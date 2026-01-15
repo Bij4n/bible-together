@@ -1,0 +1,16 @@
+---
+EnableDefaultLinters: true
+exclude:
+  - 'vendor/**/*'
+  - 'tmp/**/*'
+  - 'node_modules/**/*'
+
+linters:
+  TrailingWhitespace:
+    enabled: true
+  FinalNewline:
+    enabled: true
+  SpaceAroundErbTag:
+    enabled: true
+  SpaceIndentation:
+    enabled: true
