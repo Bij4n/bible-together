@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_17_093705) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_17_100750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,6 +28,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_17_093705) do
     t.index ["translation_id"], name: "index_books_on_translation_id"
   end
 
+  create_table "chapters", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "number", null: false
+    t.datetime "updated_at", null: false
+    t.integer "verse_count", default: 0, null: false
+    t.index ["book_id", "number"], name: "index_chapters_on_book_id_and_number", unique: true
+    t.index ["book_id"], name: "index_chapters_on_book_id"
+  end
+
   create_table "translations", force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false
@@ -39,5 +49,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_17_093705) do
     t.index "lower((code)::text)", name: "index_translations_on_lower_code", unique: true
   end
 
+  create_table "verses", force: :cascade do |t|
+    t.text "body_html", null: false
+    t.text "body_text", null: false
+    t.bigint "chapter_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "number", null: false
+    t.string "osis_ref", null: false
+    t.jsonb "red_letter_ranges", default: [], null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id", "number"], name: "index_verses_on_chapter_id_and_number", unique: true
+    t.index ["chapter_id"], name: "index_verses_on_chapter_id"
+    t.index ["osis_ref"], name: "index_verses_on_osis_ref", unique: true
+  end
+
   add_foreign_key "books", "translations"
+  add_foreign_key "chapters", "books"
+  add_foreign_key "verses", "chapters"
 end
