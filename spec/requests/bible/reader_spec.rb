@@ -1,0 +1,73 @@
+require "rails_helper"
+
+RSpec.describe "Bible::Reader", type: :request do
+  let!(:translation) { create(:translation, :kjv) }
+  let!(:book) do
+    create(:book, :john, translation: translation, osis_code: "John", position: 43)
+  end
+  let!(:chapter) { create(:chapter, book: book, number: 3) }
+
+  before do
+    create(:verse,
+           chapter: chapter,
+           number: 16,
+           body_text: "For God so loved the world...",
+           body_html: %(<span class="jesus-words">For God so loved the world...</span>),
+           red_letter_ranges: [ [ 0, 30 ] ],
+           osis_ref: "Bible.KJV.John.3.16")
+    create(:verse,
+           chapter: chapter,
+           number: 17,
+           body_text: "For God sent not his Son...",
+           body_html: "For God sent not his Son...",
+           red_letter_ranges: [],
+           osis_ref: "Bible.KJV.John.3.17")
+  end
+
+  describe "GET /bible/:translation/:book/:chapter" do
+    it "renders the chapter with verse bodies" do
+      get "/bible/kjv/john/3"
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("For God so loved the world")
+      expect(response.body).to include(%(<span class="jesus-words">))
+    end
+
+    it "404s on unknown translation" do
+      get "/bible/nope/john/3"
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "404s on unknown book" do
+      get "/bible/kjv/unknown/3"
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "404s on unknown chapter" do
+      get "/bible/kjv/john/99"
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "301-redirects case-mismatched paths to the canonical lowercase form" do
+      get "/bible/KJV/John/3"
+      expect(response).to have_http_status(:moved_permanently)
+      expect(response.location).to end_with("/bible/kjv/john/3")
+    end
+
+    it "matches books with multi-character osis codes case-insensitively" do
+      create(:book, translation: translation, osis_code: "1Kgs", name_en: "1 Kings", name_es: "1 Reyes", position: 11, testament: :old)
+      chap = create(:chapter, book: Book.find_by(osis_code: "1Kgs"), number: 1)
+      create(:verse, chapter: chap, number: 1, body_text: "Now king David", body_html: "Now king David", osis_ref: "Bible.KJV.1Kgs.1.1")
+
+      get "/bible/kjv/1kgs/1"
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Now king David")
+    end
+  end
+
+  describe "GET /bible" do
+    it "redirects to the KJV Genesis chapter 1 placeholder" do
+      get "/bible"
+      expect(response).to redirect_to("/bible/kjv/gen/1")
+    end
+  end
+end
