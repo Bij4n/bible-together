@@ -1,11 +1,58 @@
-<section>
-  <h1 class="font-display text-3xl"><%= @book.name_en %> <%= @chapter.number %></h1>
-  <div>
-    <% @verses.each do |verse| %>
-      <span class="verse" data-verse-id="<%= verse.id %>" data-osis-ref="<%= verse.osis_ref %>">
-        <sup class="verse-number"><%= verse.number %></sup>
-        <%= verse.body_html.html_safe %>
-      </span>
+<% book_name = I18n.locale == :es ? @book.name_es : @book.name_en %>
+<% prev_chapter = @chapter.previous %>
+<% next_chapter = @chapter.next %>
+
+<article class="mx-auto max-w-3xl space-y-8">
+  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between text-sm uppercase tracking-wider">
+    <% if prev_chapter %>
+      <%= link_to t("bible.reader.prev_chapter"),
+                  bible_chapter_path(translation: @translation.code.downcase,
+                                     book: prev_chapter.book.osis_code.downcase,
+                                     chapter: prev_chapter.number),
+                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+    <% else %>
+      <span aria-hidden="true"></span>
     <% end %>
+
+    <% if next_chapter %>
+      <%= link_to t("bible.reader.next_chapter"),
+                  bible_chapter_path(translation: @translation.code.downcase,
+                                     book: next_chapter.book.osis_code.downcase,
+                                     chapter: next_chapter.number),
+                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+    <% end %>
+  </nav>
+
+  <header class="space-y-1 border-b border-walnut-900/15 pb-6 dark:border-gilt-500/30">
+    <p class="text-sm uppercase tracking-[0.3em] text-walnut-700/70 dark:text-amber-200/60">
+      <%= @translation.name %>
+    </p>
+    <h1 class="font-display text-5xl font-semibold uppercase tracking-[0.1em] text-walnut-900 dark:text-amber-200">
+      <%= book_name %> <%= @chapter.number %>
+    </h1>
+  </header>
+
+  <div class="chapter-body font-serif text-lg leading-loose text-walnut-900 dark:text-amber-200">
+    <% @verses.each_with_index do |verse, i| %><span class="verse" data-verse-id="<%= verse.id %>" data-osis-ref="<%= verse.osis_ref %>"><sup class="verse-number"><%= verse.number %></sup><%= verse.body_html.html_safe %></span><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
-</section>
+
+  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between border-t border-walnut-900/15 pt-6 text-sm uppercase tracking-wider dark:border-gilt-500/30">
+    <% if prev_chapter %>
+      <%= link_to t("bible.reader.prev_chapter"),
+                  bible_chapter_path(translation: @translation.code.downcase,
+                                     book: prev_chapter.book.osis_code.downcase,
+                                     chapter: prev_chapter.number),
+                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+    <% else %>
+      <span aria-hidden="true"></span>
+    <% end %>
+
+    <% if next_chapter %>
+      <%= link_to t("bible.reader.next_chapter"),
+                  bible_chapter_path(translation: @translation.code.downcase,
+                                     book: next_chapter.book.osis_code.downcase,
+                                     chapter: next_chapter.number),
+                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+    <% end %>
+  </nav>
+</article>

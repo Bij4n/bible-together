@@ -13,3 +13,8 @@ es:
   home:
     welcome: Bienvenido a Open Bible.
     placeholder: Esta es una página de inicio provisional. Pronto llegará el lector.
+  bible:
+    reader:
+      prev_chapter: Anterior
+      next_chapter: Siguiente
+      chapter_label: Capítulo

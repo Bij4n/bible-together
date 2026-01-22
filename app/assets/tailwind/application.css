@@ -52,3 +52,31 @@
     letter-spacing: 0.02em;
   }
 }
+
+@layer components {
+  /*
+   * Jesus's words — distinct shade from the rubric red accent
+   * (#8b2e2e) used for UI chrome. The in-text red is slightly darker
+   * and more saturated to read well as body copy; don't unify them.
+   */
+  .jesus-words {
+    color: #8a1c1c;
+    font-style: italic;
+  }
+
+  html[data-theme="dark"] .jesus-words {
+    color: #d98b8b;
+  }
+
+  .verse-number {
+    font-family: var(--font-display);
+    font-size: 0.7em;
+    line-height: 0;
+    color: color-mix(in srgb, var(--color-walnut-900) 60%, transparent);
+    margin-right: 0.2em;
+  }
+
+  html[data-theme="dark"] .verse-number {
+    color: color-mix(in srgb, var(--color-amber-200) 60%, transparent);
+  }
+}

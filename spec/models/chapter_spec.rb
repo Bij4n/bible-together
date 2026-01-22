@@ -24,4 +24,32 @@ RSpec.describe Chapter, type: :model do
       expect(Chapter.new.verse_count).to eq(0)
     end
   end
+
+  describe "#previous / #next" do
+    let(:translation) { create(:translation) }
+    let(:gen)  { create(:book, translation: translation, osis_code: "Gen",  position: 1, testament: :old) }
+    let(:exod) { create(:book, translation: translation, osis_code: "Exod", position: 2, testament: :old) }
+
+    let!(:gen1)  { create(:chapter, book: gen, number: 1) }
+    let!(:gen2)  { create(:chapter, book: gen, number: 2) }
+    let!(:gen50) { create(:chapter, book: gen, number: 50) }
+    let!(:exod1) { create(:chapter, book: exod, number: 1) }
+
+    it "walks within a book" do
+      expect(gen1.next).to eq(gen2)
+      expect(gen2.previous).to eq(gen1)
+    end
+
+    it "crosses book boundaries forward" do
+      expect(gen50.next).to eq(exod1)
+    end
+
+    it "crosses book boundaries backward" do
+      expect(exod1.previous).to eq(gen50)
+    end
+
+    it "returns nil at the canon edges" do
+      expect(gen1.previous).to be_nil
+    end
+  end
 end
