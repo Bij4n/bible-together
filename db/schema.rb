@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_17_100750) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_17_114523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_17_100750) do
     t.index "lower((code)::text)", name: "index_translations_on_lower_code", unique: true
   end
 
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "default_translation_id"
+    t.string "display_name"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
+    t.string "theme", default: "system", null: false
+    t.string "ui_locale", default: "en", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower((display_name)::text)", name: "index_users_on_lower_display_name", unique: true, where: "(display_name IS NOT NULL)"
+    t.index ["default_translation_id"], name: "index_users_on_default_translation_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.check_constraint "char_length(display_name::text) <= 60", name: "users_display_name_length_check"
+    t.check_constraint "theme::text = ANY (ARRAY['light'::character varying, 'dark'::character varying, 'system'::character varying]::text[])", name: "users_theme_check"
+    t.check_constraint "ui_locale::text = ANY (ARRAY['en'::character varying, 'es'::character varying]::text[])", name: "users_ui_locale_check"
+  end
+
   create_table "verses", force: :cascade do |t|
     t.text "body_html", null: false
     t.text "body_text", null: false
@@ -65,5 +86,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_17_100750) do
 
   add_foreign_key "books", "translations"
   add_foreign_key "chapters", "books"
+  add_foreign_key "users", "translations", column: "default_translation_id"
   add_foreign_key "verses", "chapters"
 end
