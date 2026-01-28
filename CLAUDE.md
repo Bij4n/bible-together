@@ -174,3 +174,9 @@ bin/rails bible:import[kjv]  # seed KJV (Sprint 1+)
 - I18n keys mirror the view path: `app.bible.reader.chapter_heading` for `app/views/bible/reader/chapter.html.erb`
 - No business logic in controllers beyond routing; push to models or services
 - Never use `.where.not` without an index consideration
+
+---
+
+## Workflow notes
+
+- **Commit before destructive generators.** Rails generators like `rails g devise:install`, `rails g devise <Model>`, or `rails g scaffold` will happily overwrite uncommitted files (factories, specs, views). If you've started writing tests or fixtures before running a generator that touches those files, commit them first — `git checkout HEAD -- file` can always restore a committed version; it can't restore an unstaged one. Bit us in Sprint 2 when `rails g devise User` clobbered an unstaged factory + spec.
