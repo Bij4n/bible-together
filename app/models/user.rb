@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   belongs_to :default_translation, class_name: "Translation", optional: true
 
+  has_many :highlights, dependent: :destroy
+
   validates :ui_locale, inclusion: { in: UI_LOCALES }
   validates :theme,     inclusion: { in: THEMES }
   validates :display_name,
