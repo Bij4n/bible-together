@@ -9,6 +9,9 @@ class Highlight < ApplicationRecord
   belongs_to :user
   belongs_to :translation
 
+  has_many :highlight_notes, dependent: :destroy
+  has_many :notes, through: :highlight_notes
+
   validates :osis_ref, presence: true
   validates :user_id, uniqueness: { scope: [ :osis_ref, :color ] }
   validate  :osis_ref_is_parseable
