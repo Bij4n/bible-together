@@ -18,6 +18,9 @@ en:
       prev_chapter: Previous
       next_chapter: Next
       chapter_label: Chapter
+      group_notes: Notes in this chapter
+      by_author: "by %{name}"
+      breadcrumb_home: Open Bible
   settings:
     title: Settings
     updated: Preferences saved.
