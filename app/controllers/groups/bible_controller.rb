@@ -15,18 +15,18 @@ module Groups
 
       prefix = "Bible.#{@translation.code}.#{@book.osis_code}.#{@chapter.number}."
 
-      # Own highlights in this chapter, plus every highlight anchored by
-      # a note that's been shared with this group. Highlights themselves
-      # carry the color; the shared note indicator is rendered separately
-      # from the list of @group_notes below.
-      own        = current_user.highlights.for_chapter(prefix).to_a
-      group_hs   = Highlight
-                   .joins(highlight_notes: { note: :note_shares })
-                   .where(note_shares: { shareable_type: "Group", shareable_id: @group.id })
-                   .for_chapter(prefix)
-                   .distinct
-                   .to_a
-      @highlights = (own + group_hs).uniq { |h| h.id }
+      # Sprint 5: the group bible shows only highlights anchored to a
+      # note shared with this group. Each viewer's private highlights
+      # stay on /bible/... — keeping group-view content identical
+      # across members means a single broadcast can replace a verse for
+      # everyone. A future sprint can layer per-user highlights as a
+      # client-side overlay without re-rendering the server HTML.
+      @highlights = Highlight
+                    .joins(highlight_notes: { note: :note_shares })
+                    .where(note_shares: { shareable_type: "Group", shareable_id: @group.id })
+                    .for_chapter(prefix)
+                    .distinct
+                    .to_a
 
       @group_notes = Note
                      .shared_with_group(@group)
