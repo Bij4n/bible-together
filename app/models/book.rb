@@ -1,5 +1,6 @@
 class Book < ApplicationRecord
   belongs_to :translation
+  has_many :chapters, dependent: :destroy
 
   # `scopes: false` avoids clashing with ActiveRecord's Book.new constructor.
   enum :testament, { old: 0, new: 1 }, scopes: false

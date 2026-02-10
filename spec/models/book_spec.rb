@@ -37,6 +37,7 @@ RSpec.describe Book, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:translation) }
+    it { is_expected.to have_many(:chapters).dependent(:destroy) }
   end
 
   describe "testament enum" do
