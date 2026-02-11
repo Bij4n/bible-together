@@ -3,7 +3,7 @@
 <% next_chapter = @chapter.next %>
 
 <article class="mx-auto max-w-3xl space-y-8">
-  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between text-sm uppercase tracking-wider">
+  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between gap-4 text-sm uppercase tracking-wider">
     <% if prev_chapter %>
       <%= link_to t("bible.reader.prev_chapter"),
                   bible_chapter_path(translation: @translation.code.downcase,
@@ -14,12 +14,26 @@
       <span aria-hidden="true"></span>
     <% end %>
 
+    <select data-controller="chapter-picker"
+            data-action="change->chapter-picker#navigate"
+            aria-label="<%= t("bible.reader.chapter_label") %>"
+            class="rounded border border-walnut-900/30 bg-transparent px-3 py-1 font-serif text-sm normal-case tracking-normal dark:border-gilt-500/40">
+      <% @book.chapters.order(:number).each do |ch| %>
+        <option value="<%= bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: ch.number) %>"
+                <%= "selected" if ch.id == @chapter.id %>>
+          <%= t("bible.reader.chapter_label") %> <%= ch.number %>
+        </option>
+      <% end %>
+    </select>
+
     <% if next_chapter %>
       <%= link_to t("bible.reader.next_chapter"),
                   bible_chapter_path(translation: @translation.code.downcase,
                                      book: next_chapter.book.osis_code.downcase,
                                      chapter: next_chapter.number),
                   class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+    <% else %>
+      <span aria-hidden="true"></span>
     <% end %>
   </nav>
 
