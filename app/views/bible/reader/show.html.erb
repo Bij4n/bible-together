@@ -1,0 +1,11 @@
+<section>
+  <h1 class="font-display text-3xl"><%= @book.name_en %> <%= @chapter.number %></h1>
+  <div>
+    <% @verses.each do |verse| %>
+      <span class="verse" data-verse-id="<%= verse.id %>" data-osis-ref="<%= verse.osis_ref %>">
+        <sup class="verse-number"><%= verse.number %></sup>
+        <%= verse.body_html.html_safe %>
+      </span>
+    <% end %>
+  </div>
+</section>
