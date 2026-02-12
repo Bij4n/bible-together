@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :note_shares, only: [ :create, :destroy ]
   resources :comments,    only: [ :create, :update, :destroy ]
   resources :upvotes,     only: [ :create, :destroy ]
+  resources :flags,       only: [ :create ]
 
   resources :groups do
     collection do

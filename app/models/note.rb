@@ -27,6 +27,7 @@ class Note < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :upvotes, dependent: :destroy
   has_many :upvoters, through: :upvotes, source: :user
+  has_many :flags, as: :flaggable, dependent: :destroy
 
   # Flat list of comments in display order: top-level oldest first,
   # each top-level's replies oldest first, depth-first. Siblingized

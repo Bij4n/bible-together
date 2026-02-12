@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_19_045840) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_19_051036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,6 +88,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_045840) do
     t.index ["note_id"], name: "index_comments_on_note_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "flags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "details"
+    t.bigint "flaggable_id", null: false
+    t.string "flaggable_type", null: false
+    t.string "reason", null: false
+    t.datetime "resolved_at"
+    t.bigint "resolved_by_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["flaggable_type", "flaggable_id"], name: "index_flags_on_flaggable"
+    t.index ["resolved_at"], name: "index_flags_on_resolved_at"
+    t.index ["resolved_by_id"], name: "index_flags_on_resolved_by_id"
+    t.index ["user_id", "flaggable_type", "flaggable_id"], name: "index_flags_uniqueness", unique: true
+    t.index ["user_id"], name: "index_flags_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -220,6 +237,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_045840) do
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "notes"
   add_foreign_key "comments", "users"
+  add_foreign_key "flags", "users"
+  add_foreign_key "flags", "users", column: "resolved_by_id"
   add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "highlight_notes", "highlights"
   add_foreign_key "highlight_notes", "notes"
