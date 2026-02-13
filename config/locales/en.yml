@@ -13,6 +13,8 @@ en:
   home:
     welcome: Welcome to Open Bible.
     placeholder: This is a placeholder landing page. Real reader coming soon.
+    cta_public_bible: Read the Bible
+    cta_my_bible: My reader
   bible:
     reader:
       prev_chapter: Previous
@@ -107,3 +109,16 @@ en:
     add_placeholder: Add a comment…
     reply_placeholder: Write a reply…
     timestamp: "%{ago} ago"
+  public_bible:
+    community_view: Community view
+    community_notes: Community notes
+    switch_to_my_bible: Switch to my bible
+    no_notes_yet: No community notes on this chapter yet.
+    sign_in_to_add: Sign in to add one.
+    by_author: "by %{name}"
+    featured: Featured
+    hidden: Hidden
+    flag: Flag
+    flag_reason_prompt: "Why are you flagging this? (brief reason)"
+    flag_submitted: "Flag submitted. Thank you for helping keep the community constructive."
+    flag_failed: Couldn't submit the flag. Try again later.
