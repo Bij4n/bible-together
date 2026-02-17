@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_19_052844) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_19_165200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -225,6 +225,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_052844) do
     t.check_constraint "ui_locale::text = ANY (ARRAY['en'::character varying::text, 'es'::character varying::text])", name: "users_ui_locale_check"
   end
 
+  create_table "verse_embeddings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "embedding_data", null: false
+    t.string "model_version", default: "all-MiniLM-L6-v2", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "verse_id", null: false
+    t.index ["verse_id"], name: "index_verse_embeddings_on_verse_id", unique: true
+  end
+
   create_table "verses", force: :cascade do |t|
     t.text "body_html", null: false
     t.text "body_text", null: false
@@ -260,5 +269,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_052844) do
   add_foreign_key "upvotes", "notes"
   add_foreign_key "upvotes", "users"
   add_foreign_key "users", "translations", column: "default_translation_id"
+  add_foreign_key "verse_embeddings", "verses"
   add_foreign_key "verses", "chapters"
 end
