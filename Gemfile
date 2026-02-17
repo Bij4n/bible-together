@@ -42,8 +42,9 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-# Authentication. Added in Sprint 2.
-# gem "devise"
+# Authentication.
+gem "devise"
+gem "devise-i18n"
 
 # Keyword search over verses / notes. Added in Sprint 8.
 # gem "pg_search"
