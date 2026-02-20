@@ -146,6 +146,13 @@ es:
       - esperanza
       - perdón
       - paz
+    modes:
+      keyword: Palabras clave
+      semantic: Conceptual
+    semantic_explanation: "La búsqueda conceptual encuentra versículos por significado, no por palabras exactas."
+    semantic_unavailable: "La búsqueda conceptual no está disponible ahora. Mostrando resultados por palabras clave."
+    semantic_notes_pending: "La búsqueda conceptual solo cubre versículos por ahora. Cambia el ámbito a versículos para ver resultados."
+    similarity_match: "%{percent}% de coincidencia"
   admin:
     title: Admin
     nav:

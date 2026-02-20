@@ -146,6 +146,13 @@ en:
       - hope
       - forgiveness
       - peace
+    modes:
+      keyword: Keyword
+      semantic: Concept
+    semantic_explanation: "Concept search finds verses by meaning, not exact words."
+    semantic_unavailable: "Concept search is temporarily unavailable. Showing keyword results instead."
+    semantic_notes_pending: "Concept search covers verses only for now. Switch scope to verses to see results."
+    similarity_match: "%{percent}% match"
   admin:
     title: Admin
     nav:

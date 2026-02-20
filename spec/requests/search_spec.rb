@@ -67,5 +67,40 @@ RSpec.describe "Search", type: :request do
       get "/search"
       expect(response.body).to include(I18n.t("search.empty_hint"))
     end
+
+    describe "mode=semantic" do
+      let(:query_vector) { [ 1.0, 0.0 ] + Array.new(382, 0.0) }
+
+      before do
+        create(:verse_embedding, verse: verse, embedding: query_vector)
+        allow(EmbeddingService).to receive_messages(
+          healthy?: true,
+          embed_texts: { "embeddings" => [ query_vector ], "model_version" => "all-MiniLM-L6-v2" }
+        )
+      end
+
+      it "renders semantic verse results with the citation and similarity badge" do
+        get "/search", params: { q: "divine love", mode: "semantic" }
+        expect(response.body).to include("John 3:16")
+        expect(response.body).to include("100% match")
+      end
+
+      it "falls back to keyword results and shows a banner when the service is down" do
+        allow(EmbeddingService).to receive(:healthy?).and_return(false)
+        get "/search", params: { q: "loved", mode: "semantic" }
+        expect(response.body).to include(I18n.t("search.semantic_unavailable"))
+        expect(response.body).to include("<mark>loved</mark>")
+      end
+
+      it "warns when scope=notes + mode=semantic (notes semantic search pending)" do
+        get "/search", params: { q: "divine love", mode: "semantic", scope: "notes" }
+        expect(response.body).to include(I18n.t("search.semantic_notes_pending"))
+      end
+
+      it "ignores unknown mode values and defaults to keyword" do
+        get "/search", params: { q: "loved", mode: "nonsense" }
+        expect(response.body).to include("<mark>loved</mark>")
+      end
+    end
   end
 end

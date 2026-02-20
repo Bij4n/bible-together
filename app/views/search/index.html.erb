@@ -23,6 +23,16 @@
     </div>
 
     <fieldset class="flex items-center gap-4 font-serif text-sm">
+      <legend class="sr-only"><%= t("search.modes.keyword") %></legend>
+      <% SearchController::MODES.each do |mode| %>
+        <label class="flex items-center gap-1">
+          <%= f.radio_button :mode, mode, checked: @mode == mode %>
+          <%= t("search.modes.#{mode}") %>
+        </label>
+      <% end %>
+    </fieldset>
+
+    <fieldset class="flex items-center gap-4 font-serif text-sm">
       <legend class="sr-only"><%= t("search.filters.all") %></legend>
       <% SearchService::VALID_SCOPES.each do |scope| %>
         <label class="flex items-center gap-1">
@@ -31,9 +41,27 @@
         </label>
       <% end %>
     </fieldset>
+
+    <% if @mode == "semantic" %>
+      <p class="font-serif text-xs italic text-walnut-700/70 dark:text-amber-200/60">
+        <%= t("search.semantic_explanation") %>
+      </p>
+    <% end %>
   <% end %>
 
   <% if @query.present? %>
+    <% if @results[:semantic_fallback] %>
+      <p class="rounded border border-rubric-500/30 bg-rubric-500/10 px-4 py-3 font-serif text-sm text-walnut-900 dark:border-gilt-500/40 dark:bg-walnut-800 dark:text-amber-200">
+        <%= t("search.semantic_unavailable") %>
+      </p>
+    <% end %>
+
+    <% if @results[:notes_scope_requested] %>
+      <p class="rounded border border-walnut-900/15 bg-parchment-50 px-4 py-3 font-serif text-sm text-walnut-700 dark:border-gilt-500/30 dark:bg-walnut-800 dark:text-amber-300">
+        <%= t("search.semantic_notes_pending") %>
+      </p>
+    <% end %>
+
     <%= render partial: "results", locals: { results: @results, query: @query, scope: @scope } %>
   <% else %>
     <section class="space-y-3">
