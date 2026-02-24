@@ -132,6 +132,9 @@ en:
       all: Everything
       verses: Verses only
       notes: Notes only
+    translations:
+      current: This translation
+      all: All translations
     empty_hint: Enter a search term above to explore verses and community notes.
     no_results_html: "No results for <strong>%{query}</strong>. Try different keywords or check your spelling."
     results_for_html: "Results for <strong>%{query}</strong>"

@@ -132,6 +132,9 @@ es:
       all: Todo
       verses: Solo versículos
       notes: Solo notas
+    translations:
+      current: Esta traducción
+      all: Todas las traducciones
     empty_hint: Escribe un término de búsqueda para explorar versículos y notas.
     no_results_html: "Sin resultados para <strong>%{query}</strong>. Prueba otras palabras o revisa la ortografía."
     results_for_html: "Resultados para <strong>%{query}</strong>"
