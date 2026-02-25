@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_18_213651) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_18_215656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,6 +76,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_18_213651) do
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
 
+  create_table "highlight_notes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "highlight_id", null: false
+    t.bigint "note_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["highlight_id", "note_id"], name: "index_highlight_notes_on_highlight_id_and_note_id", unique: true
+    t.index ["highlight_id"], name: "index_highlight_notes_on_highlight_id"
+    t.index ["note_id"], name: "index_highlight_notes_on_note_id"
+  end
+
   create_table "highlights", force: :cascade do |t|
     t.integer "color", default: 0, null: false
     t.datetime "created_at", null: false
@@ -87,6 +97,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_18_213651) do
     t.index ["translation_id"], name: "index_highlights_on_translation_id"
     t.index ["user_id", "osis_ref", "color"], name: "index_highlights_on_user_osis_ref_color", unique: true
     t.index ["user_id"], name: "index_highlights_on_user_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.integer "visibility", default: 0, null: false
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "translations", force: :cascade do |t|
@@ -139,8 +157,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_18_213651) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "books", "translations"
   add_foreign_key "chapters", "books"
+  add_foreign_key "highlight_notes", "highlights"
+  add_foreign_key "highlight_notes", "notes"
   add_foreign_key "highlights", "translations"
   add_foreign_key "highlights", "users"
+  add_foreign_key "notes", "users"
   add_foreign_key "users", "translations", column: "default_translation_id"
   add_foreign_key "verses", "chapters"
 end
