@@ -1,0 +1,58 @@
+<% book_name = I18n.locale == :es ? @book.name_es : @book.name_en %>
+<% debug_selection = Rails.env.development? || params[:debug] == "1" %>
+
+<article class="relative mx-auto max-w-3xl space-y-8"
+         data-controller="highlight"
+         data-highlight-translation-code-value="<%= @translation.code %>"
+         data-highlight-book-value="<%= @book.osis_code %>"
+         data-highlight-chapter-value="<%= @chapter.number %>"
+         data-highlight-debug-value="<%= debug_selection %>">
+
+  <nav aria-label="breadcrumb" class="flex items-center gap-2 text-xs uppercase tracking-wider text-walnut-700 dark:text-amber-300">
+    <%= link_to t("bible.reader.breadcrumb_home"), root_path, class: "hover:text-rubric-500 dark:hover:text-gilt-400" %>
+    <span aria-hidden="true">&rsaquo;</span>
+    <%= link_to @group.name, group_path(@group), class: "hover:text-rubric-500 dark:hover:text-gilt-400" %>
+    <span aria-hidden="true">&rsaquo;</span>
+    <span class="text-walnut-900 dark:text-amber-200"><%= book_name %> <%= @chapter.number %></span>
+  </nav>
+
+  <header class="space-y-1 border-b border-walnut-900/15 pb-6 dark:border-gilt-500/30">
+    <p class="text-sm uppercase tracking-[0.3em] text-walnut-700/70 dark:text-amber-200/60">
+      <%= @translation.name %>
+    </p>
+    <h1 class="font-display text-5xl font-semibold uppercase tracking-[0.1em] text-walnut-900 dark:text-amber-200">
+      <%= book_name %> <%= @chapter.number %>
+    </h1>
+  </header>
+
+  <div class="chapter-body font-serif text-lg leading-loose text-walnut-900 dark:text-amber-200"
+       data-highlight-target="chapter">
+    <% @verses.each_with_index do |verse, i| %><span class="verse"
+           data-verse-id="<%= verse.id %>"
+           data-osis-ref="<%= verse.osis_ref %>"
+           data-verse-text="<%= verse.body_text %>"><sup class="verse-number" data-ignore-selection><%= verse.number %></sup><%= render_verse_with_highlights(verse, @highlights) %></span><%= " " unless i == @verses.size - 1 %><% end %>
+  </div>
+
+  <% if @group_notes.any? %>
+    <aside class="rounded border border-walnut-900/15 bg-parchment-50 p-5 dark:border-gilt-500/30 dark:bg-walnut-800">
+      <h2 class="font-display text-lg uppercase tracking-wider text-walnut-900 dark:text-amber-200">
+        <%= t("bible.reader.group_notes") %>
+      </h2>
+      <ul class="mt-3 space-y-4">
+        <% @group_notes.each do |note| %>
+          <li class="border-b border-walnut-900/10 pb-3 last:border-0 last:pb-0 dark:border-gilt-500/20">
+            <p class="text-xs uppercase tracking-[0.18em] text-walnut-700/70 dark:text-amber-200/60">
+              <%= note.highlights.map(&:osis_ref).join(", ") %>
+              <span class="ml-2 italic normal-case tracking-normal">
+                <%= t("bible.reader.by_author", name: note.user.display_name.presence || note.user.email) %>
+              </span>
+            </p>
+            <div class="trix-content mt-1 font-serif text-walnut-900 dark:text-amber-200">
+              <%= note.body %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </aside>
+  <% end %>
+</article>
