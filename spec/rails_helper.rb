@@ -26,7 +26,7 @@ require 'shoulda/matchers'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+Rails.root.glob("spec/support/**/*.rb").sort_by(&:to_s).each { |f| require f }
 
 # Ensures that the test database schema matches the current schema file.
 # If there are pending migrations it will invoke `db:test:prepare` to
@@ -97,6 +97,7 @@ Capybara.register_driver(:headless_chrome_ci) do |app|
   options.add_argument("--disable-dev-shm-usage")
   options.add_argument("--disable-gpu")
   options.add_argument("--window-size=1400,1400")
+  options.add_option("goog:loggingPrefs", { browser: "ALL" })
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
