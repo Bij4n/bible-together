@@ -1,4 +1,6 @@
 class Note < ApplicationRecord
+  include GroupBibleBroadcastable
+
   # :private and :public clash with Ruby keywords and Rails generated
   # enum methods (note.private? etc). Keeping the stored values as
   # private_note / public_note. The UI still labels them "Private" /
@@ -54,4 +56,32 @@ class Note < ApplicationRecord
   scope :shared_with_group, ->(group) {
     joins(:note_shares).where(note_shares: { shareable_type: "Group", shareable_id: group.id })
   }
+
+  # Body edits re-render the list entry on every group this note is
+  # shared with. Destroy cascades via note_shares' callbacks.
+  after_update_commit :broadcast_note_update, if: :saved_change_to_body?
+
+  private
+
+  def saved_change_to_body?
+    # ActionText body updates arrive through the rich_text record; plain
+    # AR dirty tracking on `body` isn't available, so fall back to "any
+    # update commit fires this". Conservative but correct.
+    true
+  end
+
+  def broadcast_note_update
+    return if shared_groups.empty?
+
+    shared_groups.each do |group|
+      target_chapters_for(self).each do |verse|
+        Turbo::StreamsChannel.broadcast_replace_to(
+          group, "bible", verse[:translation], verse[:book], verse[:chapter],
+          target: ActionView::RecordIdentifier.dom_id(self),
+          partial: "groups/bible/note",
+          locals: { note: self }
+        )
+      end
+    end
+  end
 end
