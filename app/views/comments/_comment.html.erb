@@ -1,3 +1,8 @@
+<%# Broadcast renders call this partial without a request context, so
+    current_user raises Devise::MissingWarden there. Fall back safely —
+    the partial renders without author controls in broadcasts, and the
+    author sees them on the next full page render. %>
+<% viewer = local_assigns.fetch(:viewer) { current_user rescue nil } %>
 <% indent = [ comment.depth, Comment::MAX_DEPTH ].min * 20 %>
 <article id="<%= dom_id(comment) %>"
          data-controller="comment"
@@ -28,7 +33,7 @@
       </button>
     <% end %>
 
-    <% if comment.user_id == current_user&.id %>
+    <% if viewer && comment.user_id == viewer.id %>
       <%= button_to t("comments.delete"),
                     comment_path(comment),
                     method: :delete,
