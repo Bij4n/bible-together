@@ -8,6 +8,9 @@ RSpec.describe "Bible::Reader", type: :request do
   let!(:chapter) { create(:chapter, book: book, number: 3) }
 
   before do
+    # /bible/... is the signed-in personal reader as of Sprint 7.
+    sign_in create(:user)
+
     create(:verse,
            chapter: chapter,
            number: 16,

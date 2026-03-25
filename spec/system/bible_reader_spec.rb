@@ -8,6 +8,10 @@ RSpec.describe "Bible reader", type: :system, js: true do
   let!(:john5)      { create(:chapter, book: john, number: 5) }
 
   before do
+    # /bible/... is the signed-in personal reader as of Sprint 7;
+    # anonymous visitors get redirected to /public/bible/...
+    sign_in create(:user)
+
     create(:verse, chapter: john3, number: 16,
                    body_text: "For God so loved the world, that he gave his only begotten Son...",
                    body_html: %(<span class="jesus-words">For God so loved the world, that he gave his only begotten Son...</span>),

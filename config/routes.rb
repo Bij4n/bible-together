@@ -42,4 +42,10 @@ Rails.application.routes.draw do
       to: "bible/reader#show",
       as: :bible_chapter,
       constraints: { chapter: /\d+/ }
+
+  get "/public/bible", to: redirect("/public/bible/kjv/gen/1")
+  get "/public/bible/:translation/:book/:chapter",
+      to: "public/bible#show",
+      as: :public_bible_chapter,
+      constraints: { chapter: /\d+/ }
 end

@@ -1,0 +1,47 @@
+<% book_name = I18n.locale == :es ? @book.name_es : @book.name_en %>
+
+<article class="relative mx-auto max-w-3xl space-y-8">
+  <header class="space-y-1 border-b border-walnut-900/15 pb-6 dark:border-gilt-500/30">
+    <p class="text-sm uppercase tracking-[0.3em] text-walnut-700/70 dark:text-amber-200/60">
+      <%= @translation.name %> · <%= t("public_bible.community_view") %>
+    </p>
+    <h1 class="font-display text-5xl font-semibold uppercase tracking-[0.1em] text-walnut-900 dark:text-amber-200">
+      <%= book_name %> <%= @chapter.number %>
+    </h1>
+    <% if user_signed_in? %>
+      <p class="text-sm italic text-walnut-700 dark:text-amber-300">
+        <%= link_to t("public_bible.switch_to_my_bible"),
+                    bible_chapter_path(translation: @translation.code.downcase,
+                                       book: @book.osis_code.downcase,
+                                       chapter: @chapter.number),
+                    class: "hover:text-rubric-500 dark:hover:text-gilt-400" %>
+      </p>
+    <% end %>
+  </header>
+
+  <div class="chapter-body font-serif text-lg leading-loose text-walnut-900 dark:text-amber-200">
+    <% @verses.each_with_index do |verse, i| %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights } %><%= " " unless i == @verses.size - 1 %><% end %>
+  </div>
+
+  <aside id="public_notes_aside" class="space-y-4">
+    <h2 class="font-display text-lg uppercase tracking-wider text-walnut-900 dark:text-amber-200">
+      <%= t("public_bible.community_notes") %>
+    </h2>
+
+    <% if @public_notes.any? %>
+      <ul id="public_notes_list" class="space-y-4">
+        <% @public_notes.each do |note| %>
+          <%= render partial: "public/bible/note", locals: { note: note } %>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="font-serif italic text-walnut-700 dark:text-amber-300">
+        <%= t("public_bible.no_notes_yet") %>
+        <% unless user_signed_in? %>
+          <%= link_to t("public_bible.sign_in_to_add"), new_user_session_path,
+                      class: "ml-1 hover:text-rubric-500 dark:hover:text-gilt-400" %>
+        <% end %>
+      </p>
+    <% end %>
+  </aside>
+</article>

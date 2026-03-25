@@ -13,6 +13,8 @@ es:
   home:
     welcome: Bienvenido a Open Bible.
     placeholder: Esta es una página de inicio provisional. Pronto llegará el lector.
+    cta_public_bible: Leer la Biblia
+    cta_my_bible: Mi lector
   bible:
     reader:
       prev_chapter: Anterior
@@ -107,3 +109,16 @@ es:
     add_placeholder: Añade un comentario…
     reply_placeholder: Escribe una respuesta…
     timestamp: "hace %{ago}"
+  public_bible:
+    community_view: Vista de la comunidad
+    community_notes: Notas de la comunidad
+    switch_to_my_bible: Cambiar a mi biblia
+    no_notes_yet: Aún no hay notas de la comunidad en este capítulo.
+    sign_in_to_add: Inicia sesión para añadir una.
+    by_author: "por %{name}"
+    featured: Destacada
+    hidden: Oculta
+    flag: Reportar
+    flag_reason_prompt: "¿Por qué reportas esto? (motivo breve)"
+    flag_submitted: "Reporte enviado. Gracias por ayudar a mantener una comunidad constructiva."
+    flag_failed: No se pudo enviar el reporte. Inténtalo más tarde.
