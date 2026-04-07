@@ -2,6 +2,9 @@ class Verse < ApplicationRecord
   include PgSearch::Model
 
   belongs_to :chapter
+  has_one :verse_embedding, dependent: :destroy
+
+  scope :with_embeddings, -> { joins(:verse_embedding) }
 
   validates :number, presence: true, uniqueness: { scope: :chapter_id }
   validates :body_text, presence: true
