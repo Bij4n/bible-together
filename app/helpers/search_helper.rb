@@ -1,6 +1,18 @@
 module SearchHelper
   # Canonical citation for a verse — "John 3:16" in English or "Juan 3:16"
   # in Spanish. Reused by both verse and note result partials.
+  # Keyword results come back with a pg_search_highlight attribute
+  # (ts_headline's <mark>-wrapped output, already safe to render raw).
+  # Semantic results don't — they're plain Verse rows, so escape the
+  # body_text and truncate it to a readable preview.
+  def verse_body_snippet(verse, length: 220)
+    if verse.respond_to?(:pg_search_highlight)
+      verse.pg_search_highlight.html_safe
+    else
+      h(verse.body_text.to_s.truncate(length))
+    end
+  end
+
   def verse_citation(verse)
     book = verse.chapter.book
     name = I18n.locale == :es ? book.name_es : book.name_en

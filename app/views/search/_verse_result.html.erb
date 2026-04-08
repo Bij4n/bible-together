@@ -5,11 +5,16 @@
                                           book: verse.chapter.book.osis_code.downcase,
                                           chapter: verse.chapter.number),
                 class: "hover:text-rubric-500 dark:hover:text-gilt-400" %>
+    <% if verse.respond_to?(:similarity_score) %>
+      <span class="ml-2 normal-case tracking-normal text-walnut-700/60 dark:text-amber-200/50">
+        <%= t("search.similarity_match", percent: (verse.similarity_score * 100).round) %>
+      </span>
+    <% end %>
   </p>
   <p class="mt-1 font-serif text-walnut-900 dark:text-amber-200">
-    <%# pg_search_highlight is safe here — body_text is plain, ts_headline
-        wraps matched terms in <mark>. Anywhere we concat HTML we'd
-        want to escape; here we opt into the pre-wrapped output. %>
-    <%= verse.pg_search_highlight.html_safe %>
+    <%# pg_search_highlight is safe for keyword results (body_text is
+        plain, ts_headline wraps matched terms in <mark>). Semantic
+        results have no highlight — fall through to escaped body_text. %>
+    <%= verse_body_snippet(verse) %>
   </p>
 </li>
