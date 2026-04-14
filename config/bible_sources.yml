@@ -25,3 +25,30 @@ kjv:
     sha256: eeeae647fc28360ce47f9c0d5cc3b397b7fdd9913fe53dc9f44eb6deee50e253
     filename: eng-kjv.osis.xml
     archive: false
+
+# Provenance for RV1909:
+#   gratis-bible/bible publishes Spanish OSIS via ZefToOsis. Their
+#   es/sparv.xml is labeled "Spanish Reina-Valera" without a year,
+#   but three text-level markers identify it as the 1909 edition:
+#     - Gen 1:1  "EN el principio crió Dios ..."  (archaic "crió")
+#     - Ps 23:1  "JEHOVA es mi pastor"             (unaccented JEHOVA)
+#     - John 3:16 "ha dado á su Hijo unigénito"    (archaic "á")
+#   These match eBible.org's published RV1909 sample and distinguish
+#   the file from RVA (1989), SEV (1865), and the copyrighted
+#   RVR1960. seven1m/open-bibles ships Spanish in USFX only, so we
+#   use gratis-bible as the canonical OSIS Spanish source. SHA
+#   pinned so the text can't drift under us.
+rv1909:
+  name: Reina-Valera 1909
+  language: es
+  public_domain: true
+  license_notes: |
+    Public domain; the 1909 revision of the Reina-Valera Spanish
+    Bible predates the 1923 US public-domain cutoff and the 1960
+    revision's separate copyright. Redistributed as OSIS by the
+    gratis-bible/bible project via a ZefToOsis conversion.
+  source:
+    url: https://raw.githubusercontent.com/gratis-bible/bible/master/es/sparv.xml
+    sha256: 758d102ea3034f457e146219cf2ec050d59a99ba064cdcb415bbd9be70da6378
+    filename: spa-rv1909.osis.xml
+    archive: false
