@@ -102,5 +102,44 @@ RSpec.describe "Search", type: :request do
         expect(response.body).to include("<mark>loved</mark>")
       end
     end
+
+    describe "translations scope" do
+      let!(:rv1909) { create(:translation, code: "RV1909", name: "Reina-Valera 1909", language: "es") }
+      let!(:rv_john) do
+        create(:book, osis_code: "John", translation: rv1909,
+                      name_en: "John", name_es: "Juan", position: 43, testament: :new)
+      end
+      let!(:rv_chapter) { create(:chapter, book: rv_john, number: 3) }
+      let!(:rv_verse) do
+        create(:verse, chapter: rv_chapter, number: 16,
+                       body_text: "Porque de tal manera amó Dios al mundo, loved",
+                       body_html: "Porque de tal manera amó Dios al mundo, loved",
+                       osis_ref: "Bible.RV1909.John.3.16")
+      end
+
+      it "defaults to KJV only (current translation)" do
+        get "/search", params: { q: "loved" }
+        expect(response.body).to include("For God so")
+        expect(response.body).not_to include("Porque de tal manera")
+      end
+
+      it "scopes to the passed translation_code when translations=current" do
+        get "/search", params: { q: "loved", translations: "current", translation_code: "RV1909" }
+        expect(response.body).to include("Porque de tal manera")
+        expect(response.body).not_to include("For God so")
+      end
+
+      it "spans every translation when translations=all" do
+        get "/search", params: { q: "loved", translations: "all" }
+        expect(response.body).to include("For God so")
+        expect(response.body).to include("Porque de tal manera")
+      end
+
+      it "shows the translations radio group when multiple translations exist" do
+        get "/search"
+        expect(response.body).to include(I18n.t("search.translations.current"))
+        expect(response.body).to include(I18n.t("search.translations.all"))
+      end
+    end
   end
 end

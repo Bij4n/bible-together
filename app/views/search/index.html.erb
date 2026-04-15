@@ -42,6 +42,19 @@
       <% end %>
     </fieldset>
 
+    <% if Translation.count > 1 %>
+      <fieldset class="flex items-center gap-4 font-serif text-sm">
+        <legend class="sr-only"><%= t("search.translations.all") %></legend>
+        <% SearchService::VALID_TRANSLATIONS.each do |ts| %>
+          <label class="flex items-center gap-1">
+            <%= f.radio_button :translations, ts, checked: @translations == ts %>
+            <%= t("search.translations.#{ts}") %>
+          </label>
+        <% end %>
+      </fieldset>
+      <%= f.hidden_field :translation_code, value: @translation_code %>
+    <% end %>
+
     <% if @mode == "semantic" %>
       <p class="font-serif text-xs italic text-walnut-700/70 dark:text-amber-200/60">
         <%= t("search.semantic_explanation") %>
