@@ -214,3 +214,86 @@
     margin-right: auto;
   }
 }
+
+/*
+ * Honor prefers-reduced-motion globally — kills any transition
+ * shorter than the user's threshold rather than only the note panel
+ * (Sprint 4) or theme toggle. Cheap, broad insurance against any
+ * future component that adds a transition without remembering.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Print stylesheet: strip chrome so a printed chapter looks like a
+ * passage from a typeset bible, not a screenshot of the web app.
+ * Standard 12pt body, black ink, hide all interactive controls,
+ * keep verses on a single page where possible.
+ */
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+
+  /* Hide chrome, keep content. */
+  header,
+  nav,
+  aside,
+  button,
+  .chapter-fleuron,
+  [data-controller="theme"] *,
+  [data-highlight-target="toolbar"],
+  #note-panel-container,
+  .skip-to-main {
+    display: none !important;
+  }
+
+  /* Reset the warm focus + selection so they don't print. */
+  :focus-visible { outline: none; }
+  ::selection { background: transparent; }
+
+  /* Tighten the chapter body for print: drop the on-screen line
+     length cap (paper has a different ideal measure) and let it
+     fill the page width. */
+  .chapter-body {
+    max-width: none;
+    line-height: 1.5;
+    color: #000 !important;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .chapter-opening::first-letter {
+    color: #000 !important;
+  }
+
+  /* Verses shouldn't be split across pages mid-sentence when we can
+     help it. inside-avoid is well-supported in modern browsers. */
+  .verse {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Show full URLs after links so the print is self-contained. */
+  a[href^="http"]::after,
+  a[href^="https"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+
+  /* Jesus's words go to plain italic instead of red — most printers
+     are mono and red prints muddy on B&W output. */
+  .jesus-words {
+    color: #000 !important;
+    font-style: italic;
+  }
+}
