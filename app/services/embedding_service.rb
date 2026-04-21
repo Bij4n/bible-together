@@ -11,11 +11,28 @@ require "uri"
 # (SemanticSearchService, the batch rake task) can fall through
 # cleanly.
 class EmbeddingService
-  BASE_URL     = ENV.fetch("EMBEDDING_SERVICE_URL", "http://127.0.0.1:8000")
   HEALTH_TIMEOUT = 5
   EMBED_TIMEOUT  = 30
 
   class EmbeddingError < StandardError; end
+
+  # Resolves the embedding service URL at boot. Prefers an explicit
+  # EMBEDDING_SERVICE_URL, otherwise builds from EMBEDDING_SERVICE_HOST
+  # (+ optional port). Host-based resolution is how Render's
+  # `fromService: property: host` wiring reaches us — the private
+  # service's hostname is injected as HOST, not as a full URL.
+  def self.resolve_base_url
+    explicit = ENV["EMBEDDING_SERVICE_URL"]
+    return explicit if explicit.present?
+
+    host = ENV["EMBEDDING_SERVICE_HOST"]
+    return "http://127.0.0.1:8000" unless host.present?
+
+    port = ENV.fetch("EMBEDDING_SERVICE_PORT", "8000")
+    "http://#{host}:#{port}"
+  end
+
+  BASE_URL = resolve_base_url.freeze
 
   def self.embed_texts(texts)
     uri = URI("#{BASE_URL}/embed")

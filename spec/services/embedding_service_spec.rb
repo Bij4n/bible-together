@@ -3,6 +3,37 @@ require "rails_helper"
 RSpec.describe EmbeddingService do
   let(:base_url) { EmbeddingService::BASE_URL }
 
+  describe ".resolve_base_url" do
+    it "uses EMBEDDING_SERVICE_URL when it is set" do
+      stub_const("ENV", ENV.to_h.merge(
+        "EMBEDDING_SERVICE_URL"  => "https://explicit.example.com",
+        "EMBEDDING_SERVICE_HOST" => "ignored-host"
+      ))
+      expect(EmbeddingService.resolve_base_url).to eq("https://explicit.example.com")
+    end
+
+    it "builds the URL from EMBEDDING_SERVICE_HOST and default port 8000 when no explicit URL" do
+      env = ENV.to_h.except("EMBEDDING_SERVICE_URL", "EMBEDDING_SERVICE_PORT").merge("EMBEDDING_SERVICE_HOST" => "embedding.internal")
+      stub_const("ENV", env)
+      expect(EmbeddingService.resolve_base_url).to eq("http://embedding.internal:8000")
+    end
+
+    it "honors EMBEDDING_SERVICE_PORT when building from host" do
+      env = ENV.to_h.except("EMBEDDING_SERVICE_URL").merge(
+        "EMBEDDING_SERVICE_HOST" => "embedding.internal",
+        "EMBEDDING_SERVICE_PORT" => "9000"
+      )
+      stub_const("ENV", env)
+      expect(EmbeddingService.resolve_base_url).to eq("http://embedding.internal:9000")
+    end
+
+    it "falls back to localhost when neither URL nor HOST is set" do
+      env = ENV.to_h.except("EMBEDDING_SERVICE_URL", "EMBEDDING_SERVICE_HOST", "EMBEDDING_SERVICE_PORT")
+      stub_const("ENV", env)
+      expect(EmbeddingService.resolve_base_url).to eq("http://127.0.0.1:8000")
+    end
+  end
+
   describe ".embed_texts" do
     it "posts the texts and returns the parsed body" do
       stub_request(:post, "#{base_url}/embed")
