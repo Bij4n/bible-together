@@ -85,6 +85,15 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :headless_chrome_ci
   end
+
+  # VerseEmbedding memoises parsed vectors in class state for performance.
+  # Transactional fixtures roll back DB writes between specs but don't
+  # touch class state, so any spec that queries the cache after another
+  # spec created embeddings would see rolled-back rows. Reset every
+  # example to keep them independent.
+  config.before(:each) do
+    VerseEmbedding.reset_cache! if defined?(VerseEmbedding)
+  end
 end
 
 # Register a Chrome driver that plays nicely in sandboxed Linux CI / container

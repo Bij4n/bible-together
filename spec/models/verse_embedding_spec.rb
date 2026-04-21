@@ -116,4 +116,56 @@ RSpec.describe VerseEmbedding, type: :model do
       expect(result.similarity_score).to be_within(0.0001).of(1.0)
     end
   end
+
+  describe "in-process cache" do
+    let!(:translation) { create(:translation, :kjv) }
+    let!(:book)        { create(:book, :john, translation: translation) }
+    let!(:chapter)     { create(:chapter, book: book, number: 3) }
+
+    def seed_embedding(number, vector)
+      verse = create(:verse, chapter: chapter, number: number,
+                             body_text: "sample #{number}", body_html: "sample #{number}",
+                             osis_ref: "Bible.KJV.John.3.#{number}")
+      create(:verse_embedding, verse: verse, embedding: vector)
+      verse
+    end
+
+    it "populates the cache on first access and skips the DB JOIN on subsequent calls" do
+      seed_embedding(1, [ 1.0, 0.0 ] + Array.new(382, 0.0))
+      VerseEmbedding.reset_cache!
+      query = [ 1.0, 0.0 ] + Array.new(382, 0.0)
+
+      # First call: rebuilds from the DB.
+      expect(VerseEmbedding).to receive(:build_cached_entries).once.and_call_original
+      VerseEmbedding.search_by_similarity(query, limit: 1, threshold: 0.0)
+
+      # Second call: hits the memoised array, no rebuild.
+      expect(VerseEmbedding).not_to receive(:build_cached_entries)
+      VerseEmbedding.search_by_similarity(query, limit: 1, threshold: 0.0)
+    end
+
+    it "invalidates the cache when a VerseEmbedding is created" do
+      seed_embedding(1, [ 1.0, 0.0 ] + Array.new(382, 0.0))
+      query = [ 1.0, 0.0 ] + Array.new(382, 0.0)
+      VerseEmbedding.search_by_similarity(query, limit: 1, threshold: 0.0)
+
+      # New embedding fires the after_commit callback, blowing the cache.
+      seed_embedding(2, [ 0.9, 0.1 ] + Array.new(382, 0.0))
+      expect(VerseEmbedding.instance_variable_get(:@cached_entries)).to be_nil
+
+      # Next search rebuilds and sees both rows.
+      results = VerseEmbedding.search_by_similarity(query, limit: 5, threshold: 0.0)
+      expect(results.size).to eq(2)
+    end
+
+    it "reset_cache! forces a rebuild on the next query" do
+      seed_embedding(1, [ 1.0, 0.0 ] + Array.new(382, 0.0))
+      query = [ 1.0, 0.0 ] + Array.new(382, 0.0)
+      VerseEmbedding.search_by_similarity(query, limit: 1, threshold: 0.0)
+
+      VerseEmbedding.reset_cache!
+      expect(VerseEmbedding).to receive(:build_cached_entries).once.and_call_original
+      VerseEmbedding.search_by_similarity(query, limit: 1, threshold: 0.0)
+    end
+  end
 end
