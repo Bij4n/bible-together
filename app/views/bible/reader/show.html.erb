@@ -9,13 +9,13 @@
          data-highlight-book-value="<%= @book.osis_code %>"
          data-highlight-chapter-value="<%= @chapter.number %>"
          data-highlight-debug-value="<%= debug_selection %>">
-  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between gap-4 text-sm uppercase tracking-wider">
+  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between gap-4 font-ui text-sm">
     <% if prev_chapter %>
       <%= link_to t("bible.reader.prev_chapter"),
                   bible_chapter_path(translation: @translation.code.downcase,
                                      book: prev_chapter.book.osis_code.downcase,
                                      chapter: prev_chapter.number),
-                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+                  class: "text-surface-600 transition-colors hover:text-accent-700 dark:text-surface-400 dark:hover:text-accent-400" %>
     <% else %>
       <span aria-hidden="true"></span>
     <% end %>
@@ -23,7 +23,7 @@
     <select data-controller="chapter-picker"
             data-action="change->chapter-picker#navigate"
             aria-label="<%= t("bible.reader.chapter_label") %>"
-            class="rounded border border-walnut-900/30 bg-transparent px-3 py-1 font-serif text-sm normal-case tracking-normal dark:border-gilt-500/40">
+            class="rounded-md border border-surface-300 bg-transparent px-3 py-1.5 font-ui text-sm text-surface-700 dark:border-surface-700 dark:text-surface-300">
       <% @book.chapters.order(:number).each do |ch| %>
         <option value="<%= bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: ch.number) %>"
                 <%= "selected" if ch.id == @chapter.id %>>
@@ -37,15 +37,15 @@
                   bible_chapter_path(translation: @translation.code.downcase,
                                      book: next_chapter.book.osis_code.downcase,
                                      chapter: next_chapter.number),
-                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+                  class: "text-surface-600 transition-colors hover:text-accent-700 dark:text-surface-400 dark:hover:text-accent-400" %>
     <% else %>
       <span aria-hidden="true"></span>
     <% end %>
   </nav>
 
-  <header class="space-y-2 border-b border-walnut-900/15 pb-6 dark:border-gilt-500/30">
+  <header class="space-y-3 border-b border-surface-200 pb-6 dark:border-surface-800">
     <div class="flex items-center justify-between gap-3">
-      <p class="text-sm uppercase tracking-[0.3em] text-walnut-700/70 dark:text-amber-200/60">
+      <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
         <%= @translation.name %>
       </p>
       <% translations = Translation.order(:name) %>
@@ -53,7 +53,7 @@
         <select data-controller="translation-picker"
                 data-action="change->translation-picker#navigate"
                 aria-label="<%= t("bible.reader.translation_picker") %>"
-                class="rounded border border-walnut-900/30 bg-transparent px-3 py-1 font-serif text-sm normal-case tracking-normal dark:border-gilt-500/40">
+                class="rounded-md border border-surface-300 bg-transparent px-3 py-1.5 font-ui text-sm text-surface-700 dark:border-surface-700 dark:text-surface-300">
           <% translations.each do |t| %>
             <option value="<%= bible_chapter_path(translation: t.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>"
                     <%= "selected" if t.id == @translation.id %>>
@@ -63,54 +63,51 @@
         </select>
       <% end %>
     </div>
-    <h1 class="font-display text-5xl font-semibold uppercase tracking-[0.1em] text-walnut-900 dark:text-amber-200">
-      <span class="book-ornament" aria-hidden="true">&#10086;</span>
+    <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 dark:text-surface-50">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
     </h1>
   </header>
 
-  <div class="chapter-body font-serif text-lg leading-loose text-walnut-900 dark:text-amber-200"
+  <div class="chapter-body font-reading text-lg leading-relaxed text-surface-900 dark:text-surface-100"
        data-highlight-target="chapter">
     <% @verses.each_with_index do |verse, i| %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights || [], cross_translation_highlights: @cross_translation_highlights, chapter_opener: i == 0 } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
-  <div class="chapter-fleuron" aria-hidden="true">&#10086;</div>
-
   <% if user_signed_in? %>
     <div data-highlight-target="toolbar"
          hidden
-         class="absolute z-20 flex items-center gap-1 rounded border border-walnut-900/30 bg-parchment-50 p-1 shadow-md dark:border-gilt-500/40 dark:bg-walnut-800">
+         class="absolute z-20 flex items-center gap-1 rounded-lg border border-surface-200 bg-surface-50 p-1 shadow-lg ring-1 ring-surface-900/5 dark:border-surface-800 dark:bg-surface-900 dark:ring-surface-50/10">
       <% Highlight::COLORS.each do |color| %>
         <button type="button"
                 data-action="highlight#apply"
                 data-color="<%= color %>"
                 title="<%= color.capitalize %>"
-                class="h-6 w-6 rounded-full border border-walnut-900/30 dark:border-gilt-500/40 highlight-swatch-<%= color %>">
+                class="h-6 w-6 rounded-full border border-surface-300 dark:border-surface-700 highlight-swatch-<%= color %>">
           <span class="sr-only"><%= color.capitalize %></span>
         </button>
       <% end %>
       <button type="button"
               data-action="highlight#note"
               title="<%= t("notes.save", default: "Note") %>"
-              class="h-6 rounded px-2 text-xs uppercase tracking-wider text-walnut-900 hover:bg-walnut-900 hover:text-parchment-100 dark:text-amber-200 dark:hover:bg-amber-200 dark:hover:text-walnut-900">
+              class="h-6 rounded-md px-2 font-ui text-xs text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:text-surface-300 dark:hover:bg-surface-800 dark:hover:text-surface-50">
         &#9998;
       </button>
       <button type="button"
               data-action="highlight#remove"
               title="<%= t("bible.reader.remove_highlight", default: "Remove") %>"
-              class="h-6 rounded px-2 text-xs uppercase tracking-wider text-walnut-900 hover:bg-walnut-900 hover:text-parchment-100 dark:text-amber-200 dark:hover:bg-amber-200 dark:hover:text-walnut-900">
+              class="h-6 rounded-md px-2 font-ui text-xs text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:text-surface-300 dark:hover:bg-surface-800 dark:hover:text-surface-50">
         &times;
       </button>
     </div>
   <% end %>
 
-  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between border-t border-walnut-900/15 pt-6 text-sm uppercase tracking-wider dark:border-gilt-500/30">
+  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between border-t border-surface-200 pt-6 font-ui text-sm dark:border-surface-800">
     <% if prev_chapter %>
       <%= link_to t("bible.reader.prev_chapter"),
                   bible_chapter_path(translation: @translation.code.downcase,
                                      book: prev_chapter.book.osis_code.downcase,
                                      chapter: prev_chapter.number),
-                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+                  class: "text-surface-600 transition-colors hover:text-accent-700 dark:text-surface-400 dark:hover:text-accent-400" %>
     <% else %>
       <span aria-hidden="true"></span>
     <% end %>
@@ -120,7 +117,7 @@
                   bible_chapter_path(translation: @translation.code.downcase,
                                      book: next_chapter.book.osis_code.downcase,
                                      chapter: next_chapter.number),
-                  class: "text-walnut-700 hover:text-rubric-500 dark:text-amber-300 dark:hover:text-gilt-400" %>
+                  class: "text-surface-600 transition-colors hover:text-accent-700 dark:text-surface-400 dark:hover:text-accent-400" %>
     <% end %>
   </nav>
 </article>

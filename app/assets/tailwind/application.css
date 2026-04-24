@@ -82,46 +82,49 @@
 
 @layer base {
   html {
-    background-color: var(--color-parchment-100);
-    color: var(--color-walnut-900);
-    font-family: var(--font-serif);
+    background-color: var(--color-surface-50);
+    color: var(--color-surface-900);
+    font-family: var(--font-reading);
   }
 
   html[data-theme="dark"] {
-    background-color: var(--color-walnut-900);
-    color: var(--color-amber-200);
+    background-color: var(--color-surface-950);
+    color: var(--color-surface-100);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    letter-spacing: 0.02em;
+    font-family: var(--font-ui);
+    letter-spacing: -0.01em;
   }
 
   /*
-   * Warm focus indicator. Default browser outlines are blue and clash
-   * with the manuscript palette; gilt at 2px keeps the affordance
-   * visible without losing the candle-warm feel. Applied via
-   * :focus-visible so mouse users don't see a ring on click but
-   * keyboard users always do.
+   * Focus indicator uses the bronze accent so keyboard-nav affordance
+   * picks up the brand color instead of the browser's default blue.
+   * :focus-visible (not :focus) so mouse clickers don't see a ring on
+   * buttons; keyboard users always do.
    */
   :focus-visible {
-    outline: 2px solid var(--color-gilt-500);
+    outline: 2px solid var(--color-accent-700);
     outline-offset: 2px;
     border-radius: 2px;
   }
 
   html[data-theme="dark"] :focus-visible {
-    outline-color: var(--color-gilt-400);
+    outline-color: var(--color-accent-400);
   }
 
   /*
-   * Selection color: warm gilt-tinted overlay in both themes so
-   * highlighting text feels like swiping a beeswax marker over the
-   * page rather than the default OS blue.
+   * Text selection tinted with the accent so highlighting reads as a
+   * brand color rather than the OS default. color-mix gives us a soft
+   * overlay in both themes without maintaining separate rgb pairs.
    */
   ::selection {
-    background-color: rgba(184, 138, 74, 0.30); /* gilt-500 @ 30% */
+    background-color: color-mix(in srgb, var(--color-accent-700) 25%, transparent);
     color: inherit;
+  }
+
+  html[data-theme="dark"] ::selection {
+    background-color: color-mix(in srgb, var(--color-accent-400) 25%, transparent);
   }
 }
 
@@ -132,42 +135,44 @@
    * and more saturated to read well as body copy; don't unify them.
    */
   .jesus-words {
-    color: #8a1c1c;
+    color: var(--color-jesus-light);
     font-style: italic;
   }
 
   html[data-theme="dark"] .jesus-words {
-    color: #d98b8b;
+    color: var(--color-jesus-dark);
   }
 
   .verse-number {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-size: 0.7em;
     line-height: 0;
-    color: color-mix(in srgb, var(--color-walnut-900) 60%, transparent);
+    font-weight: 500;
+    color: color-mix(in srgb, var(--color-surface-900) 55%, transparent);
     margin-right: 0.2em;
   }
 
   html[data-theme="dark"] .verse-number {
-    color: color-mix(in srgb, var(--color-amber-200) 60%, transparent);
+    color: color-mix(in srgb, var(--color-surface-100) 55%, transparent);
   }
 
   /*
-   * Highlight overlays — muted manuscript tones on parchment, slightly
-   * lower alpha on walnut. Jesus-words keeps its italic red when a
-   * highlight overlaps; the background class just paints behind.
+   * Highlight overlays — retuned for the near-white / near-black
+   * surface palette. Slight alpha bump on light over the previous
+   * parchment-calibrated values because near-white ground makes soft
+   * pastels read paler than they did on cream parchment.
    */
-  .highlight-gold     { background-color: rgba(230, 199, 132, 0.45); }
-  .highlight-rose     { background-color: rgba(232, 185, 185, 0.45); }
-  .highlight-sage     { background-color: rgba(185, 212, 177, 0.45); }
-  .highlight-lavender { background-color: rgba(198, 191, 224, 0.45); }
-  .highlight-sky      { background-color: rgba(167, 198, 212, 0.45); }
+  .highlight-gold     { background-color: rgba(230, 199, 132, 0.55); }
+  .highlight-rose     { background-color: rgba(232, 185, 185, 0.55); }
+  .highlight-sage     { background-color: rgba(185, 212, 177, 0.55); }
+  .highlight-lavender { background-color: rgba(198, 191, 224, 0.55); }
+  .highlight-sky      { background-color: rgba(167, 198, 212, 0.55); }
 
-  html[data-theme="dark"] .highlight-gold     { background-color: rgba(212, 165, 116, 0.30); }
-  html[data-theme="dark"] .highlight-rose     { background-color: rgba(184, 138, 138, 0.30); }
-  html[data-theme="dark"] .highlight-sage     { background-color: rgba(138, 160, 126, 0.30); }
-  html[data-theme="dark"] .highlight-lavender { background-color: rgba(138, 138, 184, 0.30); }
-  html[data-theme="dark"] .highlight-sky      { background-color: rgba(126, 160, 176, 0.30); }
+  html[data-theme="dark"] .highlight-gold     { background-color: rgba(212, 165, 116, 0.35); }
+  html[data-theme="dark"] .highlight-rose     { background-color: rgba(184, 138, 138, 0.35); }
+  html[data-theme="dark"] .highlight-sage     { background-color: rgba(138, 160, 126, 0.35); }
+  html[data-theme="dark"] .highlight-lavender { background-color: rgba(138, 138, 184, 0.35); }
+  html[data-theme="dark"] .highlight-sky      { background-color: rgba(126, 160, 176, 0.35); }
 
   /* Toolbar swatches mirror the highlight colors at full opacity. */
   .highlight-swatch-gold     { background-color: #e6c784; }
