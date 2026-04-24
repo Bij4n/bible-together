@@ -2,7 +2,7 @@
 
 ## Current sprint
 
-**Sprint 13 closed.** Home + public reader chrome + groups reader chrome + shared comments + search page + notes slide-in panel (with Trix theming) + locale/translation banner (with cookie-based dismissal). Eight commits. Sprint 14 next: settings, admin, groups-index + detail + forms, flashes, manuscript-token deletion from `application.css`. Open a Sprint 14 brief when ready.
+**Sprint 14 — Secondary surfaces + manuscript-token deletion.** Final migration sprint of the 12-15 design pivot. Closes out settings, admin, groups (index + detail + forms), shared flashes; then deletes the manuscript tokens from `application.css` and drops the Cinzel/EB Garamond font-loader tag from the layout. Sprint 15 picks up content + donations. See brief under [Sprint roadmap](#sprint-14--secondary-surfaces--manuscript-token-deletion).
 
 ---
 
@@ -128,6 +128,8 @@ Append-only. Each entry: date-ish, decision, rationale.
 - **2026-04-23 Sprint 13 open** — **Home page visual migration pulled up from Sprint 15 into Sprint 13.** Rationale: home is the first surface a visitor sees; shipping Sprint 13 with a modern reader but a manuscript-era home contradicts the pivot's whole point. Sprint 15's homepage scope reduces to the content rewrite (hero copy, features grid, about section, donation CTA); the visual shell lands now.
 - **2026-04-23 Sprint 13 open** — **Danger buttons standardize on the `red-500/40 outline + red-700 text + hover:bg-red-500 hover:text-surface-50` pattern** from `devise/registrations/edit` (Sprint 12 addendum, commit 46d2adf). Rubric-red-on-parchment appeared in three inconsistent variants across the codebase (registrations cancel, admin hide/unhide, settings); one canonical treatment replaces all of them. Applied to any destructive actions in Sprint 13's scope; flagged as the target for Sprint 14's admin/settings work.
 - **2026-04-24 Sprint 13 close** — **Two-tier danger pattern, not one.** Sprint 13's brief proposed a single canonical red-500 pill pattern for all destructive actions. Worked for full-weight buttons (cancel account, delete note — both pills) but was too heavy for inline footer text-buttons (comment delete, sitting next to a neutral-hover reply button). Collapsing both to pills would force the reply button to also become a pill for visual parity, which isn't right — reply isn't destructive. Finalized pattern: **canonical pill** (`border-red-500/40 + text-red-700 + hover:bg-red-500`) for standalone destructive actions; **text-red hover** (`hover:text-red-700 dark:hover:text-red-400`) for inline text-buttons that need a destructive signal without visual weight. Sprint 14 applies the pill to admin hide/unhide + settings destructive actions; keeps text-red hover wherever a delete lives inline next to non-destructive actions.
+- **2026-04-24 Sprint 13 close** — **Navbar drops sign-up, keeps sign-in only.** Matches the Grammarly / Notion / Linear / Stripe pattern referenced as the design target. New users still reach sign-up in one click via the "Sign up" link Devise's `_links` partial renders under the sign-in form. No i18n cleanup (`auth.sign_up` still used by that partial). Shipped as a small standalone commit between Sprints 13 and 14.
+- **2026-04-24 Sprint 14 open** — **Sprint 14 is the visual-migration finale.** Four surface clusters (shared flashes, settings, groups, admin) plus the manuscript-token deletion from `application.css` and the Cinzel/EB Garamond Google Fonts tag removal from the layout. Ordering: flashes first (blast radius), settings second (reuses Devise patterns), groups third (largest cluster), admin fourth (smallest), token deletion last (grep-gated). Sprint 15 stays content + donations; no visual migration work crosses the Sprint 14/15 boundary.
 
 - **2026-04-21 Deployment** — **Render over Vercel for v1 hosting at bible-together.org.** Vercel's Ruby support is thin; Render runs Rails natively, has a managed Postgres tier, and supports private services for the Python embedding sidecar. Informal deploy work rather than a full sprint — not a feature, just getting the Sprint 9-10 work in front of users.
 - **2026-04-21 Deployment** — **Single Postgres, not the Rails 8 multi-DB default.** Collapsed primary/cache/queue/cable to one connection backed by a single Render Basic-256mb instance. Converted `db/cache_schema.rb` / `db/queue_schema.rb` / `db/cable_schema.rb` into real migrations under `db/migrate/` so the solid_* tables land in primary alongside app tables. Rejected the "all four connections point at the same URL" alternative: each solid schema file declares `version: 1`, and Rails' shared `schema_migrations` would collide on load. strong_migrations flagged the Solid Queue FKs; wrapped them in `safety_assured` with a note explaining the tables are brand-new and empty in the same migration.
@@ -425,6 +427,28 @@ Only `private` visibility works this sprint. Sharing comes in Sprint 4.
 - Print stylesheet for chapters (people will want this)
 
 **Tests:** accessibility assertions via `axe-core-rspec`; visual regression is manual.
+
+### Sprint 14 — Secondary surfaces + manuscript-token deletion
+
+**Goal:** close out the migration phase of the 12-15 design pivot. Every remaining manuscript surface (settings, admin, groups, shared flashes) lands on the modern design system, then the manuscript tokens in `application.css` and the Cinzel/EB Garamond Google Fonts tag get deleted. Sprint 15 is content rewrite + Bitcoin donations; this is the last sprint that touches the visual system.
+
+- **Shared flashes**: `shared/_flashes.html.erb` + `_settings_flash.html.erb`. Rendered by the layout on every page; doing these early in the sprint means every later migrated surface already benefits from the modern flash. Small file, high blast radius.
+- **Settings page**: `settings/edit.html.erb`. User preferences hub — UI locale, theme, default translation, display name. Reuses the canonical form-field pattern from `devise/sessions/new` and `notes/_form`.
+- **Groups views**: `groups/index.html.erb` + `show.html.erb` + `new.html.erb` + `edit.html.erb` + `_form.html.erb`. Largest cluster by occurrence count (42). Destructive actions (leave group, delete group) land on the canonical red-500 pill from Sprint 12 addendum / Sprint 13 standardization. Invitation-code UX is visual-only; watch for keyboard-copy accessibility regression.
+- **Admin moderation views**: `admin/notes/index.html.erb` + `admin/notes/show.html.erb` + `admin/flags/index.html.erb`. Hide/unhide/feature buttons adopt the canonical red-500 (destructive) and accent pill (affirmative) patterns. Filter tabs' manuscript active-underline needs a design call — accent underline vs. pill vs. weight change; flag when encountered.
+- **Manuscript token deletion from `application.css`**: remove `--font-display`, `--font-serif`, `--font-sans` (Cinzel / EB Garamond), `--color-parchment-*`, `--color-walnut-*`, `--color-amber-100/200/300`, `--color-rubric-*`, `--color-gilt-*`. Also the inert component rules: `.book-ornament`, `.chapter-fleuron`, `.chapter-opening::first-letter`. Runs last; guarded by a grep-clean across `app/views/`, `app/helpers/`, `app/javascript/`.
+- **Font-loader cleanup in `layouts/application.html.erb`**: drop the Google Fonts `<link>` that pulls Cinzel + EB Garamond once the CSS references are gone. Ships with the token-deletion commit.
+
+**Out of scope:**
+- Sprint 15 homepage content rewrite (hero, features grid, about, donation CTA).
+- Bitcoin donation integration (Sprint 15).
+- SMTP provider wiring (carried over from deployment TODOs; Sprint 15).
+
+**Tests:** visual refactor with the existing 185+ request specs as regression safety net. No new behavior; pure migration + dead-code deletion. Re-run `axe-core-rspec` on settings, admin/notes/index, and groups/show once migrated. The token-deletion commit itself runs a grep verification step before committing.
+
+**Known fallout:** shared flashes render on every page — any spec asserting on flash container class names would need updating (grep first). Admin filter-tab active-state design is a small open question. A handful of specs across ~85 render-based tests may implicitly reference manuscript class names; low probability but not zero.
+
+**Confidence:** high on file list, sprint ordering, and token-deletion mechanics (the grep-clean gate is deterministic). Medium on the admin filter-tab active-state design choice. Medium on spec fallout from the flash migration since it touches every layout render.
 
 ### Sprint 13 — Reader ecosystem + search + notes + home + locale banner
 
