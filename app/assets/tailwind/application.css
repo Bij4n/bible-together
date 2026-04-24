@@ -6,6 +6,10 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
+  /*
+   * Manuscript tokens (Sprints 0-11). Kept alive until Sprint 14
+   * closes and no views reference them; then removed in one commit.
+   */
   --font-sans: "EB Garamond", ui-serif, Georgia, serif;
   --font-serif: "EB Garamond", ui-serif, Georgia, serif;
   --font-display: "Cinzel", "EB Garamond", ui-serif, Georgia, serif;
@@ -33,6 +37,47 @@
   /* Gilt (accents, dividers in dark mode). */
   --color-gilt-400: #d4a574;
   --color-gilt-500: #b88a4a;
+
+  /*
+   * Modern SaaS tokens (Sprint 12 pivot). These sit alongside the
+   * manuscript tokens above until migration completes. Prefer these
+   * on any new view; prefer these when touching an existing view.
+   */
+
+  /* UI sans for navbar, buttons, headings, labels. */
+  --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Reading serif for verse body, note body, long-form. Serif sustains
+     dwell-reading attention better than sans at this scale. */
+  --font-reading: "Source Serif 4", ui-serif, Georgia, serif;
+
+  /* Neutral surface palette — cool zinc. Light mode grounds everything
+     on near-white; dark mode inverts to cool near-black. */
+  --color-surface-50:  #fafafa;
+  --color-surface-100: #f4f4f5;
+  --color-surface-200: #e4e4e7;
+  --color-surface-300: #d4d4d8;
+  --color-surface-500: #71717a;
+  --color-surface-700: #3f3f46;
+  --color-surface-800: #27272a;
+  --color-surface-900: #18181b;
+  --color-surface-950: #09090b;
+
+  /* Bronze accent — warmer than the blue/teal/indigo SaaS default,
+     distinctive without reading as a clone. Light mode uses 600-700;
+     dark mode uses 300-400 for contrast against near-black. */
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+
+  /* Jesus's words — retuned for white ground. The manuscript
+     `#8a1c1c` reads harsh as block-red on near-white; `red-800` is
+     WCAG AA on surface-50 and WCAG AA on surface-950 for the dark
+     variant. */
+  --color-jesus-light: #991b1b;
+  --color-jesus-dark:  #fca5a5;
 }
 
 @layer base {
