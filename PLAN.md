@@ -2,7 +2,7 @@
 
 ## Current sprint
 
-**Sprint 12 — Design system pivot: manuscript → modern SaaS.** Foundation sprint for a 4-sprint visual overhaul (12-15). See the brief under [Sprint roadmap](#sprint-12--design-system-pivot-to-modern-saas). Rolling out progressively — each sprint ships live; users will see transitional inconsistency between 12 and 14 close.
+**Sprint 13 — Reader ecosystem + search + notes + home + locale banner.** Second sprint of the 12-15 design pivot. Sprint 12 closed with foundation tokens, modern navbar, signed-in reader, custom dropdown component, and auth pages migrated. Sprint 13 finishes the reader ecosystem and ships the new locale-translation banner; Sprint 14 cleans up secondary surfaces and removes manuscript tokens; Sprint 15 rewrites homepage content + donations. See brief under [Sprint roadmap](#sprint-13--reader-ecosystem--search--notes--home--locale-banner).
 
 ---
 
@@ -123,6 +123,10 @@ Append-only. Each entry: date-ish, decision, rationale.
 - **2026-04-20 Sprint 11** — **Typography tweaks scoped to `.chapter-body`, not a global `clamp()` rewrite.** The brief proposed a fluid scale across every text element, which would have cascaded across ~50 view files for marginal per-screen benefit. Instead: kerning + standard ligatures (so EB Garamond's fi/fl/ff actually render), `text-rendering: optimizeLegibility`, leading from 2.0 (`leading-loose`) to 1.8 (less gappy on a serif body), and `max-width: 70ch` so prose stays inside the 50-75ch reading-comfort band. Four lines of CSS, zero view changes.
 - **2026-04-20 Sprint 11** — **Global `prefers-reduced-motion` sweep replaced the per-component versions.** Sprint 4's note panel and Sprint 2's theme toggle each had their own `prefers-reduced-motion` block. Centralised into a single `*, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; ... }` block so any future component is covered without remembering to opt in.
 - **2026-04-20 Sprint 11** — **Print stylesheet demotes Jesus's red to italic black.** Most household printers are mono, and red prints muddy on B&W output. Italic plain text preserves the "Jesus is speaking" signal in a print-appropriate way. Same stylesheet hides nav/header/aside/buttons/toolbars/notes panel, drops the 70ch on-screen cap (paper has different ideal measure), inlines URLs after anchor text, and adds `break-inside: avoid` to verses so sentences rarely split across pages.
+
+- **2026-04-23 Sprint 12 close / Sprint 13 open** — **Full manuscript-token audit before opening Sprint 13.** Grepped every view for `font-display` / `font-serif` / `parchment-` / `walnut-` / `gilt-` / `rubric-` / `book-ornament` / `chapter-fleuron` / `bg-amber-[12]` / `text-amber-[12]`. 194 occurrences across 26 view files plus one JS controller (`upvote_controller.js` toggles `bg-walnut-900` at runtime) plus the note-panel slide-in container in `layouts/application.html.erb`. Sprint 12 migrated 12 files (navbar, signed-in reader, verse partial, nav_select partial, 5 Devise views, 3 Devise shared partials); Sprint 13 targets ~14 more; Sprint 14 handles the rest plus `application.css` token deletion. Static `public/*.html` error pages and Devise mailer templates are Rails-stock, not manuscript — out of scope. Audit drove two decisions logged below.
+- **2026-04-23 Sprint 13 open** — **Home page visual migration pulled up from Sprint 15 into Sprint 13.** Rationale: home is the first surface a visitor sees; shipping Sprint 13 with a modern reader but a manuscript-era home contradicts the pivot's whole point. Sprint 15's homepage scope reduces to the content rewrite (hero copy, features grid, about section, donation CTA); the visual shell lands now.
+- **2026-04-23 Sprint 13 open** — **Danger buttons standardize on the `red-500/40 outline + red-700 text + hover:bg-red-500 hover:text-surface-50` pattern** from `devise/registrations/edit` (Sprint 12 addendum, commit 46d2adf). Rubric-red-on-parchment appeared in three inconsistent variants across the codebase (registrations cancel, admin hide/unhide, settings); one canonical treatment replaces all of them. Applied to any destructive actions in Sprint 13's scope; flagged as the target for Sprint 14's admin/settings work.
 
 - **2026-04-21 Deployment** — **Render over Vercel for v1 hosting at bible-together.org.** Vercel's Ruby support is thin; Render runs Rails natively, has a managed Postgres tier, and supports private services for the Python embedding sidecar. Informal deploy work rather than a full sprint — not a feature, just getting the Sprint 9-10 work in front of users.
 - **2026-04-21 Deployment** — **Single Postgres, not the Rails 8 multi-DB default.** Collapsed primary/cache/queue/cable to one connection backed by a single Render Basic-256mb instance. Converted `db/cache_schema.rb` / `db/queue_schema.rb` / `db/cable_schema.rb` into real migrations under `db/migrate/` so the solid_* tables land in primary alongside app tables. Rejected the "all four connections point at the same URL" alternative: each solid schema file declares `version: 1`, and Rails' shared `schema_migrations` would collide on load. strong_migrations flagged the Solid Queue FKs; wrapped them in `safety_assured` with a note explaining the tables are brand-new and empty in the same migration.
@@ -420,6 +424,26 @@ Only `private` visibility works this sprint. Sharing comes in Sprint 4.
 - Print stylesheet for chapters (people will want this)
 
 **Tests:** accessibility assertions via `axe-core-rspec`; visual regression is manual.
+
+### Sprint 13 — Reader ecosystem + search + notes + home + locale banner
+
+**Goal:** finish the modern migration of every surface a non-admin user interacts with — public bible reader, groups reader, search, notes slide-in panel, home page visual shell — and ship the new locale/translation banner. Sprint 14 handles settings, admin, groups-index, flashes, and manuscript-token deletion after this.
+
+- **Public bible reader**: `app/views/public/bible/show.html.erb` + `_note.html.erb`. Remove `book-ornament` + `chapter-fleuron`, modernize header + chapter body + community notes aside. Translation picker already done in commit 14910ba.
+- **Groups bible reader**: `app/views/groups/bible/show.html.erb` + `_note.html.erb`. Preserve Sprint 5's Action Cable wiring; visual-only changes.
+- **Shared comments partials**: `_comment.html.erb` + `_form.html.erb` + `_thread.html.erb`. Rendered by both readers.
+- **Search page**: `search/index.html.erb` + `_results.html.erb` + `_verse_result.html.erb` + `_note_result.html.erb`. Retune the search input and scope/mode radio groups.
+- **Notes slide-in panel**: container in `layouts/application.html.erb` (remaining parchment aside) + `notes/_form.html.erb` + `notes/show.html.erb`. Trix editor theming is CSS-opinionated; expect iteration.
+- **Upvote Stimulus controller**: `upvote_controller.js` class-toggle list swaps from `bg-walnut-900 text-parchment-100 dark:text-walnut-900` to `bg-accent-700 text-surface-50 dark:bg-accent-400 dark:text-surface-950`.
+- **Home page visual migration**: `home/show.html.erb`. Content text unchanged — Sprint 15 rewrites the content surface (hero, features grid, about). Pulled up from Sprint 15 because it's the first thing a visitor sees.
+- **Danger button standardization**: the `border-red-500/40 text-red-700 hover:bg-red-500 hover:text-surface-50` pattern from `devise/registrations/edit` (Sprint 12 addendum) becomes the canonical destructive-action treatment across the app. Applied to any danger buttons in this sprint's views; flagged as the target for Sprint 14's admin/settings destructive actions.
+- **Locale/translation banner (new feature)**: dismissible banner on reader pages when `I18n.locale` doesn't match `@translation.language`. Example copy: "Reading KJV with Spanish labels? Switch to RV1909." Dismissal persists via a signed cookie so it survives reloads and stays per-browser; a user-preference column can replace it later if cross-device stickiness becomes wanted.
+
+**Tests:** locale banner is new behavior — spec-first at the request level (asserts banner renders when locale/translation mismatch; absent when they match; dismissal endpoint writes the cookie). Upvote controller class change — update existing upvote specs if they assert on classes. Rest is visual refactor with the existing suite as regression net. Re-run `axe-core-rspec` on public reader, groups reader, search, and home once migrated.
+
+**Known fallout:** Trix editor theming often needs a follow-up polish pass once first rendered. System specs that `click_on` manuscript-uppercase buttons stay OK since Capybara matches case-insensitively, but worth watching. Home page `root_path` spec continues to render — button text unchanged.
+
+**Confidence:** high on file list and ordering (audit in 2026-04-23 decisions log grounds the scope). Medium on Trix theming and banner copy wording. Medium on scope — this is the biggest sprint yet in files touched (~14 files).
 
 ### Sprint 12 — Design system pivot to modern SaaS
 
