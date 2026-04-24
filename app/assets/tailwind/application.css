@@ -134,6 +134,17 @@
    * (#8b2e2e) used for UI chrome. The in-text red is slightly darker
    * and more saturated to read well as body copy; don't unify them.
    */
+  /*
+   * Theme toggle icons: both sun and moon live in the button's DOM;
+   * CSS shows whichever matches the current theme so the icon reads
+   * as "you are here" rather than "click to change." Swap keys off
+   * the same data-theme attribute the Stimulus controller flips.
+   */
+  .theme-icon-sun  { display: inline-block; }
+  .theme-icon-moon { display: none; }
+  html[data-theme="dark"] .theme-icon-sun  { display: none; }
+  html[data-theme="dark"] .theme-icon-moon { display: inline-block; }
+
   .jesus-words {
     color: var(--color-jesus-light);
     font-style: italic;

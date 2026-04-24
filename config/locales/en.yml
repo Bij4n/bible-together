@@ -3,9 +3,9 @@ en:
     name: Open Bible
     tagline: Read, annotate, and share the scriptures.
   layout:
-    theme_toggle: Toggle theme
-    theme_toggle_light: Switch to light
-    theme_toggle_dark: Switch to dark
+    theme_switch: Switch theme
+    theme_light: Light
+    theme_dark: Dark
     language_switcher: Language
     language_en: English
     language_es: Español

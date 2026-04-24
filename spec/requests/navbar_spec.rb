@@ -23,7 +23,9 @@ RSpec.describe "Navbar", type: :request do
     end
 
     it "places the theme toggle and both locale options inside the menu" do
-      expect(response.body).to include("Toggle theme")
+      expect(response.body).to include(%(aria-label="Switch theme"))
+      expect(response.body).to include(%(data-label-light="Light"))
+      expect(response.body).to include(%(data-label-dark="Dark"))
       expect(response.body).to include("English")
       expect(response.body).to include("Español")
     end

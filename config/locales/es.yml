@@ -3,9 +3,9 @@ es:
     name: Open Bible
     tagline: Lee, anota y comparte las Escrituras.
   layout:
-    theme_toggle: Cambiar tema
-    theme_toggle_light: Cambiar a claro
-    theme_toggle_dark: Cambiar a oscuro
+    theme_switch: Cambiar tema
+    theme_light: Claro
+    theme_dark: Oscuro
     language_switcher: Idioma
     language_en: English
     language_es: Español

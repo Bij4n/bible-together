@@ -35,7 +35,9 @@ export default class extends Controller {
   apply(theme, { persistLocal, persistServer }) {
     document.documentElement.dataset.theme = theme
     if (this.hasLabelTarget) {
-      const key = theme === "dark" ? "labelLight" : "labelDark"
+      // Label shows the current theme ("Light" / "Dark"), not the
+      // action — so pick the matching dataset key on this theme.
+      const key = theme === "dark" ? "labelDark" : "labelLight"
       const text = this.labelTarget.dataset[key]
       if (text) this.labelTarget.textContent = text
     }
