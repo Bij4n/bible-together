@@ -1,5 +1,11 @@
-fastapi==0.104.1
-uvicorn==0.24.0
-sentence-transformers==2.2.2
-numpy==1.24.3
-pydantic==2.4.2
+# Pinned to versions that ship prebuilt wheels for Python 3.11, 3.12,
+# and 3.13. Earlier pins (numpy 1.24, sentence-transformers 2.2.2)
+# only had wheels up to 3.11; on 3.12+ pip fell back to source builds
+# and failed with `setuptools.build_meta` backend-unavailable errors.
+# numpy is intentionally unpinned — sentence-transformers declares a
+# compatible range and we let resolver pick a version with wheels for
+# the active interpreter.
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sentence-transformers==3.3.1
+pydantic==2.10.3
