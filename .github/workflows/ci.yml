@@ -94,8 +94,17 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/open_bible_test
 
     steps:
-      - name: Install Chrome and system packages for system specs
-        uses: browser-actions/setup-chrome@v1
+      # SHA-pinned for supply-chain hygiene — tag refs can be force-pushed,
+      # commit SHAs cannot. Update the pin when bumping versions.
+      # browser-actions/setup-firefox v1.7.1 — see decisions log 2026-04-24.
+      - name: Install Firefox for system specs
+        uses: browser-actions/setup-firefox@fcf821c621167805dd63a29662bd7cb5676c81a8
+
+      # browser-actions/setup-geckodriver master @ 01983cb (2026-02-21) —
+      # no GitHub Releases published; pinned to default-branch HEAD at the
+      # time of the 2026-04-24 process-debt repair. See decisions log.
+      - name: Install geckodriver for system specs
+        uses: browser-actions/setup-geckodriver@01983cba585474556f36f12da47225cd94b330b9
 
       - name: Checkout code
         uses: actions/checkout@v6
@@ -110,7 +119,16 @@ jobs:
         run: bin/rails db:prepare
 
       - name: Run RSpec
-        run: bundle exec rspec
+        run: |
+          # browser-actions/setup-firefox and setup-geckodriver both put
+          # the binaries on PATH. spec/rails_helper.rb reads FIREFOX_BINARY
+          # and GECKODRIVER_PATH with ~/.local/opt fallbacks for dev; in
+          # CI we set them to the runner's resolved paths.
+          export FIREFOX_BINARY="$(which firefox)"
+          export GECKODRIVER_PATH="$(which geckodriver)"
+          echo "FIREFOX_BINARY=$FIREFOX_BINARY"
+          echo "GECKODRIVER_PATH=$GECKODRIVER_PATH"
+          bundle exec rspec
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
