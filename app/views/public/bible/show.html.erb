@@ -1,9 +1,9 @@
 <% book_name = I18n.locale == :es ? @book.name_es : @book.name_en %>
 
 <article class="relative mx-auto max-w-3xl space-y-8">
-  <header class="space-y-1 border-b border-walnut-900/15 pb-6 dark:border-gilt-500/30">
+  <header class="space-y-3 border-b border-surface-200 pb-6 dark:border-surface-800">
     <div class="flex items-center justify-between gap-3">
-      <p class="text-sm uppercase tracking-[0.3em] text-walnut-700/70 dark:text-amber-200/60">
+      <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
         <%= @translation.name %> · <%= t("public_bible.community_view") %>
       </p>
       <% translations = Translation.order(:name) %>
@@ -16,29 +16,26 @@
                    aria_label: t("bible.reader.translation_picker") %>
       <% end %>
     </div>
-    <h1 class="font-display text-5xl font-semibold uppercase tracking-[0.1em] text-walnut-900 dark:text-amber-200">
-      <span class="book-ornament" aria-hidden="true">&#10086;</span>
+    <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 dark:text-surface-50">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
     </h1>
     <% if user_signed_in? %>
-      <p class="text-sm italic text-walnut-700 dark:text-amber-300">
+      <p class="font-ui text-sm italic text-surface-600 dark:text-surface-400">
         <%= link_to t("public_bible.switch_to_my_bible"),
                     bible_chapter_path(translation: @translation.code.downcase,
                                        book: @book.osis_code.downcase,
                                        chapter: @chapter.number),
-                    class: "hover:text-rubric-500 dark:hover:text-gilt-400" %>
+                    class: "not-italic underline underline-offset-2 transition-colors hover:text-accent-700 dark:hover:text-accent-400" %>
       </p>
     <% end %>
   </header>
 
-  <div class="chapter-body font-serif text-lg leading-loose text-walnut-900 dark:text-amber-200">
+  <div class="chapter-body font-reading text-lg leading-relaxed text-surface-900 dark:text-surface-100">
     <% @verses.each_with_index do |verse, i| %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0 } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
-  <div class="chapter-fleuron" aria-hidden="true">&#10086;</div>
-
   <aside id="public_notes_aside" class="space-y-4">
-    <h2 class="font-display text-lg uppercase tracking-wider text-walnut-900 dark:text-amber-200">
+    <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900 dark:text-surface-50">
       <%= t("public_bible.community_notes") %>
     </h2>
 
@@ -49,11 +46,11 @@
         <% end %>
       </ul>
     <% else %>
-      <p class="font-serif italic text-walnut-700 dark:text-amber-300">
+      <p class="font-reading italic text-surface-600 dark:text-surface-400">
         <%= t("public_bible.no_notes_yet") %>
         <% unless user_signed_in? %>
           <%= link_to t("public_bible.sign_in_to_add"), new_user_session_path,
-                      class: "ml-1 hover:text-rubric-500 dark:hover:text-gilt-400" %>
+                      class: "ml-1 not-italic underline underline-offset-2 transition-colors hover:text-accent-700 dark:hover:text-accent-400" %>
         <% end %>
       </p>
     <% end %>

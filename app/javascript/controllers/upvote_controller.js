@@ -43,9 +43,9 @@ export default class extends Controller {
 
   syncButton() {
     if (!this.hasButtonTarget) return
-    this.buttonTarget.classList.toggle("bg-walnut-900", this.upvotedValue)
-    this.buttonTarget.classList.toggle("text-parchment-100", this.upvotedValue)
-    this.buttonTarget.classList.toggle("dark:bg-amber-200", this.upvotedValue)
-    this.buttonTarget.classList.toggle("dark:text-walnut-900", this.upvotedValue)
+    this.buttonTarget.classList.toggle("bg-accent-700", this.upvotedValue)
+    this.buttonTarget.classList.toggle("text-surface-50", this.upvotedValue)
+    this.buttonTarget.classList.toggle("dark:bg-accent-400", this.upvotedValue)
+    this.buttonTarget.classList.toggle("dark:text-surface-950", this.upvotedValue)
   }
 }
