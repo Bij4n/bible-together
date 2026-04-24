@@ -37,7 +37,10 @@ RSpec.describe "Settings preferences", type: :system, js: true do
     visit "/"
     expect(page).to have_content(/welcome to open bible/i)
 
-    # Header switcher renders as <a> for signed-out users.
+    # Language pills moved into the Account-menu dropdown in the
+    # Sprint 12 navbar rewrite; they still render as <a> for signed-out
+    # users so click_on still works, but the menu has to be open first.
+    open_account_menu
     click_on "Español"
     expect(page).to have_content(/bienvenido a open bible/i)
 

@@ -10,6 +10,11 @@ RSpec.describe "Auth flows", type: :system, js: true do
     find('input[type="submit"][value*="Sign up"]').click
 
     expect(page).to have_content("Welcome! You have signed up successfully.")
+
+    # Settings + Sign out moved into the Account-menu dropdown in the
+    # Sprint 12 navbar rewrite.
+    open_account_menu
+
     expect(page).to have_link(text: /settings/i)
     expect(page).to have_button(text: /sign out/i)
     expect(User.find_by(email: "scribe@open-bible.test")).to be_present
@@ -24,9 +29,15 @@ RSpec.describe "Auth flows", type: :system, js: true do
     find('input[type="submit"][value*="Sign in"]').click
 
     expect(page).to have_content("Signed in successfully.")
-    expect(page).to have_button(text: /sign out/i)
 
+    open_account_menu
+    expect(page).to have_button(text: /sign out/i)
     click_button "Sign out"
+
+    # Menu closes on the navigation that follows sign-out; reopen it to
+    # verify the signed-out state exposes Sign in where the signed-in
+    # state exposed Sign out.
+    open_account_menu
     expect(page).to have_link(text: /sign in/i)
   end
 end

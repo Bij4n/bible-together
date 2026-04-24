@@ -64,9 +64,13 @@ RSpec.describe "Public bible + moderation", type: :system, js: true do
     visit "/public/bible/kjv/john/3"
     expect(page).to have_content("This will be hidden")
 
-    # Sign out; anonymous visitor should NOT see it.
+    # Sign out; anonymous visitor should NOT see it. Sign out lives
+    # inside the Account-menu dropdown since the Sprint 12 navbar
+    # rewrite, so open the menu first. Reopen after the signout
+    # redirect to verify Sign in is exposed.
+    open_account_menu
     click_button "Sign out"
-    # Wait for the signout redirect to settle before revisiting.
+    open_account_menu
     expect(page).to have_link(text: /sign in/i)
     visit "/public/bible/kjv/john/3"
     expect(page).not_to have_content("This will be hidden")

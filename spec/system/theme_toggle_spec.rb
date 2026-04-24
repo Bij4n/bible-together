@@ -5,13 +5,16 @@ RSpec.describe "Theme toggle", type: :system, js: true do
     visit "/"
 
     # Deterministic starting point — prefers-color-scheme varies between
-    # headless Chrome versions, and we want to assert the toggle itself.
+    # headless browser versions, and we want to assert the toggle itself.
     page.execute_script(
       "localStorage.setItem('open-bible:theme', 'light');" \
       "document.documentElement.dataset.theme = 'light';"
     )
     expect(page).to have_css(%(html[data-theme="light"]))
 
+    # Theme toggle moved into the Account-menu dropdown in the Sprint
+    # 12 navbar rewrite; open the menu before clicking it.
+    open_account_menu
     find("button[data-action='theme#toggle']").click
 
     expect(page).to have_css(%(html[data-theme="dark"]))
