@@ -100,11 +100,13 @@ jobs:
       - name: Install Firefox for system specs
         uses: browser-actions/setup-firefox@fcf821c621167805dd63a29662bd7cb5676c81a8
 
-      # browser-actions/setup-geckodriver master @ 01983cb (2026-02-21) —
-      # no GitHub Releases published; pinned to default-branch HEAD at the
-      # time of the 2026-04-24 process-debt repair. See decisions log.
+      # browser-actions/setup-geckodriver v0.0.0 — the only tagged ref on
+      # the repo. master HEAD has newer changes (aarch64 support) but
+      # doesn't commit the built index.js, so the action errors with
+      # 'File not found: index.js' when pinned there. v0.0.0 is the last
+      # ref that bundles the dist. See decisions log 2026-04-24.
       - name: Install geckodriver for system specs
-        uses: browser-actions/setup-geckodriver@01983cba585474556f36f12da47225cd94b330b9
+        uses: browser-actions/setup-geckodriver@eb8b0670366f719ca31703766a8cb7e3ea2c56ed
 
       - name: Checkout code
         uses: actions/checkout@v6
