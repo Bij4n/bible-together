@@ -10,6 +10,9 @@ en:
     language_en: English
     language_es: Español
     skip_to_content: Skip to main content
+    open_menu: Open menu
+    close_menu: Close menu
+    account: Account
   home:
     welcome: Welcome to Open Bible.
     placeholder: This is a placeholder landing page. Real reader coming soon.
