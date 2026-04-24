@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :upvotes,     only: [ :create, :destroy ]
   resources :flags,       only: [ :create ]
 
+  post "/locale_banner/dismiss", to: "locale_banners#dismiss", as: :dismiss_locale_banner
+
   resources :groups do
     collection do
       post :join

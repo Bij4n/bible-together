@@ -13,6 +13,11 @@ en:
     open_menu: Open menu
     close_menu: Close menu
     account: Account
+  locale_banner:
+    aria_label: Reading language suggestion
+    reading: "You're reading %{name}."
+    switch_to: "Switch to %{name}"
+    dismiss: Dismiss
   home:
     welcome: Welcome to Open Bible.
     placeholder: This is a placeholder landing page. Real reader coming soon.
