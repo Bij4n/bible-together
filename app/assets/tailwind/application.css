@@ -169,11 +169,17 @@
     font-size: 0.7em;
     line-height: 0;
     font-weight: 500;
-    color: color-mix(in srgb, var(--color-surface-900) 55%, transparent);
+    /* 70% mix lands at ~#5a5a5c on surface-50 — ~5.7:1 contrast, clears
+       WCAG AA (4.5:1) with margin. 55% rendered at 3.88:1 and axe
+       failed it on the migrated readers. See decisions log 2026-04-24. */
+    color: color-mix(in srgb, var(--color-surface-900) 70%, transparent);
     margin-right: 0.2em;
   }
 
   html[data-theme="dark"] .verse-number {
+    /* Dark mode's 55% mix already lands at ~7:1 contrast on surface-950
+       — passes AAA. Alpha asymmetry between the two themes is
+       intentional (see decisions log). */
     color: color-mix(in srgb, var(--color-surface-100) 55%, transparent);
   }
 
