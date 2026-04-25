@@ -44,6 +44,15 @@ RSpec.describe "Home page", type: :system do
 
     expect(page).to have_content(I18n.t("home.donate_cta.heading"))
     expect(page).to have_content(I18n.t("home.donate_cta.body"))
+
+    # The CTA body uses second-person imperative ("keep it open") so
+    # the reader is the agent, not the abstract noun "donations". The
+    # button right below carries the literal action ("Donate"); the
+    # body should be motivation, not a restatement of the button word.
+    within("section[data-section='donate-cta']") do
+      expect(page).to have_content("keep it open for whoever comes next")
+      expect(page).not_to have_content("donations keep it open")
+    end
   end
 
   it "hides the bottom Donate CTA when no active address exists" do
