@@ -27,6 +27,22 @@ RSpec.describe "Public donate flow", type: :system do
       expect(page).to have_css('form[action="/donate/confirm"]', visible: :all)
     end
 
+    it "renders the QR on a white background regardless of theme" do
+      # QR scanners (including major wallet apps) are calibrated for
+      # the QR-code spec's black-on-white assumption — dark-mode-tinted
+      # QRs are functionally less reliable, even when their *contrast*
+      # ratio is fine. The QR's container forces white background +
+      # black foreground in both light and dark themes.
+      visit "/donate"
+
+      expect(page).to have_css(".qr-frame.bg-white", visible: :all)
+      qr_frame_html = find(".qr-frame", visible: :all)[:class]
+      # No dark: theme variants on the QR frame's background or text —
+      # the whole point is theme-independent black-on-white.
+      expect(qr_frame_html).not_to match(/dark:bg-/)
+      expect(qr_frame_html).not_to match(/dark:text-/)
+    end
+
     it "submits the form and lands on the thank-you page (rack_test happy path)" do
       visit "/donate"
 
