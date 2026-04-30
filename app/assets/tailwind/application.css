@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 /*
- * Self-hosted OFL fonts. Inter and Source Serif 4 .woff2 files live in
- * public/fonts/ and ship with the repo — no Google Fonts or other
- * third-party loader. Variable fonts: one file per roman/italic axis
- * covers every weight we use.
+ * Self-hosted OFL fonts. Inter, Instrument Serif, and JetBrains Mono
+ * .woff2 files live in public/fonts/ and ship with the repo — no
+ * Google Fonts or other third-party loader. Variable fonts: one file
+ * per roman/italic axis covers every weight we use; static fonts ship
+ * one file per style.
  */
 @font-face {
   font-family: "Inter";
@@ -22,6 +23,33 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/InstrumentSerif-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMonoVariable.woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Source Serif 4 retained for one transitional sprint — removal commit
+   `remove unused source-serif font files` lands once nothing references
+   it. Do not point new code at this family. */
 @font-face {
   font-family: "Source Serif 4";
   src: url("/fonts/SourceSerif4Variable-Roman.otf.woff2") format("woff2-variations");
@@ -46,31 +74,40 @@
 @theme {
   /* UI sans for navbar, buttons, headings, labels. */
   --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  /* Reading serif for verse body, note body, long-form. Serif sustains
-     dwell-reading attention better than sans at this scale. */
-  --font-reading: "Source Serif 4", ui-serif, Georgia, serif;
+  /* Reading serif for verse body, note body, long-form, and italic
+     emphasis accents in headlines. Serif sustains dwell-reading
+     attention better than sans at this scale. */
+  --font-reading: "Instrument Serif", ui-serif, Georgia, serif;
+  /* Mono for verse refs, eyebrow labels, code-like UI metadata.
+     Tracked-out at small sizes (~10–12px) so refs read as labels,
+     not body. */
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Neutral surface palette — cool zinc. Light mode grounds everything
-     on near-white; dark mode inverts to cool near-black. */
-  --color-surface-50:  #fafafa;
-  --color-surface-100: #f4f4f5;
-  --color-surface-200: #e4e4e7;
-  --color-surface-300: #d4d4d8;
-  --color-surface-500: #71717a;
-  --color-surface-700: #3f3f46;
-  --color-surface-800: #27272a;
-  --color-surface-900: #18181b;
-  --color-surface-950: #09090b;
+  /* Neutral surface palette — green-tinted zinc. Light mode grounds
+     everything on cool near-white; dark mode inverts to a green-cast
+     near-black. The faint green tint binds the surface to the mint
+     accent so the page reads as one palette, not background +
+     unrelated brand color. */
+  --color-surface-50:  #f7f8f5;
+  --color-surface-100: #ecefe7;
+  --color-surface-200: #dde2d8;
+  --color-surface-300: #d1d7ce;
+  --color-surface-500: #8a9590;
+  --color-surface-700: #4a5450;
+  --color-surface-800: #243029;
+  --color-surface-900: #161e1a;
+  --color-surface-950: #0e1411;
 
-  /* Bronze accent — warmer than the blue/teal/indigo SaaS default,
-     distinctive without reading as a clone. Light mode uses 600-700;
-     dark mode uses 300-400 for contrast against near-black. */
-  --color-accent-300: #fcd34d;
-  --color-accent-400: #fbbf24;
-  --color-accent-500: #f59e0b;
-  --color-accent-600: #d97706;
-  --color-accent-700: #b45309;
-  --color-accent-800: #92400e;
+  /* Mint accent — quieter and more devotional than the prior bronze,
+     still distinctive against the SaaS-default blue/teal field.
+     Light mode uses 600-700; dark mode uses 300-400 for contrast
+     against near-black. */
+  --color-accent-300: #8ee1bc;
+  --color-accent-400: #5dd4a0;
+  --color-accent-500: #15a06a;
+  --color-accent-600: #0f8056;
+  --color-accent-700: #0f5c3f;
+  --color-accent-800: #0a4530;
 
   /* Jesus's words — tuned for the surface palette. red-800 is WCAG AA
      on surface-50; red-300 is WCAG AA on surface-950 for the dark
@@ -97,7 +134,7 @@
   }
 
   /*
-   * Focus indicator uses the bronze accent so keyboard-nav affordance
+   * Focus indicator uses the mint accent so keyboard-nav affordance
    * picks up the brand color instead of the browser's default blue.
    * :focus-visible (not :focus) so mouse clickers don't see a ring on
    * buttons; keyboard users always do.
