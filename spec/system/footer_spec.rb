@@ -34,6 +34,17 @@ RSpec.describe "Footer", type: :system do
       end
     end
 
+    # The wordmark mark is the brand glyph — a mint disc with two
+    # concentric outline rings rendered via CSS on a decorative span
+    # next to the wordmark text. aria-hidden so screen readers skip
+    # it; the wordmark text carries the brand identity for AT users.
+    it "renders the wordmark mark glyph next to the wordmark text" do
+      visit "/"
+      within("footer") do
+        expect(page).to have_css("span.wordmark-mark[aria-hidden='true']")
+      end
+    end
+
     # Tagline is hidden below the sm breakpoint via `hidden sm:block`
     # — at desktop widths it shows, at mobile widths it's display:none
     # but still in the DOM. rack_test doesn't honor responsive CSS,
@@ -85,6 +96,40 @@ RSpec.describe "Footer", type: :system do
       within("footer") do
         link = find_link(I18n.t("layout.about_link"))
         expect(link[:href]).to end_with("#about")
+      end
+    end
+
+    # Active-state is the "you are here" cue: links pointing at the
+    # current route render in mint accent instead of the idle surface
+    # tone. About is excluded by design — its href is the in-page
+    # anchor /#about, which would erroneously match `/` and mark About
+    # active on the homepage. Real route changes (Donate, Settings)
+    # opt in via the nav_active? helper.
+    describe "active-state styling" do
+      before { BitcoinAddress.rotate_to!(address: "bc1qfzfen6peqgqmc03gj2jsu0zc96s49dwgahvu2l") }
+
+      it "marks the Donate link active when on /donate" do
+        visit "/donate"
+        within("footer") do
+          link = find_link(I18n.t("layout.donate_link"))
+          expect(link[:class]).to include("decoration-accent-700/40")
+        end
+      end
+
+      it "does not mark the Donate link active on /" do
+        visit "/"
+        within("footer") do
+          link = find_link(I18n.t("layout.donate_link"))
+          expect(link[:class]).not_to include("decoration-accent-700/40")
+        end
+      end
+
+      it "does not mark the About link active on /" do
+        visit "/"
+        within("footer") do
+          link = find_link(I18n.t("layout.about_link"))
+          expect(link[:class]).not_to include("decoration-accent-700/40")
+        end
       end
     end
 
