@@ -99,6 +99,40 @@ RSpec.describe "Footer", type: :system do
       end
     end
 
+    # Active-state is the "you are here" cue: links pointing at the
+    # current route render in mint accent instead of the idle surface
+    # tone. About is excluded by design — its href is the in-page
+    # anchor /#about, which would erroneously match `/` and mark About
+    # active on the homepage. Real route changes (Donate, Settings)
+    # opt in via the nav_active? helper.
+    describe "active-state styling" do
+      before { BitcoinAddress.rotate_to!(address: "bc1qfzfen6peqgqmc03gj2jsu0zc96s49dwgahvu2l") }
+
+      it "marks the Donate link active when on /donate" do
+        visit "/donate"
+        within("footer") do
+          link = find_link(I18n.t("layout.donate_link"))
+          expect(link[:class]).to include("text-accent-700 dark:text-accent-400")
+        end
+      end
+
+      it "does not mark the Donate link active on /" do
+        visit "/"
+        within("footer") do
+          link = find_link(I18n.t("layout.donate_link"))
+          expect(link[:class]).not_to include("text-accent-700 dark:text-accent-400")
+        end
+      end
+
+      it "does not mark the About link active on /" do
+        visit "/"
+        within("footer") do
+          link = find_link(I18n.t("layout.about_link"))
+          expect(link[:class]).not_to include("text-accent-700 dark:text-accent-400")
+        end
+      end
+    end
+
     context "Settings link" do
       it "is hidden when signed out" do
         visit "/"
