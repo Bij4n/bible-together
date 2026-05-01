@@ -211,6 +211,28 @@
   html[data-theme="dark"] .theme-icon-sun  { display: none; }
   html[data-theme="dark"] .theme-icon-moon { display: inline-block; }
 
+  /*
+   * Hero headline em-accent. Ships rendered emphasis on specific words
+   * inside the hero h1 — the i18n string carries `<em>` for the words
+   * we want lifted (welcome_html in en/es). Em swaps the sans run for
+   * Instrument Serif italic in the mint accent, breaks the heading's
+   * 600 weight back to 400 so the italic axis renders correctly, and
+   * tightens letter-spacing slightly for the serif rhythm against the
+   * sans surround. Scoped to .hero-emphasis so other em usage on the
+   * page is unaffected.
+   */
+  .hero-emphasis em {
+    font-family: var(--font-reading);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-accent-700);
+    letter-spacing: -0.02em;
+  }
+
+  html[data-theme="dark"] .hero-emphasis em {
+    color: var(--color-accent-400);
+  }
+
   .jesus-words {
     color: var(--color-jesus-light);
     font-style: italic;

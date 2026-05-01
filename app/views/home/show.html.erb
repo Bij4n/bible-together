@@ -12,6 +12,7 @@
   }
 
   primary_btn  = "inline-block rounded-md bg-accent-700 px-6 py-3.5 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300"
+  hero_btn     = "inline-flex items-center gap-2 rounded-full bg-surface-950 px-7 py-3.5 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-700 hover:-translate-y-px dark:bg-surface-50 dark:text-surface-950 dark:hover:bg-accent-400"
   card_classes = "block h-full rounded-lg border border-surface-200 bg-surface-50 p-5 transition-colors hover:border-accent-700 dark:border-surface-800 dark:bg-surface-900 dark:hover:border-accent-400 sm:p-6"
   section_h2   = "font-ui text-2xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl"
   subgroup_h3  = "font-ui text-sm font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400"
@@ -20,8 +21,8 @@
 <div class="space-y-24 sm:space-y-28">
   <%# Hero %>
   <section class="space-y-5 pt-2 sm:space-y-6 sm:pt-4">
-    <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-5xl">
-      <%= t("home.welcome") %>
+    <h1 class="hero-emphasis font-ui text-5xl font-semibold leading-[1.05] tracking-[-0.035em] text-surface-900 dark:text-surface-50 sm:text-6xl md:text-7xl">
+      <%= t("home.welcome_html") %>
     </h1>
     <p class="max-w-2xl font-reading text-lg leading-relaxed text-surface-700 dark:text-surface-300 sm:text-xl">
       <%= t("home.subhead") %>
@@ -30,7 +31,7 @@
     <div class="pt-2">
       <%= link_to t("home.cta_public_bible"),
                   public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
-                  class: primary_btn %>
+                  class: hero_btn %>
     </div>
 
     <p class="font-ui text-xs text-surface-500 dark:text-surface-400">
