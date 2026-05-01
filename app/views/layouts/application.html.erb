@@ -177,11 +177,20 @@
           </nav>
         </div>
 
+        <%# Attribution row. Translations line stays sans because it
+            carries proper-noun-case content ("Reina-Valera", "English")
+            that loses information under text-transform: uppercase. The
+            meta line ("No tracking. © 2026.") is short, no proper-
+            nouns, and benefits from the deliberate mono-caps trust-
+            signal rhythm — JetBrains Mono finally pays its dues here.
+            text-[10px] compensates for the tracking-widest visual
+            scale-up so the line doesn't outsize the translations
+            line above it. %>
         <div class="space-y-1 border-t border-surface-200 pt-4 dark:border-surface-800">
           <p class="font-ui text-xs text-surface-500 dark:text-surface-400">
             <%= t("layout.footer_attribution_translations") %>
           </p>
-          <p class="font-ui text-xs text-surface-400 dark:text-surface-500">
+          <p class="font-mono text-[10px] uppercase tracking-widest text-surface-500 dark:text-surface-400">
             <%= t("layout.footer_attribution_meta", year: Date.current.year) %>
           </p>
         </div>
