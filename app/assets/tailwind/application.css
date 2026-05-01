@@ -212,6 +212,49 @@
   html[data-theme="dark"] .theme-icon-moon { display: inline-block; }
 
   /*
+   * Wordmark mark. The mint disc next to "Open Bible" in the header
+   * and footer is the brand glyph — a 20x20 accent-700 disc with two
+   * concentric outline rings (4px @ 25% accent, 9px @ 10% accent)
+   * via box-shadow. Rendered as an inline-block on a decorative
+   * <span class="wordmark-mark" aria-hidden="true"></span> placed
+   * before the wordmark text. flex-shrink: 0 keeps the disc round
+   * when the parent flex container narrows.
+   *
+   * Pulse animation deliberately omitted — pulse reads as charming
+   * on first view and noise on the hundredth. The @keyframes for a
+   * subtle pulse lives commented-out immediately below; to enable,
+   * uncomment the keyframes block AND add
+   *   animation: wordmark-pulse 2.4s ease-in-out infinite;
+   * to .wordmark-mark.
+   */
+  .wordmark-mark {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-accent-700);
+    flex-shrink: 0;
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--color-accent-700) 25%, transparent),
+      0 0 0 9px color-mix(in srgb, var(--color-accent-700) 10%, transparent);
+  }
+
+  html[data-theme="dark"] .wordmark-mark {
+    background: var(--color-accent-400);
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--color-accent-400) 25%, transparent),
+      0 0 0 9px color-mix(in srgb, var(--color-accent-400) 10%, transparent);
+  }
+
+  /* Pulse animation revert path. Uncomment + wire to .wordmark-mark
+     animation property to enable.
+  @keyframes wordmark-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.72; }
+  }
+  */
+
+  /*
    * Hero headline em-accent. Ships rendered emphasis on specific words
    * inside the hero h1 — the i18n string carries `<em>` for the words
    * we want lifted (welcome_html in en/es). Em swaps the sans run for

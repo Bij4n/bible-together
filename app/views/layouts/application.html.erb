@@ -36,7 +36,8 @@
 
     <header class="border-b border-surface-200 bg-surface-50 dark:border-surface-800 dark:bg-surface-950">
       <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <%= link_to root_path, class: "font-ui text-lg font-semibold tracking-tight text-surface-900 transition-colors hover:text-accent-700 dark:text-surface-50 dark:hover:text-accent-400" do %>
+        <%= link_to root_path, class: "inline-flex items-center gap-2.5 font-ui text-lg font-semibold tracking-tight text-surface-900 transition-colors hover:text-accent-700 dark:text-surface-50 dark:hover:text-accent-400" do %>
+          <span class="wordmark-mark" aria-hidden="true"></span>
           <%= t("app.name") %>
         <% end %>
 
@@ -147,7 +148,8 @@
       <div class="mx-auto max-w-5xl space-y-6 px-6 py-8 sm:py-10">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div class="space-y-1">
-            <p class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
+            <p class="inline-flex items-center gap-2.5 font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
+              <span class="wordmark-mark" aria-hidden="true"></span>
               <%= t("app.name") %>
             </p>
             <p class="hidden font-reading text-sm text-surface-600 dark:text-surface-400 sm:block">

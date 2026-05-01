@@ -34,6 +34,17 @@ RSpec.describe "Footer", type: :system do
       end
     end
 
+    # The wordmark mark is the brand glyph — a mint disc with two
+    # concentric outline rings rendered via CSS on a decorative span
+    # next to the wordmark text. aria-hidden so screen readers skip
+    # it; the wordmark text carries the brand identity for AT users.
+    it "renders the wordmark mark glyph next to the wordmark text" do
+      visit "/"
+      within("footer") do
+        expect(page).to have_css("span.wordmark-mark[aria-hidden='true']")
+      end
+    end
+
     # Tagline is hidden below the sm breakpoint via `hidden sm:block`
     # — at desktop widths it shows, at mobile widths it's display:none
     # but still in the DOM. rack_test doesn't honor responsive CSS,
