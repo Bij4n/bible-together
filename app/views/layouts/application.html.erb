@@ -46,7 +46,7 @@
               the idle surface-tones — the "you are here" cue when the
               current route is /search. Hover behavior unchanged in
               both states. %>
-          <%= link_to search_path, class: "rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(search_path) ? 'text-accent-700 dark:text-accent-400' : 'text-surface-700 dark:text-surface-300'}" do %>
+          <%= link_to search_path, class: "rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(search_path) ? 'text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40' : 'text-surface-700 dark:text-surface-300'}" do %>
             <%= t("search.submit") %>
           <% end %>
 
@@ -151,7 +151,7 @@
       # anchor, not a separate route. Donate and Settings are real
       # routes, so they get the active-state treatment when current.
       footer_link_base   = "transition-colors hover:text-accent-700 dark:hover:text-accent-400"
-      footer_link_active = "text-accent-700 dark:text-accent-400"
+      footer_link_active = "text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40"
     %>
     <footer class="border-t border-surface-200 bg-surface-50 dark:border-surface-800 dark:bg-surface-950">
       <div class="mx-auto max-w-5xl space-y-6 px-6 py-8 sm:py-10">

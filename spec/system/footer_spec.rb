@@ -112,7 +112,7 @@ RSpec.describe "Footer", type: :system do
         visit "/donate"
         within("footer") do
           link = find_link(I18n.t("layout.donate_link"))
-          expect(link[:class]).to include("text-accent-700 dark:text-accent-400")
+          expect(link[:class]).to include("decoration-accent-700/40")
         end
       end
 
@@ -120,7 +120,7 @@ RSpec.describe "Footer", type: :system do
         visit "/"
         within("footer") do
           link = find_link(I18n.t("layout.donate_link"))
-          expect(link[:class]).not_to include("text-accent-700 dark:text-accent-400")
+          expect(link[:class]).not_to include("decoration-accent-700/40")
         end
       end
 
@@ -128,7 +128,7 @@ RSpec.describe "Footer", type: :system do
         visit "/"
         within("footer") do
           link = find_link(I18n.t("layout.about_link"))
-          expect(link[:class]).not_to include("text-accent-700 dark:text-accent-400")
+          expect(link[:class]).not_to include("decoration-accent-700/40")
         end
       end
     end
