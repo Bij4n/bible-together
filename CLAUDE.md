@@ -2,7 +2,7 @@
 
 ## Project
 
-**Open Bible** (repo: `open-bible`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. Aesthetic: modern SaaS — Inter (UI) + Source Serif 4 (body), bronze accent, near-white light mode, cool near-black dark mode. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
+**Open Bible** (repo: `open-bible`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. Aesthetic: modern SaaS — Inter (UI/body sans) + Instrument Serif (verse + italic accents) + JetBrains Mono (refs/labels), mint accent (#0F5C3F), cool near-white light mode, cool near-black dark mode. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
 
 Full roadmap lives in `PLAN.md`. Read it before starting any sprint. Update it when decisions change.
 
@@ -78,7 +78,7 @@ Applies to `spec/rails_helper.rb` driver registrations, anything installed via `
 
 No `fonts.googleapis.com`, `fonts.gstatic.com`, `www.google-analytics.com`, `ajax.googleapis.com`, Google Tag Manager, or any other Google-hosted asset.
 
-Self-host open-licensed assets from `/public` or the asset pipeline. Fonts (Inter, Source Serif 4, etc.) are OFL-licensed — download the `.woff2` into `public/fonts/` and declare `@font-face` rules in `application.css`. No CDN.
+Self-host open-licensed assets from `/public` or the asset pipeline. Fonts (Inter, Instrument Serif, JetBrains Mono, etc.) are OFL-licensed — download the `.woff2` into `public/fonts/` and declare `@font-face` rules in `application.css`. No CDN.
 
 ### 9. Every UI commit updates its matching system spec in the same commit
 
