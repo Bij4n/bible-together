@@ -47,25 +47,6 @@
   font-display: swap;
 }
 
-/* Source Serif 4 retained for one transitional sprint — removal commit
-   `remove unused source-serif font files` lands once nothing references
-   it. Do not point new code at this family. */
-@font-face {
-  font-family: "Source Serif 4";
-  src: url("/fonts/SourceSerif4Variable-Roman.otf.woff2") format("woff2-variations");
-  font-weight: 200 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  src: url("/fonts/SourceSerif4Variable-Italic.otf.woff2") format("woff2-variations");
-  font-weight: 200 900;
-  font-style: italic;
-  font-display: swap;
-}
-
 /* Dark mode driven by a `data-theme="dark"` attribute on <html> (set by the
    theme Stimulus controller from localStorage / prefers-color-scheme). This
    overrides Tailwind's default media-query based dark variant. */
