@@ -140,6 +140,11 @@
     background-color: var(--color-surface-50);
     color: var(--color-surface-900);
     font-family: var(--font-reading);
+    /* Sticky header sits at the top of the viewport at ~57px tall;
+       scroll-padding-top reserves space when the browser scrolls to
+       a fragment anchor (e.g. /public/bible/kjv/john/3#v16) so the
+       linked element doesn't land hidden under the header. */
+    scroll-padding-top: 80px;
   }
 
   html[data-theme="dark"] {
@@ -210,6 +215,41 @@
   .theme-icon-moon { display: none; }
   html[data-theme="dark"] .theme-icon-sun  { display: none; }
   html[data-theme="dark"] .theme-icon-moon { display: inline-block; }
+
+  /*
+   * Site header chrome. Sticks to the top of the viewport while the
+   * page scrolls; backdrop-blur'd background renders as a frosted
+   * floating bar over scrolled content. The .scrolled modifier (added
+   * by the site_header Stimulus controller past 16px scroll) pops a
+   * 1px bottom border so the header reads as a deliberate edge once
+   * lifted; at rest the border is transparent and the header reads
+   * flush. color-mix at 85% opacity keeps the bar tinted with the
+   * page's surface palette in both modes — dark page bg shows through
+   * as a darker frost in dark mode without needing an explicit dark
+   * background variant.
+   */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-surface-50) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, background 0.3s ease;
+  }
+
+  .site-header.scrolled {
+    border-bottom-color: var(--color-surface-200);
+  }
+
+  html[data-theme="dark"] .site-header {
+    background: color-mix(in srgb, var(--color-surface-950) 85%, transparent);
+  }
+
+  html[data-theme="dark"] .site-header.scrolled {
+    border-bottom-color: var(--color-surface-800);
+  }
 
   /*
    * Wordmark mark. The mint disc next to "Open Bible" in the header
