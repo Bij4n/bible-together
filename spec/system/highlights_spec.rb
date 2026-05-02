@@ -30,25 +30,48 @@ RSpec.describe "Highlights", type: :system, js: true do
     page.execute_script(<<~JS)
       (() => {
         const verse = document.querySelector('[data-verse-id="#{verse_id}"]');
-        const walker = document.createTreeWalker(verse, NodeFilter.SHOW_TEXT, {
-          acceptNode(n) {
-            let p = n.parentElement;
-            while (p && p !== verse) {
-              if (p.dataset?.ignoreSelection !== undefined) return NodeFilter.FILTER_REJECT;
-              p = p.parentElement;
+        function walker() {
+          return document.createTreeWalker(verse, NodeFilter.SHOW_TEXT, {
+            acceptNode(n) {
+              let p = n.parentElement;
+              while (p && p !== verse) {
+                if (p.dataset?.ignoreSelection !== undefined) return NodeFilter.FILTER_REJECT;
+                p = p.parentElement;
+              }
+              return NodeFilter.FILTER_ACCEPT;
             }
-            return NodeFilter.FILTER_ACCEPT;
-          }
-        });
-        let textNode, soFar = 0;
-        while (textNode = walker.nextNode()) {
-          if (soFar + textNode.textContent.length > #{start_offset}) break;
-          soFar += textNode.textContent.length;
+          });
         }
-        const localStart = #{start_offset} - soFar;
+        // Walk text nodes once, locating both the start and end text
+        // nodes so the range can span highlight-introduced fragmentation
+        // (e.g. selecting "For God" across plain "For " + highlighted
+        // "God so" text nodes — Sprint 16.6 requires cross-fragment
+        // ranges for the new range-intersection active-state contract).
+        const startTarget = #{start_offset};
+        const endTarget = startTarget + #{length};
+        const w = walker();
+        let n, soFar = 0;
+        let startNode = null, startLocal = 0, endNode = null, endLocal = 0;
+        while (n = w.nextNode()) {
+          const len = n.textContent.length;
+          if (startNode === null && soFar + len > startTarget) {
+            startNode = n;
+            startLocal = startTarget - soFar;
+          }
+          if (startNode !== null && soFar + len >= endTarget) {
+            endNode = n;
+            endLocal = endTarget - soFar;
+            break;
+          }
+          soFar += len;
+        }
+        if (endNode === null) {
+          endNode = startNode;
+          endLocal = startNode.textContent.length;
+        }
         const range = document.createRange();
-        range.setStart(textNode, localStart);
-        range.setEnd(textNode, Math.min(localStart + #{length}, textNode.textContent.length));
+        range.setStart(startNode, startLocal);
+        range.setEnd(endNode, endLocal);
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
