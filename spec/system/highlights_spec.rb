@@ -313,4 +313,108 @@ RSpec.describe "Highlights", type: :system, js: true do
       end
     end
   end
+
+  # Sprint 16.5 PR D — toolbar persistence + click-outside dismiss +
+  # selection restoration across surgical streams. The end-state DOM
+  # after a mutation matches the pre-PR-D end-state (highlight span
+  # exists with right class + data-highlight-ids), but the route to
+  # get there is now a turbo_stream replace instead of a full
+  # Turbo.visit reload. Toolbar stays open, scroll preserved, active
+  # state reflects the just-applied color.
+  describe "toolbar persistence + click-outside dismiss" do
+    it "keeps the toolbar visible after color apply (no full reload)" do
+      v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+      visit "/bible/kjv/john/3"
+      select_within_verse(v16.id, "God", start_offset: 4, length: 3)
+
+      find("[data-highlight-target='toolbar'] button[data-color='gold']", visible: :all).click
+
+      # After PR D: stream replaces the verse, toolbar stays visible,
+      # the just-applied gold swatch is now aria-pressed=true.
+      expect(page).to have_css("span.highlight-gold", text: "God")
+      expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all)
+    end
+
+    it "dismisses the toolbar when the user clicks outside both the toolbar and the chapter" do
+      v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+      visit "/bible/kjv/john/3"
+      select_within_verse(v16.id, "God", start_offset: 4, length: 3)
+      expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
+
+      # Click on the footer — definitively outside the toolbar AND
+      # outside the chapter container. Document mousedown listener
+      # fires hideToolbar.
+      find("footer").click
+
+      expect(page).to have_css("[data-highlight-target='toolbar']", visible: :hidden)
+    end
+
+    it "re-anchors the toolbar to a new selection in a different verse" do
+      v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+      v17 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.17")
+      visit "/bible/kjv/john/3"
+
+      select_within_verse(v16.id, "God", start_offset: 4, length: 3)
+      expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
+
+      select_within_verse(v17.id, "God", start_offset: 4, length: 3)
+
+      # Toolbar still visible, now anchored to verse 17.
+      expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
+      # Strengthened position assertion: toolbar.top should sit close
+      # to verse 17's top (within toolbar-height+8px, the offset
+      # showToolbarAt applies). 50px margin tolerates browser sub-pixel
+      # rounding without admitting a stale verse-16 anchor.
+      v17_top = page.evaluate_script(<<~JS)
+        document.querySelector('[data-verse-id="#{v17.id}"]').getBoundingClientRect().top
+      JS
+      tb_top = page.evaluate_script(<<~JS)
+        document.querySelector('[data-highlight-target="toolbar"]').getBoundingClientRect().top
+      JS
+      expect((tb_top - v17_top).abs).to be < 50
+    end
+
+    it "restores the selection across the turbo_stream replace on apply (same-verse)" do
+      v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+      visit "/bible/kjv/john/3"
+      select_within_verse(v16.id, "God", start_offset: 4, length: 3)
+
+      find("[data-highlight-target='toolbar'] button[data-color='gold']", visible: :all).click
+      expect(page).to have_css("span.highlight-gold", text: "God")
+
+      # Selection should be restored (Strategy 2). rangeCount > 0
+      # AND toString matches the original snapshot text.
+      range_count = page.evaluate_script("window.getSelection().rangeCount")
+      expect(range_count).to be >= 1
+      selected_text = page.evaluate_script("window.getSelection().toString()")
+      expect(selected_text).to eq("God")
+    end
+
+    it "restores cross-verse selection across the turbo_stream replace" do
+      # Cross-verse selection is a real user pattern — full sentences
+      # often cross verse boundaries. Snapshot tracks both endpoints'
+      # verse ids; restoration walks both verses. Risk-flag #7 from the
+      # PR D plan asserted this would work via computeOffset re-use; this
+      # spec is the verification that turns the assumption into a
+      # contract.
+      v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+      v17 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.17")
+      visit "/bible/kjv/john/3"
+
+      # Select from "world" tail in v16 across into "For" head of v17.
+      select_across_verses(v16.id, 21, v17.id, 7)
+      find("[data-highlight-target='toolbar'] button[data-color='sage']", visible: :all).click
+
+      expect(page).to have_css("span.highlight-sage", count: 2)
+
+      range_count = page.evaluate_script("window.getSelection().rangeCount")
+      expect(range_count).to be >= 1
+      selected_text = page.evaluate_script("window.getSelection().toString()")
+      # Selection should still span both verses — text contains a
+      # substring from v16 ("world") and from v17 ("For God").
+      expect(selected_text).to include("world")
+      expect(selected_text).to include("For God")
+    end
+  end
 end

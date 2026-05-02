@@ -23,13 +23,29 @@ export default class extends Controller {
 
   connect() {
     this.onSelectionChange = this.onSelectionChange.bind(this)
+    this.onDocumentMousedown = this.onDocumentMousedown.bind(this)
     document.addEventListener("selectionchange", this.onSelectionChange)
+    // Sprint 16.5 PR D — click-outside dismiss. Inside-toolbar and
+    // inside-chapter clicks early-return; everything else
+    // (header/footer/sidebar/body padding) closes the toolbar. New
+    // selections inside the chapter are managed by selectionchange,
+    // not by this listener.
+    document.addEventListener("mousedown", this.onDocumentMousedown)
     if (this.debugValue) this.mountInspector()
   }
 
   disconnect() {
     document.removeEventListener("selectionchange", this.onSelectionChange)
+    document.removeEventListener("mousedown", this.onDocumentMousedown)
     if (this.inspector) this.inspector.remove()
+  }
+
+  onDocumentMousedown(event) {
+    if (!this.hasToolbarTarget || this.toolbarTarget.hidden) return
+    if (this.toolbarTarget.contains(event.target)) return
+    if (this.hasChapterTarget && this.chapterTarget.contains(event.target)) return
+    this.hideToolbar()
+    window.getSelection()?.removeAllRanges()
   }
 
   onSelectionChange() {
@@ -211,16 +227,13 @@ export default class extends Controller {
     const color = swatch.dataset.color
     if (!color) return
 
-    // Color toggle = highlight removal. The aria-pressed state was
-    // set by markActiveSwatch when the toolbar opened over an
-    // existing highlight; clicking the active swatch is the user
-    // saying "undo this highlight." Apply path stays for new
-    // highlights or for adding a different color over an existing one.
     if (swatch.getAttribute("aria-pressed") === "true") {
       return this.removeViaToggle()
     }
 
     if (!this.currentRef) return
+
+    const snapshot = this.snapshotSelection()
     const csrfMeta = document.querySelector('meta[name="csrf-token"]')
     const csrf = csrfMeta ? csrfMeta.content : ""
 
@@ -234,10 +247,10 @@ export default class extends Controller {
       },
       body: JSON.stringify({ highlight: { osis_ref: this.currentRef, color } })
     })
+    if (!response.ok) return
 
-    if (response.ok) {
-      window.Turbo?.visit(window.location.href, { action: "replace" }) || window.location.reload()
-    }
+    await this.applyTurboStream(response)
+    requestAnimationFrame(() => this.restoreSelectionOrFallback(snapshot, color))
   }
 
   // Color-toggle removal path. Confirms with the user when the
@@ -260,6 +273,7 @@ export default class extends Controller {
       if (!window.confirm(message)) return
     }
 
+    const snapshot = this.snapshotSelection()
     const csrfMeta = document.querySelector('meta[name="csrf-token"]')
     const csrf = csrfMeta ? csrfMeta.content : ""
     const response = await fetch(`/highlights/${dominant.dominantId}`, {
@@ -267,9 +281,137 @@ export default class extends Controller {
       credentials: "same-origin",
       headers: { "X-CSRF-Token": csrf, "Accept": "text/vnd.turbo-stream.html" },
     })
+    if (!response.ok) return
 
-    if (response.ok) {
-      window.Turbo?.visit(window.location.href, { action: "replace" }) || window.location.reload()
+    await this.applyTurboStream(response)
+    requestAnimationFrame(() => this.restoreSelectionOrFallback(snapshot, null))
+  }
+
+  // Snapshot the current selection as { startVerseId, startOffset,
+  // endVerseId, endOffset, text } so we can restore it after the
+  // turbo_stream replace mutates the verse DOM. Cross-verse
+  // selections track both endpoints' verse ids and walk both verses
+  // on restoration. Returns null if no selection or selection isn't
+  // anchored inside a .verse element.
+  snapshotSelection() {
+    const sel = window.getSelection()
+    if (!sel || sel.rangeCount === 0) return null
+    const range = sel.getRangeAt(0)
+
+    const startVerseEl = this.closestVerseEl(range.startContainer)
+    const endVerseEl = this.closestVerseEl(range.endContainer)
+    if (!startVerseEl || !endVerseEl) return null
+
+    return {
+      startVerseId: startVerseEl.dataset.verseId,
+      startOffset: this.computeOffset(startVerseEl, range.startContainer, range.startOffset),
+      endVerseId: endVerseEl.dataset.verseId,
+      endOffset: this.computeOffset(endVerseEl, range.endContainer, range.endOffset),
+      text: range.toString(),
+    }
+  }
+
+  closestVerseEl(node) {
+    return node.nodeType === Node.TEXT_NODE
+      ? node.parentElement?.closest(".verse")
+      : node.closest?.(".verse")
+  }
+
+  // Sprint 16.5 PR D — Strategy 2 with strategy-3 fallback. Restore
+  // the snapshotted selection across the post-stream DOM; if the
+  // restored range's text doesn't match the snapshot, fall back to
+  // strategy 3 (toolbar repositions on the new highlighted-span's
+  // bounding rect) and console.warn for visibility. Worst-case UX
+  // is bounded — toolbar lands on a real DOM element instead of
+  // stale coordinates.
+  restoreSelectionOrFallback(snapshot, applyColor) {
+    if (!snapshot) return
+
+    try {
+      const range = this.rangeFromSnapshot(snapshot)
+      if (!range) throw new Error("could not rebuild range from snapshot")
+      if (range.toString() !== snapshot.text) {
+        throw new Error(`text mismatch: expected ${JSON.stringify(snapshot.text)}, got ${JSON.stringify(range.toString())}`)
+      }
+      const sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+      // selectionchange will fire → syncSelection → showToolbarAt
+      // repositions the toolbar AND markActiveSwatch updates the
+      // active state. Both flow through the existing path.
+    } catch (err) {
+      console.warn("[highlight] selection restoration failed; falling back to bounding-rect repositioning:", err.message)
+      this.repositionToolbarFallback(applyColor)
+    }
+  }
+
+  rangeFromSnapshot(snapshot) {
+    const startVerse = document.querySelector(`[data-verse-id="${snapshot.startVerseId}"]`)
+    const endVerse = document.querySelector(`[data-verse-id="${snapshot.endVerseId}"]`)
+    if (!startVerse || !endVerse) return null
+    const start = this.findOffsetPosition(startVerse, snapshot.startOffset)
+    const end = this.findOffsetPosition(endVerse, snapshot.endOffset)
+    if (!start || !end) return null
+    const range = document.createRange()
+    range.setStart(start.node, start.offset)
+    range.setEnd(end.node, end.offset)
+    return range
+  }
+
+  findOffsetPosition(verseEl, targetOffset) {
+    const walker = document.createTreeWalker(verseEl, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        let p = n.parentElement
+        while (p && p !== verseEl) {
+          if (p.dataset?.ignoreSelection !== undefined) return NodeFilter.FILTER_REJECT
+          p = p.parentElement
+        }
+        return NodeFilter.FILTER_ACCEPT
+      },
+    })
+    let cumulative = 0
+    let cur
+    while ((cur = walker.nextNode())) {
+      const len = cur.textContent.length
+      if (cumulative + len >= targetOffset) {
+        return { node: cur, offset: targetOffset - cumulative }
+      }
+      cumulative += len
+    }
+    return null
+  }
+
+  // Strategy 3 fallback. For apply: anchor toolbar at the just-applied
+  // color's first matching span. For remove: leave toolbar at last
+  // position, clear active state. Either way, the toolbar lands on a
+  // real DOM element and stays open per hybrid C.
+  repositionToolbarFallback(applyColor) {
+    if (!this.hasToolbarTarget) return
+    if (applyColor) {
+      const target = this.chapterTarget?.querySelector(`.highlight-${applyColor}[data-highlight-ids]`)
+      if (target) {
+        const rect = target.getBoundingClientRect()
+        const tb = this.toolbarTarget
+        tb.style.top = `${window.scrollY + rect.top - tb.offsetHeight - 8}px`
+        tb.style.left = `${window.scrollX + rect.left}px`
+      }
+      this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
+        btn.setAttribute("aria-pressed", btn.dataset.color === applyColor ? "true" : "false")
+      })
+    } else {
+      this.clearActiveSwatch()
+    }
+  }
+
+  async applyTurboStream(response) {
+    const html = await response.text()
+    if (!html.trim()) return
+    if (window.Turbo?.renderStreamMessage) {
+      window.Turbo.renderStreamMessage(html)
+    } else {
+      const tmp = document.createElement("template")
+      tmp.innerHTML = html.trim()
+      document.body.appendChild(tmp.content)
     }
   }
 
