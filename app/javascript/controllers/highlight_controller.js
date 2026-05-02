@@ -358,18 +358,6 @@ export default class extends Controller {
       // OsisRef.
       this.currentRef = this.rangeToOsisRef(range)
       this.showToolbarAt(range)
-      // For apply path: the just-applied color may not be detected by
-      // markActiveSwatch when the restored range starts at a text-node
-      // boundary (offset N of an N-char node puts startContainer
-      // OUTSIDE the new highlight span — which the anchor-based
-      // detection rejects per PR A's codified contract). Force-set
-      // the active swatch directly here. We know what the user just
-      // applied; we don't need to derive it from selection geometry.
-      if (applyColor) {
-        this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
-          btn.setAttribute("aria-pressed", btn.dataset.color === applyColor ? "true" : "false")
-        })
-      }
     } catch (err) {
       console.warn("[highlight] selection restoration failed; falling back to bounding-rect repositioning:", err.message)
       this.repositionToolbarFallback(applyColor)
@@ -400,16 +388,35 @@ export default class extends Controller {
         return NodeFilter.FILTER_ACCEPT
       },
     })
+    // Strict `>` (not `>=`) so an exact-boundary offset prefers the
+    // START of the NEXT text node over the END of the current one.
+    // Concrete reason: when a highlight is applied, the verse splits
+    // into [pre-highlight, highlight-text, post-highlight] text nodes.
+    // For an offset coinciding with the highlight's START, `>=` picked
+    // the END of the pre-highlight node — which lives OUTSIDE the
+    // highlight span — and PR A's anchor-based active-state detection
+    // (correctly per its contract) walks closest("[data-highlight-ids]")
+    // from startContainer's parent and returns null when the parent
+    // is the verse, not the highlight span. With strict `>`, the
+    // boundary lands at offset 0 of the highlight's own text node
+    // (parent IS the highlight span), and anchor detection works.
+    // boundaryFallback handles the end-of-verse case where targetOffset
+    // equals the total verse length — return the last text node's end
+    // since there's no next text node.
     let cumulative = 0
+    let boundaryFallback = null
     let cur
     while ((cur = walker.nextNode())) {
       const len = cur.textContent.length
-      if (cumulative + len >= targetOffset) {
+      if (cumulative + len > targetOffset) {
         return { node: cur, offset: targetOffset - cumulative }
+      }
+      if (cumulative + len === targetOffset) {
+        boundaryFallback = { node: cur, offset: len }
       }
       cumulative += len
     }
-    return null
+    return boundaryFallback
   }
 
   // Strategy 3 fallback. For apply: anchor toolbar at the just-applied
