@@ -183,28 +183,83 @@ export default class extends Controller {
     }
   }
 
-  // Returns the dominant highlight under the selection's anchor, or
-  // null when the selection STARTS in plain text. The renderer's
-  // "highest-id wins" precedence is encoded as the visible
-  // highlight-{color} class; the data-highlight-ids attribute lists
-  // every touching id; data-note-count is the dominant highlight's
-  // note count (eager-loaded via reader_controller's includes(:notes)).
-  // Anchor-based detection is deliberate — codified in highlights_spec.
+  // Sprint 16.6 — range-intersection active-state detection.
+  // Replaces the PR A anchor-based contract because production
+  // friction showed the anchor-based contract was wrong for the
+  // dominant use case (overshoot-by-one-character when retargeting
+  // an existing highlight). New rule: any [data-highlight-ids] span
+  // the selection range INTERSECTS participates; dominant is
+  // Math.max across all touched ids — consistent with the renderer's
+  // highest-id-wins precedence and with removeViaToggle's existing
+  // destroy target. No new precedence rule introduced.
+  //
+  // Perf: scope the walk to the selection's verses, not the whole
+  // chapter. Single-verse and adjacent-two-verse selections (the
+  // common case) avoid walking the entire chapter on every
+  // selectionchange. Three-or-more-verse selections fall back to
+  // chapter-wide walk to catch highlights in the middle verses
+  // (degenerate, rare). Adjacency check uses nextElementSibling
+  // because verses render as direct children of chapterTarget
+  // separated by whitespace text nodes.
+  //
   // Shared by markActiveSwatch (PR A) and removeViaToggle (PR C).
   dominantHighlightUnderSelection(range) {
-    const startNode = range.startContainer
-    const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement
-    const span = startEl?.closest("[data-highlight-ids]")
-    if (!span) return null
-    const color = Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
-    const ids = (span.dataset.highlightIds || "").split(",").filter(Boolean).map(Number)
-    if (ids.length === 0) return null
+    if (!this.hasChapterTarget) return null
+
+    const startVerse = this.closestVerseEl(range.startContainer)
+    const endVerse = this.closestVerseEl(range.endContainer)
+    if (!startVerse) return null
+
+    let scope
+    if (!endVerse || startVerse === endVerse) {
+      scope = [startVerse]
+    } else if (startVerse.nextElementSibling === endVerse) {
+      scope = [startVerse, endVerse]
+    } else {
+      scope = [this.chapterTarget]
+    }
+
+    const touchedSpans = scope.flatMap((root) =>
+      Array.from(root.querySelectorAll("[data-highlight-ids]"))
+    ).filter((span) => range.intersectsNode(span))
+
+    if (touchedSpans.length === 0) return null
+
+    const allIds = new Set()
+    touchedSpans.forEach((span) => {
+      const ids = (span.dataset.highlightIds || "").split(",").filter(Boolean).map(Number)
+      ids.forEach((id) => allIds.add(id))
+    })
+    if (allIds.size === 0) return null
+
+    const dominantId = Math.max(...allIds)
+
+    // Find the touched span where dominantId is the LOCAL max — that
+    // fragment carries dominant's color in its visible class. By
+    // construction such a span should exist (dominant is in some
+    // span's id list, and per renderer's highest-id-wins, the span
+    // where local max == dominantId carries dominant's color).
+    // Defensive null on miss in case of DOM mutation race or
+    // unforeseen edge — markActiveSwatch / removeViaToggle handle
+    // null via existing fall-through.
+    const dominantSpan = touchedSpans.find((span) => {
+      const localIds = (span.dataset.highlightIds || "").split(",").filter(Boolean).map(Number)
+      return Math.max(...localIds) === dominantId
+    })
+    if (!dominantSpan) {
+      console.warn("[highlight] no touched span carries dominantId as local max", { dominantId, touchedSpans })
+      return null
+    }
+
+    const color = Array.from(dominantSpan.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
+    const noteCount = parseInt(dominantSpan.dataset.noteCount || "0", 10)
+
     return {
-      span,
+      span: dominantSpan,
       color,
-      ids,
-      dominantId: Math.max(...ids),
-      noteCount: parseInt(span.dataset.noteCount || "0", 10),
+      ids: Array.from(allIds),
+      dominantId,
+      noteCount,
     }
   }
 
