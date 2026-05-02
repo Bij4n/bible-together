@@ -30,25 +30,48 @@ RSpec.describe "Highlights", type: :system, js: true do
     page.execute_script(<<~JS)
       (() => {
         const verse = document.querySelector('[data-verse-id="#{verse_id}"]');
-        const walker = document.createTreeWalker(verse, NodeFilter.SHOW_TEXT, {
-          acceptNode(n) {
-            let p = n.parentElement;
-            while (p && p !== verse) {
-              if (p.dataset?.ignoreSelection !== undefined) return NodeFilter.FILTER_REJECT;
-              p = p.parentElement;
+        function walker() {
+          return document.createTreeWalker(verse, NodeFilter.SHOW_TEXT, {
+            acceptNode(n) {
+              let p = n.parentElement;
+              while (p && p !== verse) {
+                if (p.dataset?.ignoreSelection !== undefined) return NodeFilter.FILTER_REJECT;
+                p = p.parentElement;
+              }
+              return NodeFilter.FILTER_ACCEPT;
             }
-            return NodeFilter.FILTER_ACCEPT;
-          }
-        });
-        let textNode, soFar = 0;
-        while (textNode = walker.nextNode()) {
-          if (soFar + textNode.textContent.length > #{start_offset}) break;
-          soFar += textNode.textContent.length;
+          });
         }
-        const localStart = #{start_offset} - soFar;
+        // Walk text nodes once, locating both the start and end text
+        // nodes so the range can span highlight-introduced fragmentation
+        // (e.g. selecting "For God" across plain "For " + highlighted
+        // "God so" text nodes — Sprint 16.6 requires cross-fragment
+        // ranges for the new range-intersection active-state contract).
+        const startTarget = #{start_offset};
+        const endTarget = startTarget + #{length};
+        const w = walker();
+        let n, soFar = 0;
+        let startNode = null, startLocal = 0, endNode = null, endLocal = 0;
+        while (n = w.nextNode()) {
+          const len = n.textContent.length;
+          if (startNode === null && soFar + len > startTarget) {
+            startNode = n;
+            startLocal = startTarget - soFar;
+          }
+          if (startNode !== null && soFar + len >= endTarget) {
+            endNode = n;
+            endLocal = endTarget - soFar;
+            break;
+          }
+          soFar += len;
+        }
+        if (endNode === null) {
+          endNode = startNode;
+          endLocal = startNode.textContent.length;
+        }
         const range = document.createRange();
-        range.setStart(textNode, localStart);
-        range.setEnd(textNode, Math.min(localStart + #{length}, textNode.textContent.length));
+        range.setStart(startNode, startLocal);
+        range.setEnd(endNode, endLocal);
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
@@ -289,13 +312,16 @@ RSpec.describe "Highlights", type: :system, js: true do
       end
     end
 
-    it "marks no swatch as aria-pressed when selection STARTS in plain text and extends into a highlight" do
-      # Codifies the anchor-based detection contract. A selection that
-      # begins in plain text and crosses into a highlighted span does
-      # NOT surface the highlight's color as active. Future-readers:
-      # this is intentional, not incidental — the active state follows
-      # the user's selection START (their mental anchor), not the
-      # selection's geometric extent.
+    # Sprint 16.6 — contract inversion. PR A's codified anchor-based
+    # detection ("selection STARTS in plain text and extends into a
+    # highlight → no active state") was deliberately deleted because
+    # production friction showed it was wrong for the dominant use
+    # case (overshoot-by-one-character when retargeting an existing
+    # highlight). The new contract is range-intersection: any
+    # [data-highlight-ids] span the selection range touches
+    # participates; dominant is Math.max across all touched ids
+    # (consistent with renderer + removeViaToggle's existing target).
+    it "marks the highlight color when selection starts in plain text and extends into a single highlight" do
       v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
       # Highlight covers offsets 4..10 ("God so").
       create(:highlight, user: user, translation: translation,
@@ -305,12 +331,43 @@ RSpec.describe "Highlights", type: :system, js: true do
       expect(page).to have_css("span.highlight-rose", text: "God so")
 
       # Select from offset 0 ("For ", PLAIN text) through into the
-      # highlighted "God" span.
+      # highlighted "God so" span. Pre-Sprint-16.6 this asserted
+      # all swatches stay aria-pressed=false; post-inversion the
+      # rose swatch is active (selection intersects the rose span).
       select_within_verse(v16.id, "For God", start_offset: 0, length: 7)
 
-      Highlight::COLORS.each do |c|
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='rose'][aria-pressed='true']", visible: :all)
+      Highlight::COLORS.reject { |c| c == "rose" }.each do |c|
         expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='#{c}'][aria-pressed='false']", visible: :all)
       end
+    end
+
+    it "marks the highest-id (dominant) highlight color when selection covers two highlights of different colors" do
+      # Sprint 16.6 edge case: selection spans two non-overlapping
+      # highlights of different colors. Per renderer's highest-id-wins
+      # precedence and removeViaToggle's Math.max destroy target, the
+      # active swatch reflects the higher-id highlight (latest-created).
+      # The lower-id highlight is invisible to the active-state UI in
+      # this scenario — accepted ambiguity until Sprint 19+ public
+      # community highlights raise the two-color-overlap frequency.
+      v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+      # Lower-id gold on "God" (offsets 4..7), higher-id sage on
+      # "loved" (offsets 11..16). Selecting "God so loved" intersects
+      # both; sage (higher id) wins.
+      create(:highlight, user: user, translation: translation,
+                         osis_ref: "Bible.KJV.John.3.16!4-Bible.KJV.John.3.16!7",
+                         color: "gold")
+      create(:highlight, user: user, translation: translation,
+                         osis_ref: "Bible.KJV.John.3.16!11-Bible.KJV.John.3.16!16",
+                         color: "sage")
+      visit "/bible/kjv/john/3"
+      expect(page).to have_css("span.highlight-gold", text: "God")
+      expect(page).to have_css("span.highlight-sage", text: "loved")
+
+      select_within_verse(v16.id, "God so loved", start_offset: 4, length: 12)
+
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='sage'][aria-pressed='true']", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='false']", visible: :all)
     end
   end
 
