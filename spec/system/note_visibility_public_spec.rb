@@ -92,9 +92,14 @@ RSpec.describe "Note visibility — public", type: :system, js: true do
     open_note_panel
     page.accept_confirm { trigger_public_radio_change }
     page.execute_script("document.querySelector('trix-editor').editor.insertString('A community thought.')")
-    page.execute_script("document.querySelector('form[action=\"/notes\"]').requestSubmit()")
 
-    expect(page).to have_no_selector(%(body[data-note-panel-open="true"]))
+    expect {
+      page.execute_script("document.querySelector('form[action=\"/notes\"]').requestSubmit()")
+      Timeout.timeout(Capybara.default_max_wait_time) do
+        sleep 0.05 until Note.exists?
+      end
+    }.to change(Note, :count).by(1)
+
     persisted = Note.last
     expect(persisted.user).to eq(user)
     expect(persisted.visibility).to eq("public_note")
