@@ -70,11 +70,21 @@ RSpec.describe "Note visibility — public", type: :system, js: true do
     expect(page).to have_no_content("Coming in Sprint 7")
   end
 
+  # The radios live inside the slide-in note panel
+  # (#note-panel-container) which has overflow-y-auto. The panel's
+  # scrollable region is below the fold of the trix-editor, so
+  # Selenium's "scroll into view" pre-click step can't reach them
+  # through the fixed-position panel container automatically. Scroll
+  # the radio into view via JS first, then click.
+  def click_public_radio
+    radio = find('input[name="note[visibility]"][value="public_note"]', visible: :all)
+    page.execute_script("arguments[0].scrollIntoView({ block: 'center' })", radio)
+    radio.click
+  end
+
   it "persists a public note when the user confirms the public-publish dialog" do
     open_note_panel
-    page.accept_confirm do
-      find('input[name="note[visibility]"][value="public_note"]', visible: :all).click
-    end
+    page.accept_confirm { click_public_radio }
     page.execute_script("document.querySelector('trix-editor').editor.insertString('A community thought.')")
     find('form[action="/notes"] input[type="submit"]').click
 
@@ -87,9 +97,7 @@ RSpec.describe "Note visibility — public", type: :system, js: true do
 
   it "reverts to private_note when the user declines the public-publish dialog" do
     open_note_panel
-    page.dismiss_confirm do
-      find('input[name="note[visibility]"][value="public_note"]', visible: :all).click
-    end
+    page.dismiss_confirm { click_public_radio }
     expect(page).to have_selector('input[name="note[visibility]"][value="private_note"]:checked', visible: :all)
     expect(page).to have_no_selector('input[name="note[visibility]"][value="public_note"]:checked', visible: :all)
   end
