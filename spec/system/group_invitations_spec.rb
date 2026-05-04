@@ -9,6 +9,14 @@ RSpec.describe "Group invitations — end-to-end", type: :system, js: true do
   let(:group) { create(:group, name: "Tuesday Study", owner: owner) }
   let!(:translation) { create(:translation, :kjv) }
   let!(:book)        { create(:book, :genesis, translation: translation) }
+  let!(:chapter)     { create(:chapter, book: book, number: 1) }
+  let!(:verse) do
+    create(:verse, chapter: chapter, number: 1,
+                   body_text: "In the beginning",
+                   body_html: "In the beginning",
+                   red_letter_ranges: [],
+                   osis_ref: "Bible.KJV.Gen.1.1")
+  end
 
   # Run deliver_later inline so the mailer fires synchronously during
   # the spec — avoids pulling in ActiveJob::TestHelper just for one
