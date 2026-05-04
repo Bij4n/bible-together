@@ -10,8 +10,15 @@ RSpec.describe "Group invitations — end-to-end", type: :system, js: true do
   let!(:translation) { create(:translation, :kjv) }
   let!(:book)        { create(:book, :genesis, translation: translation) }
 
-  before do
+  # Run deliver_later inline so the mailer fires synchronously during
+  # the spec — avoids pulling in ActiveJob::TestHelper just for one
+  # perform_enqueued_jobs call.
+  around do |example|
+    prior = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = :inline
     ActionMailer::Base.deliveries.clear
+    example.run
+    ActiveJob::Base.queue_adapter = prior
   end
 
   it "owner sends an invitation, recipient signs up + auto-joins on click" do
@@ -23,7 +30,6 @@ RSpec.describe "Group invitations — end-to-end", type: :system, js: true do
 
     expect(page).to have_content("Invitation sent to friend@example.com")
     expect(page).to have_content("friend@example.com") # appears in pending list
-    perform_enqueued_jobs
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail).to be_present
