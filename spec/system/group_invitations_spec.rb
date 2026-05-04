@@ -35,8 +35,9 @@ RSpec.describe "Group invitations — end-to-end", type: :system, js: true do
     expect(mail).to be_present
     expect(mail.to).to eq([ "friend@example.com" ])
 
-    accept_url = mail.body.decoded[%r{/group_invitations/[A-Za-z0-9_-]+}]
-    expect(accept_url).to be_present
+    body = mail.html_part&.body&.to_s.to_s + mail.text_part&.body&.to_s.to_s
+    accept_url = body[%r{/group_invitations/[A-Za-z0-9_\-=]+}]
+    expect(accept_url).to be_present, "expected accept URL in mail body, got:\n#{body[0..400]}"
 
     click_button "Sign out"
     visit accept_url
