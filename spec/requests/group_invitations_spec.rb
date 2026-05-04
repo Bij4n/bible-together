@@ -117,10 +117,14 @@ RSpec.describe "GroupInvitations", type: :request do
     end
 
     context "with a valid token, signed-out user" do
-      it "stashes the show URL via Devise's stored_location and redirects to sign-in" do
+      it "stashes the token in a signed cookie and redirects to sign-in" do
         get accept_group_invitation_path(invitation.token)
         expect(response).to redirect_to(new_user_session_path)
-        expect(session["pending_group_invitation_token"]).to eq(invitation.token)
+        # Rack::Test exposes set cookies via response.cookies; the
+        # signed-cookie value is opaque (Rails-encoded) but its
+        # presence + redirect together confirm the stash. End-to-end
+        # consumption is covered by the system spec.
+        expect(response.cookies).to have_key("pending_group_invitation_token")
       end
     end
 

@@ -5,13 +5,17 @@ class GroupInvitationsController < ApplicationController
   # - #destroy: owner cancels a pending invitation. Same gates.
   # - #show: recipient clicks the email link.
   #     - If signed in → accept!, redirect to the group's bible reader.
-  #     - If signed out → stash the token in
-  #       session[:pending_group_invitation_token] and redirect to
-  #       /users/sign_in. ApplicationController#after_sign_in_path_for
-  #       picks the token back up post-auth (works for both sign-in
-  #       and sign-up paths since Devise's after_sign_up_path_for
-  #       defaults to after_sign_in_path_for) and redirects back here,
-  #       where the signed-in branch consumes the token + accepts.
+  #     - If signed out → stash the token in a signed cookie
+  #       (cookies.signed[:pending_group_invitation_token], 1-hour
+  #       TTL) and redirect to /users/sign_in. We use a cookie rather
+  #       than the Rails session because warden rotates the session
+  #       on sign-in/sign-up, wiping plain session keys. The cookie
+  #       survives the rotation. ApplicationController#after_sign_
+  #       in_path_for picks it back up post-auth (works for both
+  #       sign-in and sign-up paths since Devise's
+  #       after_sign_up_path_for defaults to after_sign_in_path_for)
+  #       and redirects back here, where the signed-in branch
+  #       consumes the cookie + accepts.
   before_action :authenticate_user!, only: %i[create destroy]
 
   def create
@@ -68,13 +72,13 @@ class GroupInvitationsController < ApplicationController
       # sign-in vs sign-up flows). ApplicationController's
       # after_sign_in_path_for override picks it up + redirects back
       # here after auth, where the signed-in branch fires accept!.
-      session[:pending_group_invitation_token] = invitation.token
+      cookies.signed[:pending_group_invitation_token] = { value: invitation.token, expires: 1.hour.from_now }
       flash[:notice] = t("group_invitations.show.sign_in_to_accept")
       redirect_to new_user_session_path
       return
     end
 
-    session.delete(:pending_group_invitation_token)
+    cookies.delete(:pending_group_invitation_token)
     invitation.accept!(current_user)
     redirect_to(
       group_bible_chapter_path(invitation.group, translation: "kjv", book: "gen", chapter: 1),
@@ -103,7 +107,7 @@ class GroupInvitationsController < ApplicationController
         notice: t("group_invitations.show.already_accepted")
       )
     else
-      session[:pending_group_invitation_token] = invitation.token
+      cookies.signed[:pending_group_invitation_token] = { value: invitation.token, expires: 1.hour.from_now }
       redirect_to new_user_session_path,
                   notice: t("group_invitations.show.sign_in_to_accept")
     end
