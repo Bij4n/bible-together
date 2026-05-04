@@ -15,6 +15,21 @@ class ApplicationController < ActionController::Base
     head :not_found unless current_user&.admin?
   end
 
+  # Sprint 23.4 — when a signed-out user clicks an email-invitation
+  # link, GroupInvitationsController#show stashes the token in
+  # cookies.signed[:pending_group_invitation_token] and redirects to
+  # sign-in. (Cookie not session because warden rotates the session
+  # during sign-in/sign-up, wiping plain session keys.) After auth
+  # — Devise#after_sign_up_path_for falls through to here — redirect
+  # them back to the accept URL where the signed-in branch consumes
+  # the cookie + accepts.
+  def after_sign_in_path_for(resource)
+    token = cookies.signed[:pending_group_invitation_token]
+    return accept_group_invitation_path(token) if token.present?
+
+    super
+  end
+
   # Layout-level gate for the site-wide footer donate link. Memoized
   # per-request — multiple partial renders within the same response
   # share one indexed `SELECT 1` against the partial unique index.
