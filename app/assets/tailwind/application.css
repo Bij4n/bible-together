@@ -128,6 +128,16 @@
        a fragment anchor (e.g. /public/bible/kjv/john/3#v16) so the
        linked element doesn't land hidden under the header. */
     scroll-padding-top: 80px;
+    /* Soft theme flip — page bg and base text color crossfade over
+       150ms instead of snapping when data-theme changes. The
+       transition only fires on property change, so initial loads
+       and Turbo navigations stay instant. Most chrome (header,
+       cards, menu items) already carries Tailwind's
+       transition-colors and animates on its own; this rule covers
+       the largest surface — the page itself.
+       prefers-reduced-motion override below cancels this for users
+       who've asked the OS to keep motion still. */
+    transition: background-color 150ms ease, color 150ms ease;
   }
 
   html[data-theme="dark"] {
