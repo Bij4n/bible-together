@@ -316,6 +316,20 @@
       background: rgba(14, 20, 17, 0.4);
       pointer-events: none;
     }
+
+    /* Bump row-level menu items to a finger-sized tap target on
+       mobile — desktop py-2 is fine for cursor, but ~32px is below
+       Apple's 44px touch guideline. Direct-child selectors on
+       .account-sheet hit Settings/Admin/Sign in (anchors), the theme
+       toggle (button), and the sign-out form's button, while
+       leaving the nested locale-switcher tiles at their compact
+       py-1 size. */
+    .account-sheet > a[role="menuitem"],
+    .account-sheet > button[role="menuitem"],
+    .account-sheet > form > button {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
   }
 
   /*
