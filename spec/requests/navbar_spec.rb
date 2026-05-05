@@ -70,4 +70,43 @@ RSpec.describe "Navbar", type: :request do
       expect(response.body).to include(">Admin<")
     end
   end
+
+  # The account-menu items pick up an active class when the user is on
+  # the route the link points at — same "you are here" cue the footer
+  # already uses, so a user opening the menu while on /settings sees
+  # Settings highlighted instead of all items reading equally.
+  describe "account-menu active state" do
+    let(:user) { create(:user) }
+    before { sign_in user }
+
+    it "marks Settings active when on /settings" do
+      get "/settings"
+      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Settings/)
+    end
+
+    it "does not mark Settings active on the homepage" do
+      get "/"
+      expect(response.body).not_to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Settings/)
+    end
+  end
+
+  describe "admin link active state" do
+    let(:admin) { create(:user, admin: true) }
+    before { sign_in admin }
+
+    it "marks Admin active anywhere under /admin" do
+      get "/admin/notes"
+      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Admin/)
+    end
+
+    it "marks Admin active on /admin/flags too (not just /admin/notes)" do
+      get "/admin/flags"
+      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Admin/)
+    end
+
+    it "does not mark Admin active on /settings" do
+      get "/settings"
+      expect(response.body).not_to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Admin/)
+    end
+  end
 end
