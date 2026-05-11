@@ -202,5 +202,14 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Questions
 
-Open an issue. If you're unsure whether something is in scope before building
-it, ask — it's far cheaper than building the wrong thing.
+Use [GitHub Discussions](https://github.com/Bij4n/open-bible/discussions):
+
+- **Q&A** — setup help, "how do I self-host this?", anything that's a
+  question with an answer. Threads get marked resolved so others can find them.
+- **Ideas** — feature proposals, translation requests, UX suggestions. Open
+  here before building something large.
+- **General** — introductions, show and tell, anything else.
+
+Save issues for confirmed bugs and actionable tasks. If you're unsure whether
+something is a bug or a question, start a Discussion — it can always be
+converted to an issue later.

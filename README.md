@@ -191,7 +191,7 @@ If you want to add a new public-domain Bible translation, see the
 [Adding a translation](CONTRIBUTING.md#adding-a-translation) section in
 CONTRIBUTING.md.
 
-Questions? Open an issue.
+Questions? Start a [GitHub Discussion](https://github.com/Bij4n/open-bible/discussions). Use issues for confirmed bugs and actionable tasks.
 
 ## License
 
