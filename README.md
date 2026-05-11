@@ -172,6 +172,27 @@ container-style (ZefToOsis flavor) OSIS 2.1.1 dialects.
 Development history and decision log live in `PLAN.md`. Project conventions
 (TDD discipline, commit style, confidence flagging) are in `CLAUDE.md`.
 
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full
+guide — setup, development rules, how to add a public-domain translation, and
+the PR checklist.
+
+A few things to know before you start:
+
+- **Tests first.** Every change follows red → green → refactor. No exceptions.
+- **System specs ship with UI changes** — in the same commit, not after.
+- **Bilingual required.** Both `en.yml` and `es.yml` updated in every PR that
+  adds or changes user-facing copy.
+- **Firefox only** for browser automation — no Chrome or Chromium.
+- **No Google-hosted assets** — fonts, analytics, CDN links.
+
+If you want to add a new public-domain Bible translation, see the
+[Adding a translation](CONTRIBUTING.md#adding-a-translation) section in
+CONTRIBUTING.md.
+
+Questions? Open an issue.
+
 ## License
 
 MIT. See `LICENSE`.
