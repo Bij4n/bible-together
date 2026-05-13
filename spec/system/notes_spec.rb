@@ -41,4 +41,18 @@ RSpec.describe "Notes", type: :system, js: true do
     expect(page).to have_content("John 3:16")
     expect(page).not_to have_content("Bible.KJV.John.3.16!")
   end
+
+  it "renders the email share field with inputmode=email for mobile keyboards" do
+    sign_in user
+    visit "/notes/#{note.id}/edit"
+    expect(page).to have_css("input[name='note[user_emails]'][inputmode='email']")
+  end
+
+  it "renders visibility radio labels as large touch-friendly rows" do
+    sign_in user
+    visit "/notes/#{note.id}/edit"
+    # Each label must carry the touch-target class so tapping anywhere
+    # on the row hits the radio — not just the 16px input itself.
+    expect(page).to have_css("label.touch-target-row", minimum: 4)
+  end
 end
