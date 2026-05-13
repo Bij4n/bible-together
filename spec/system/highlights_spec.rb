@@ -468,4 +468,37 @@ RSpec.describe "Highlights", type: :system, js: true do
       expect(selected_text).to include("For God")
     end
   end
+
+  describe "tap-to-open on mobile" do
+    it "tapping an existing highlight span shows the toolbar with the correct active swatch" do
+      create(:highlight, user: user, translation: translation,
+                         osis_ref: "Bible.KJV.John.3.16!4-Bible.KJV.John.3.16!7",
+                         color: "gold")
+
+      visit "/bible/kjv/john/3"
+      expect(page).to have_css("span[data-highlight-ids]")
+
+      # Click collapses selection (simulates a mobile tap on the span).
+      find("span[data-highlight-ids]").click
+
+      expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all)
+    end
+
+    it "tapping the pencil after a tap opens the note panel for that highlight" do
+      create(:highlight, user: user, translation: translation,
+                         osis_ref: "Bible.KJV.John.3.16!4-Bible.KJV.John.3.16!7",
+                         color: "sage")
+
+      visit "/bible/kjv/john/3"
+      find("span[data-highlight-ids]").click
+      expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
+
+      find("[data-action='highlight#note']", visible: :all).click
+
+      # Body attribute is set synchronously; note-panel frame loads async.
+      expect(page).to have_css("body[data-note-panel-open='true']")
+      expect(page).to have_css("trix-editor", visible: :all)
+    end
+  end
 end
