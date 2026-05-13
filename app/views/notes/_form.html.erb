@@ -19,11 +19,18 @@
   <section class="note-panel"
            data-controller="note-panel"
            data-note-panel-open-value="true">
-    <header class="flex items-center justify-between border-b border-surface-200 pb-3 dark:border-surface-800">
-      <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900 dark:text-surface-50">
-        <% citation = note.highlights.map(&:osis_ref).first || "New note" %>
-        <%= existing ? citation : (highlight_ids.any? ? "Note" : "New note") %>
-      </h2>
+    <% citation_osis = local_assigns[:citation_osis] %>
+    <header class="flex items-start justify-between border-b border-surface-200 pb-3 dark:border-surface-800">
+      <div>
+        <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900 dark:text-surface-50">
+          <%= highlight_ids.any? || existing ? "Note" : "New note" %>
+        </h2>
+        <% if citation_osis.present? %>
+          <p class="mt-0.5 font-mono text-xs text-surface-500 dark:text-surface-400">
+            <%= osis_citation(citation_osis) %>
+          </p>
+        <% end %>
+      </div>
       <button type="button"
               data-action="note-panel#close"
               aria-label="Close"
@@ -46,7 +53,7 @@
         <%= f.rich_text_area :body, autofocus: true %>
       </div>
 
-      <fieldset class="space-y-2 font-ui text-sm text-surface-700 dark:text-surface-300">
+      <fieldset class="font-ui text-sm text-surface-700 dark:text-surface-300">
         <legend class="<%= eyebrow_classes %>">
           <%= t("notes.visibility_legend", default: "Visibility") %>
         </legend>
@@ -55,9 +62,12 @@
             live). public_note carries data-action="change->note-panel
             #confirmPublic" so the panel controller can fire a confirm
             dialog on the radio change — making a note public broadcasts
-            it to anyone, friction at choice-time is desirable. %>
+            it to anyone, friction at choice-time is desirable.
+            touch-target-row gives each label a minimum 44px tap area
+            on mobile via padding so users don't have to hit the 16px
+            radio input itself. %>
         <% NotesController::ACTIVE_VISIBILITIES.each do |v| %>
-          <label class="flex items-center gap-2">
+          <label class="touch-target-row flex cursor-pointer items-center gap-2 rounded-md px-1 py-2 -mx-1 hover:bg-surface-100 dark:hover:bg-surface-800">
             <%= f.radio_button :visibility, v,
                                checked: (note.visibility || "private_note") == v,
                                data: (v == "public_note" ? { action: "change->note-panel#confirmPublic", confirm_message: t("notes.confirm_make_public") } : {}),
@@ -73,6 +83,7 @@
         </label>
         <%# Sprint 4 uses a simple comma-separated email list. Sprint 5 will upgrade to an autocomplete. %>
         <input type="text"
+               inputmode="email"
                name="note[user_emails]"
                value="<%= note.shared_users.map(&:email).join(", ") %>"
                placeholder="<%= t("notes.emails_placeholder") %>"
@@ -84,9 +95,9 @@
         <label class="mb-1.5 <%= eyebrow_classes %>">
           <%= t("notes.share_with_groups") %>
         </label>
-        <div class="space-y-1 font-ui text-sm text-surface-700 dark:text-surface-300">
+        <div class="font-ui text-sm text-surface-700 dark:text-surface-300">
           <% current_user.groups.distinct.order(:name).each do |g| %>
-            <label class="flex items-center gap-2">
+            <label class="touch-target-row flex cursor-pointer items-center gap-2 rounded-md px-1 py-2 -mx-1 hover:bg-surface-100 dark:hover:bg-surface-800">
               <%= check_box_tag "note[group_ids][]", g.id, note.shared_groups.include?(g), class: "h-4 w-4 accent-accent-700 dark:accent-accent-400" %>
               <%= g.name %>
             </label>
