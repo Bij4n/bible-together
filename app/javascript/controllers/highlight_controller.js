@@ -24,16 +24,21 @@ export default class extends Controller {
   connect() {
     this.onSelectionChange = this.onSelectionChange.bind(this)
     this.onDocumentPointerdown = this.onDocumentPointerdown.bind(this)
+    this.onDocumentPointerup = this.onDocumentPointerup.bind(this)
     document.addEventListener("selectionchange", this.onSelectionChange)
     // pointerdown fires for both mouse and touch, so toolbar dismiss
     // works on mobile without separate touchstart handling.
     document.addEventListener("pointerdown", this.onDocumentPointerdown)
+    // pointerup detects taps on existing highlight spans so the toolbar
+    // opens without requiring a text selection drag.
+    document.addEventListener("pointerup", this.onDocumentPointerup)
     if (this.debugValue) this.mountInspector()
   }
 
   disconnect() {
     document.removeEventListener("selectionchange", this.onSelectionChange)
     document.removeEventListener("pointerdown", this.onDocumentPointerdown)
+    document.removeEventListener("pointerup", this.onDocumentPointerup)
     if (this.inspector) this.inspector.remove()
   }
 
@@ -43,6 +48,38 @@ export default class extends Controller {
     if (this.hasChapterTarget && this.chapterTarget.contains(event.target)) return
     this.hideToolbar()
     window.getSelection()?.removeAllRanges()
+  }
+
+  // Detects a tap (pointerup with no active text selection) on an
+  // existing highlight span inside the chapter and shows the toolbar
+  // positioned at that span. Stores the tapped span so note() and
+  // removeViaToggle() can operate on it without requiring a selection.
+  onDocumentPointerup(event) {
+    if (!this.hasChapterTarget || !this.chapterTarget.contains(event.target)) return
+    const sel = window.getSelection()
+    if (sel && !sel.isCollapsed) return  // drag-select; let syncSelection handle it
+    const span = event.target.closest("[data-highlight-ids]")
+    if (!span) return
+
+    this.tapSpan = span
+    this.showToolbarAtSpan(span)
+  }
+
+  showToolbarAtSpan(span) {
+    if (!this.hasToolbarTarget) return
+    const rect = span.getBoundingClientRect()
+    const tb = this.toolbarTarget
+    tb.hidden = false
+    tb.style.top  = `${window.scrollY + rect.top - tb.offsetHeight - 8}px`
+    tb.style.left = `${window.scrollX + rect.left}px`
+
+    const verseEl = span.closest(".verse")
+    if (verseEl?.dataset?.verseId) tb.dataset.anchorVerseId = verseEl.dataset.verseId
+
+    const color = Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
+    tb.querySelectorAll("button[data-color]").forEach((btn) => {
+      btn.setAttribute("aria-pressed", btn.dataset.color === color ? "true" : "false")
+    })
   }
 
   onSelectionChange() {
@@ -55,9 +92,13 @@ export default class extends Controller {
     if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
       this.currentRef = null
       this.updateInspector(null, null)
-      this.hideToolbar()
+      // If the toolbar was opened by tapping a highlight span, keep it
+      // visible — a collapsed selection after a tap is expected.
+      if (!this.tapSpan) this.hideToolbar()
       return
     }
+    // User started a new text selection; clear the tap state.
+    this.tapSpan = null
     const range = sel.getRangeAt(0)
     if (!this.hasChapterTarget || !this.chapterTarget.contains(range.commonAncestorContainer)) {
       this.currentRef = null
@@ -173,6 +214,7 @@ export default class extends Controller {
   }
 
   hideToolbar() {
+    this.tapSpan = null
     if (this.hasToolbarTarget) {
       this.toolbarTarget.hidden = true
       delete this.toolbarTarget.dataset.anchorVerseId
@@ -324,11 +366,22 @@ export default class extends Controller {
   // pluralized confirm templates are rendered server-side as data
   // attributes on the toolbar; we substitute %{count} client-side.
   async removeViaToggle() {
-    const sel = window.getSelection()
-    if (!sel || sel.rangeCount === 0) return
-    const range = sel.getRangeAt(0)
-    const dominant = this.dominantHighlightUnderSelection(range)
-    if (!dominant) return
+    let dominant
+
+    if (this.tapSpan) {
+      const span = this.tapSpan
+      const ids = (span.dataset.highlightIds || "").split(",").filter(Boolean).map(Number)
+      if (ids.length === 0) return
+      const color = Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
+      const noteCount = parseInt(span.dataset.noteCount || "0", 10)
+      dominant = { span, color, ids, dominantId: Math.max(...ids), noteCount }
+    } else {
+      const sel = window.getSelection()
+      if (!sel || sel.rangeCount === 0) return
+      const range = sel.getRangeAt(0)
+      dominant = this.dominantHighlightUnderSelection(range)
+      if (!dominant) return
+    }
 
     if (dominant.noteCount > 0) {
       const tmpl = dominant.noteCount === 1
@@ -506,6 +559,13 @@ export default class extends Controller {
   }
 
   async note(event) {
+    // If toolbar was shown by tapping an existing highlight span, open
+    // the note panel for that highlight directly (no selection needed).
+    if (this.tapSpan) {
+      const ids = (this.tapSpan.dataset.highlightIds || "").split(",").filter(Boolean).map(Number)
+      if (ids.length > 0) { this.loadNotePanelFor(ids); return }
+    }
+
     // If the user has a selection, first create a gold highlight
     // (default color), then open the note panel for that new highlight.
     // If no selection (they clicked an existing highlight first), fall
