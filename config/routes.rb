@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     member do
       delete :leave
     end
-    resources :memberships, only: [ :create, :destroy ]
+    resources :memberships, only: [ :destroy ]
     # Sprint 23.3 — owner sends/cancels email invitations from the
     # group's show page. show (accept-via-token) lives at the
     # top-level path keyed by token; see below.
