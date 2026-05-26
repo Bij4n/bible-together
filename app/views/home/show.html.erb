@@ -46,7 +46,7 @@
       the verse card spotlight on the right. With no featured note the
       text content takes the full container width and the verse-card
       slot is omitted (graceful degradation). %>
-  <section class="pt-2 sm:pt-4<%= " md:grid md:grid-cols-[1.1fr_1fr] md:items-center md:gap-x-12 md:gap-y-0" if @hero_verse %>">
+  <section class="pt-2 sm:pt-4 md:grid md:grid-cols-[1.1fr_1fr] md:items-center md:gap-x-12 md:gap-y-0">
     <div class="space-y-5 sm:space-y-6">
       <h1 class="hero-emphasis font-ui text-[clamp(56px,9vw,96px)] font-semibold leading-[1.05] tracking-[-0.035em] text-surface-900 dark:text-surface-50">
         <%= t("home.welcome_html") %>
@@ -79,11 +79,13 @@
       </p>
     </div>
 
-    <% if @hero_verse %>
-      <div class="mt-12 md:mt-0">
+    <div class="mt-12 md:mt-0">
+      <% if @hero_verse %>
         <%= render "hero_verse_card", note: @hero_note, verse: @hero_verse %>
-      </div>
-    <% end %>
+      <% else %>
+        <%= render "hero_empty_state" %>
+      <% end %>
+    </div>
   </section>
 
   <% if @community_entries.any? %>

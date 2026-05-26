@@ -30,6 +30,13 @@ RSpec.describe "Home page", type: :system do
                    osis_ref: "Bible.RV1909.Gen.1.1")
   end
 
+  it "shows the hero empty-state verse card when no featured note exists" do
+    visit "/"
+    expect(page).to have_css("[data-testid='hero-empty-state']")
+    expect(page).to have_content(I18n.t("home.hero_empty_state.cta"))
+    expect(page).to have_content("John 3")
+  end
+
   it "renders the new hero copy" do
     visit "/"
 
