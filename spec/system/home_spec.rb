@@ -1,14 +1,8 @@
 require "rails_helper"
 
-# The homepage is the front door — every CTA on it must land where it
-# claims. This spec asserts the hero CTA, every feature-card link, and
-# the bottom donate-CTA point at the URLs the copy promises. rack_test
-# driver — page is plain HTML, no JS-driven surfaces in the homepage
-# content itself.
+# Homepage is now hero-only: verse card (or empty-state), community notes,
+# and donate CTA. Features / how-it-works / about moved to /how-it-works.
 RSpec.describe "Home page", type: :system do
-  # Real translation/book/chapter/verse for the public reader so the
-  # CTAs that land on /public/bible/kjv/gen/1 actually render rather
-  # than 404-ing on a missing record.
   let!(:translation_kjv) { create(:translation, :kjv) }
   let!(:translation_rv1909) { create(:translation, :rv1909) }
   let!(:book_genesis_kjv) { create(:book, :genesis, translation: translation_kjv) }
@@ -30,20 +24,34 @@ RSpec.describe "Home page", type: :system do
                    osis_ref: "Bible.RV1909.Gen.1.1")
   end
 
-  it "renders the new hero copy" do
+  it "shows the hero empty-state verse card when no featured note exists" do
+    visit "/"
+    expect(page).to have_css("[data-testid='hero-empty-state']")
+    expect(page).to have_content(I18n.t("home.hero_empty_state.cta"))
+    expect(page).to have_content("John 3")
+  end
+
+  it "renders the hero copy" do
     visit "/"
 
-    # welcome_html ships <em> markup around the words rendered as
-    # Instrument Serif italic mint accents inside the hero h1. Capybara's
-    # `text:` matcher reads visible text content (em tags collapse), so
-    # we assert against the rendered string. Hardcoded rather than
-    # I18n.t("home.welcome_html") because the i18n value contains the
-    # raw "<em>" characters and the rendered page does not.
-    expect(page).to have_css("h1.hero-emphasis", text: "Where verses meet voices.")
-    expect(page).to have_css("h1.hero-emphasis em", text: "verses")
-    expect(page).to have_css("h1.hero-emphasis em", text: "voices")
+    expect(page).to have_css("h1", text: "Where verses meet voices.")
     expect(page).to have_content(I18n.t("home.subhead"))
     expect(page).to have_content(I18n.t("home.tertiary"))
+  end
+
+  it "does not render the features section or how-it-works section on the homepage" do
+    visit "/"
+
+    expect(page).not_to have_content(I18n.t("home.features.highlights.title"))
+    expect(page).not_to have_content(I18n.t("home.how.step_1_body"))
+    expect(page).not_to have_css("section#about")
+  end
+
+  it "links 'See how it works' to /how-it-works" do
+    visit "/"
+
+    link = find_link(I18n.t("home.cta_how_it_works"))
+    expect(link[:href]).to eq("/how-it-works")
   end
 
   it "renders the bottom Donate CTA when an active address exists" do
@@ -53,10 +61,6 @@ RSpec.describe "Home page", type: :system do
     expect(page).to have_content(I18n.t("home.donate_cta.heading"))
     expect(page).to have_content(I18n.t("home.donate_cta.body"))
 
-    # The CTA body uses second-person imperative ("keep it open") so
-    # the reader is the agent, not the abstract noun "donations". The
-    # button right below carries the literal action ("Donate"); the
-    # body should be motivation, not a restatement of the button word.
     within("section[data-section='donate-cta']") do
       expect(page).to have_content("keep it open for whoever comes next")
       expect(page).not_to have_content("donations keep it open")
@@ -70,124 +74,11 @@ RSpec.describe "Home page", type: :system do
     expect(page).not_to have_css("[data-section='donate-cta']")
   end
 
-  it "renders all 7 feature cards but not the cut hygiene-level features" do
-    visit "/"
-
-    expect(page).to have_content(I18n.t("home.features.highlights.title"))
-    expect(page).to have_content(I18n.t("home.features.notes.title"))
-    expect(page).to have_content(I18n.t("home.features.groups.title"))
-    expect(page).to have_content(I18n.t("home.features.public.title"))
-    expect(page).to have_content(I18n.t("home.features.bilingual.title"))
-    expect(page).to have_content(I18n.t("home.features.keyword_search.title"))
-    expect(page).to have_content(I18n.t("home.features.semantic_search.title"))
-
-    # Semantic search is explicitly labelled (English) on the card —
-    # RV1909 has no embeddings yet, so the parenthetical is the
-    # honest claim. When the multilingual model swap ships in
-    # Sprint 16+, drop the parenthetical.
-    expect(page).to have_content("Semantic search (English)")
-
-    # Hygiene-level expectations — dark mode + bilingual UI — are
-    # NOT cards. They show up implicitly (the navbar already lets
-    # you toggle theme + language), but they're not headline
-    # features and they don't have natural destinations.
-    expect(page).not_to have_content("Dark mode")
-    expect(page).not_to have_content("Bilingual UI")
-  end
-
-  it "groups feature cards into 'For yourself' and 'With others' subgroups" do
-    visit "/"
-
-    # Each subgroup gets its own H3 — the grid splits at the heading.
-    expect(page).to have_css("h3", text: I18n.t("home.features.for_yourself"))
-    expect(page).to have_css("h3", text: I18n.t("home.features.with_others"))
-
-    # "For yourself" group contains the personal-experience cards
-    # (read, mark, find), "With others" contains the shared/relational
-    # cards (groups, public, bilingual). Bilingual lands in "With
-    # others" because of the heart-language framing in its body.
-    within(:xpath, "//section//div[.//h3[contains(text(),'#{I18n.t('home.features.for_yourself')}')]]") do
-      expect(page).to have_content(I18n.t("home.features.highlights.title"))
-      expect(page).to have_content(I18n.t("home.features.notes.title"))
-      expect(page).to have_content(I18n.t("home.features.keyword_search.title"))
-      expect(page).to have_content(I18n.t("home.features.semantic_search.title"))
-    end
-
-    within(:xpath, "//section//div[.//h3[contains(text(),'#{I18n.t('home.features.with_others')}')]]") do
-      expect(page).to have_content(I18n.t("home.features.groups.title"))
-      expect(page).to have_content(I18n.t("home.features.public.title"))
-      expect(page).to have_content(I18n.t("home.features.bilingual.title"))
-    end
-  end
-
-  it "renders the How it works step bodies in their tight one-liner register" do
-    # How it works is the structural counter-beat between the testimony-
-    # voice features grid and About section. Step bodies are deliberately
-    # terse (parallel-structure one-liners) so the page rhythm has a
-    # mechanical 1-2-3 moment between two emotion-rich sections, rather
-    # than every section pressing the same emotional register.
-    visit "/"
-
-    expect(page).to have_content("Pick a translation. Open a chapter.")
-    expect(page).to have_content("Select what struck you. Write what it meant. Yours by default.")
-    expect(page).to have_content("With one person. With a group. With everyone.")
-  end
-
-  it "renders the About section as five distinct paragraphs" do
-    # v2.6 restructured About from 2 paragraphs into 5 to surface the
-    # "verse that wrecks you" line as a standalone paragraph between
-    # the belief opener and its consequence, and to split the dense
-    # practical paragraph into translations + funding/maintainer.
-    visit "/"
-
-    paragraphs = all("section#about p", visible: :all)
-    expect(paragraphs.size).to eq(5)
-
-    expect(paragraphs[0].text).to include("scripture is meant to be read with someone")
-    expect(paragraphs[1].text).to include("verse that wrecks you wrecks somebody else")
-    expect(paragraphs[2].text).to include("changes how you read it yourself")
-    expect(paragraphs[3].text).to include("Two public-domain translations live")
-    expect(paragraphs[4].text).to include("Built and maintained by one person")
-  end
-
-  it "renders the softened public-notes card without specific archetype examples" do
-    visit "/"
-
-    # The earlier draft listed specific archetypes ("the widow who lost
-    # her husband", "the kid finding their faith") that read as real-
-    # user examples when they were hypothetical. v2 softens to a
-    # generic frame ("someone whose life looks nothing like yours")
-    # which keeps the testimony tone without manufacturing testimony.
-    expect(page).to have_content("someone whose life looks nothing like yours")
-    expect(page).not_to have_content("widow who lost her husband")
-    expect(page).not_to have_content("kid finding their faith")
-  end
-
   it "lands the hero CTA on the public reader" do
     visit "/"
 
     click_on I18n.t("home.cta_public_bible"), match: :first
     expect(page).to have_current_path("/public/bible/kjv/gen/1")
-  end
-
-  it "lands every feature-card link on its claimed destination" do
-    expected_destinations = {
-      "highlights"      => "/public/bible/kjv/gen/1",
-      "notes"           => "/public/bible/kjv/gen/1",
-      "groups"          => "/groups",
-      "public"          => "/public/bible/kjv/gen/1",
-      "bilingual"       => "/public/bible/rv1909/gen/1",
-      "keyword_search"  => "/search",
-      "semantic_search" => "/search"
-    }
-
-    expected_destinations.each do |key, path|
-      visit "/"
-
-      title = I18n.t("home.features.#{key}.title")
-      link = find_link(title)
-      expect(link[:href]).to eq(path), "expected feature card '#{title}' to link to #{path}, was #{link[:href]}"
-    end
   end
 
   it "lands the bottom donate-CTA button on /donate" do
@@ -203,13 +94,6 @@ RSpec.describe "Home page", type: :system do
   context "when an active BitcoinAddress exists" do
     before { BitcoinAddress.rotate_to!(address: "bc1qfzfen6peqgqmc03gj2jsu0zc96s49dwgahvu2l") }
 
-    # The site-wide footer (Sprint 15.6 PR D) renders on every page
-    # including the homepage. The Donate link inside the footer is
-    # visible everywhere when an active address exists — including /.
-    # The earlier "hide on /" gate was per-page logic for a footer
-    # that had only a Donate link in it; the new footer carries its
-    # own chrome (wordmark, About, attribution) and justifies itself
-    # site-wide. Broader footer behavior lives in footer_spec.rb.
     it "shows the footer Donate link on the homepage" do
       visit "/"
 

@@ -61,16 +61,12 @@ RSpec.describe "Notes", type: :system, js: true do
       sign_in user
       visit "/bible/kjv/john/3"
 
-      # Load the note form into the turbo frame and force the panel visible
-      # so Capybara can interact with it (the aside starts off-screen via
-      # translate-x-full, which in Tailwind v4 uses the CSS translate
-      # property — a separate axis from transform).
+      # Load the note form into the turbo frame and open the panel.
+      # Disable transition so Capybara doesn't race the 150ms slide.
       execute_script(<<~JS)
+        document.getElementById('note-panel-container').style.transition = 'none';
+        document.body.dataset.notePanelOpen = 'true';
         document.getElementById('note_panel').setAttribute('src', '/notes/#{note.id}/edit');
-        const c = document.getElementById('note-panel-container');
-        c.classList.remove('translate-x-full');
-        c.style.translate = '0 0';
-        c.style.transition = 'none';
       JS
 
       expect(page).to have_css("trix-editor", visible: :all, wait: 5)
@@ -89,14 +85,7 @@ RSpec.describe "Notes", type: :system, js: true do
       sign_in user
       visit "/bible/kjv/john/3"
       page.execute_script(<<~JS)
-        // Tailwind v4 uses the modern CSS `translate` property (not
-        // `transform`), so overriding `transform` inline doesn't move
-        // the panel. Removing translate-x-full and disabling the
-        // transition brings it on-screen instantly for Selenium.
-        const c = document.getElementById('note-panel-container');
-        c.classList.remove('translate-x-full');
-        c.style.translate   = '0 0';
-        c.style.transition  = 'none';
+        document.getElementById('note-panel-container').style.transition = 'none';
         document.body.dataset.notePanelOpen = 'true';
         document.getElementById('note_panel').src = '/notes/#{note.id}/edit';
       JS

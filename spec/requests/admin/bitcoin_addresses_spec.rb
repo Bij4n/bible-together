@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Admin::BitcoinAddresses", type: :request do
   describe "non-admin access" do
-    it "404s GET /admin/bitcoin_addresses for signed-out visitors" do
+    it "redirects signed-out visitors to sign-in" do
       get admin_bitcoin_addresses_path
-      expect(response).to have_http_status(:not_found)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "404s GET /admin/bitcoin_addresses for non-admin signed-in users" do

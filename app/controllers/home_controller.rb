@@ -12,6 +12,9 @@ class HomeController < ApplicationController
     @community_entries = community_entries(skip_id: @hero_note&.id)
   end
 
+  def how_it_works
+  end
+
   private
 
   # Sprint 22.3 — community section. Returns up to COMMUNITY_NOTE_LIMIT

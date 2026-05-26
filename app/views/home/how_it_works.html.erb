@@ -1,0 +1,137 @@
+<%
+  for_yourself_keys = %w[highlights notes keyword_search semantic_search]
+  with_others_keys  = %w[groups public bilingual]
+  feature_destinations = {
+    "highlights"      => public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
+    "notes"           => public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
+    "groups"          => groups_path,
+    "public"          => public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
+    "bilingual"       => public_bible_chapter_path(translation: "rv1909", book: "gen", chapter: 1),
+    "keyword_search"  => search_path,
+    "semantic_search" => search_path
+  }
+
+  section_h2   = "font-ui text-2xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl"
+  subgroup_h3  = "font-ui text-sm font-semibold uppercase tracking-widest text-surface-500 dark:text-surface-400"
+  card_classes = "block h-full rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-surface-900 hover:shadow-[0_16px_40px_-16px_rgba(14,20,17,0.14)] dark:border-surface-800 dark:bg-surface-900 dark:hover:border-surface-50 dark:hover:shadow-[0_24px_48px_-16px_rgba(0,0,0,0.4)] sm:p-6"
+  demo_classes = "mt-4 rounded-md bg-surface-100 p-4 dark:bg-surface-950/50"
+  demo_ref     = "mb-2 font-mono text-[10px] uppercase tracking-widest text-surface-700 dark:text-surface-300"
+  cards_with_demo = %w[highlights notes keyword_search bilingual]
+%>
+
+<div class="space-y-24 sm:space-y-28">
+  <%# Page header %>
+  <section class="pt-2 sm:pt-4">
+    <h1 class="font-ui text-[clamp(40px,7vw,72px)] font-semibold leading-[1.08] tracking-[-0.03em] text-surface-900 dark:text-surface-50">
+      <%= t("home.how_it_works_title") %>
+    </h1>
+    <p class="mt-4 max-w-xl font-reading text-lg leading-[1.6] text-surface-700 dark:text-surface-300">
+      <%= t("home.subhead") %>
+    </p>
+    <%= link_to t("home.cta_public_bible"),
+                public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
+                class: "mt-6 inline-flex items-center gap-2 rounded-full bg-surface-950 px-7 py-3.5 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-700 hover:-translate-y-px dark:bg-surface-50 dark:text-surface-950 dark:hover:bg-accent-400" %>
+  </section>
+
+  <%# How it works — three steps %>
+  <section id="how-it-works" class="space-y-8 scroll-mt-20">
+    <h2 class="<%= section_h2 %>">
+      <%= t("home.how.heading_html") %>
+    </h2>
+
+    <ol class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
+      <% (1..3).each do |n| %>
+        <li class="space-y-2.5">
+          <div class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-700/10 font-reading text-[28px] font-normal italic leading-none text-accent-700 dark:bg-accent-400/10 dark:text-accent-400">
+            <%= n %>
+          </div>
+          <h3 class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
+            <%= t("home.how.step_#{n}_title") %>
+          </h3>
+          <p class="font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
+            <%= t("home.how.step_#{n}_body") %>
+          </p>
+          <%= render partial: "home/step_screen", locals: { n: n, demo_classes: demo_classes, demo_ref: demo_ref } %>
+        </li>
+      <% end %>
+    </ol>
+  </section>
+
+  <%# Features %>
+  <section class="space-y-10">
+    <h2 class="<%= section_h2 %>">
+      <%= t("home.features.heading_html") %>
+    </h2>
+
+    <div class="space-y-6">
+      <h3 class="<%= subgroup_h3 %>">
+        <%= t("home.features.for_yourself") %>
+      </h3>
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <% for_yourself_keys.each do |key| %>
+          <li>
+            <%= link_to feature_destinations[key], class: card_classes do %>
+              <h4 class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
+                <%= t("home.features.#{key}.title") %>
+              </h4>
+              <p class="mt-2 font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
+                <%= t("home.features.#{key}.body") %>
+              </p>
+              <% if cards_with_demo.include?(key) %>
+                <%= render partial: "home/feature_demo", locals: { key: key, demo_classes: demo_classes, demo_ref: demo_ref } %>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="space-y-6">
+      <h3 class="<%= subgroup_h3 %>">
+        <%= t("home.features.with_others") %>
+      </h3>
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <% with_others_keys.each do |key| %>
+          <li>
+            <%= link_to feature_destinations[key], class: card_classes do %>
+              <h4 class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
+                <%= t("home.features.#{key}.title") %>
+              </h4>
+              <p class="mt-2 font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
+                <%= t("home.features.#{key}.body") %>
+              </p>
+              <% if cards_with_demo.include?(key) %>
+                <%= render partial: "home/feature_demo", locals: { key: key, demo_classes: demo_classes, demo_ref: demo_ref } %>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </section>
+
+  <%# About %>
+  <section id="about" class="scroll-mt-20">
+    <div class="grid gap-7 md:grid-cols-[1fr_1.4fr] md:items-start md:gap-16">
+      <aside aria-hidden="true" class="hidden md:block">
+        <blockquote class="font-reading text-[clamp(28px,4vw,40px)] font-normal italic leading-[1.2] tracking-tight text-surface-900 text-balance dark:text-surface-50">
+          <%= t("home.about.para_2") %>
+        </blockquote>
+      </aside>
+
+      <div class="space-y-4">
+        <p class="max-w-2xl font-reading text-base leading-[1.7] text-pretty text-surface-700 dark:text-surface-300">
+          <%= t("home.about.para_1") %>
+        </p>
+        <p class="max-w-2xl font-reading text-base leading-[1.7] text-pretty text-surface-700 dark:text-surface-300 md:hidden">
+          <%= t("home.about.para_2") %>
+        </p>
+        <% (3..5).each do |n| %>
+          <p class="max-w-2xl font-reading text-base leading-[1.7] text-pretty text-surface-700 dark:text-surface-300">
+            <%= t("home.about.para_#{n}") %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</div>

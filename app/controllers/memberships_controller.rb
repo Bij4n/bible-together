@@ -3,18 +3,6 @@ class MembershipsController < ApplicationController
   before_action :load_group
   before_action :ensure_group_owner
 
-  def create
-    email = params[:email].to_s.downcase.strip
-    user = User.find_by("lower(email) = ?", email)
-
-    if user.nil?
-      redirect_to group_path(@group), alert: t("memberships.user_not_found", email: email) and return
-    end
-
-    @group.memberships.find_or_create_by!(user: user) { |m| m.role = :member }
-    redirect_to group_path(@group), notice: t("memberships.added", email: email)
-  end
-
   def destroy
     membership = @group.memberships.find(params[:id])
     membership.destroy!
