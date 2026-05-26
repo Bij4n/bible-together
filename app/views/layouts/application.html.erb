@@ -5,6 +5,20 @@
     who've saved a preference. %>
 <html lang="<%= I18n.locale %>"<%= " data-theme=\"#{resolved_theme}\"".html_safe if resolved_theme %> data-controller="theme">
   <head>
+    <%# No-flash theme: runs synchronously before any stylesheet is applied.
+        Sets data-theme on <html> so the first CSS evaluation already targets
+        the correct palette — no 150ms transition fires on initial load and
+        axe always sees a stable state. Server-set data-theme (pinned user
+        preference) takes precedence; script exits early if it is present. %>
+    <script>
+      (function(){
+        var el = document.documentElement;
+        if (el.dataset.theme === "light" || el.dataset.theme === "dark") return;
+        var stored = localStorage.getItem("open-bible:theme");
+        if (stored === "dark" || stored === "light") { el.dataset.theme = stored; return; }
+        el.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      })();
+    </script>
     <% page_title = content_for?(:title) ? "#{content_for(:title)} · #{t("app.name")}" : t("app.name") %>
     <% page_description = content_for?(:meta_description) ? content_for(:meta_description) : t("app.meta_description") %>
     <% canonical_url = request.original_url.split("?").first %>

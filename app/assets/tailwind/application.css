@@ -123,6 +123,9 @@
     background-color: var(--color-surface-50);
     color: var(--color-surface-900);
     font-family: var(--font-reading);
+    /* Tell the browser we handle color-scheme ourselves so it does not
+       apply its own forced-dark transformation on top of our CSS. */
+    color-scheme: light;
     /* Sticky header sits at the top of the viewport at ~57px tall;
        scroll-padding-top reserves space when the browser scrolls to
        a fragment anchor (e.g. /public/bible/kjv/john/3#v16) so the
@@ -143,6 +146,7 @@
   html[data-theme="dark"] {
     background-color: var(--color-surface-950);
     color: var(--color-surface-100);
+    color-scheme: dark;
   }
 
   h1, h2, h3, h4, h5, h6 {
