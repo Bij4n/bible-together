@@ -1,66 +1,27 @@
 <%
-  for_yourself_keys = %w[highlights notes keyword_search semantic_search]
-  with_others_keys  = %w[groups public bilingual]
-  feature_destinations = {
-    "highlights"      => public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
-    "notes"           => public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
-    "groups"          => groups_path,
-    "public"          => public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
-    "bilingual"       => public_bible_chapter_path(translation: "rv1909", book: "gen", chapter: 1),
-    "keyword_search"  => search_path,
-    "semantic_search" => search_path
-  }
-
   hero_btn     = "inline-flex items-center gap-2 rounded-full bg-surface-950 px-7 py-3.5 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-700 hover:-translate-y-px dark:bg-surface-50 dark:text-surface-950 dark:hover:bg-accent-400"
   donate_btn   = "inline-flex items-center gap-2 rounded-full bg-surface-50 px-7 py-3.5 font-ui text-base font-medium text-surface-950 transition-colors hover:bg-accent-300 hover:-translate-y-px"
-  card_classes = "block h-full rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-surface-900 hover:shadow-[0_16px_40px_-16px_rgba(14,20,17,0.14)] dark:border-surface-800 dark:bg-surface-900 dark:hover:border-surface-50 dark:hover:shadow-[0_24px_48px_-16px_rgba(0,0,0,0.4)] sm:p-6"
-  # `hero-emphasis` lets the i18n `<em>` carry the Instrument Serif
-  # mint italic treatment used in the hero h1 — keeps the homepage
-  # voice consistent across hero + section headings.
   section_h2   = "hero-emphasis font-ui text-2xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl"
-  subgroup_h3  = "font-ui text-sm font-semibold uppercase tracking-widest text-surface-500 dark:text-surface-400"
-
-  # Echo prototype demo chrome shared across the 4 demoed feature cards.
-  # paper-deep background, mono ref label, decorative `aria-hidden`.
-  demo_classes = "mt-4 rounded-md bg-surface-100 p-4 dark:bg-surface-950/50"
-  # text-surface-700 on bg-surface-100 = 6.69:1 (WCAG AA — at 10px
-  # we need 4.5:1; surface-500 hit 4.19 and tripped axe).
-  demo_ref     = "mb-2 font-mono text-[10px] uppercase tracking-widest text-surface-700 dark:text-surface-300"
-  # Cards with embedded demos per the Echo prototype's 4-card layout.
-  # The 3 Open Bible cards without Echo equivalents (semantic_search,
-  # groups, public) intentionally render text-only — inventing demo
-  # UI for them would echo the Sprint 15 "no synthetic content" lock.
-  cards_with_demo = %w[highlights notes keyword_search bilingual]
 %>
 
 <div class="space-y-24 sm:space-y-28">
-  <%# Hero. Echo prototype: h1 → subhead → CTA row → hero-meta chips
-      (factual labels: translations, languages, license) → tertiary
-      (values statement). The 18.2 chip-above-h1 was deliberately
-      replaced with the prototype's 3-chip row below the CTAs in 18.7
-      so the chips read as informational metadata rather than as an
-      eyebrow competing with the h1 for attention.
-
-      Sprint 22.2 — when an admin features a public note, the hero
-      becomes a 2-col grid at md+ (1.1fr 1fr per Echo prototype) with
-      the verse card spotlight on the right. With no featured note the
-      text content takes the full container width and the verse-card
-      slot is omitted (graceful degradation). %>
+  <%# Hero. Two-column at md+ (1.1fr 1fr) — verse card on the right.
+      Single column on mobile; verse card stacks below the text. %>
   <section class="pt-2 sm:pt-4 md:grid md:grid-cols-[1.1fr_1fr] md:items-center md:gap-x-12 md:gap-y-0">
     <div class="space-y-5 sm:space-y-6">
-      <h1 class="hero-emphasis font-ui text-[clamp(56px,9vw,96px)] font-semibold leading-[1.05] tracking-[-0.035em] text-surface-900 dark:text-surface-50">
+      <h1 class="hero-emphasis font-ui text-[clamp(48px,9vw,96px)] font-semibold leading-[1.05] tracking-[-0.035em] text-surface-900 dark:text-surface-50">
         <%= t("home.welcome_html") %>
       </h1>
       <p class="max-w-2xl font-reading text-lg leading-[1.6] text-pretty text-surface-700 dark:text-surface-300 sm:text-xl">
         <%= t("home.subhead") %>
       </p>
 
-      <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
+      <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3">
         <%= link_to t("home.cta_public_bible"),
                     public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
-                    class: hero_btn %>
-        <%= link_to "#how-it-works",
-                    class: "inline-flex items-center gap-1.5 font-ui text-base font-medium text-surface-900 transition-colors hover:text-accent-700 dark:text-surface-50 dark:hover:text-accent-400" do %>
+                    class: "#{hero_btn} justify-center sm:justify-start" %>
+        <%= link_to how_it_works_path,
+                    class: "inline-flex items-center justify-center gap-1.5 font-ui text-base font-medium text-surface-900 transition-colors hover:text-accent-700 dark:text-surface-50 dark:hover:text-accent-400 sm:justify-start" do %>
           <%= t("home.cta_how_it_works") %>
           <span aria-hidden="true">&rarr;</span>
         <% end %>
@@ -79,7 +40,7 @@
       </p>
     </div>
 
-    <div class="mt-12 md:mt-0">
+    <div class="mt-10 md:mt-0">
       <% if @hero_verse %>
         <%= render "hero_verse_card", note: @hero_note, verse: @hero_verse %>
       <% else %>
@@ -92,172 +53,8 @@
     <%= render "community_section", section_h2: section_h2 %>
   <% end %>
 
-  <%# Features — split into two subgroups for visual rhythm and to
-      mirror the product's two arcs (personal experience vs. shared
-      experience). Bilingual lands in "With others" because the heart-
-      language framing in its body is relational, not technical. %>
-  <section class="space-y-10">
-    <h2 class="<%= section_h2 %>">
-      <%= t("home.features.heading_html") %>
-    </h2>
-
-    <div class="space-y-6">
-      <h3 class="<%= subgroup_h3 %>">
-        <%= t("home.features.for_yourself") %>
-      </h3>
-      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <% for_yourself_keys.each do |key| %>
-          <li>
-            <%= link_to feature_destinations[key], class: card_classes do %>
-              <h4 class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
-                <%= t("home.features.#{key}.title") %>
-              </h4>
-              <p class="mt-2 font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
-                <%= t("home.features.#{key}.body") %>
-              </p>
-              <% if cards_with_demo.include?(key) %>
-                <%= render partial: "home/feature_demo", locals: { key: key, demo_classes: demo_classes, demo_ref: demo_ref } %>
-              <% end %>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div class="space-y-6">
-      <h3 class="<%= subgroup_h3 %>">
-        <%= t("home.features.with_others") %>
-      </h3>
-      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <% with_others_keys.each do |key| %>
-          <li>
-            <%= link_to feature_destinations[key], class: card_classes do %>
-              <h4 class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
-                <%= t("home.features.#{key}.title") %>
-              </h4>
-              <p class="mt-2 font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
-                <%= t("home.features.#{key}.body") %>
-              </p>
-              <% if cards_with_demo.include?(key) %>
-                <%= render partial: "home/feature_demo", locals: { key: key, demo_classes: demo_classes, demo_ref: demo_ref } %>
-              <% end %>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </section>
-
-  <%# How it works %>
-  <section id="how-it-works" class="space-y-8 scroll-mt-20">
-    <h2 class="<%= section_h2 %>">
-      <%= t("home.how.heading_html") %>
-    </h2>
-
-    <ol class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
-      <% (1..3).each do |n| %>
-        <li class="space-y-2.5">
-          <%# Numeral: Instrument Serif italic 28px in a 44x44 mint
-              disc. Echo's signal: steps read as considered (literary)
-              rather than mechanical (sans counter). If production
-              review reads it as decorative/precious, swap which
-              block is gated by `if false` below (Rule 9 fix-on-
-              this-branch). Using an `if false` guard rather than an
-              ERB comment block because erubi closes a comment at
-              the first close-tag, and inner ERB output tags break
-              the parse. %>
-          <% if false # sans-bold revert path %>
-            <div class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent-700/10 font-ui text-sm font-semibold text-accent-700 dark:bg-accent-400/10 dark:text-accent-400">
-              <%= n %>
-            </div>
-          <% end %>
-          <div class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-700/10 font-reading text-[28px] font-normal italic leading-none text-accent-700 dark:bg-accent-400/10 dark:text-accent-400">
-            <%= n %>
-          </div>
-          <h3 class="font-ui text-base font-semibold text-surface-900 dark:text-surface-50">
-            <%= t("home.how.step_#{n}_title") %>
-          </h3>
-          <p class="font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
-            <%= t("home.how.step_#{n}_body") %>
-          </p>
-          <%= render partial: "home/step_screen", locals: { n: n, demo_classes: demo_classes, demo_ref: demo_ref } %>
-        </li>
-      <% end %>
-    </ol>
-  </section>
-
-  <%# About — 5 paragraphs by design. The strong line ("the verse
-      that wrecks you...") sits as its own paragraph between the
-      belief opener (p1) and its consequence (p3); translations
-      (p4) and maintainer/funding (p5) split apart so the practical
-      content doesn't run together in one breath.
-
-      Sprint 18.3a (Echo prototype alignment): quote-LEFT / prose-RIGHT
-      at md+, mirroring the prototype's `.about-block` (1fr 1.4fr,
-      gap-16). The quote is large Instrument Serif italic with no
-      border accent — it serves as the section opener, so the
-      explicit "About" h2 is dropped (heading would compete with the
-      quote's visual weight). The section keeps id="about" so the
-      footer's #about anchor still resolves.
-
-      On mobile the layout collapses to a single column; p2 stays
-      in-flow between p1 and p3 (md:hidden on inline copy, hidden
-      md:block on the quote aside) so reading order is preserved at
-      every breakpoint. %>
-  <section id="about" class="scroll-mt-20">
-    <div class="grid gap-7 md:grid-cols-[1fr_1.4fr] md:items-start md:gap-16">
-      <aside aria-hidden="true" class="hidden md:block">
-        <blockquote class="font-reading text-[clamp(28px,4vw,40px)] font-normal italic leading-[1.2] tracking-tight text-surface-900 text-balance dark:text-surface-50">
-          <%= t("home.about.para_2") %>
-        </blockquote>
-      </aside>
-
-      <div class="space-y-4">
-        <p class="max-w-2xl font-reading text-base leading-[1.7] text-pretty text-surface-700 dark:text-surface-300">
-          <%= t("home.about.para_1") %>
-        </p>
-        <p class="max-w-2xl font-reading text-base leading-[1.7] text-pretty text-surface-700 dark:text-surface-300 md:hidden">
-          <%= t("home.about.para_2") %>
-        </p>
-        <% (3..5).each do |n| %>
-          <p class="max-w-2xl font-reading text-base leading-[1.7] text-pretty text-surface-700 dark:text-surface-300">
-            <%= t("home.about.para_#{n}") %>
-          </p>
-        <% end %>
-      </div>
-    </div>
-  </section>
-
-  <%# Donate CTA — gated on the same active-address check as the
-      footer link, so the donations affordance is uniformly visible
-      or hidden site-wide. /donate itself stays accessible by URL
-      with the unavailable explainer. %>
+  <%# Donate CTA — gated on active-address check. %>
   <% if donate_link_visible? %>
-    <%# Donate panel: .donate-callout chrome — dark statement in
-        light mode, subtle elevation in dark mode, mint radial glow,
-        inverse paper-on-ink button. If production review feels too
-        heavy against the now-mint page, swap which section is
-        gated by `if false` below (Rule 9 fix-on-this-branch).
-        Using an `if false` guard rather than an ERB comment block
-        because erubi closes a comment at the first close-tag, and
-        inner ERB output tags inside the revert block would break
-        the parse. The light-card revert below is self-contained:
-        the bg-accent-700 button class string is inlined so the
-        revert needs no other edits. %>
-    <% if false # light-card revert path %>
-      <section data-section="donate-cta"
-               class="rounded-lg border border-surface-200 bg-surface-50 p-7 text-center dark:border-surface-800 dark:bg-surface-900 sm:p-10">
-        <h2 class="font-ui text-xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-2xl">
-          <%= t("home.donate_cta.heading") %>
-        </h2>
-        <p class="mx-auto mt-3 max-w-md font-reading text-base leading-relaxed text-surface-700 dark:text-surface-300">
-          <%= t("home.donate_cta.body") %>
-        </p>
-        <div class="mt-6">
-          <%= link_to t("home.donate_cta.button"), donate_path, class: "inline-block rounded-md bg-accent-700 px-6 py-3.5 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300" %>
-        </div>
-      </section>
-    <% end %>
     <section data-section="donate-cta"
              class="donate-callout rounded-3xl p-8 text-center sm:p-12">
       <div class="relative">
