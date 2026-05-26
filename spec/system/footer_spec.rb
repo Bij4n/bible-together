@@ -91,6 +91,14 @@ RSpec.describe "Footer", type: :system do
       end
     end
 
+    it "links How it works to /how-it-works" do
+      visit "/"
+      within("footer") do
+        link = find_link(I18n.t("layout.how_it_works_link"))
+        expect(link[:href]).to end_with("/how-it-works")
+      end
+    end
+
     it "links About to the canonical /about page" do
       visit "/"
       within("footer") do
@@ -120,6 +128,14 @@ RSpec.describe "Footer", type: :system do
         within("footer") do
           link = find_link(I18n.t("layout.donate_link"))
           expect(link[:class]).not_to include("decoration-accent-700/40")
+        end
+      end
+
+      it "marks the How it works link active when on /how-it-works" do
+        visit "/how-it-works"
+        within("footer") do
+          link = find_link(I18n.t("layout.how_it_works_link"))
+          expect(link[:class]).to include("decoration-accent-700/40")
         end
       end
 
