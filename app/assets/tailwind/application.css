@@ -577,15 +577,6 @@
   .highlight-swatch-lavender { background-color: #c6bfe0; }
   .highlight-swatch-sky      { background-color: #a7c6d4; }
 
-  /*
-   * Slide-in note panel. Body gains a data-note-panel-open flag when a
-   * panel is mounted; CSS handles the transform. Mobile-first —
-   * full-width up to the sm breakpoint (sm:max-w-md in the markup).
-   */
-  body[data-note-panel-open="true"] #note-panel-container {
-    transform: translateX(0);
-  }
-
   @media (prefers-reduced-motion: reduce) {
     #note-panel-container { transition: none; }
   }
@@ -654,6 +645,16 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+/*
+ * Slide-in note panel. Declared outside @layer so this rule wins over
+ * Tailwind's @layer utilities — translate-x-full (in utilities) uses
+ * the CSS `translate` property, and rules outside any layer always beat
+ * layered ones regardless of specificity.
+ */
+body[data-note-panel-open="true"] #note-panel-container {
+  translate: 0;
 }
 
 /*
