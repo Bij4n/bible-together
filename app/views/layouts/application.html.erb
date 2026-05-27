@@ -82,6 +82,16 @@
         <% end %>
 
         <nav class="flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.account") %>">
+          <% if user_signed_in? %>
+            <%# Notes and Groups are the social backbone — surface them
+                in the top nav so signed-in users always have one tap to
+                their content. Hidden below sm to keep the mobile rail tight. %>
+            <%= link_to t("layout.my_notes_link"), notes_path,
+                        class: "hidden sm:inline-block rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(notes_path) ? 'text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40' : 'text-surface-700 dark:text-surface-300'}" %>
+            <%= link_to t("layout.my_groups_link"), groups_path,
+                        class: "hidden sm:inline-block rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(groups_path) ? 'text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40' : 'text-surface-700 dark:text-surface-300'}" %>
+          <% end %>
+
           <%# Active-state on the search link uses mint text instead of
               the idle surface-tones — the "you are here" cue when the
               current route is /search. Hover behavior unchanged in
