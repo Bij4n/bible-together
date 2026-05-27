@@ -228,6 +228,13 @@ es:
     remove: Eliminar
     email_placeholder: miembro@ejemplo.com
   notes:
+    my_notes: Mis notas
+    empty: Aún no hay notas. Abre la Biblia, resalta un versículo y escribe lo que significa para ti.
+    badge:
+      private_note: Privada
+      shared_users: Compartida
+      shared_groups: Con grupos
+      public_note: Pública
     save: Guardar nota
     delete: Eliminar nota
     confirm_delete: ¿Eliminar esta nota?

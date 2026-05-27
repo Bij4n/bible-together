@@ -235,6 +235,13 @@ en:
     remove: Remove
     email_placeholder: member@example.com
   notes:
+    my_notes: My Notes
+    empty: No notes yet. Open the Bible, highlight a verse, and write what it means to you.
+    badge:
+      private_note: Private
+      shared_users: Shared
+      shared_groups: With groups
+      public_note: Public
     save: Save note
     delete: Delete note
     confirm_delete: Delete this note?

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   patch "/settings", to: "settings#update"
 
   resources :highlights, only: [ :create, :update, :destroy ]
-  resources :notes,      only: [ :new, :create, :update, :destroy, :show, :edit ]
+  resources :notes,      only: [ :index, :new, :create, :update, :destroy, :show, :edit ]
 
   # Sprint 23.2/23.3 — accept-via-token route for email group
   # invitations. The named helper is `accept_group_invitation_path`
