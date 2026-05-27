@@ -215,6 +215,7 @@ es:
     privacy:
       private_group: Privado
       invite_only: Solo por invitación
+      open_group: Abierto
     description: Lee la Escritura con personas en quienes confías. Los grupos son espacios pequeños — un estudio, un hilo familiar, un grupo de amigos — donde puedes compartir notas, comentarios y resaltados en tiempo real. Las notas son privadas por defecto y sólo se muestran al grupo cuando tú eliges compartirlas.
     new_description: Crea un grupo de lectura pequeño. Agrega un nombre y una descripción opcional. Una vez creado, podrás invitar a amigos por correo o compartir el código de invitación desde la página del grupo.
     empty: Aún no estás en ningún grupo. Crea uno para empezar un estudio con amigos, o pega un código de invitación abajo para unirte a uno que alguien te haya compartido.

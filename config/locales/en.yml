@@ -222,6 +222,7 @@ en:
     privacy:
       private_group: Private
       invite_only: Invite-only
+      open_group: Open
     description: Read scripture together with people you trust. Groups are small spaces — a study, a family thread, a friend group — where you can share notes, comments, and highlights in real-time. Notes stay private by default and only surface to the group when you choose to share them.
     new_description: Start a small reading group. Add a name and an optional description. Once you've created the group, you can invite friends by email or share an invitation code from the group page.
     empty: You aren't in any groups yet. Create one to start a study with friends, or paste an invitation code below to join one someone has shared with you.
