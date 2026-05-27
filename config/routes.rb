@@ -71,6 +71,8 @@ Rails.application.routes.draw do
   resources :authors, only: [:show]
 
   get  "/about",             to: "about#show",             as: :about
+  get  "/terms",             to: "legal#terms",            as: :terms
+  get  "/privacy",           to: "legal#privacy",          as: :privacy
   get  "/sitemap.xml",       to: "sitemap#show",           as: :sitemap, defaults: { format: :xml }
 
   get  "/donate",            to: "donations#show",         as: :donate

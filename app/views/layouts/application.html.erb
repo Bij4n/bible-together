@@ -211,6 +211,8 @@
             <% end %>
             <%= link_to t("layout.how_it_works_link"), how_it_works_path, class: "#{footer_link_base} #{footer_link_active if nav_active?(how_it_works_path)}" %>
             <%= link_to t("layout.about_link"), about_path, class: "#{footer_link_base} #{footer_link_active if nav_active?(about_path)}" %>
+            <%= link_to t("legal.terms.title"), terms_path, class: "#{footer_link_base} #{footer_link_active if nav_active?(terms_path)}" %>
+            <%= link_to t("legal.privacy.title"), privacy_path, class: "#{footer_link_base} #{footer_link_active if nav_active?(privacy_path)}" %>
             <% if user_signed_in? %>
               <%= link_to t("auth.settings"), settings_path, class: "#{footer_link_base} #{footer_link_active if nav_active?(settings_path)}" %>
             <% end %>
