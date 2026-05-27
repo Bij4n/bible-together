@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :groups do
     collection do
       post :join
+      get  :discover
     end
     member do
       delete :leave
