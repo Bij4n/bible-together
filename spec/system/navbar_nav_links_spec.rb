@@ -21,10 +21,24 @@ RSpec.describe "Navbar signed-in links", type: :system do
         expect(page).not_to have_link(I18n.t("layout.my_groups_link"), href: groups_path)
       end
     end
+
+    it "shows the How it Works link" do
+      visit "/"
+      within("header nav") do
+        expect(page).to have_link(I18n.t("layout.how_it_works_link"), href: how_it_works_path)
+      end
+    end
   end
 
   context "when signed in" do
     before { sign_in create(:user) }
+
+    it "does not show the How it Works link in the header nav" do
+      visit "/"
+      within("header nav") do
+        expect(page).not_to have_link(I18n.t("layout.how_it_works_link"), href: how_it_works_path)
+      end
+    end
 
     it "shows the Notes link" do
       visit "/"

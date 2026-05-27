@@ -90,6 +90,9 @@
                         class: "hidden sm:inline-block rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(notes_path) ? 'text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40' : 'text-surface-700 dark:text-surface-300'}" %>
             <%= link_to t("layout.my_groups_link"), groups_path,
                         class: "hidden sm:inline-block rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(groups_path) ? 'text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40' : 'text-surface-700 dark:text-surface-300'}" %>
+          <% else %>
+            <%= link_to t("layout.how_it_works_link"), how_it_works_path,
+                        class: "hidden sm:inline-block rounded-md px-3 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(how_it_works_path) ? 'text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40' : 'text-surface-700 dark:text-surface-300'}" %>
           <% end %>
 
           <%# Active-state on the search link uses mint text instead of
