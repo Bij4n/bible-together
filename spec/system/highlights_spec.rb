@@ -107,13 +107,25 @@ RSpec.describe "Highlights", type: :system, js: true do
     JS
   end
 
+  it "applies the default color with one click on the Highlight button" do
+    v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
+    visit "/bible/kjv/john/3"
+
+    select_within_verse(v16.id, "God", start_offset: 4, length: 3)
+    find("[data-highlight-target='toolbar'] [data-highlight-default]", visible: :all).click
+
+    expect(page).to have_css("span.highlight-yellow", text: "God")
+    saved = Highlight.find_by(user: user, osis_ref: "Bible.KJV.John.3.16!4-Bible.KJV.John.3.16!7")
+    expect(saved.color).to eq(Highlight::DEFAULT_COLOR)
+  end
+
   it "creates a single-verse highlight that survives reload" do
     v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
     visit "/bible/kjv/john/3"
 
     select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-    find("[data-highlight-target='toolbar'] [data-color='yellow']", visible: :all).click
+    find("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed]", visible: :all).click
 
     # Turbo.visit reloads the chapter — wait for the highlight span to appear.
     expect(page).to have_css("span.highlight-yellow", text: "God")
@@ -130,7 +142,7 @@ RSpec.describe "Highlights", type: :system, js: true do
 
     # From offset 24 in verse 16 ("world") through offset 7 in verse 17 ("For God")
     select_across_verses(v16.id, 21, v17.id, 7)
-    find("[data-highlight-target='toolbar'] [data-color='green']", visible: :all).click
+    find("[data-highlight-target='toolbar'] button[data-color='green'][aria-pressed]", visible: :all).click
 
     expect(page).to have_css("span.highlight-green", count: 2)
     saved = Highlight.find_by(user: user, color: "green")
@@ -146,7 +158,7 @@ RSpec.describe "Highlights", type: :system, js: true do
     )
     visit "/bible/kjv/john/3"
     select_within_verse(v16.id, "loved", start_offset: 11, length: 5)
-    find("[data-highlight-target='toolbar'] [data-color='rose']", visible: :all).click
+    find("[data-highlight-target='toolbar'] button[data-color='rose'][aria-pressed]", visible: :all).click
 
     expect(page).to have_css("span.jesus-words.highlight-rose", text: "loved")
     # Red-letter context around the highlight should keep its red class.
@@ -384,7 +396,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       visit "/bible/kjv/john/3"
       select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-      find("[data-highlight-target='toolbar'] button[data-color='yellow']", visible: :all).click
+      find("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed]", visible: :all).click
 
       # After PR D: stream replaces the verse, toolbar stays visible,
       # the just-applied gold swatch is now aria-pressed=true.
@@ -431,7 +443,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       visit "/bible/kjv/john/3"
       select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-      find("[data-highlight-target='toolbar'] button[data-color='yellow']", visible: :all).click
+      find("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed]", visible: :all).click
       expect(page).to have_css("span.highlight-yellow", text: "God")
 
       # Selection should be restored (Strategy 2). rangeCount > 0

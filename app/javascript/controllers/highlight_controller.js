@@ -91,7 +91,7 @@ export default class extends Controller {
     const color = this.canonicalColor(
       Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
     )
-    tb.querySelectorAll("button[data-color]").forEach((btn) => {
+    tb.querySelectorAll("button[data-color]:not([data-highlight-default])").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.color === color ? "true" : "false")
     })
   }
@@ -320,14 +320,14 @@ export default class extends Controller {
     if (!this.hasToolbarTarget) return
     const dominant = this.dominantHighlightUnderSelection(range)
     const activeColor = this.canonicalColor(dominant?.color ?? null)
-    this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
+    this.toolbarTarget.querySelectorAll("button[data-color]:not([data-highlight-default])").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.color === activeColor ? "true" : "false")
     })
   }
 
   clearActiveSwatch() {
     if (!this.hasToolbarTarget) return
-    this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
+    this.toolbarTarget.querySelectorAll("button[data-color]:not([data-highlight-default])").forEach((btn) => {
       btn.setAttribute("aria-pressed", "false")
     })
   }
@@ -348,7 +348,13 @@ export default class extends Controller {
     const color = swatch.dataset.color
     if (!color) return
 
-    if (swatch.getAttribute("aria-pressed") === "true") {
+    // Toggle-remove fires when the clicked swatch is the active one,
+    // or when the labeled Highlight button (which never carries
+    // pressed state) targets the color that's already active.
+    const activeSwatch = this.hasToolbarTarget &&
+      this.toolbarTarget.querySelector("button[data-color][aria-pressed='true']")
+    if (swatch.getAttribute("aria-pressed") === "true" ||
+        (activeSwatch && activeSwatch.dataset.color === color)) {
       return this.removeViaToggle()
     }
 
