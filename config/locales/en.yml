@@ -161,6 +161,13 @@ en:
       cross_translation_badge_title: "You've annotated this verse in %{translation} — click to jump there."
       dismiss_toolbar: Dismiss
       highlight_action: Highlight
+      verse_view: Verse view
+      verse_notes_chip:
+        one: "%{count} note on this verse"
+        other: "%{count} notes on this verse"
+      layer_label: Layer
+      layer_mine: My Bible
+      layer_community: Community
       note_action: Note
       # Sprint 16.5 PR C: confirm dialog when color-toggle removes a
       # highlight that has notes attached. Q1 Option A — auto-destroy

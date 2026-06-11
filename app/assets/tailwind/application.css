@@ -679,6 +679,73 @@
    * `ch` so the line length stays inside the 50-75ch reading-comfort
    * band regardless of viewport width.
    */
+  /* Community-layer highlights (design v3 / Kindle rule): other
+     people's marks render as a quiet dotted underline, never a fill —
+     crowd marks must not be louder than your own. */
+  .community-highlight {
+    text-decoration: underline dotted;
+    text-decoration-color: var(--color-surface-400);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+  }
+
+  html[data-theme="dark"] .community-highlight {
+    text-decoration-color: var(--color-surface-500);
+  }
+
+  /* Per-verse note-count chip (design v3 margin chips, rendered
+     inline at the verse's end). Quiet accent-tinted pill; the count
+     is the content. data-ignore-selection keeps it out of the
+     offset math like the verse-number sup. */
+  .verse-note-chip {
+    display: inline-block;
+    margin-left: 0.35em;
+    padding: 0 0.45em;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-accent-700) 10%, transparent);
+    color: var(--color-accent-700);
+    font-family: var(--font-ui);
+    font-size: 0.62em;
+    font-weight: 600;
+    line-height: 1.6;
+    vertical-align: 0.25em;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+
+  .verse-note-chip:hover {
+    background: color-mix(in srgb, var(--color-accent-700) 18%, transparent);
+  }
+
+  html[data-theme="dark"] .verse-note-chip {
+    background: color-mix(in srgb, var(--color-accent-400) 14%, transparent);
+    color: var(--color-accent-400);
+  }
+
+  html[data-theme="dark"] .verse-note-chip:hover {
+    background: color-mix(in srgb, var(--color-accent-400) 22%, transparent);
+  }
+
+  /* Keyboard verse focus (j/k verbs). A quiet accent ring around the
+     focused verse — visible without shouting over highlights. */
+  .verse.verse-kbd-focus {
+    outline: 2px solid color-mix(in srgb, var(--color-accent-700) 45%, transparent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  html[data-theme="dark"] .verse.verse-kbd-focus {
+    outline-color: color-mix(in srgb, var(--color-accent-400) 45%, transparent);
+  }
+
+  /* Verse-per-block "study mode" (reader_prefs controller). Verses are
+     inline spans in continuous prose by default; the toggle stacks
+     them with breathing room for verse-by-verse study. */
+  .chapter-body.verse-blocks .verse {
+    display: block;
+    margin-bottom: 0.9em;
+  }
+
   .chapter-body {
     font-feature-settings: "kern" 1, "liga" 1;
     text-rendering: optimizeLegibility;

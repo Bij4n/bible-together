@@ -6,15 +6,20 @@
       <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
         <%= @translation.name %> · <%= t("public_bible.community_view") %>
       </p>
-      <% translations = Translation.order(:name) %>
-      <% if translations.size > 1 %>
-        <%= render "shared/nav_select",
-                   options: translations.map { |t|
-                     [ t.name, public_bible_chapter_path(translation: t.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) ]
-                   },
-                   selected_url: public_bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number),
-                   aria_label: t("bible.reader.translation_picker") %>
-      <% end %>
+      <div class="flex items-center gap-2">
+        <%= render "bible/reader/layer_switcher",
+                   translation: @translation, book: @book, chapter: @chapter,
+                   selected_url: public_bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+        <% translations = Translation.order(:name) %>
+        <% if translations.size > 1 %>
+          <%= render "shared/nav_select",
+                     options: translations.map { |t|
+                       [ t.name, public_bible_chapter_path(translation: t.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) ]
+                     },
+                     selected_url: public_bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number),
+                     aria_label: t("bible.reader.translation_picker") %>
+        <% end %>
+      </div>
     </div>
     <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 dark:text-surface-50 sm:text-5xl md:text-6xl">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
@@ -34,7 +39,8 @@
   </header>
 
   <div class="chapter-body font-reading text-surface-900 dark:text-surface-100">
-    <% @verses.each_with_index do |verse, i| %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0 } %><%= " " unless i == @verses.size - 1 %><% end %>
+    <% chip_map = verse_note_map(@highlights) %>
+    <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, highlight_style: :underline, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: "#note_#{chip_ids.first}" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
   <aside id="public_notes_aside" class="space-y-4">

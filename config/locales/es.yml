@@ -161,6 +161,13 @@ es:
       cross_translation_badge_title: "Has anotado este versículo en %{translation} — haz clic para ir allí."
       dismiss_toolbar: Cerrar
       highlight_action: Resaltar
+      verse_view: Por versículo
+      verse_notes_chip:
+        one: "%{count} nota en este versículo"
+        other: "%{count} notas en este versículo"
+      layer_label: Capa
+      layer_mine: Mi Biblia
+      layer_community: Comunidad
       note_action: Nota
       confirm_remove_with_notes:
         one: "Este resaltado tiene %{count} nota. Quitarlo eliminará la nota. ¿Continuar?"

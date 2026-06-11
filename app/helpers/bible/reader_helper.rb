@@ -1,5 +1,21 @@
 module Bible
   module ReaderHelper
+    # Verse id => ordered unique note ids, for the per-verse note chips
+    # (design v3). Built from the chapter's already-loaded highlights
+    # (notes eager-loaded by every reader controller), so the only extra
+    # queries are the per-highlight affected_verses lookups — a handful
+    # per chapter at most.
+    def verse_note_map(highlights)
+      map = Hash.new { |h, k| h[k] = [] }
+      Array(highlights).each do |hl|
+        note_ids = hl.notes.map(&:id)
+        next if note_ids.empty?
+
+        hl.affected_verses.each { |v| map[v.id].concat(note_ids) }
+      end
+      map.transform_values(&:uniq)
+    end
+
     # Emit verse HTML with highlight overlays layered over red-letter
     # (jesus-words) spans. Character ranges are merged via an event-list
     # sweep: collect every range boundary, sort, emit one span per
@@ -13,7 +29,12 @@ module Bible
     #     highest-id (most recent) highlight's color wins; all touching
     #     highlight ids are listed in data-highlight-ids for click
     #     disambiguation.
-    def render_verse_with_highlights(verse, highlights)
+    # style: :fill (default) paints highlight fragments with the
+    # owner's color overlay — your own marks. :underline renders them
+    # as a quiet dotted underline instead (design v3 / Kindle rule:
+    # other people's highlights are never louder than your own) — used
+    # by the community layer.
+    def render_verse_with_highlights(verse, highlights, style: :fill)
       text = verse.body_text.to_s
       return "".html_safe if text.empty?
 
@@ -46,7 +67,7 @@ module Bible
         if active_highlights.any?
           sorted_highlights = active_highlights.sort_by { |r| r[:id] }
           dominant = sorted_highlights.last
-          classes << "highlight-#{dominant[:color]}"
+          classes << (style == :underline ? "community-highlight" : "highlight-#{dominant[:color]}")
           ids = sorted_highlights.map { |r| r[:id] }.join(",")
           # data-note-count is the dominant highlight's note count.
           # Drives the Sprint 16.5 PR C color-toggle removal flow:
