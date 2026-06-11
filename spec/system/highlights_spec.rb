@@ -108,9 +108,14 @@ RSpec.describe "Highlights", type: :system, js: true do
   end
 
   describe "verse-tap selection on narrow viewports" do
-    after do
-      page.driver.browser.manage.window.resize_to(1400, 1024)
-    end
+    # The browser session persists across examples, so restore the
+    # window to its exact pre-example size — restoring to a guessed
+    # size broke the site-header scroll spec downstream (a taller
+    # window made the homepage non-scrollable). before/after (not
+    # around) because the Firefox driver is only installed by the
+    # suite-level driven_by before-hook.
+    before { @original_window = page.driver.browser.manage.window.size }
+    after  { page.driver.browser.manage.window.resize_to(@original_window.width, @original_window.height) }
 
     it "tapping a verse selects its full text and the Highlight button marks the whole verse" do
       v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
