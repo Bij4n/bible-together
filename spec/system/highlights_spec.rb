@@ -113,14 +113,14 @@ RSpec.describe "Highlights", type: :system, js: true do
 
     select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-    find("[data-highlight-target='toolbar'] [data-color='gold']", visible: :all).click
+    find("[data-highlight-target='toolbar'] [data-color='yellow']", visible: :all).click
 
     # Turbo.visit reloads the chapter — wait for the highlight span to appear.
-    expect(page).to have_css("span.highlight-gold", text: "God")
+    expect(page).to have_css("span.highlight-yellow", text: "God")
 
     saved = Highlight.find_by(user: user, osis_ref: "Bible.KJV.John.3.16!4-Bible.KJV.John.3.16!7")
     expect(saved).to be_present
-    expect(saved.color).to eq("gold")
+    expect(saved.color).to eq("yellow")
   end
 
   it "creates a cross-verse highlight with the correct per-verse boundaries" do
@@ -130,10 +130,10 @@ RSpec.describe "Highlights", type: :system, js: true do
 
     # From offset 24 in verse 16 ("world") through offset 7 in verse 17 ("For God")
     select_across_verses(v16.id, 21, v17.id, 7)
-    find("[data-highlight-target='toolbar'] [data-color='sage']", visible: :all).click
+    find("[data-highlight-target='toolbar'] [data-color='green']", visible: :all).click
 
-    expect(page).to have_css("span.highlight-sage", count: 2)
-    saved = Highlight.find_by(user: user, color: "sage")
+    expect(page).to have_css("span.highlight-green", count: 2)
+    saved = Highlight.find_by(user: user, color: "green")
     expect(saved.osis_ref).to eq("Bible.KJV.John.3.16!21-Bible.KJV.John.3.17!7")
   end
 
@@ -183,7 +183,7 @@ RSpec.describe "Highlights", type: :system, js: true do
     # PRs C/D/E build on top of it.
     v17 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.17")
     select_within_verse(v17.id, "For", start_offset: 0, length: 3)
-    Highlight::COLORS.each do |c|
+    Highlight::TOOLBAR_COLORS.each do |c|
       expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='#{c}'][aria-pressed='false']", visible: :all)
     end
   end
@@ -214,7 +214,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       select_within_verse(v16.id, "For", start_offset: 0, length: 3)
       # Swatch is now aria-pressed=true (PR A); clicking it triggers
       # the toggle-remove branch in apply().
-      find("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all).click
+      find("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='true']", visible: :all).click
 
       expect(page).not_to have_css("span.highlight-gold")
       expect(Highlight.exists?(highlight.id)).to be false
@@ -237,7 +237,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       # window.confirm dialog; the message includes the note count
       # via the bilingual I18n template's %{count} interpolation.
       page.accept_confirm(/1 note/) do
-        find("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all).click
+        find("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='true']", visible: :all).click
       end
 
       expect(page).not_to have_css("span.highlight-gold")
@@ -257,7 +257,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       select_within_verse(v16.id, "For", start_offset: 0, length: 3)
 
       page.dismiss_confirm do
-        find("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all).click
+        find("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='true']", visible: :all).click
       end
 
       # Both survive the cancel — atomic preserve-or-cascade contract.
@@ -294,8 +294,8 @@ RSpec.describe "Highlights", type: :system, js: true do
 
       select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all)
-      Highlight::COLORS.reject { |c| c == "gold" }.each do |c|
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='true']", visible: :all)
+      Highlight::TOOLBAR_COLORS.reject { |c| c == "yellow" }.each do |c|
         expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='#{c}'][aria-pressed='false']", visible: :all)
       end
     end
@@ -307,7 +307,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       # No highlights anywhere on this verse — plain selection.
       select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-      Highlight::COLORS.each do |c|
+      Highlight::TOOLBAR_COLORS.each do |c|
         expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='#{c}'][aria-pressed='false']", visible: :all)
       end
     end
@@ -337,7 +337,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       select_within_verse(v16.id, "For God", start_offset: 0, length: 7)
 
       expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='rose'][aria-pressed='true']", visible: :all)
-      Highlight::COLORS.reject { |c| c == "rose" }.each do |c|
+      Highlight::TOOLBAR_COLORS.reject { |c| c == "rose" }.each do |c|
         expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='#{c}'][aria-pressed='false']", visible: :all)
       end
     end
@@ -366,8 +366,8 @@ RSpec.describe "Highlights", type: :system, js: true do
 
       select_within_verse(v16.id, "God so loved", start_offset: 4, length: 12)
 
-      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='sage'][aria-pressed='true']", visible: :all)
-      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='false']", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='green'][aria-pressed='true']", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='false']", visible: :all)
     end
   end
 
@@ -384,13 +384,13 @@ RSpec.describe "Highlights", type: :system, js: true do
       visit "/bible/kjv/john/3"
       select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-      find("[data-highlight-target='toolbar'] button[data-color='gold']", visible: :all).click
+      find("[data-highlight-target='toolbar'] button[data-color='yellow']", visible: :all).click
 
       # After PR D: stream replaces the verse, toolbar stays visible,
       # the just-applied gold swatch is now aria-pressed=true.
-      expect(page).to have_css("span.highlight-gold", text: "God")
+      expect(page).to have_css("span.highlight-yellow", text: "God")
       expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
-      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='true']", visible: :all)
     end
 
     it "dismisses the toolbar when the user clicks outside both the toolbar and the chapter" do
@@ -431,8 +431,8 @@ RSpec.describe "Highlights", type: :system, js: true do
       visit "/bible/kjv/john/3"
       select_within_verse(v16.id, "God", start_offset: 4, length: 3)
 
-      find("[data-highlight-target='toolbar'] button[data-color='gold']", visible: :all).click
-      expect(page).to have_css("span.highlight-gold", text: "God")
+      find("[data-highlight-target='toolbar'] button[data-color='yellow']", visible: :all).click
+      expect(page).to have_css("span.highlight-yellow", text: "God")
 
       # Selection should be restored (Strategy 2). rangeCount > 0
       # AND toString matches the original snapshot text.
@@ -455,9 +455,9 @@ RSpec.describe "Highlights", type: :system, js: true do
 
       # Select from "world" tail in v16 across into "For" head of v17.
       select_across_verses(v16.id, 21, v17.id, 7)
-      find("[data-highlight-target='toolbar'] button[data-color='sage']", visible: :all).click
+      find("[data-highlight-target='toolbar'] button[data-color='green']", visible: :all).click
 
-      expect(page).to have_css("span.highlight-sage", count: 2)
+      expect(page).to have_css("span.highlight-green", count: 2)
 
       range_count = page.evaluate_script("window.getSelection().rangeCount")
       expect(range_count).to be >= 1
@@ -482,7 +482,7 @@ RSpec.describe "Highlights", type: :system, js: true do
       find("span[data-highlight-ids]").click
 
       expect(page).to have_css("[data-highlight-target='toolbar']:not([hidden])", visible: :all)
-      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='gold'][aria-pressed='true']", visible: :all)
+      expect(page).to have_css("[data-highlight-target='toolbar'] button[data-color='yellow'][aria-pressed='true']", visible: :all)
     end
 
     it "tapping the pencil after a tap opens the note panel for that highlight" do

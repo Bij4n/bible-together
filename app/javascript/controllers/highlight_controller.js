@@ -21,6 +21,18 @@ export default class extends Controller {
     debug: { type: Boolean, default: false }
   }
 
+  // Legacy stored colors (pre-design-v3) render-map onto the current
+  // four-color palette; the same aliasing applies when matching an
+  // existing highlight's color to a toolbar swatch, so e.g. a "gold"
+  // highlight marks the yellow swatch active and toggles off through
+  // it. Mirrors Highlight::COLORS docs in app/models/highlight.rb.
+  static LEGACY_COLOR_ALIASES = { gold: "yellow", sage: "green", sky: "blue", lavender: "blue" }
+
+  canonicalColor(color) {
+    if (!color) return color
+    return this.constructor.LEGACY_COLOR_ALIASES[color] || color
+  }
+
   connect() {
     this.onSelectionChange = this.onSelectionChange.bind(this)
     this.onDocumentPointerdown = this.onDocumentPointerdown.bind(this)
@@ -76,7 +88,9 @@ export default class extends Controller {
     const verseEl = span.closest(".verse")
     if (verseEl?.dataset?.verseId) tb.dataset.anchorVerseId = verseEl.dataset.verseId
 
-    const color = Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
+    const color = this.canonicalColor(
+      Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
+    )
     tb.querySelectorAll("button[data-color]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.color === color ? "true" : "false")
     })
@@ -305,7 +319,7 @@ export default class extends Controller {
   markActiveSwatch(range) {
     if (!this.hasToolbarTarget) return
     const dominant = this.dominantHighlightUnderSelection(range)
-    const activeColor = dominant?.color ?? null
+    const activeColor = this.canonicalColor(dominant?.color ?? null)
     this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.color === activeColor ? "true" : "false")
     })
