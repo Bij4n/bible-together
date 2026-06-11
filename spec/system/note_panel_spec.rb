@@ -53,6 +53,6 @@ RSpec.describe "Note editor panel", type: :system, js: true do
     expect(page).to have_selector(%(body[data-note-panel-open="true"]))
     expect(page).to have_selector("trix-editor", visible: :all)
     expect(page).to have_selector("form[action='/notes']", visible: :all)
-    expect(Highlight.where(user: user, color: "gold").count).to eq(1)
+    expect(Highlight.where(user: user, color: Highlight::DEFAULT_COLOR).count).to eq(1)
   end
 end

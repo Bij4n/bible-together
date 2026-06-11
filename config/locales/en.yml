@@ -162,6 +162,9 @@ en:
       dismiss_toolbar: Dismiss
       highlight_action: Highlight
       verse_view: Verse view
+      verse_notes_chip:
+        one: "%{count} note on this verse"
+        other: "%{count} notes on this verse"
       layer_label: Layer
       layer_mine: My Bible
       layer_community: Community

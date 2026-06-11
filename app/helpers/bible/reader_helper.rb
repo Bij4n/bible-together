@@ -1,5 +1,21 @@
 module Bible
   module ReaderHelper
+    # Verse id => ordered unique note ids, for the per-verse note chips
+    # (design v3). Built from the chapter's already-loaded highlights
+    # (notes eager-loaded by every reader controller), so the only extra
+    # queries are the per-highlight affected_verses lookups — a handful
+    # per chapter at most.
+    def verse_note_map(highlights)
+      map = Hash.new { |h, k| h[k] = [] }
+      Array(highlights).each do |hl|
+        note_ids = hl.notes.map(&:id)
+        next if note_ids.empty?
+
+        hl.affected_verses.each { |v| map[v.id].concat(note_ids) }
+      end
+      map.transform_values(&:uniq)
+    end
+
     # Emit verse HTML with highlight overlays layered over red-letter
     # (jesus-words) spans. Character ranges are merged via an event-list
     # sweep: collect every range boundary, sort, emit one span per

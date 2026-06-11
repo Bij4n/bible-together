@@ -679,6 +679,39 @@
    * `ch` so the line length stays inside the 50-75ch reading-comfort
    * band regardless of viewport width.
    */
+  /* Per-verse note-count chip (design v3 margin chips, rendered
+     inline at the verse's end). Quiet accent-tinted pill; the count
+     is the content. data-ignore-selection keeps it out of the
+     offset math like the verse-number sup. */
+  .verse-note-chip {
+    display: inline-block;
+    margin-left: 0.35em;
+    padding: 0 0.45em;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-accent-700) 10%, transparent);
+    color: var(--color-accent-700);
+    font-family: var(--font-ui);
+    font-size: 0.62em;
+    font-weight: 600;
+    line-height: 1.6;
+    vertical-align: 0.25em;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+
+  .verse-note-chip:hover {
+    background: color-mix(in srgb, var(--color-accent-700) 18%, transparent);
+  }
+
+  html[data-theme="dark"] .verse-note-chip {
+    background: color-mix(in srgb, var(--color-accent-400) 14%, transparent);
+    color: var(--color-accent-400);
+  }
+
+  html[data-theme="dark"] .verse-note-chip:hover {
+    background: color-mix(in srgb, var(--color-accent-400) 22%, transparent);
+  }
+
   /* Keyboard verse focus (j/k verbs). A quiet accent ring around the
      focused verse — visible without shouting over highlights. */
   .verse.verse-kbd-focus {

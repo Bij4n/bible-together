@@ -39,7 +39,8 @@
   </header>
 
   <div class="chapter-body font-reading text-surface-900 dark:text-surface-100">
-    <% @verses.each_with_index do |verse, i| %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0 } %><%= " " unless i == @verses.size - 1 %><% end %>
+    <% chip_map = verse_note_map(@highlights) %>
+    <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: "#note_#{chip_ids.first}" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
   <aside id="public_notes_aside" class="space-y-4">
