@@ -551,9 +551,12 @@
     opacity: 0.28;
   }
 
+  /* Red-letter is upright roman on screen — color alone carries the
+     "Jesus is speaking" signal (the italics read dated at body sizes).
+     The print stylesheet still demotes to italic black for mono
+     printers, where color can't carry it. */
   .jesus-words {
     color: var(--color-jesus-light);
-    font-style: italic;
   }
 
   html[data-theme="dark"] .jesus-words {
@@ -665,8 +668,14 @@
   .chapter-body {
     font-feature-settings: "kern" 1, "liga" 1;
     text-rendering: optimizeLegibility;
-    line-height: 1.8;
-    max-width: 70ch;
+    /* The Medium reading column: ~17px on phones fluidly up to 20px
+       on desktop, 1.7 leading (verses carry superscript numbers, so
+       slightly looser than prose), and a 42rem (~672px) measure.
+       This rule owns the chapter's type entirely — the reader views
+       deliberately carry no text-size/leading utilities. */
+    font-size: clamp(1.0625rem, 0.95rem + 0.55vw, 1.25rem);
+    line-height: 1.7;
+    max-width: 42rem;
     margin-left: auto;
     margin-right: auto;
   }

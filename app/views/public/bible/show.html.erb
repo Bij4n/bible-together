@@ -33,7 +33,7 @@
     <% end %>
   </header>
 
-  <div class="chapter-body font-reading text-lg leading-relaxed text-surface-900 dark:text-surface-100">
+  <div class="chapter-body font-reading text-surface-900 dark:text-surface-100">
     <% @verses.each_with_index do |verse, i| %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0 } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
