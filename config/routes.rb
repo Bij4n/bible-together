@@ -68,6 +68,10 @@ Rails.application.routes.draw do
 
   get "/search", to: "search#index", as: :search
 
+  # The global public-notes feed (Sprint R7) — "the public list of all
+  # the public comments/stories on highlighted verses."
+  get "/community", to: "community#index", as: :community
+
   resources :authors, only: [ :show ] do
     # Follow the author (Sprint R5). Singular — you either follow
     # someone or you don't.

@@ -285,6 +285,24 @@ es:
       shared_users: Personas específicas
       shared_groups: Mis estudios
       public_note: Pública
+  community:
+    title: Comunidad
+    intro: Notas públicas de lectores de todas partes — lo que un versículo significó para alguien, en sus propias palabras. Cualquiera puede leer; inicia sesión para añadir la tuya.
+    sort_label: Ordenar
+    sort_recent: Recientes
+    sort_top: Destacadas
+    book_filter: Libro
+    all_books: Todos los libros
+    upvotes:
+      one: "%{count} voto"
+      other: "%{count} votos"
+    replies:
+      one: "%{count} respuesta"
+      other: "%{count} respuestas"
+    posted_ago: "hace %{time}"
+    read_in_context: Leer en contexto
+    load_more: Cargar más
+    empty: Aún no hay notas públicas. Abre la Biblia, resalta un versículo y sé quien comparta primero lo que significa para ti.
   authors:
     public_notes_heading: Notas públicas
     member_since: "Miembro desde %{year}"

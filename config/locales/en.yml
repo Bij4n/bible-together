@@ -292,6 +292,24 @@ en:
       shared_users: Specific people
       shared_groups: My studies
       public_note: Public
+  community:
+    title: Community
+    intro: Public notes from readers everywhere — what a verse meant to someone, in their own words. Anyone can read; sign in to add yours.
+    sort_label: Sort
+    sort_recent: Recent
+    sort_top: Top
+    book_filter: Book
+    all_books: All books
+    upvotes:
+      one: "%{count} upvote"
+      other: "%{count} upvotes"
+    replies:
+      one: "%{count} reply"
+      other: "%{count} replies"
+    posted_ago: "%{time} ago"
+    read_in_context: Read in context
+    load_more: Load more
+    empty: No public notes yet. Open the Bible, highlight a verse, and be the first to share what it means to you.
   authors:
     public_notes_heading: Public Notes
     member_since: "Member since %{year}"
