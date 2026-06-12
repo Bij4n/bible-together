@@ -288,6 +288,8 @@ is the template for R1–R4.
 | **R8 — Studies polish** | `/studies` alias + rename sweep, group page → club layout, discovery card grid | Groups surfaces |
 | **R9 — QA pass** | Full-app Firefox screenshot sweep (this audit's script, kept in `script/`), axe on both themes, mobile pass, perf check on chips/layer queries | — |
 
+R5–R9 are expanded into implementation-ready specs in §7 (gap-closure plan).
+
 R1–R4 are sequential (each builds on the last). R5–R6 are sequential with each other
 but independent of R3–R4 after R2. R7/R8 can land in either order.
 
@@ -303,3 +305,152 @@ but independent of R3–R4 after R2. R7/R8 can land in either order.
    Community layer active.
 
 R1 is unblocked.
+
+---
+
+## 7. Gap-closure plan (added 2026-06-11, post-R4)
+
+R1–R4 shipped the full visual + interaction redesign. This section expands R5–R9
+into implementation-ready specs and assigns every known gap — including the small
+debts R1–R4 left behind — to a sprint. Nothing on this list is unowned.
+
+### Gap inventory → sprint assignment
+
+| Gap | Sprint |
+|---|---|
+| No follow system / no mutual-follow friends | R5 |
+| No "Friends" option in the Post-to menu | R6 |
+| "Specific people" sharing is comma-separated emails | R6 |
+| No visibility glyph (lock/people/globe) on rendered notes | R6 |
+| No global public feed of notes ("the public list") | R7 |
+| `/public/bible` not yet merged into the reader (owner decision #4) | R7 |
+| No Kindle-style "N people highlighted" on community underlines | R7 |
+| Studies rename is nav-only; pages/emails/URLs still say Groups | R8 |
+| Transactional emails still use the old mint in inline styles | R8 |
+| Group page isn't the club layout from §4.5 | R8 |
+| Verse-view toggle missing on community/study layers | R9 |
+| No `?` shortcuts overlay (j/k/h/n undiscoverable) | R9 |
+| Devise paranoid mode undecided (account-existence leak) | R9 |
+| Full a11y/mobile/perf sweep on the new surfaces | R9 |
+| Semantic-search production deployment | Out of scope — backlog (pre-dates redesign) |
+| Group default-visibility open question (Sprint 4) | Decide in R6 (recommendation: keep opt-in) |
+
+### R5 — Follows
+
+Foundation for friends. No notifications in v1.
+
+1. **Migration** `create_table :follows`: `follower_id`/`followed_id` (FKs to users,
+   `null: false`), timestamps; unique index on `[follower_id, followed_id]`; check
+   constraint `follower_id != followed_id`. strong_migrations-safe (new table).
+2. **Models.** `Follow` (belongs_to follower/followed, both `class_name: "User"`).
+   `User`: `following` / `followers` through follows; `follow!(user)` /
+   `unfollow!(user)` / `following?(user)`; `friends` scope via the mutual self-join
+   (`follows f1 JOIN follows f2 ON f1.followed_id = f2.follower_id AND
+   f1.follower_id = f2.followed_id`); `friends_with?(user)`.
+3. **Author page UI** (`/authors/:id` exists): Follow/Following toggle button
+   (signed-in, hidden on self), follower/following counts, "Friends" badge when
+   mutual. Plain form POST/DELETE → redirect back; no Turbo Streams needed.
+4. **FollowsController** `create`/`destroy`, scoped `current_user.follows`.
+   404 on self-follow attempts.
+5. Follows are public-profile data (consistent with public notes); no privacy
+   toggle in v1 — revisit if requested.
+
+TDD: model specs (mutuality, constraint, self-follow), request specs (auth, idempotence),
+system spec (toggle on author page). ~4 commits.
+
+### R6 — Friends sharing
+
+1. **Enum append** (integer-backed, append-only): `friends_note: 4` in
+   `Note::VISIBILITIES`; add to `NotesController::ACTIVE_VISIBILITIES`.
+2. **`Note.visible_to(user)` fifth branch:**
+   `OR (notes.visibility = 4 AND notes.user_id IN (<user's mutual-follow ids subquery>))`.
+   Admin short-circuit unchanged. Comment visibility inherits via the existing
+   `Comment.visible_to` merge — verify with specs, no code expected.
+3. **Post-to menu** gains "Friends" between Only me and Specific people
+   (en "Friends" / es "Amistades"), with the same data-label mechanics. No share
+   sections needed — friends_note is zero-configuration by design.
+4. **Friend picker.** The "Specific people" section becomes a checkbox list of the
+   author's friends (mutual follows, alphabetical) + the email input demoted to an
+   "or invite by email" fallback row. NoteShare semantics unchanged.
+5. **Visibility glyphs.** Every rendered note (notes index, note panel header,
+   community cards, group lists) shows a tiny glyph + sr-only label for its
+   visibility: lock (only me), two-people (friends/specific), book (study), globe
+   (public). One shared helper `visibility_glyph(note)`.
+6. **Decision to log:** group default visibility stays opt-in per note (Sprint 4
+   default) — the Post-to menu makes the choice explicit at write time, which is
+   the friction we want.
+
+TDD: visible_to model specs (mutual, one-way, stranger, admin), composer system
+specs, glyph helper spec. ~5 commits.
+
+### R7 — Community feed + public-bible merge
+
+1. **`/community` feed** (`CommunityController#index`, public): cards = quoted verse
+   (reading serif) + citation + note body + author + upvote/comment counts + posted-at.
+   Sort: Recent (default) / Top (`sorted_for_public`). Filter: book select (highlight
+   osis_ref prefix). Pagination: `limit/offset` with a "Load more" link (no new gem);
+   25/page. Built on `Note.public_visible` + existing includes to avoid N+1.
+2. **Nav.** "Community" nav item points to `/community`; the reader's layer switcher
+   keeps pointing at the community *reading* layer.
+3. **Public-bible merge (owner decision #4):** `Bible::ReaderController` learns
+   `?layer=community` — renders the community variant (dotted underlines, public
+   notes list, no personal toolbar); `/public/bible/:t/:b/:c` 301-redirects to
+   `/bible/:t/:b/:c?layer=community`; signed-out `/bible/...` serves the community
+   layer directly instead of redirecting away. Canonical URLs + sitemap updated;
+   the old route helpers keep working through the redirect during transition.
+   The layer switcher's Community option now stays inside `/bible`.
+4. **"N people highlighted."** Community layer chips/underlines gain
+   `title`/aria-label "N people highlighted this verse" (distinct highlight authors
+   per verse, computed alongside `verse_note_map`).
+
+TDD: feed request + system specs, redirect specs, layer-param specs, count helper
+spec. ~6 commits. This is the largest remaining sprint.
+
+### R8 — Studies rename + study page + emails
+
+1. **Routes:** `resources :groups, path: "studies"` (helpers unchanged) + 301
+   redirect `/groups/*` → `/studies/*` for bookmarks/SEO.
+2. **Copy sweep:** all `groups.*` i18n values to study wording (en + es) — page
+   headings, buttons, flashes, invitation email subject/body. Model/table/helper
+   names stay `Group`/`groups` (display-level rename per the original decision).
+3. **Study page → club layout (§4.5):** header (name, members, invite),
+   "reading together" card linking the group's current chapter, then the member-notes
+   feed anchored to verses. Real-time wiring untouched.
+4. **Discovery** page becomes the card grid.
+5. **Mailer re-skin:** transactional emails (Devise + invitations) get the v3 green
+   and Source Serif inline styles — closes the stale-mint debt.
+
+TDD: redirect specs, system sweep label updates, mailer specs. ~5 commits.
+Highest spec-churn sprint (label assertions), lowest risk.
+
+### R9 — QA + hardening (close-out)
+
+1. Full `script/design_audit.rb` sweep — all surfaces × both themes × desktop/mobile;
+   fix visual nits found.
+2. axe-core on every surface including the new ones (community feed, author pages,
+   Post-to menu open state) — both themes.
+3. **Small debts:** verse-view toggle on community/study layers; `?` keyboard
+   shortcuts overlay (one modal listing j/k/h/n + Esc, aria-modal, closes on Esc).
+4. **Perf:** verify chip/layer/feed queries N+1-free under log inspection; add any
+   missing indexes surfaced by the follows/friends subqueries.
+5. **Security gate:** flip `config.devise.paranoid = true` (account-existence leak
+   matters more once follows make user enumeration interesting); re-run brakeman +
+   bundler-audit; review FollowsController for IDOR.
+6. Decisions-log close-out + REDESIGN.md marked complete; README screenshots refresh.
+
+### Sequencing
+
+```
+R5 ──► R6 ──┐
+            ├──► R9
+R7 ─────────┤
+R8 ─────────┘
+```
+
+R5→R6 is the only hard dependency. R7 and R8 are independent of both and of each
+other — they can interleave if priorities shift (e.g., ship R7 first if the public
+feed matters most). R9 is last, always.
+
+Estimated effort at the R1–R4 pace: R5 and R8 are single-session sprints; R6 and R7
+are larger; R9 is a half-session. The user-facing goal statement is fully satisfied
+at the end of R7; R8–R9 are finish work.

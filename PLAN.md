@@ -9,8 +9,9 @@ feed). The full plan and sprint sequencing R1–R9 live in `REDESIGN.md`; the de
 system as shipped lives in `DESIGN.md`. Sprints R3 (highlight/note flow) and **R4
 (reader layers + chips) shipped** — layer switcher, per-verse note chips, dotted
 community underlines, verse-per-block toggle, keyboard verbs. Next up: **Sprint R5 —
-follows** (follows table, mutual-follow friends, author-page follow UI), then R6
-friends sharing, R7 community feed, R8 studies rename, R9 QA pass.
+follows**, then R6 friends sharing, R7 community feed + public-bible merge, R8
+studies rename, R9 QA/hardening. R5–R9 are specced in detail in REDESIGN.md §7
+(gap-closure plan, added post-R4) — every known gap has a sprint assignment.
 
 Previously: Sprint 25 closed — mobile highlighting / note-leaving / note-sharing flow (PRs #97–#101), all merged and live. See `HANDOFF.md` for the prior polish queue.
 
