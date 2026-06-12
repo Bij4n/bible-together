@@ -278,6 +278,7 @@ es:
     post_to: Publicar para
     visibility:
       private_note: Solo yo
+      friends_note: Amistades
       shared_users: Personas específicas
       shared_groups: Mis estudios
       public_note: Pública

@@ -285,6 +285,7 @@ en:
     post_to: Post to
     visibility:
       private_note: Only me
+      friends_note: Friends
       shared_users: Specific people
       shared_groups: My studies
       public_note: Public

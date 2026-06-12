@@ -27,6 +27,12 @@ RSpec.describe "Notes", type: :request do
         expect(note.body.to_s).to include("A thought")
       end
 
+      it "accepts friends_note from the Post-to menu" do
+        post "/notes",
+             params: { note: { body: "For my friends", highlight_ids: [ highlight.id ], visibility: "friends_note" } }
+        expect(Note.last.visibility).to eq("friends_note")
+      end
+
       it "accepts a visibility from the form and falls back to private_note for unknown values" do
         post "/notes",
              params: { note: { body: "A thought", highlight_ids: [ highlight.id ], visibility: "shared_users" } }
