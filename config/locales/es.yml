@@ -276,6 +276,7 @@ es:
     confirm_public: Hacerla pública
     cancel_public: Volver
     post_to: Publicar para
+    or_invite_by_email: O comparte por correo
     visibility:
       private_note: Solo yo
       friends_note: Amistades

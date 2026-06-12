@@ -283,6 +283,7 @@ en:
     confirm_public: Make it public
     cancel_public: Go back
     post_to: Post to
+    or_invite_by_email: Or share by email
     visibility:
       private_note: Only me
       friends_note: Friends
