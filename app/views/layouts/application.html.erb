@@ -96,8 +96,8 @@
             <%= link_to t("layout.studies_link"), groups_path,
                         class: "#{rail_idle} #{request.path.start_with?("/groups") ? rail_active : rail_rest}" %>
           <% end %>
-          <%= link_to t("layout.community_link"), "/public/bible",
-                      class: "#{rail_idle} #{request.path.start_with?("/public/bible") ? rail_active : rail_rest}" %>
+          <%= link_to t("layout.community_link"), community_path,
+                      class: "#{rail_idle} #{request.path.start_with?("/community") ? rail_active : rail_rest}" %>
           <% unless user_signed_in? %>
             <%= link_to t("layout.how_it_works_link"), how_it_works_path,
                         class: "#{rail_idle} #{nav_active?(how_it_works_path) ? rail_active : rail_rest}" %>
@@ -146,7 +146,7 @@
               <% if user_signed_in? %>
                 <%= link_to t("layout.studies_link"), groups_path, role: "menuitem", class: "sm:hidden #{menu_item_base} #{menu_item_idle}" %>
               <% end %>
-              <%= link_to t("layout.community_link"), "/public/bible", role: "menuitem", class: "sm:hidden #{menu_item_base} #{menu_item_idle}" %>
+              <%= link_to t("layout.community_link"), community_path, role: "menuitem", class: "sm:hidden #{menu_item_base} #{menu_item_idle}" %>
 
               <% if user_signed_in? %>
                 <div class="px-4 py-2 text-xs uppercase tracking-wide text-surface-500 dark:text-surface-400">
