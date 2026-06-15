@@ -85,7 +85,7 @@ RSpec.describe "Navbar nav links", type: :system do
       end
     end
 
-    it "marks the Studies link active when on /groups" do
+    it "marks the Studies link active when on /studies" do
       visit groups_path
       within("header nav") do
         link = find_link(I18n.t("layout.studies_link"))

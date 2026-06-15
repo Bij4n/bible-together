@@ -2,7 +2,7 @@
 <% debug_selection = Rails.env.development? || params[:debug] == "1" %>
 
 <article class="relative mx-auto max-w-3xl space-y-8"
-         data-controller="highlight"
+         data-controller="highlight reader-prefs"
          data-highlight-translation-code-value="<%= @translation.code %>"
          data-highlight-book-value="<%= @book.osis_code %>"
          data-highlight-chapter-value="<%= @chapter.number %>"
@@ -24,9 +24,19 @@
       <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
         <%= @translation.name %>
       </p>
-      <%= render "bible/reader/layer_switcher",
-                 translation: @translation, book: @book, chapter: @chapter,
-                 selected_url: group_bible_chapter_path(@group, translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+      <div class="flex items-center gap-2">
+        <button type="button"
+                data-action="reader-prefs#toggleVerseBlocks"
+                data-reader-prefs-target="verseToggle"
+                aria-pressed="false"
+                title="<%= t("bible.reader.verse_view") %>"
+                class="rounded-md border border-surface-300 bg-surface-50 px-3 py-1.5 font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-accent-700/40 aria-pressed:text-accent-700 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-300 dark:hover:bg-surface-800 dark:aria-pressed:border-accent-400/40 dark:aria-pressed:text-accent-400">
+          <%= t("bible.reader.verse_view") %>
+        </button>
+        <%= render "bible/reader/layer_switcher",
+                   translation: @translation, book: @book, chapter: @chapter,
+                   selected_url: group_bible_chapter_path(@group, translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+      </div>
     </div>
     <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 dark:text-surface-50 sm:text-5xl md:text-6xl">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
@@ -34,6 +44,7 @@
   </header>
 
   <div class="chapter-body font-reading text-surface-900 dark:text-surface-100"
+       data-reader-prefs-target="body"
        data-highlight-target="chapter">
     <% chip_map = verse_note_map(@highlights) %>
     <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: "#note_#{chip_ids.first}" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>

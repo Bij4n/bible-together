@@ -18,35 +18,35 @@ RSpec.describe "Groups::Bible", type: :request do
 
   before { create(:membership, user: member, group: group, role: :member) }
 
-  describe "GET /groups/:group_id/bible/:translation/:book/:chapter" do
+  describe "GET /studies/:group_id/bible/:translation/:book/:chapter" do
     it "requires sign-in" do
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
       expect(response).to redirect_to(new_user_session_path)
     end
 
     it "404s for non-members" do
       sign_in outsider
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
       expect(response).to have_http_status(:not_found)
     end
 
     it "renders for owner" do
       sign_in owner
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("For God so loved the world")
     end
 
     it "subscribes the page to the group bible cable channel" do
       sign_in owner
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
       expect(response.body).to include(%(channel="GroupBibleChannel"))
       expect(response.body).to match(%r{<turbo-cable-stream-source[^>]*signed-stream-name})
     end
 
     it "renders for member with breadcrumb" do
       sign_in member
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(group.name)
     end
@@ -62,7 +62,7 @@ RSpec.describe "Groups::Bible", type: :request do
       owner.update!(display_name: "Apollos")
 
       sign_in member
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
 
       expect(response.body).to include("A thought")
       expect(response.body).to include("Apollos")
@@ -79,7 +79,7 @@ RSpec.describe "Groups::Bible", type: :request do
       create(:note_share, note: note, shareable: other)
 
       sign_in member
-      get "/groups/#{group.id}/bible/kjv/john/3"
+      get "/studies/#{group.id}/bible/kjv/john/3"
       expect(response.body).not_to include("Private thought")
     end
   end

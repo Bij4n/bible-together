@@ -33,6 +33,8 @@ class GroupsController < ApplicationController
   def show
     @memberships = @group.memberships.includes(:user)
     @pending_invitations = @group.group_invitations.pending.order(created_at: :desc) if @group.owner_id == current_user.id
+    @member_notes = @group.recent_member_notes
+    @reading_together = @group.reading_together_location
   end
 
   def edit
