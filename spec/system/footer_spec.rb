@@ -37,8 +37,8 @@ RSpec.describe "Footer", type: :system do
     it "renders the wordmark text without a mark glyph" do
       visit "/"
       within("footer") do
-        expect(page).to have_css("span.wordmark-open", text: "Open")
         expect(page).to have_css("span.wordmark-bible", text: "Bible")
+        expect(page).to have_css("span.wordmark-open", text: "Together")
         expect(page).not_to have_css("span.wordmark-mark")
       end
     end

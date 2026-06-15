@@ -16,14 +16,16 @@ module LocaleBannerHelper
                .first
   end
 
-  # Path to the same book/chapter in the suggested translation. Public
-  # reader → public path; signed-in reader → private path.
+  # Path to the same book/chapter in the suggested translation,
+  # preserving the active lens (the community layer lives at the same
+  # URL behind ?layer=community since the R7 merge).
   def locale_banner_target_path(suggested)
     args = {
       translation: suggested.code.downcase,
       book: @book.osis_code.downcase,
       chapter: @chapter.number
     }
-    controller_path.start_with?("public/") ? public_bible_chapter_path(args) : bible_chapter_path(args)
+    args[:layer] = "community" if params[:layer] == "community" || !user_signed_in?
+    bible_chapter_path(args)
   end
 end

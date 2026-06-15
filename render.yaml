@@ -1,4 +1,4 @@
-# Render Blueprint for Open Bible.
+# Render Blueprint for Bible Together.
 #
 # Three resources: a Rails web service, a private Python embedding
 # service the Rails app calls over HTTP, and a managed Postgres.
@@ -15,7 +15,7 @@
 
 services:
   - type: web
-    name: open-bible-web
+    name: bible-together-web
     runtime: ruby
     plan: starter
     region: oregon
@@ -39,18 +39,18 @@ services:
         sync: false
       - key: DATABASE_URL
         fromDatabase:
-          name: open-bible-db
+          name: bible-together-db
           property: connectionString
       - key: EMBEDDING_SERVICE_HOST
         fromService:
           type: pserv
-          name: open-bible-embedding
+          name: bible-together-embedding
           property: host
       - key: EMBEDDING_SERVICE_PORT
         value: "8000"
 
   - type: pserv
-    name: open-bible-embedding
+    name: bible-together-embedding
     runtime: python
     # Standard plan (2 GB RAM) — sentence-transformers + torch resident
     # set is ~600-800 MB, which will OOM on starter (512 MB).
@@ -72,8 +72,8 @@ services:
       sizeGB: 1
 
 databases:
-  - name: open-bible-db
+  - name: bible-together-db
     plan: basic-256mb
     region: oregon
-    databaseName: open_bible_production
-    user: open_bible
+    databaseName: bible_together_production
+    user: bible_together

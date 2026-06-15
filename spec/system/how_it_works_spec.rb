@@ -77,7 +77,7 @@ RSpec.describe "How it works page", type: :system do
     expected_destinations = {
       "highlights"      => "/public/bible/kjv/gen/1",
       "notes"           => "/public/bible/kjv/gen/1",
-      "groups"          => "/groups",
+      "groups"          => "/studies",
       "public"          => "/public/bible/kjv/gen/1",
       "bilingual"       => "/public/bible/rv1909/gen/1",
       "keyword_search"  => "/search",

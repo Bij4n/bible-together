@@ -1,6 +1,6 @@
-# Contributing to Open Bible
+# Contributing to Bible Together
 
-Thanks for wanting to help. Open Bible is a Rails app for reading, marking up,
+Thanks for wanting to help. Bible Together is a Rails app for reading, marking up,
 and sharing scripture — built around the belief that scripture is meant to be
 read with someone. Contributions are welcome whether you're fixing a bug, adding
 a new public-domain translation, improving accessibility, or tightening the
@@ -202,7 +202,7 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Questions
 
-Use [GitHub Discussions](https://github.com/Bij4n/open-bible/discussions):
+Use [GitHub Discussions](https://github.com/Bij4n/bible-together/discussions):
 
 - **Q&A** — setup help, "how do I self-host this?", anything that's a
   question with an answer. Threads get marked resolved so others can find them.

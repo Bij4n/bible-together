@@ -1,8 +1,8 @@
-# Welcome to Open Bible Discussions
+# Welcome to Bible Together Discussions
 
 Thanks for being here.
 
-Open Bible is a Bible reader built around the idea that scripture is meant to
+Bible Together is a Bible reader built around the idea that scripture is meant to
 be read with someone — you can highlight passages, write notes, share them
 privately or publicly, and read together in real-time with a group. It runs
 at [bible-together.org](https://bible-together.org) and the code is open-source
@@ -24,7 +24,7 @@ and free to self-host.
   who's using this and what you're using it for.
 
 - **Spotted a bug?** Open an
-  [issue](https://github.com/Bij4n/open-bible/issues) with steps to reproduce.
+  [issue](https://github.com/Bij4n/bible-together/issues) with steps to reproduce.
 
 ---
 
@@ -35,7 +35,7 @@ and every PR that touches user-facing copy ships with both locales updated.
 
 **Adding a public-domain translation is a real contribution path.** The OSIS
 importer handles both major dialect variants. See
-[CONTRIBUTING.md](https://github.com/Bij4n/open-bible/blob/main/CONTRIBUTING.md#adding-a-translation)
+[CONTRIBUTING.md](https://github.com/Bij4n/bible-together/blob/main/CONTRIBUTING.md#adding-a-translation)
 for the step-by-step.
 
 **Self-hosting is possible.** It's a standard Rails 8 app on PostgreSQL. The

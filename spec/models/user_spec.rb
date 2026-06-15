@@ -15,8 +15,8 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:email) }
 
     it "requires unique email case-insensitively" do
-      create(:user, email: "reader@open-bible.test")
-      dup = build(:user, email: "READER@open-bible.test")
+      create(:user, email: "reader@bible-together.test")
+      dup = build(:user, email: "READER@bible-together.test")
       expect(dup).not_to be_valid
       expect(dup.errors[:email]).to be_present
     end
@@ -86,7 +86,7 @@ RSpec.describe User, type: :model do
 
   describe "defaults" do
     it "sets ui_locale and theme when the row is created" do
-      user = User.create!(email: "fresh@open-bible.test", password: "correct horse battery staple")
+      user = User.create!(email: "fresh@bible-together.test", password: "correct horse battery staple")
       expect(user.ui_locale).to eq("en")
       expect(user.theme).to eq("system")
     end
@@ -94,12 +94,12 @@ RSpec.describe User, type: :model do
 
   describe "#author_name" do
     it "returns the display_name when set" do
-      user = build(:user, display_name: "Scribe", email: "bookish@open-bible.test")
+      user = build(:user, display_name: "Scribe", email: "bookish@bible-together.test")
       expect(user.author_name).to eq("Scribe")
     end
 
     it "falls back to the email local-part when display_name is blank" do
-      user = build(:user, display_name: nil, email: "scribe@open-bible.test")
+      user = build(:user, display_name: nil, email: "scribe@bible-together.test")
       expect(user.author_name).to eq("scribe")
     end
 

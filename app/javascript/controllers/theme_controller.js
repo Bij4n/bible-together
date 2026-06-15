@@ -20,13 +20,19 @@ const MODES = ["light", "dark", "system"]
 export default class extends Controller {
   static targets = ["label"]
   static values = {
-    storageKey: { type: String, default: "open-bible:theme" }
+    storageKey: { type: String, default: "bible-together:theme" }
   }
 
   connect() {
     this.media = window.matchMedia("(prefers-color-scheme: dark)")
     this.systemListener = this._onSystemChange.bind(this)
     this.media.addEventListener("change", this.systemListener)
+
+    const legacy = localStorage.getItem("open-bible:theme")
+    if (legacy && !localStorage.getItem(this.storageKeyValue)) {
+      localStorage.setItem(this.storageKeyValue, legacy)
+      localStorage.removeItem("open-bible:theme")
+    }
 
     const existing = document.documentElement.dataset.theme
     let mode

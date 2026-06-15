@@ -2,7 +2,7 @@
 
 ## Project
 
-**Open Bible** (repo: `open-bible`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. Aesthetic: modern SaaS — Inter (UI/body sans) + Instrument Serif (verse + italic accents) + JetBrains Mono (refs/labels), mint accent (#0F5C3F), cool near-white light mode, cool near-black dark mode. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
+**Bible Together** (repo: `bible-together`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. Aesthetic: modern SaaS — Inter (UI/body sans) + Instrument Serif (verse + italic accents) + JetBrains Mono (refs/labels), mint accent (#0F5C3F), cool near-white light mode, cool near-black dark mode. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
 
 Full roadmap lives in `PLAN.md`. Read it before starting any sprint. Update it when decisions change.
 
