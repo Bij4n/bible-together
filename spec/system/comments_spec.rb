@@ -29,7 +29,7 @@ RSpec.describe "Comments", type: :system, js: true do
     sign_in member
     note # trigger creation
 
-    visit "/groups/#{group.id}/bible/kjv/john/3"
+    visit "/studies/#{group.id}/bible/kjv/john/3"
     expect(page).to have_content("Seed thought")
 
     fill_in "comment[body]", with: "Well said.", match: :first
@@ -47,7 +47,7 @@ RSpec.describe "Comments", type: :system, js: true do
     top = create(:comment, note: note, user: owner, body: "Original")
     reply = create(:comment, note: note, user: member, parent: top, body: "Response")
 
-    visit "/groups/#{group.id}/bible/kjv/john/3"
+    visit "/studies/#{group.id}/bible/kjv/john/3"
 
     reply_el = find("##{ActionView::RecordIdentifier.dom_id(reply)}", visible: :all)
     style = reply_el[:style]
@@ -76,7 +76,7 @@ RSpec.describe "Comments", type: :system, js: true do
   it "hides edit/delete for other users' comments" do
     create(:comment, note: note, user: owner, body: "Owner says so")
     sign_in member
-    visit "/groups/#{group.id}/bible/kjv/john/3"
+    visit "/studies/#{group.id}/bible/kjv/john/3"
     expect(page).to have_content("Owner says so")
     expect(page).not_to have_selector("input[value='Delete']")
   end
