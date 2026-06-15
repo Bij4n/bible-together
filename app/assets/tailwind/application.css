@@ -391,97 +391,6 @@
   }
 
   /*
-   * Wordmark mark. The accent-green disc next to "Bible Together" in the header
-   * and footer is the brand glyph — a 20x20 accent-700 disc with two
-   * concentric outline rings (4px @ 25% accent, 9px @ 10% accent)
-   * via box-shadow. Rendered as an inline-block on a decorative
-   * <span class="wordmark-mark" aria-hidden="true"></span> placed
-   * before the wordmark text. flex-shrink: 0 keeps the disc round
-   * when the parent flex container narrows.
-   *
-   * Pulse animation deliberately omitted — pulse reads as charming
-   * on first view and noise on the hundredth. The @keyframes for a
-   * subtle pulse lives commented-out immediately below; to enable,
-   * uncomment the keyframes block AND add
-   *   animation: wordmark-pulse 2.4s ease-in-out infinite;
-   * to .wordmark-mark.
-   */
-  .wordmark-mark {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--color-accent-700);
-    flex-shrink: 0;
-    box-shadow:
-      0 0 0 4px color-mix(in srgb, var(--color-accent-700) 25%, transparent),
-      0 0 0 9px color-mix(in srgb, var(--color-accent-700) 10%, transparent);
-  }
-
-  html[data-theme="dark"] .wordmark-mark {
-    background: var(--color-accent-400);
-    box-shadow:
-      0 0 0 4px color-mix(in srgb, var(--color-accent-400) 25%, transparent),
-      0 0 0 9px color-mix(in srgb, var(--color-accent-400) 10%, transparent);
-  }
-
-  /* Split-weight wordmark. "Together" renders at weight 400 in a muted
-     surface tone so the noun "Bible" at weight 720 reads as primary.
-     Inter variable axis covers 100–900 so 720 is a valid stop.
-     A literal space character sits between the spans so Capybara and
-     screen readers see "Bible Together" as two words; flex collapses it
-     visually. margin-left on .wordmark-open provides the actual gap. */
-  .wordmark-open {
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    color: var(--color-surface-600);
-  }
-  html[data-theme="dark"] .wordmark-open {
-    color: var(--color-surface-400);
-  }
-  .wordmark-bible {
-    font-weight: 720;
-    letter-spacing: -0.03em;
-    margin-left: 0.18em;
-    color: var(--color-surface-900);
-  }
-  html[data-theme="dark"] .wordmark-bible {
-    color: var(--color-surface-50);
-  }
-
-  /* Pulse animation revert path. Uncomment + wire to .wordmark-mark
-     animation property to enable.
-  @keyframes wordmark-pulse {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.72; }
-  }
-  */
-
-  /*
-   * Echo cursor — a thin blinking caret used inside the homepage
-   * feature/step demo blocks to suggest live typing. Width 1.5px,
-   * height matches its line, accent-green color, blinks every 1.1s.
-   * Decorative — wrapped in aria-hidden parents so screen readers
-   * skip it. prefers-reduced-motion at the bottom of this file
-   * already disables the animation by zeroing duration globally.
-   */
-  .echo-cursor {
-    display: inline-block;
-    width: 1.5px;
-    height: 1.05em;
-    background: var(--color-accent-700);
-    vertical-align: text-bottom;
-    margin-left: 1px;
-    animation: echo-cursor-blink 1.1s infinite;
-  }
-  html[data-theme="dark"] .echo-cursor {
-    background: var(--color-accent-400);
-  }
-  @keyframes echo-cursor-blink {
-    50% { opacity: 0; }
-  }
-
-  /*
    * Hero headline em-accent. Ships rendered emphasis on specific words
    * inside the hero h1 — the i18n string carries `<em>` for the words
    * we want lifted (welcome_html in en/es). Em swaps the sans run for
@@ -501,6 +410,125 @@
 
   html[data-theme="dark"] .hero-emphasis em {
     color: var(--color-accent-400);
+  }
+
+  /*
+   * Marketing / landing surfaces. Medium-style editorial rhythm:
+   * generous section spacing and a framed product preview in the hero.
+   * overflow-x: clip keeps the hero's soft background glow from
+   * bleeding past the viewport edge (it uses negative horizontal
+   * insets), which would otherwise trigger a mobile side-scroll.
+   */
+  .landing {
+    overflow-x: clip;
+  }
+
+  .landing-hero {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .landing-hero::before {
+    content: "";
+    position: absolute;
+    inset: -4rem -2rem auto;
+    height: min(520px, 70vh);
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, color-mix(in srgb, var(--color-accent-700) 9%, transparent), transparent 70%),
+      radial-gradient(ellipse 60% 50% at 85% 10%, color-mix(in srgb, var(--color-accent-700) 5%, transparent), transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  html[data-theme="dark"] .landing-hero::before {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, color-mix(in srgb, var(--color-accent-400) 12%, transparent), transparent 70%),
+      radial-gradient(ellipse 60% 50% at 85% 10%, color-mix(in srgb, var(--color-accent-400) 6%, transparent), transparent 65%);
+  }
+
+  .landing-preview {
+    overflow: hidden;
+    border-radius: 1.25rem;
+    border: 1px solid var(--color-surface-200);
+    background: var(--color-surface-50);
+    padding: 1.5rem 1.35rem 1.35rem;
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.04),
+      0 24px 64px -28px rgb(14 20 17 / 0.22);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .landing-preview-ref {
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-surface-500);
+  }
+
+  .landing-preview-note {
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-surface-200);
+    background: var(--color-surface-100);
+    padding: 1rem 1.05rem;
+  }
+
+  .landing-preview:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-surface-900) 18%, var(--color-surface-200));
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.04),
+      0 32px 72px -24px rgb(14 20 17 / 0.32);
+  }
+
+  html[data-theme="dark"] .landing-preview {
+    border-color: var(--color-surface-800);
+    background: var(--color-surface-900);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.35),
+      0 28px 72px -28px rgb(0 0 0 / 0.65);
+  }
+
+  html[data-theme="dark"] .landing-preview:hover {
+    border-color: color-mix(in srgb, var(--color-surface-50) 16%, var(--color-surface-800));
+  }
+
+  html[data-theme="dark"] .landing-preview-note {
+    border-color: var(--color-surface-800);
+    background: color-mix(in srgb, var(--color-surface-950) 65%, var(--color-surface-900));
+  }
+
+  .landing-bento-card {
+    border-radius: 1.25rem;
+    border: 1px solid var(--color-surface-200);
+    background: var(--color-surface-50);
+    padding: 1.35rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.03);
+  }
+
+  html[data-theme="dark"] .landing-bento-card {
+    border-color: var(--color-surface-800);
+    background: var(--color-surface-900);
+  }
+
+  .landing-community-card {
+    border-radius: 1.25rem;
+    border: 1px solid var(--color-surface-200);
+    background: var(--color-surface-50);
+    padding: 1.35rem 1.35rem 1.15rem;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .landing-community-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-surface-900) 14%, var(--color-surface-200));
+    box-shadow: 0 20px 48px -28px rgb(14 20 17 / 0.22);
+  }
+
+  html[data-theme="dark"] .landing-community-card {
+    border-color: var(--color-surface-800);
+    background: var(--color-surface-900);
   }
 
   /*

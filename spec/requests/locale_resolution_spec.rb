@@ -2,14 +2,11 @@ require "rails_helper"
 
 # Verifies the precedence documented in ApplicationController#resolved_locale:
 #   current_user.ui_locale  >  session[:locale]  >  params[:locale]  >  default.
-# We use home#show as the probe. The welcome headline now ships as
-# `welcome_html` with `<em>` markup around two words, which breaks
-# direct-substring matching on the rendered response body. The CTA
-# button copy ("Read the Bible" / "Leer la Biblia") is locale-distinct,
-# unique on the page, and has no embedded markup — cleaner probe.
+# We use home#show as the probe. The primary CTA copy is locale-distinct
+# and has no embedded markup.
 RSpec.describe "Locale resolution", type: :request do
-  let(:english_greeting) { "Read the Bible" }
-  let(:spanish_greeting) { "Leer la Biblia" }
+  let(:english_greeting) { I18n.t("home.cta_public_bible", locale: :en) }
+  let(:spanish_greeting) { I18n.t("home.cta_public_bible", locale: :es) }
 
   it "defaults to English" do
     get "/"

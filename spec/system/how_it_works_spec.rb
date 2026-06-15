@@ -22,74 +22,43 @@ RSpec.describe "How it works page", type: :system do
                    osis_ref: "Bible.RV1909.Gen.1.1")
   end
 
-  it "renders the page title and subhead" do
+  it "renders the page title and intro" do
     visit "/how-it-works"
 
     expect(page).to have_css("h1", text: I18n.t("home.how_it_works_title"))
-    expect(page).to have_content(I18n.t("home.subhead"))
+    expect(page).to have_content(I18n.t("home.landing.how_page_intro"))
   end
 
-  it "renders the three how-it-works step bodies" do
+  it "renders the three steps" do
     visit "/how-it-works"
 
-    expect(page).to have_content("Pick a translation. Open a chapter.")
-    expect(page).to have_content("Select what struck you. Write what it meant. Yours by default.")
-    expect(page).to have_content("With one person. With a group. With everyone.")
+    expect(page).to have_content(I18n.t("home.how.step_1_title"))
+    expect(page).to have_content(I18n.t("home.how.step_1_body"))
+    expect(page).to have_content(I18n.t("home.how.step_2_title"))
+    expect(page).to have_content(I18n.t("home.how.step_2_body"))
+    expect(page).to have_content(I18n.t("home.how.step_3_title"))
+    expect(page).to have_content(I18n.t("home.how.step_3_body"))
   end
 
-  it "renders all 7 feature cards" do
+  it "renders the included feature list" do
     visit "/how-it-works"
 
-    expect(page).to have_content(I18n.t("home.features.highlights.title"))
-    expect(page).to have_content(I18n.t("home.features.notes.title"))
-    expect(page).to have_content(I18n.t("home.features.groups.title"))
-    expect(page).to have_content(I18n.t("home.features.public.title"))
-    expect(page).to have_content(I18n.t("home.features.bilingual.title"))
-    expect(page).to have_content(I18n.t("home.features.keyword_search.title"))
-    expect(page).to have_content(I18n.t("home.features.semantic_search.title"))
-  end
-
-  it "groups feature cards into 'For yourself' and 'With others' subgroups" do
-    visit "/how-it-works"
-
-    expect(page).to have_css("h3", text: I18n.t("home.features.for_yourself"))
-    expect(page).to have_css("h3", text: I18n.t("home.features.with_others"))
-  end
-
-  it "renders the About section" do
-    visit "/how-it-works"
-
-    paragraphs = all("section#about p", visible: :all)
-    expect(paragraphs.size).to eq(5)
-    expect(paragraphs[0].text).to include("scripture is meant to be read with someone")
-    expect(paragraphs[1].text).to include("verse that wrecks you wrecks somebody else")
-  end
-
-  it "renders the softened public-notes card copy" do
-    visit "/how-it-works"
-
-    expect(page).to have_content("someone whose life looks nothing like yours")
-    expect(page).not_to have_content("widow who lost her husband")
-    expect(page).not_to have_content("kid finding their faith")
-  end
-
-  it "lands every feature-card link on its claimed destination" do
-    expected_destinations = {
-      "highlights"      => "/public/bible/kjv/gen/1",
-      "notes"           => "/public/bible/kjv/gen/1",
-      "groups"          => "/studies",
-      "public"          => "/public/bible/kjv/gen/1",
-      "bilingual"       => "/public/bible/rv1909/gen/1",
-      "keyword_search"  => "/search",
-      "semantic_search" => "/search"
-    }
-
-    expected_destinations.each do |key, path|
-      visit "/how-it-works"
-
-      title = I18n.t("home.features.#{key}.title")
-      link = find_link(title)
-      expect(link[:href]).to eq(path), "expected feature card '#{title}' to link to #{path}, was #{link[:href]}"
+    I18n.t("home.landing.feature_list").each do |item|
+      expect(page).to have_content(item)
     end
+  end
+
+  it "does not render the About section or feature demos" do
+    visit "/how-it-works"
+
+    expect(page).not_to have_css("section#about")
+    expect(page).not_to have_css(".landing-bento-card")
+  end
+
+  it "links to the reader from the page CTA" do
+    visit "/how-it-works"
+
+    click_on I18n.t("home.cta_public_bible")
+    expect(page).to have_current_path("/bible/kjv/gen/1?layer=community")
   end
 end

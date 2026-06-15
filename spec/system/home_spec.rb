@@ -1,7 +1,7 @@
 require "rails_helper"
 
-# Homepage is now hero-only: verse card (or empty-state), community notes,
-# and donate CTA. Features / how-it-works / about moved to /how-it-works.
+# Homepage is hero copy, three bullet points, optional community notes,
+# and donate CTA. Full tour lives on /how-it-works.
 RSpec.describe "Home page", type: :system do
   let!(:translation_kjv) { create(:translation, :kjv) }
   let!(:translation_rv1909) { create(:translation, :rv1909) }
@@ -24,44 +24,76 @@ RSpec.describe "Home page", type: :system do
                    osis_ref: "Bible.RV1909.Gen.1.1")
   end
 
-  it "shows the hero empty-state verse card when no featured note exists" do
-    visit "/"
-    expect(page).to have_css("[data-testid='hero-empty-state']")
-    expect(page).to have_content(I18n.t("home.hero_empty_state.cta"))
-    expect(page).to have_content("John 3")
-  end
-
   it "renders the hero copy" do
     visit "/"
 
-    expect(page).to have_css("h1", text: "Where verses meet voices.")
+    expect(page).to have_css("h1", text: I18n.t("home.welcome"))
     expect(page).to have_content(I18n.t("home.subhead"))
     expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
-  it "renders the brand mark in the header wordmark" do
+  it "renders the landing points" do
     visit "/"
 
-    within("header") do
-      expect(page).to have_css("span.wordmark-mark")
-      expect(page).to have_css("span.wordmark-bible", text: "Bible")
-      expect(page).to have_css("span.wordmark-open", text: "Together")
+    I18n.t("home.landing.points").each do |point|
+      expect(page).to have_content(point[:title])
+      expect(page).to have_content(point[:body])
     end
   end
 
-  it "does not render the features section or how-it-works section on the homepage" do
+  it "renders the hero product preview" do
     visit "/"
 
-    expect(page).not_to have_content(I18n.t("home.features.highlights.title"))
-    expect(page).not_to have_content(I18n.t("home.how.step_1_body"))
+    within(".landing-hero") do
+      expect(page).to have_css(".landing-preview")
+    end
+  end
+
+  it "does not render removed marketing sections" do
+    visit "/"
+
+    expect(page).not_to have_css("[data-testid='hero-empty-state']")
+    expect(page).not_to have_css(".landing-hero-grid")
     expect(page).not_to have_css("section#about")
   end
 
-  it "links 'See how it works' to /how-it-works" do
+  it "renders marketing pages in light mode even when the user prefers dark" do
+    user = create(:user, theme: "dark")
+    sign_in user
+    visit "/"
+    expect(page).to have_css('html[data-theme="light"]')
+    expect(page).to have_css("body.marketing-surface")
+  end
+
+  it "renders the same wordmark in header and footer" do
     visit "/"
 
-    link = find_link(I18n.t("home.cta_how_it_works"))
-    expect(link[:href]).to eq("/how-it-works")
+    within("header") do
+      expect(page).to have_link(I18n.t("app.name"), href: "/")
+      expect(page).to have_css("a.wordmark")
+      expect(page).not_to have_css("svg.wordmark-mark")
+    end
+
+    within("footer") do
+      expect(page).to have_link(I18n.t("app.name"), href: "/")
+      expect(page).to have_css("a.wordmark")
+      expect(page).not_to have_css("svg.wordmark-mark")
+    end
+  end
+
+  it "does not render the full how-it-works feature grid on the homepage" do
+    visit "/"
+
+    expect(page).not_to have_content(I18n.t("home.features.semantic_search.title"))
+  end
+
+  it "links 'How it works' to /how-it-works from the hero" do
+    visit "/"
+
+    within(".landing-hero") do
+      link = find_link(I18n.t("home.cta_how_it_works"))
+      expect(link[:href]).to eq("/how-it-works")
+    end
   end
 
   it "renders the bottom Donate CTA when an active address exists" do
@@ -71,8 +103,9 @@ RSpec.describe "Home page", type: :system do
     expect(page).to have_content(I18n.t("home.donate_cta.heading"))
     expect(page).to have_content(I18n.t("home.donate_cta.body"))
 
+    expect(page).to have_css("section[data-section='donate-cta'].donate-callout")
     within("section[data-section='donate-cta']") do
-      expect(page).to have_content("keep it open for whoever comes next")
+      expect(page).to have_content("help cover hosting")
       expect(page).not_to have_content("donations keep it open")
     end
   end

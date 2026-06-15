@@ -28,7 +28,7 @@ RSpec.describe "Homepage community section", type: :request do
 
   it "does not render the section when no public notes exist" do
     get "/"
-    expect(response.body).not_to include(I18n.t("home.community.heading_html").gsub(/<\/?em>/, ""))
+    expect(response.body).not_to include(I18n.t("home.community.heading"))
     expect(response.body).not_to include('id="community"')
   end
 
@@ -52,14 +52,13 @@ RSpec.describe "Homepage community section", type: :request do
     expect(response.body).not_to include("Apollos") # 4th — over the 3-card limit
   end
 
-  it "skips the featured hero note (no double-show)" do
-    apollos_note = create_public_note(author_name: "Apollos", body: "Hero featured note.")
+  it "includes a featured note in the community list alongside others" do
+    apollos_note = create_public_note(author_name: "Apollos", body: "Featured note.")
     apollos_note.update!(featured: true, featured_at: Time.current)
     create_public_note(author_name: "Priscilla", body: "Community note.")
 
     get "/"
-    # Apollos shows in hero (only once). Priscilla shows in community.
-    expect(response.body.scan("Apollos").length).to eq(1)
+    expect(response.body).to include("Apollos")
     expect(response.body).to include("Priscilla")
   end
 
@@ -71,19 +70,17 @@ RSpec.describe "Homepage community section", type: :request do
     expect(response.body).not_to include('id="community"')
   end
 
-  it "uses the prototype heading + intro copy" do
+  it "uses the community heading + intro copy" do
     create_public_note(author_name: "Apollos", body: "trigger render")
     get "/"
-    expect(response.body).to include("Read what struck")
-    expect(response.body).to include("someone else")
+    expect(response.body).to include(I18n.t("home.community.heading"))
     expect(response.body).to include(I18n.t("home.community.intro"))
   end
 
   it "renders the Spanish heading + intro with locale=es" do
     create_public_note(author_name: "Apollos", body: "trigger render")
     get "/?locale=es"
-    expect(response.body).to include("Lee lo que tocó")
-    expect(response.body).to include("otro")
+    expect(response.body).to include(I18n.t("home.community.heading", locale: :es))
     expect(response.body).to include(I18n.t("home.community.intro", locale: :es))
   end
 end

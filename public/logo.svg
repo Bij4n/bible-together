@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 48" fill="none" role="img" aria-label="Bible Together">
+  <style>
+    .book { fill: #1A8917; }
+    .shine { fill: #fff; opacity: 0.15; }
+    .dot { fill: #fff; }
+    .bible { font: 720 22px Inter, ui-sans-serif, system-ui, sans-serif; fill: #242424; letter-spacing: -0.03em; }
+    .together { font: 400 22px Inter, ui-sans-serif, system-ui, sans-serif; fill: #515150; letter-spacing: -0.02em; }
+    @media (prefers-color-scheme: dark) {
+      .book { fill: #53c24e; }
+      .dot { fill: #101113; }
+      .bible { fill: #f6f6f4; }
+      .together { fill: #a3a3a1; }
+    }
+  </style>
+  <g transform="translate(0 0)">
+    <path class="book" d="M24 41V14.5C24 14.5 9 18 7 28.5C6 34.5 10 39.5 24 41Z"/>
+    <path class="book" d="M24 41V14.5C24 14.5 39 18 41 28.5C42 34.5 38 39.5 24 41Z"/>
+    <path class="shine" d="M24 16.5V39L12.5 35C10.5 32.5 10 29.5 11 27L24 16.5Z"/>
+    <path class="shine" d="M24 16.5V39L35.5 35C37.5 32.5 38 29.5 37 27L24 16.5Z"/>
+    <circle class="dot" cx="14.5" cy="10" r="3.25"/>
+    <circle class="dot" cx="33.5" cy="10" r="3.25"/>
+  </g>
+  <text class="bible" x="58" y="31">Bible</text>
+  <text class="together" x="118" y="31">Together</text>
+</svg>

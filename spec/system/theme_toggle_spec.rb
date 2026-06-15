@@ -1,8 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Theme toggle", type: :system, js: true do
+  # Marketing routes (home, how-it-works, about) are forced to light per
+  # DESIGN.md, so the toggle is exercised on a content surface (/search).
   it "flips data-theme on click and persists the choice across reloads" do
-    visit "/"
+    visit "/search"
 
     # Deterministic starting point — prefers-color-scheme varies between
     # headless browser versions, and we want to assert the toggle itself.
@@ -21,12 +23,12 @@ RSpec.describe "Theme toggle", type: :system, js: true do
     stored = page.evaluate_script("localStorage.getItem('bible-together:theme')")
     expect(stored).to eq("dark")
 
-    visit "/"
+    visit "/search"
     expect(page).to have_css(%(html[data-theme="dark"]))
   end
 
   it "cycles light → dark → system → light on successive clicks" do
-    visit "/"
+    visit "/search"
     page.execute_script(
       "localStorage.setItem('bible-together:theme', 'light');" \
       "document.documentElement.dataset.theme = 'light';"

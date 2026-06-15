@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
-  helper_method :resolved_theme, :initial_theme_label, :donate_link_visible?
+  MARKETING_ROUTES = {
+    "home" => %w[show how_it_works],
+    "about" => %w[show]
+  }.freeze
+
+  helper_method :resolved_theme, :page_theme, :marketing_page?, :layout_container_class,
+                :initial_theme_label, :donate_link_visible?
 
   # Admin gate for /admin/* controllers. Non-admins get 404 rather than
   # 403 so the existence of admin routes isn't advertised.
@@ -51,6 +57,22 @@ class ApplicationController < ActionController::Base
 
     theme = current_user.theme
     %w[light dark].include?(theme) ? theme : nil
+  end
+
+  # Marketing pages always render in light mode — editorial white ground
+  # per DESIGN.md. Signed-in dark-mode users still get light here.
+  def page_theme
+    return "light" if marketing_page?
+
+    resolved_theme
+  end
+
+  def marketing_page?
+    MARKETING_ROUTES.fetch(controller_name, []).include?(action_name)
+  end
+
+  def layout_container_class
+    marketing_page? ? "max-w-6xl" : "max-w-5xl"
   end
 
   # Initial label for the header theme button before the Stimulus

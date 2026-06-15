@@ -59,95 +59,51 @@ en:
     switch_to: "Switch to %{name}"
     dismiss: Dismiss
   home:
-    hero_meta:
-      kjv: KJV English
-      rv1909: RV1909 Español
-      public_domain: Public domain
-    hero_empty_state:
-      ref: John 3 · 16
-      verse: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."
-      cta: "Be the first to share a note on this verse →"
-    welcome_html: '<span class="block">Where verses</span> <span class="block">meet voices.</span>'
-    subhead: Highlight the words that pierced through. Share what they meant to you. Read what the same verse meant to someone else.
-    cta_public_bible: Read the Bible
-    cta_how_it_works: See how it works
+    welcome: Read the Bible together.
+    subhead: Highlight verses, write notes, and share with your study group.
+    cta_public_bible: Start reading
+    cta_how_it_works: How it works
     how_it_works_title: How it works
-    tertiary: No tracking. Donation-supported.
+    tertiary: Free. KJV and Reina-Valera 1909. No ads, no tracking.
+    landing:
+      points_label: What you can do
+      points:
+        - title: Highlight
+          body: Mark the exact phrase that stops you—not the whole verse.
+        - title: Take notes
+          body: Attach notes to your highlights. Private until you choose to share.
+        - title: Study together
+          body: Read the same chapter with your group, in real time.
+      how_page_intro: Open a chapter, mark what stands out, share when you are ready.
+      features_label: Included
+      feature_list:
+        - Character-level highlights
+        - Private notes with optional sharing
+        - Live study groups
+        - Public notes on each chapter
+        - KJV and Reina-Valera 1909, English and Spanish UI
+        - Keyword and semantic search
     community:
-      heading_html: Read what struck <em>someone else.</em>
-      intro: A small slice of what readers are sharing publicly. Public notes are visible to everyone. Private notes never leave your account.
-    features:
-      heading_html: Built around the way you <em>actually</em> read.
-      for_yourself: For yourself
-      with_others: With others
-      highlights:
-        title: Character-level highlighting
-        body: Mark the exact words that pierced through. Not just the verse — the line, the phrase, the comma where everything turned.
-        demo:
-          ref: 1 Kings 19 · 12
-          before: "And after the fire "
-          highlight: a still small voice
-          after: "."
-      notes:
-        title: Private and shared notes
-        body: Write what scripture means to you. Keep it between you and God, share it with one person, or open it up.
-        demo:
-          ref: Note · Psalm 46 · 10
-          private: Private
-          friends: Friends
-          public: Public
-          body: "\"Be still\" is not a feeling. It's an instruction."
-      groups:
-        title: Group Bibles, real-time
-        body: Read with the people closest to you. Highlights, notes, and comments update live — like sitting in the same pew, two hundred miles apart.
-      public:
-        title: Public notes with upvotes
-        body: Read how the same verse landed for someone whose life looks nothing like yours. Verses live differently in every life.
-      bilingual:
-        title: Bilingual — KJV and RV1909
-        body: Read in your heart language. King James English, Reina-Valera Spanish — switch between them on any verse, on any page.
-      keyword_search:
-        title: Keyword search
-        body: Find the verse you almost remember. The one your grandmother quoted. The phrase from a sermon ten years ago.
-        demo:
-          ref: Search
-          query: verses about feeling lost
-          result_1_ref: "Psalm 139:7"
-          result_1_text: Whither shall I go from thy spirit?
-          result_2_ref: "Luke 15:4"
-          result_2_text: Doth not leave the ninety and nine...
-      semantic_search:
-        title: Semantic search (English)
-        body: "Search by what you mean, not what's written. Ask for \"verses about feeling lost\" and find Psalms you'd never have looked up. KJV only for now."
+      heading: From the community
+      intro: Public notes on real verses.
     how:
-      heading_html: Three steps. <em>That's it.</em>
-      step_1_title: Open scripture
-      step_1_body: Pick a translation. Open a chapter.
-      step_1_demo:
-        ref: Matthew 5
-        text: "Blessed are the poor in spirit: for theirs is the kingdom of heaven. Blessed are they that mourn..."
-      step_2_title: Mark what matters
-      step_2_body: Select what struck you. Write what it meant. Yours by default.
-      step_2_demo:
-        ref: Matthew 5 · 4
-        before: "Blessed are "
-        highlight: "they that mourn: for they shall be comforted"
-        after: "."
-      step_3_title: Share your story
-      step_3_body: With one person. With a group. With everyone.
-      step_3_demo:
-        ref: Sharing with
-        group: Sunday small group · 4 readers
+      heading: Three steps
+      step_1_title: Open a chapter
+      step_1_body: KJV or RV1909. No account required.
+      step_2_title: Mark and note
+      step_2_body: Highlight a phrase and add a note. Private until you share.
+      step_3_title: Share when ready
+      step_3_body: With a friend, your study group, or the public chapter.
     about:
       heading: About
-      para_1: "Bible Together is built on a simple belief: scripture is meant to be read with someone."
-      para_2: The verse that wrecks you wrecks somebody else, somewhere.
-      para_3: Knowing that — being able to say so, being able to read what it meant for someone else — changes how you read it yourself.
-      para_4: "Two public-domain translations live: KJV in English, RV1909 in Spanish, with the interface in both languages."
-      para_5: Built and maintained by one person. Hosting is funded by donations — no subscription, no tracker, no upsell.
+      para_1: Bible Together is a reader for people who mark up their Bible—highlights, notes, and a community layer when you want to read with others.
+      para_2: The verse that stops you has probably stopped someone else too.
+      para_3: Reading what it meant for them—then writing what it meant for you—is the whole point.
+      para_4: KJV in English and RV1909 in Spanish are live now. The interface is bilingual. Both translations are public domain.
+      para_5: Built and maintained by one person. Hosting runs on donations—no subscription, no ads, no tracker.
     donate_cta:
-      heading: Support Bible Together
-      body: If Bible Together has mattered to you, keep it open for whoever comes next.
+      heading: Keep it open
+      body: If this has been useful to you, help cover hosting so the next reader can find it.
       button: Donate
   bible:
     reader:

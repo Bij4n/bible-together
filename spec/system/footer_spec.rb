@@ -30,16 +30,18 @@ RSpec.describe "Footer", type: :system do
     it "renders the wordmark on the homepage" do
       visit "/"
       within("footer") do
-        expect(page).to have_content(I18n.t("app.name"))
+        expect(page).to have_link(I18n.t("app.name"), href: "/")
+        expect(page).to have_css("a.wordmark")
       end
     end
 
-    it "renders the wordmark text without a mark glyph" do
+    it "matches the header wordmark treatment" do
       visit "/"
+      within("header") do
+        expect(page).to have_css("a.wordmark", text: I18n.t("app.name"))
+      end
       within("footer") do
-        expect(page).to have_css("span.wordmark-bible", text: "Bible")
-        expect(page).to have_css("span.wordmark-open", text: "Together")
-        expect(page).not_to have_css("span.wordmark-mark")
+        expect(page).to have_css("a.wordmark", text: I18n.t("app.name"))
       end
     end
 
