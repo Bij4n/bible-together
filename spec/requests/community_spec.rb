@@ -76,6 +76,13 @@ RSpec.describe "Community feed", type: :request do
     expect(response.body).not_to include("Acts note")
   end
 
+  it "links read in context into the community reader layer" do
+    public_note!(body: "Grace upon grace")
+    get "/community"
+
+    expect(response.body).to include("/bible/kjv/john/3?layer=community")
+  end
+
   it "paginates with a load-more link" do
     26.times { |i| public_note!(body: "Note number #{i}") }
 

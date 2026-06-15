@@ -26,28 +26,62 @@ RSpec.describe "Public::Bible", type: :request do
     note
   end
 
-  describe "GET /public/bible/:translation/:book/:chapter" do
-    it "renders for anonymous visitors" do
-      public_note!(body: "Community thought")
+  describe "the community layer at /bible (Sprint R7 merge)" do
+    it "301-redirects the old /public/bible URLs into the reader's community layer" do
       get "/public/bible/kjv/john/3"
+      expect(response).to have_http_status(:moved_permanently)
+      expect(response.location).to end_with("/bible/kjv/john/3?layer=community")
+    end
+
+    it "301-redirects case-mismatched /public/bible paths to the lowercase community layer" do
+      get "/public/bible/KJV/John/3"
+      expect(response).to have_http_status(:moved_permanently)
+      expect(response.location).to end_with("/bible/kjv/john/3?layer=community")
+    end
+
+    it "serves the community layer to anonymous visitors at /bible directly" do
+      public_note!(body: "Community thought")
+      get "/bible/kjv/john/3"
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("For God so loved the world")
       expect(response.body).to include("Community thought")
     end
 
+    it "serves the community layer to signed-in users with ?layer=community" do
+      public_note!(body: "Community thought")
+      sign_in create(:user)
+      get "/bible/kjv/john/3", params: { layer: "community" }
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Community thought")
+    end
+
     it "renders community highlights as dotted underlines, never fills" do
       public_note!(body: "Community thought")
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3"
       # Design v3 / Kindle rule: other people's highlights are a quiet
       # dotted underline; color fills are reserved for your own marks.
       expect(response.body).to include("community-highlight")
       expect(response.body).not_to match(/class="[^"]*highlight-(yellow|green|blue|rose|gold|sage|lavender|sky)/)
     end
 
+    it "labels community underlines with how many people highlighted the verse" do
+      public_note!(body: "First voice")
+      second = create(:user)
+      highlight = create(:highlight, user: second, translation: translation,
+                                     osis_ref: "Bible.KJV.John.3.16", color: "blue")
+      note = create(:note, user: second, body: "<p>Second voice</p>", visibility: :public_note)
+      create(:highlight_note, highlight: highlight, note: note)
+
+      get "/bible/kjv/john/3"
+
+      expect(response.body).to include(I18n.t("public_bible.people_highlighted", count: 2))
+      expect(response.body).to include('aria-label="' + I18n.t("public_bible.people_highlighted", count: 2) + '"')
+    end
+
     it "excludes hidden notes from anonymous view" do
       hidden = public_note!(body: "Bad content")
       hidden.update!(hidden_at: Time.current)
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3"
       expect(response.body).not_to include("Bad content")
     end
 
@@ -56,23 +90,12 @@ RSpec.describe "Public::Bible", type: :request do
       hidden.update!(hidden_at: Time.current)
       admin = create(:user, admin: true)
       sign_in admin
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3", params: { layer: "community" }
       expect(response.body).to include("Under review")
     end
 
-    it "redirects signed-out visitors from /bible to /public/bible" do
-      get "/bible/kjv/john/3"
-      expect(response).to redirect_to("/public/bible/kjv/john/3")
-    end
-
-    it "301-redirects case-mismatched paths to lowercase canonical" do
-      get "/public/bible/KJV/John/3"
-      expect(response).to have_http_status(:moved_permanently)
-      expect(response.location).to end_with("/public/bible/kjv/john/3")
-    end
-
     it "404s on unknown translations" do
-      get "/public/bible/xyz/john/3"
+      get "/bible/xyz/john/3"
       expect(response).to have_http_status(:not_found)
     end
 
@@ -83,16 +106,16 @@ RSpec.describe "Public::Bible", type: :request do
       2.times { create(:upvote, note: popular) }
       pinned = public_note!(body: "PINNED", featured: true)
 
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3"
       body = response.body
       expect(body.index("PINNED")).to be < body.index("POPULAR")
       expect(body.index("POPULAR")).to be < body.index("OLD PLAIN")
     end
   end
 
-  describe "translation picker on /public/bible/:translation/:book/:chapter" do
+  describe "translation picker on the community layer" do
     it "is not rendered when only one translation is installed" do
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3"
       expect(response.body).not_to include(%(aria-label="Translation"))
     end
 
@@ -106,11 +129,11 @@ RSpec.describe "Public::Bible", type: :request do
                      red_letter_ranges: [],
                      osis_ref: "Bible.RV1909.John.3.16")
 
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3"
       expect(response.body).to include(%(aria-label="Translation"))
-      expect(response.body).to include(%(data-url="/public/bible/kjv/john/3"))
-      expect(response.body).to include(%(data-url="/public/bible/rv1909/john/3"))
-      expect(response.body).to match(%r{<button[^>]*data-url="/public/bible/kjv/john/3"[^>]*aria-selected="true"}m)
+      expect(response.body).to include(%(data-url="/bible/kjv/john/3?layer=community"))
+      expect(response.body).to include(%(data-url="/bible/rv1909/john/3?layer=community"))
+      expect(response.body).to match(%r{<button[^>]*data-url="/bible/kjv/john/3\?layer=community"[^>]*aria-selected="true"}m)
     end
   end
 

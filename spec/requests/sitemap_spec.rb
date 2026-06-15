@@ -15,7 +15,7 @@ RSpec.describe "Sitemap", type: :request do
     expect(response.body).to include(about_url)
     expect(response.body).to include(donate_url)
     expect(response.body).to include(search_url)
-    expect(response.body).to include(public_bible_chapter_url(translation: "kjv", book: "john", chapter: 3))
+    expect(response.body).to include(bible_chapter_url(translation: "kjv", book: "john", chapter: 3))
   end
 
   it "is reachable without authentication" do

@@ -1,34 +1,25 @@
 module Bible
   class ReaderController < ApplicationController
+    include CommunityChapterLoading
+
     # /bible -> the user's default translation if they've set one, else
     # KJV Genesis 1. Signed-out visitors fall through to the public
     # bible at the same default.
     def entry
       code = resolved_default_translation_code
-      if user_signed_in?
-        redirect_to bible_chapter_path(translation: code.downcase, book: "gen", chapter: 1)
-      else
-        redirect_to public_bible_chapter_path(translation: code.downcase, book: "gen", chapter: 1)
-      end
+      # Same destination either way since R7 — /bible serves the
+      # community layer to guests at the same URL.
+      redirect_to bible_chapter_path(translation: code.downcase, book: "gen", chapter: 1)
     end
 
     def show
       canonical_translation = params[:translation].downcase
       canonical_book        = params[:book].downcase
 
-      # /bible/... is the signed-in personal reader. Anonymous visitors
-      # get sent to the public bible view so they land on something
-      # populated (scripture + community notes) instead of an empty
-      # reader that can't show their nonexistent highlights.
-      unless user_signed_in?
-        redirect_to public_bible_chapter_path(translation: canonical_translation,
-                                              book: canonical_book,
-                                              chapter: params[:chapter])
-        return
-      end
-
       if params[:translation] != canonical_translation || params[:book] != canonical_book
-        redirect_to bible_chapter_path(translation: canonical_translation, book: canonical_book, chapter: params[:chapter]),
+        redirect_to bible_chapter_path(translation: canonical_translation, book: canonical_book,
+                                       chapter: params[:chapter],
+                                       layer: params[:layer].presence),
                     status: :moved_permanently
         return
       end
@@ -37,6 +28,17 @@ module Bible
       @book        = @translation.books.where("lower(osis_code) = ?", canonical_book).first!
       @chapter     = @book.chapters.find_by!(number: params[:chapter].to_i)
       @verses      = @chapter.verses.order(:number)
+
+      # The community layer lives at the same URL (?layer=community,
+      # Sprint R7 merge of the old /public/bible surface). Anonymous
+      # visitors get it without the param — it's the only lens they
+      # have, and an empty personal reader would be a dead end.
+      if params[:layer] == "community" || !user_signed_in?
+        load_community_chapter
+        render "public/bible/show"
+        return
+      end
+
       @highlights  = load_highlights_for_chapter
       @cross_translation_highlights = load_cross_translation_highlight_map
     end

@@ -11,7 +11,7 @@
     layer_options =
       [ [ t("bible.reader.layer_mine"), bible_chapter_path(**slug) ] ] +
       current_user.groups.distinct.order(:name).map { |g| [ g.name, group_bible_chapter_path(g, **slug) ] } +
-      [ [ t("bible.reader.layer_community"), public_bible_chapter_path(**slug) ] ]
+      [ [ t("bible.reader.layer_community"), bible_chapter_path(**slug, layer: "community") ] ]
   %>
   <%= render "shared/nav_select",
              options: layer_options,

@@ -23,7 +23,8 @@ Rails.application.routes.draw do
 
   post "/locale_banner/dismiss", to: "locale_banners#dismiss", as: :dismiss_locale_banner
 
-  resources :groups do
+  # User-facing URL is /studies (Sprint R8); route helpers stay group_*.
+  resources :groups, path: "studies" do
     collection do
       post :join
       get  :discover
@@ -60,7 +61,7 @@ Rails.application.routes.draw do
       as: :bible_chapter,
       constraints: { chapter: /\d+/ }
 
-  get "/public/bible", to: redirect("/public/bible/kjv/gen/1")
+  get "/public/bible", to: redirect("/bible/kjv/gen/1?layer=community", status: 301)
   get "/public/bible/:translation/:book/:chapter",
       to: "public/bible#show",
       as: :public_bible_chapter,
@@ -71,6 +72,10 @@ Rails.application.routes.draw do
   # The global public-notes feed (Sprint R7) — "the public list of all
   # the public comments/stories on highlighted verses."
   get "/community", to: "community#index", as: :community
+
+  # Legacy /groups bookmarks (Sprint R8) — 301 to /studies.
+  get "/groups", to: redirect("/studies", status: 301)
+  get "/groups/*legacy_path", to: redirect("/studies/%{legacy_path}", status: 301)
 
   resources :authors, only: [ :show ] do
     # Follow the author (Sprint R5). Singular — you either follow

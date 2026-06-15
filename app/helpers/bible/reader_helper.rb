@@ -74,7 +74,13 @@ module Bible
           # 0 → instant remove on click, ≥1 → confirm dialog with
           # the count-aware bilingual message. The reader controller
           # eager-loads :notes on highlights so .size is in-memory.
-          out << %(<span class="#{classes.join(" ")}" data-highlight-ids="#{ids}" data-note-count="#{dominant[:note_count]}">#{fragment}</span>)
+          attrs = %(data-highlight-ids="#{ids}" data-note-count="#{dominant[:note_count]}")
+          if style == :underline
+            author_count = sorted_highlights.map { |r| r[:user_id] }.uniq.size
+            label = ERB::Util.html_escape(t("public_bible.people_highlighted", count: author_count))
+            attrs += %( title="#{label}" aria-label="#{label}")
+          end
+          out << %(<span class="#{classes.join(" ")}" #{attrs}>#{fragment}</span>)
         else
           out << %(<span class="#{classes.join(" ")}">#{fragment}</span>)
         end
@@ -99,7 +105,8 @@ module Bible
 
       return nil if start_off >= end_off
 
-      { id: highlight.id, color: highlight.color, start: start_off, end: end_off, note_count: highlight.notes.size }
+      { id: highlight.id, color: highlight.color, start: start_off, end: end_off,
+        note_count: highlight.notes.size, user_id: highlight.user_id }
     end
 
     def resolve_end_offset(offset, text_len)

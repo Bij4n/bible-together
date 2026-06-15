@@ -82,10 +82,10 @@ RSpec.describe "Bible::Reader", type: :request do
       expect(response).to redirect_to("/bible/rv1909/gen/1")
     end
 
-    it "redirects signed-out visitors to the public bible at KJV Gen 1" do
+    it "sends signed-out visitors to KJV Gen 1 (served as the community layer)" do
       sign_out :user
       get "/bible"
-      expect(response).to redirect_to("/public/bible/kjv/gen/1")
+      expect(response).to redirect_to("/bible/kjv/gen/1")
     end
   end
 
