@@ -1,13 +1,19 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bible Together">
   <style>
-    .disc { fill: #0F5C3F; }
-    .ring { stroke: #0F5C3F; }
+    .ring { fill: none; stroke: #1A8917; }
+    .disc { fill: #1A8917; }
+    .pair { fill: #FFFFFF; }
     @media (prefers-color-scheme: dark) {
-      .disc { fill: #5DD4A0; }
-      .ring { stroke: #5DD4A0; }
+      .ring { stroke: #53c24e; }
+      .disc { fill: #53c24e; }
+      .pair { fill: #101113; }
     }
   </style>
-  <circle class="ring" cx="256" cy="256" r="200" fill="none" stroke-width="2.5" opacity="0.22"/>
-  <circle class="ring" cx="256" cy="256" r="160" fill="none" stroke-width="2.5" opacity="0.45"/>
+  <!-- Concentric rings match .wordmark-mark in application.css -->
+  <circle class="ring" cx="256" cy="256" r="200" stroke-width="3" opacity="0.25"/>
+  <circle class="ring" cx="256" cy="256" r="160" stroke-width="3" opacity="0.45"/>
   <circle class="disc" cx="256" cy="256" r="112"/>
+  <!-- Two dots = reading together (visible at favicon + app-icon sizes) -->
+  <circle class="pair" cx="220" cy="256" r="18"/>
+  <circle class="pair" cx="292" cy="256" r="18"/>
 </svg>

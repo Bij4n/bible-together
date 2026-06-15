@@ -7,7 +7,7 @@ RSpec.describe "Theme toggle", type: :system, js: true do
     # Deterministic starting point — prefers-color-scheme varies between
     # headless browser versions, and we want to assert the toggle itself.
     page.execute_script(
-      "localStorage.setItem('open-bible:theme', 'light');" \
+      "localStorage.setItem('bible-together:theme', 'light');" \
       "document.documentElement.dataset.theme = 'light';"
     )
     expect(page).to have_css(%(html[data-theme="light"]))
@@ -18,7 +18,7 @@ RSpec.describe "Theme toggle", type: :system, js: true do
     find("button[data-action='theme#toggle']").click
 
     expect(page).to have_css(%(html[data-theme="dark"]))
-    stored = page.evaluate_script("localStorage.getItem('open-bible:theme')")
+    stored = page.evaluate_script("localStorage.getItem('bible-together:theme')")
     expect(stored).to eq("dark")
 
     visit "/"
@@ -28,7 +28,7 @@ RSpec.describe "Theme toggle", type: :system, js: true do
   it "cycles light → dark → system → light on successive clicks" do
     visit "/"
     page.execute_script(
-      "localStorage.setItem('open-bible:theme', 'light');" \
+      "localStorage.setItem('bible-together:theme', 'light');" \
       "document.documentElement.dataset.theme = 'light';"
     )
 
@@ -36,13 +36,13 @@ RSpec.describe "Theme toggle", type: :system, js: true do
     button = find("button[data-action='theme#toggle']")
 
     button.click
-    expect(page.evaluate_script("localStorage.getItem('open-bible:theme')")).to eq("dark")
+    expect(page.evaluate_script("localStorage.getItem('bible-together:theme')")).to eq("dark")
 
     button.click
-    expect(page.evaluate_script("localStorage.getItem('open-bible:theme')")).to eq("system")
+    expect(page.evaluate_script("localStorage.getItem('bible-together:theme')")).to eq("system")
 
     button.click
-    expect(page.evaluate_script("localStorage.getItem('open-bible:theme')")).to eq("light")
+    expect(page.evaluate_script("localStorage.getItem('bible-together:theme')")).to eq("light")
     expect(page).to have_css(%(html[data-theme="light"]))
   end
 end

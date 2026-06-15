@@ -39,6 +39,16 @@ RSpec.describe "Home page", type: :system do
     expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
+  it "renders the brand mark in the header wordmark" do
+    visit "/"
+
+    within("header") do
+      expect(page).to have_css("span.wordmark-mark")
+      expect(page).to have_css("span.wordmark-bible", text: "Bible")
+      expect(page).to have_css("span.wordmark-open", text: "Together")
+    end
+  end
+
   it "does not render the features section or how-it-works section on the homepage" do
     visit "/"
 
@@ -74,11 +84,11 @@ RSpec.describe "Home page", type: :system do
     expect(page).not_to have_css("[data-section='donate-cta']")
   end
 
-  it "lands the hero CTA on the public reader" do
+  it "lands the hero CTA on the reader (community layer for guests)" do
     visit "/"
 
     click_on I18n.t("home.cta_public_bible"), match: :first
-    expect(page).to have_current_path("/public/bible/kjv/gen/1")
+    expect(page).to have_current_path("/bible/kjv/gen/1?layer=community")
   end
 
   it "lands the bottom donate-CTA button on /donate" do
