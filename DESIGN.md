@@ -1,4 +1,4 @@
-# Design System — Open Bible
+# Design System — Bible Together
 
 ## Product Context
 
@@ -209,7 +209,7 @@ header border/background, Tailwind `transition-colors` on interactive states. Gl
 
 ## Wordmark
 
-"Open Bible" in Inter (400 "Open" / 720 "Bible") with the 20×20 accent disc
+"Bible Together" in Inter (720 "Bible" / 400 "Together") with the 20×20 accent disc
 (`.wordmark-mark`) — now Medium green. Unchanged structurally.
 
 ---

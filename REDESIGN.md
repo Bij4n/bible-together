@@ -1,4 +1,4 @@
-# REDESIGN.md — Open Bible v2
+# REDESIGN.md — Bible Together v2
 
 Owner directive (2026-06-11): the current font, color, and overall design aren't working.
 Target feel: **Medium** (reading) + **Grammarly** (friendliness). Very simple, very user
