@@ -1,0 +1,95 @@
+<% content_for :title, t("community.title") %>
+<% content_for :meta_description, t("community.intro") %>
+
+<article class="mx-auto max-w-3xl space-y-8">
+  <header class="space-y-4 border-b border-surface-200 pb-6 dark:border-surface-800">
+    <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-5xl">
+      <%= t("community.title") %>
+    </h1>
+    <p class="max-w-2xl font-ui text-base leading-relaxed text-pretty text-surface-600 dark:text-surface-400">
+      <%= t("community.intro") %>
+    </p>
+
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <%# Sort tabs — accent-underline active state (the admin
+          filter-tab pattern). Links preserve the book filter. %>
+      <nav class="flex items-center gap-4 font-ui text-sm" aria-label="<%= t("community.sort_label") %>">
+        <% tab_active = "font-medium text-accent-700 underline underline-offset-4 decoration-accent-700/40 dark:text-accent-400 dark:decoration-accent-400/40" %>
+        <% tab_idle   = "text-surface-600 transition-colors hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-50" %>
+        <%= link_to t("community.sort_recent"), community_path(book: @book), class: (@sort == "recent" ? tab_active : tab_idle) %>
+        <%= link_to t("community.sort_top"), community_path(sort: "top", book: @book), class: (@sort == "top" ? tab_active : tab_idle) %>
+      </nav>
+
+      <%# Book filter — plain GET form; empty value clears. %>
+      <form method="get" action="<%= community_path %>" class="flex items-center gap-2 font-ui text-sm">
+        <% if @sort == "top" %><input type="hidden" name="sort" value="top"><% end %>
+        <label for="community_book" class="text-surface-500 dark:text-surface-400"><%= t("community.book_filter") %></label>
+        <select id="community_book" name="book" onchange="this.form.requestSubmit()"
+                class="rounded-md border border-surface-300 bg-surface-50 px-2 py-1.5 text-surface-700 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-300">
+          <option value=""><%= t("community.all_books") %></option>
+          <% @books.each do |b| %>
+            <option value="<%= b.osis_code %>" <%= "selected" if @book == b.osis_code %>><%= I18n.locale == :es ? b.name_es : b.name_en %></option>
+          <% end %>
+        </select>
+        <noscript><button type="submit" class="underline underline-offset-2"><%= t("search.submit") %></button></noscript>
+      </form>
+    </div>
+  </header>
+
+  <% if @notes.any? %>
+    <ul class="space-y-4">
+      <% @notes.each do |note| %>
+        <% first_highlight = note.highlights.first %>
+        <% quoted_verse = first_highlight&.affected_verses&.first %>
+        <li class="rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-surface-800 dark:bg-surface-900 sm:p-6">
+          <% if quoted_verse %>
+            <blockquote class="border-l-2 border-accent-700/30 pl-4 font-reading text-base leading-relaxed text-surface-700 dark:border-accent-400/30 dark:text-surface-300">
+              <%= quoted_verse.body_text.truncate(180) %>
+            </blockquote>
+            <p class="mt-2 font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
+              <%= osis_citation(first_highlight.osis_ref) %>
+            </p>
+          <% end %>
+          <div class="mt-3 line-clamp-4 font-reading text-surface-900 dark:text-surface-100">
+            <%= note.body.to_plain_text.truncate(280) %>
+          </div>
+          <footer class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 font-ui text-xs text-surface-500 dark:text-surface-400">
+            <%= link_to note.user.author_name, author_path(note.user),
+                        class: "font-medium text-surface-700 transition-colors hover:text-accent-700 dark:text-surface-300 dark:hover:text-accent-400" %>
+            <span><%= t("community.upvotes", count: note.upvote_count) %></span>
+            <span><%= t("community.replies", count: note.comments.size) %></span>
+            <span><%= t("community.posted_ago", time: time_ago_in_words(note.created_at)) %></span>
+            <% if first_highlight %>
+              <% v = first_highlight.affected_verses.first %>
+              <% if v %>
+                <%= link_to t("community.read_in_context"),
+                            bible_chapter_path(translation: v.chapter.book.translation.code.downcase,
+                                               book: v.chapter.book.osis_code.downcase,
+                                               chapter: v.chapter.number,
+                                               layer: "community",
+                                               anchor: "verse_#{v.id}"),
+                            class: "text-accent-700 underline underline-offset-2 dark:text-accent-400" %>
+              <% end %>
+            <% end %>
+          </footer>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if @has_more %>
+      <div class="pt-2 text-center">
+        <%= link_to t("community.load_more"),
+                    community_path(page: @page + 1, sort: (@sort == "top" ? "top" : nil), book: @book),
+                    class: "inline-block rounded-full border border-surface-300 px-6 py-2.5 font-ui text-sm font-medium text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:border-surface-700 dark:text-surface-300 dark:hover:bg-surface-800 dark:hover:text-surface-50" %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="rounded-2xl border border-surface-200 bg-surface-100/60 px-8 py-12 text-center dark:border-surface-800 dark:bg-surface-900/60">
+      <p class="font-ui text-sm text-surface-600 dark:text-surface-400">
+        <%= t("community.empty") %>
+      </p>
+      <%= link_to t("home.cta_public_bible"), bible_entry_path,
+                  class: "mt-5 inline-block rounded-full bg-accent-700 px-5 py-2 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300" %>
+    </div>
+  <% end %>
+</article>

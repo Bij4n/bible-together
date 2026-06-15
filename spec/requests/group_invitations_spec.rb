@@ -5,7 +5,7 @@ RSpec.describe "GroupInvitations", type: :request do
   let(:non_owner) { create(:user) }
   let(:group) { create(:group, owner: owner) }
 
-  describe "POST /groups/:group_id/invitations" do
+  describe "POST /studies/:group_id/invitations" do
     context "as the group owner" do
       before { sign_in owner }
 
@@ -67,7 +67,7 @@ RSpec.describe "GroupInvitations", type: :request do
     end
   end
 
-  describe "DELETE /groups/:group_id/invitations/:id" do
+  describe "DELETE /studies/:group_id/invitations/:id" do
     let!(:invitation) { create(:group_invitation, group: group, invited_by: owner, email: "friend@example.com") }
 
     context "as the group owner" do

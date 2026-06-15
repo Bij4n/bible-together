@@ -14,7 +14,13 @@
       (function(){
         var el = document.documentElement;
         if (el.dataset.theme === "light" || el.dataset.theme === "dark") return;
-        var stored = localStorage.getItem("open-bible:theme");
+        var key = "bible-together:theme";
+        var legacy = localStorage.getItem("open-bible:theme");
+        if (legacy && !localStorage.getItem(key)) {
+          localStorage.setItem(key, legacy);
+          localStorage.removeItem("open-bible:theme");
+        }
+        var stored = localStorage.getItem(key);
         if (stored === "dark" || stored === "light") { el.dataset.theme = stored; return; }
         el.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       })();
@@ -77,7 +83,8 @@
     <header class="site-header" data-controller="site-header">
       <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <%= link_to root_path, class: "group inline-flex items-center gap-2.5 font-ui text-lg transition-colors" do %>
-          <span class="wordmark-open transition-colors group-hover:text-accent-700 dark:group-hover:text-accent-400">Open</span> <span class="wordmark-bible transition-colors group-hover:text-accent-700 dark:group-hover:text-accent-400">Bible</span>
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          <span class="wordmark-bible transition-colors group-hover:text-accent-700 dark:group-hover:text-accent-400">Bible</span> <span class="wordmark-open transition-colors group-hover:text-accent-700 dark:group-hover:text-accent-400">Together</span>
         <% end %>
 
         <nav class="flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.account") %>">
@@ -94,10 +101,10 @@
                       class: "#{rail_idle} #{request.path.start_with?("/bible") ? rail_active : rail_rest}" %>
           <% if user_signed_in? %>
             <%= link_to t("layout.studies_link"), groups_path,
-                        class: "#{rail_idle} #{request.path.start_with?("/groups") ? rail_active : rail_rest}" %>
+                        class: "#{rail_idle} #{request.path.start_with?("/studies") ? rail_active : rail_rest}" %>
           <% end %>
-          <%= link_to t("layout.community_link"), "/public/bible",
-                      class: "#{rail_idle} #{request.path.start_with?("/public/bible") ? rail_active : rail_rest}" %>
+          <%= link_to t("layout.community_link"), community_path,
+                      class: "#{rail_idle} #{request.path.start_with?("/community") ? rail_active : rail_rest}" %>
           <% unless user_signed_in? %>
             <%= link_to t("layout.how_it_works_link"), how_it_works_path,
                         class: "#{rail_idle} #{nav_active?(how_it_works_path) ? rail_active : rail_rest}" %>
@@ -146,7 +153,7 @@
               <% if user_signed_in? %>
                 <%= link_to t("layout.studies_link"), groups_path, role: "menuitem", class: "sm:hidden #{menu_item_base} #{menu_item_idle}" %>
               <% end %>
-              <%= link_to t("layout.community_link"), "/public/bible", role: "menuitem", class: "sm:hidden #{menu_item_base} #{menu_item_idle}" %>
+              <%= link_to t("layout.community_link"), community_path, role: "menuitem", class: "sm:hidden #{menu_item_base} #{menu_item_idle}" %>
 
               <% if user_signed_in? %>
                 <div class="px-4 py-2 text-xs uppercase tracking-wide text-surface-500 dark:text-surface-400">
@@ -217,7 +224,7 @@
         <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div class="space-y-1">
             <p class="inline-flex items-center gap-2.5 font-ui text-base">
-              <span class="wordmark-open">Open</span> <span class="wordmark-bible">Bible</span>
+              <span class="wordmark-bible">Bible</span> <span class="wordmark-open">Together</span>
             </p>
             <p class="hidden font-reading text-sm text-surface-600 dark:text-surface-400 sm:block">
               <%= t("layout.footer_tagline") %>

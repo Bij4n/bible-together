@@ -1,11 +1,11 @@
 es:
   app:
-    name: Open Bible
+    name: Bible Together
     tagline: Lee, anota y comparte las Escrituras.
     meta_description: Lector bíblico bilingüe con resaltados a nivel de carácter y notas — KJV inglés y Reina-Valera 1909 español, ambos de dominio público. Sin rastreo, sostenido por donaciones.
   errors:
     cta_home: Volver al inicio
-    cta_read: Abrir la Biblia
+    cta_read: Leer la Biblia
     "404":
       eyebrow: 404 — No encontrada
       heading_html: Esta página <em>no existe.</em>
@@ -30,7 +30,7 @@ es:
       eyebrow: 406 — Navegador no compatible
       heading_html: Tu navegador es <em>demasiado antiguo.</em>
       title: Navegador no compatible
-      body: Open Bible necesita un navegador moderno para renderizar el lector. Actualízalo e inténtalo de nuevo.
+      body: Bible Together necesita un navegador moderno para renderizar el lector. Actualízalo e inténtalo de nuevo.
   layout:
     theme_switch: Cambiar tema
     theme_light: Claro
@@ -140,14 +140,14 @@ es:
         group: Grupo pequeño del domingo · 4 lectores
     about:
       heading: Acerca de
-      para_1: "Open Bible se basa en una idea sencilla: la Escritura está hecha para leerse en compañía."
+      para_1: "Bible Together se basa en una idea sencilla: la Escritura está hecha para leerse en compañía."
       para_2: El versículo que te atraviesa atraviesa a otro, en algún lugar.
       para_3: Saberlo — poder decirlo, poder leer lo que significó para alguien más — cambia cómo lo lees tú.
       para_4: "Dos traducciones de dominio público viven aquí: KJV en inglés, RV1909 en español, con la interfaz en ambos idiomas."
       para_5: Hecho y mantenido por una sola persona. El alojamiento se financia con donaciones — sin suscripción, sin rastreo, sin trampas.
     donate_cta:
-      heading: Apoya a Open Bible
-      body: Si Open Bible te ha importado, mantenlo abierto para quien llegue después.
+      heading: Apoya a Bible Together
+      body: Si Bible Together te ha importado, mantenlo abierto para quien llegue después.
       button: Donar
   bible:
     reader:
@@ -156,12 +156,19 @@ es:
       chapter_label: Capítulo
       group_notes: Notas en este capítulo
       by_author: "por %{name}"
-      breadcrumb_home: Open Bible
+      breadcrumb_home: Bible Together
       translation_picker: Traducción
       cross_translation_badge_title: "Has anotado este versículo en %{translation} — haz clic para ir allí."
       dismiss_toolbar: Cerrar
       highlight_action: Resaltar
       verse_view: Por versículo
+      shortcuts_title: Atajos de teclado
+      shortcut_j: Versículo siguiente
+      shortcut_k: Versículo anterior
+      shortcut_h: Resaltar versículo enfocado
+      shortcut_n: Nueva nota en versículo enfocado
+      shortcut_esc: Cerrar panel o descartar
+      shortcut_help: Mostrar esta ayuda
       verse_notes_chip:
         one: "%{count} nota en este versículo"
         other: "%{count} notas en este versículo"
@@ -201,27 +208,33 @@ es:
     settings: Ajustes
     signed_in_as: Conectado como %{email}
   groups:
-    title: Grupos
-    mine: Tus grupos
-    new: Nuevo grupo
-    edit: Editar grupo
-    create: Crear grupo
+    title: Estudios
+    mine: Tus estudios
+    new: Nuevo estudio
+    edit: Editar estudio
+    create: Crear estudio
     save: Guardar
     cancel: Cancelar
-    destroy: Eliminar grupo
-    created: Grupo creado.
-    updated: Grupo actualizado.
-    destroyed: Grupo eliminado.
-    joined: Te has unido al grupo.
-    left: Has salido del grupo.
-    invalid_code: Ningún grupo coincide con ese código de invitación.
+    destroy: Eliminar estudio
+    created: Estudio creado.
+    updated: Estudio actualizado.
+    destroyed: Estudio eliminado.
+    joined: Te has unido al estudio.
+    left: Has salido del estudio.
+    invalid_code: Ningún estudio coincide con ese código de invitación.
     last_owner_cant_leave: Eres el último propietario. Transfiere la propiedad antes de salir.
     invitation_code: Código de invitación
     enter_code: Introduce un código de invitación
     join: Unirse
-    leave: Salir del grupo
-    bible: Biblia del grupo
+    leave: Salir del estudio
+    bible: Biblia del estudio
     members: Miembros
+    reading_together: Leyendo juntos
+    reading_together_intro: Retoma donde lo dejó tu estudio en la Biblia compartida.
+    open_study_bible: Abrir Biblia del estudio
+    member_notes: Notas de miembros
+    member_notes_empty: Aún no hay notas compartidas con este estudio. Resalta un versículo en la Biblia del estudio y publícalo en este estudio.
+    read_in_context: Leer en contexto
     role:
       owner: Propietario
       member: Miembro
@@ -229,21 +242,21 @@ es:
       private_group: Privado
       invite_only: Solo por invitación
       open_group: Abierto
-    discover_title: Descubrir grupos
-    discover_subtitle: Grupos abiertos a los que cualquiera puede unirse, sin invitación.
-    discover_empty: Todavía no hay grupos abiertos. Crea uno y configúralo como "Abierto" para que otros puedan encontrarlo.
-    join_open: Unirse al grupo
+    discover_title: Descubrir estudios
+    discover_subtitle: Estudios abiertos a los que cualquiera puede unirse, sin invitación.
+    discover_empty: Todavía no hay estudios abiertos. Crea uno y configúralo como "Abierto" para que otros puedan encontrarlo.
+    join_open: Unirse al estudio
     member_count:
       one: 1 miembro
       other: "%{count} miembros"
-    not_found: No se encontró ese grupo.
-    description: Lee la Escritura con personas en quienes confías. Los grupos son espacios pequeños — un estudio, un hilo familiar, un grupo de amigos — donde puedes compartir notas, comentarios y resaltados en tiempo real. Las notas son privadas por defecto y sólo se muestran al grupo cuando tú eliges compartirlas.
-    new_description: Crea un grupo de lectura pequeño. Agrega un nombre y una descripción opcional. Una vez creado, podrás invitar a amigos por correo o compartir el código de invitación desde la página del grupo.
-    empty: Aún no estás en ningún grupo. Crea uno para empezar un estudio con amigos, o pega un código de invitación abajo para unirte a uno que alguien te haya compartido.
+    not_found: No se encontró ese estudio.
+    description: Lee la Escritura con personas en quienes confías. Los estudios son espacios pequeños — un estudio bíblico, un hilo familiar, un grupo de amigos — donde puedes compartir notas, comentarios y resaltados en tiempo real. Las notas son privadas por defecto y sólo se muestran al estudio cuando tú eliges compartirlas.
+    new_description: Crea un estudio bíblico pequeño. Agrega un nombre y una descripción opcional. Una vez creado, podrás invitar a amigos por correo o compartir el código de invitación desde la página del estudio.
+    empty: Aún no estás en ningún estudio. Crea uno para leer con amigos, o pega un código de invitación abajo para unirte a uno que alguien te haya compartido.
   memberships:
     added: "Se añadió %{email} al grupo."
     removed: Miembro eliminado.
-    user_not_found: "No hay cuenta de Open Bible para %{email}."
+    user_not_found: "No hay cuenta de Bible Together para %{email}."
     cannot_remove_last_owner: No se puede eliminar al último propietario.
     add_member: Añadir miembro
     remove: Eliminar
@@ -285,6 +298,24 @@ es:
       shared_users: Personas específicas
       shared_groups: Mis estudios
       public_note: Pública
+  community:
+    title: Comunidad
+    intro: Notas públicas de lectores de todas partes — lo que un versículo significó para alguien, en sus propias palabras. Cualquiera puede leer; inicia sesión para añadir la tuya.
+    sort_label: Ordenar
+    sort_recent: Recientes
+    sort_top: Destacadas
+    book_filter: Libro
+    all_books: Todos los libros
+    upvotes:
+      one: "%{count} voto"
+      other: "%{count} votos"
+    replies:
+      one: "%{count} respuesta"
+      other: "%{count} respuestas"
+    posted_ago: "hace %{time}"
+    read_in_context: Leer en contexto
+    load_more: Cargar más
+    empty: Aún no hay notas públicas. Abre la Biblia, resalta un versículo y sé quien comparta primero lo que significa para ti.
   authors:
     public_notes_heading: Notas públicas
     member_since: "Miembro desde %{year}"
@@ -318,11 +349,11 @@ es:
       body: Las invitaciones son válidas por 14 días. Pide al dueño del grupo que envíe una nueva.
   group_invitation_mailer:
     invite:
-      subject: "%{inviter} te invitó a %{group_name} en Open Bible"
+      subject: "%{inviter} te invitó a %{group_name} en Bible Together"
       eyebrow: INVITACIÓN AL GRUPO
       heading_html: "%{inviter} quiere leer las Escrituras <em>contigo.</em>"
       heading_text: "%{inviter} quiere leer las Escrituras contigo en %{group_name}."
-      body_1: "%{inviter} te invitó a su grupo en Open Bible — un lector bíblico compartido donde los resaltados, las notas y las conversaciones se quedan entre los miembros."
+      body_1: "%{inviter} te invitó a su grupo en Bible Together — un lector bíblico compartido donde los resaltados, las notas y las conversaciones se quedan entre los miembros."
       cta: Aceptar la invitación
       expires_in: "Esta invitación caduca en %{days} días."
       footer_html: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, puedes ignorarlo con tranquilidad — no se crea ninguna cuenta hasta que aceptes.
@@ -344,6 +375,9 @@ es:
     no_notes_yet: Aún no hay notas de la comunidad en este capítulo.
     sign_in_to_add: Inicia sesión para añadir una.
     by_author: "por %{name}"
+    people_highlighted:
+      one: "1 persona subrayó este versículo"
+      other: "%{count} personas subrayaron este versículo"
     by_author_html: "por %{name}"
     featured: Destacada
     hidden: Oculta
@@ -441,8 +475,8 @@ es:
       rotated: Dirección rotada. La nueva está activa; la anterior fue archivada.
       empty: Aún no hay direcciones. Añade la primera para habilitar la página de donaciones.
   donations:
-    title: Apoya a Open Bible
-    intro_html: "Open Bible se financia de forma independiente. Si te ha sido útil, una pequeña donación ayuda mucho. No hay un equipo detrás, sólo una persona y la cuenta del servidor."
+    title: Apoya a Bible Together
+    intro_html: "Bible Together se financia de forma independiente. Si te ha sido útil, una pequeña donación ayuda mucho. No hay un equipo detrás, sólo una persona y la cuenta del servidor."
     address_heading: Envía a esta dirección Bitcoin
     address_hint: Toca para copiar. O escanea el QR con cualquier cartera.
     copy: Copiar
@@ -460,17 +494,17 @@ es:
       body: "Estamos entre carteras en este momento. Vuelve pronto, o ponte en contacto si quieres ayudar de otra forma."
     thank_you:
       heading: Gracias
-      body: "Tu apoyo mantiene Open Bible en línea para todos los que lo leen — sin anuncios, sin rastreo, sin suscripción. Si dejaste un correo, espera una respuesta breve pronto."
+      body: "Tu apoyo mantiene Bible Together en línea para todos los que lo leen — sin anuncios, sin rastreo, sin suscripción. Si dejaste un correo, espera una respuesta breve pronto."
       back_to_reading: Volver a leer
   legal:
-    eyebrow: Open Bible
+    eyebrow: Bible Together
     last_updated: "Última actualización: %{date}"
     terms:
       title: Términos de uso
       acceptance_heading: Aceptación
-      acceptance_body: Al usar Open Bible aceptas estos términos. Si no estás de acuerdo, por favor no uses el servicio.
+      acceptance_body: Al usar Bible Together aceptas estos términos. Si no estás de acuerdo, por favor no uses el servicio.
       service_heading: El servicio
-      service_body: Open Bible es un lector de Biblia gratuito que te permite hacer resaltados y notas en textos de dominio público. Es proporcionado por Demarco Ventures LLC, una empresa unipersonal. El servicio se financia con donaciones y no tiene ningún costo de suscripción.
+      service_body: Bible Together es un lector de Biblia gratuito que te permite hacer resaltados y notas en textos de dominio público. Es proporcionado por Demarco Ventures LLC, una empresa unipersonal. El servicio se financia con donaciones y no tiene ningún costo de suscripción.
       your_content_heading: Tu contenido
       your_content_body: Tus notas y resaltados te pertenecen. Nos otorgas una licencia limitada para almacenarlos y, cuando eliges hacerlos públicos, mostrarlos a otros lectores. Puedes editar o eliminar tu contenido en cualquier momento desde tu cuenta. Eliminar tu cuenta borra todo tu contenido privado de forma permanente.
       conduct_heading: Conducta
@@ -485,7 +519,7 @@ es:
       donations_heading: Donaciones
       donations_body: Las donaciones en Bitcoin son voluntarias y no reembolsables. Apoyan el costo de mantener el servicio en funcionamiento. Donar no otorga características ni derechos adicionales.
       warranty_heading: Descargo de garantía
-      warranty_body: Open Bible se proporciona "tal cual" sin garantía de ningún tipo. Hacemos nuestro mejor esfuerzo para mantenerlo funcionando y tu información segura, pero no ofrecemos garantías de disponibilidad, conservación de datos ni idoneidad para ningún propósito en particular.
+      warranty_body: Bible Together se proporciona "tal cual" sin garantía de ningún tipo. Hacemos nuestro mejor esfuerzo para mantenerlo funcionando y tu información segura, pero no ofrecemos garantías de disponibilidad, conservación de datos ni idoneidad para ningún propósito en particular.
       contact_heading: Contacto
       contact_body_html: '¿Preguntas sobre estos términos? Escríbenos a <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">hello@bible-together.org</a>.'
     privacy:
@@ -493,7 +527,7 @@ es:
       summary_heading: La versión corta
       summary_body: "Recopilamos solo lo necesario para operar el servicio: tu dirección de correo electrónico y el contenido que creas. No te rastreamos, no vendemos tus datos ni mostramos anuncios."
       collect_heading: Qué recopilamos
-      collect_intro: "Cuando creas una cuenta y usas Open Bible, almacenamos:"
+      collect_intro: "Cuando creas una cuenta y usas Bible Together, almacenamos:"
       collect_items:
         - Tu dirección de correo electrónico (usada solo para autenticación y restablecimiento de contraseña)
         - Una copia cifrada de tu contraseña (nunca almacenamos el texto en claro)

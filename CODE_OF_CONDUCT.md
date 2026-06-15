@@ -2,7 +2,7 @@
 
 ## Our commitment
 
-Open Bible is built around reading scripture together. Whether you contribute
+Bible Together is built around reading scripture together. Whether you contribute
 code, translations, bug reports, or discussion, you're part of a community
 that values the text and the people around it.
 
@@ -18,7 +18,7 @@ tradition and background are welcome.
   before responding in kind.
 - Give and receive feedback graciously. Code review is about the code, not
   the person.
-- Keep theological discussion focused on the product. Open Bible is software
+- Keep theological discussion focused on the product. Bible Together is software
   for reading scripture, not a forum for doctrinal debate.
 
 ## Unacceptable behaviour

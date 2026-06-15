@@ -34,6 +34,31 @@ class Group < ApplicationRecord
     owner_id == user.id || memberships.exists?(user_id: user.id)
   end
 
+  # Member notes shared with this study (club feed on the show page).
+  def recent_member_notes(limit: 25)
+    Note.shared_with_group(self)
+        .includes(:user, highlights: { highlight_notes: :note })
+        .order(created_at: :desc)
+        .limit(limit)
+  end
+
+  # Most recently touched highlight shared with the study — drives the
+  # "reading together" card. Falls back to Genesis 1 KJV when empty.
+  def reading_together_location
+    highlight = Highlight.joins(highlight_notes: { note: :note_shares })
+                         .where(note_shares: { shareable_type: "Group", shareable_id: id })
+                         .order("highlights.updated_at DESC")
+                         .first
+    return { translation: "kjv", book: "gen", chapter: 1 } unless highlight
+
+    parts = highlight.osis_ref.split(".")
+    return { translation: "kjv", book: "gen", chapter: 1 } if parts.size < 4
+
+    { translation: parts[1].downcase, book: parts[2].downcase, chapter: parts[3].to_i }
+  rescue StandardError
+    { translation: "kjv", book: "gen", chapter: 1 }
+  end
+
   def self.generate_invitation_code
     alphabet = ("A".."Z").to_a + ("0".."9").to_a
     length   = 6 + rand(3) # 6..8

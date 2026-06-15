@@ -20,7 +20,7 @@ RSpec.describe "Navbar nav links", type: :system do
     it "shows the Community link" do
       visit "/"
       within("header nav") do
-        expect(page).to have_link(I18n.t("layout.community_link"), href: "/public/bible")
+        expect(page).to have_link(I18n.t("layout.community_link"), href: community_path)
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe "Navbar nav links", type: :system do
     it "shows the Community link" do
       visit "/"
       within("header nav") do
-        expect(page).to have_link(I18n.t("layout.community_link"), href: "/public/bible")
+        expect(page).to have_link(I18n.t("layout.community_link"), href: community_path)
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe "Navbar nav links", type: :system do
       end
     end
 
-    it "marks the Studies link active when on /groups" do
+    it "marks the Studies link active when on /studies" do
       visit groups_path
       within("header nav") do
         link = find_link(I18n.t("layout.studies_link"))

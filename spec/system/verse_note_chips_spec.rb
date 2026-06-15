@@ -55,7 +55,7 @@ RSpec.describe "Verse note chips", type: :system do
     create(:note_share, note: note, shareable: group)
     sign_in user
 
-    visit "/groups/#{group.id}/bible/kjv/john/3"
+    visit "/studies/#{group.id}/bible/kjv/john/3"
 
     chip = find(".verse-note-chip")
     expect(chip[:href]).to end_with("#note_#{note.id}")

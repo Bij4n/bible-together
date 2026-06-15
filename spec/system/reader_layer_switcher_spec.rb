@@ -30,25 +30,25 @@ RSpec.describe "Reader layer switcher", type: :system do
       visit "/bible/kjv/john/3"
 
       expect(page).to have_css(option_selector("/bible/kjv/john/3"), text: I18n.t("bible.reader.layer_mine"), visible: :all)
-      expect(page).to have_css(option_selector("/groups/#{group.id}/bible/kjv/john/3"), text: "Wednesday Study", visible: :all)
-      expect(page).to have_css(option_selector("/public/bible/kjv/john/3"), text: I18n.t("bible.reader.layer_community"), visible: :all)
+      expect(page).to have_css(option_selector("/studies/#{group.id}/bible/kjv/john/3"), text: "Wednesday Study", visible: :all)
+      expect(page).to have_css(option_selector("/bible/kjv/john/3?layer=community"), text: I18n.t("bible.reader.layer_community"), visible: :all)
     end
 
     it "marks the group layer selected on the group bible view" do
-      visit "/groups/#{group.id}/bible/kjv/john/3"
+      visit "/studies/#{group.id}/bible/kjv/john/3"
 
-      expect(page).to have_css("#{option_selector("/groups/#{group.id}/bible/kjv/john/3")}[aria-selected='true']", visible: :all)
+      expect(page).to have_css("#{option_selector("/studies/#{group.id}/bible/kjv/john/3")}[aria-selected='true']", visible: :all)
     end
 
     it "marks Community selected on the public bible view" do
-      visit "/public/bible/kjv/john/3"
+      visit "/bible/kjv/john/3?layer=community"
 
-      expect(page).to have_css("#{option_selector("/public/bible/kjv/john/3")}[aria-selected='true']", visible: :all)
+      expect(page).to have_css("#{option_selector("/bible/kjv/john/3?layer=community")}[aria-selected='true']", visible: :all)
     end
   end
 
   it "renders no layer switcher for signed-out visitors" do
-    visit "/public/bible/kjv/john/3"
+    visit "/bible/kjv/john/3?layer=community"
 
     expect(page).not_to have_css(option_selector("/bible/kjv/john/3"), visible: :all)
   end

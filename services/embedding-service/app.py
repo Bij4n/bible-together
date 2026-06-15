@@ -5,7 +5,7 @@ from typing import List
 
 MODEL_NAME = "all-MiniLM-L6-v2"
 
-app = FastAPI(title="Open Bible Embedding Service")
+app = FastAPI(title="Bible Together Embedding Service")
 
 # Loaded once at process start. ~80MB download on first run; cached
 # afterwards in ~/.cache/huggingface/.

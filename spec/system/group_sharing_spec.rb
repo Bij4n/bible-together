@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Group note sharing", type: :system, js: true do
-  let(:alice) { create(:user, email: "alice@open-bible.test", display_name: "Alice") }
-  let(:bob)   { create(:user, email: "bob@open-bible.test") }
+  let(:alice) { create(:user, email: "alice@bible-together.test", display_name: "Alice") }
+  let(:bob)   { create(:user, email: "bob@bible-together.test") }
   let!(:translation) { create(:translation, :kjv) }
   let!(:book) { create(:book, :john, translation: translation) }
   let!(:chapter) { create(:chapter, book: book, number: 3) }
@@ -25,7 +25,7 @@ RSpec.describe "Group note sharing", type: :system, js: true do
     create(:note_share, note: note, shareable: group)
 
     sign_in bob
-    visit "/groups/#{group.id}/bible/kjv/john/3"
+    visit "/studies/#{group.id}/bible/kjv/john/3"
 
     expect(page).to have_content("For God so loved the world")
     expect(page).to have_content("The hinge of the gospel")
@@ -41,7 +41,7 @@ RSpec.describe "Group note sharing", type: :system, js: true do
     create(:note_share, note: note, shareable: group)
 
     sign_in non_member
-    visit "/groups/#{group.id}/bible/kjv/john/3"
+    visit "/studies/#{group.id}/bible/kjv/john/3"
     # Selenium can't read HTTP status directly; just verify the note
     # never paints and the chapter body isn't rendered for non-members.
     expect(page).not_to have_content("Private to group")

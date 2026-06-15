@@ -8,23 +8,16 @@
 ## Where things are right now
 
 - **Production:** [bible-together.org](https://bible-together.org), live since 2026-04-21, on Render. `main` auto-deploys.
-- **Repo:** Public on GitHub as of 2026-05-11 (MIT). `CONTRIBUTING.md` + `CODE_OF_CONDUCT.md` + `.github/pull_request_template.md` are in place for external contributors.
-- **GitHub Discussions:** Live as of 2026-05-11. Categories: Announcements (admin-only), Q&A, Ideas, General. Welcome post pinned as discussion #92 in Announcements.
-- **Branch:** `main` is clean. No open PRs.
-- **Last cluster shipped (2026-05-26, PR #111):** post-Sprint-25 UI polish + homepage redesign. All items merged and live.
-  - **WCAG contrast** — `color-scheme: light/dark` declared; inline no-flash theme script added to `<head>`; all 6 axe specs now pass consistently.
-  - **Surface palette shift** — warm cream (Substack-style) replacing the cooler near-white. Token changes in `application.css`.
-  - **Homepage restructured** — now shows only hero + community section. Features grid, How-it-works steps, and About section moved to a new `/how-it-works` route (`app/views/home/how_it_works.html.erb`). Footer "How it works" link updated.
-  - **Dropped cursive headline treatment** — plain font-weight headings site-wide. Donate panel got a plain border treatment.
-  - **Hero empty-state** — static John 3:16 card renders when no featured public note exists; hero grid always applies so layout is symmetric from day one.
-  - **Note panel slide-in fixed** — Tailwind v4 emits `translate: 100%` (the CSS `translate` property), not `transform: translateX`. Rule moved outside `@layer` so it wins on specificity; switched to `translate: 0`. System spec workarounds simplified to match.
-  - **Devise mailers redesigned** — mint glyph wordmark, mono eyebrow, Instrument Serif body, pill CTA. All 5 Devise action mailers updated (reset password, confirmation, email changed, password change, unlock). Matches `GroupInvitationMailer` vocabulary.
-  - **Hide Concept search toggle for RV1909** — toggle hidden when translation=RV1909 and scope=current; `mode=semantic` param falls back to keyword silently.
-  - **Cleanup** — orphaned `MembershipsController#create` removed (route deleted; `destroy` stays). Admin controllers standardized: `BitcoinAddressesController` now inherits `Admin::BaseController`.
+- **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together` (renamed from `open-bible` 2026-06-15).
+- **Branch:** `sprint-r7-community` — R7–R9 complete locally; merge to `main` when ready.
+- **Redesign (REDESIGN.md R1–R9):**
+  - **Shipped on `main`:** R1 tokens/type (Source Serif 4, Medium green `#1A8917`, white ground), R2 chrome re-skin, R3 highlight/note flow, R4 reader layers + chips, R5 follows, R6 friends sharing.
+  - **On branch (ready to merge):** R7 community feed + public-bible merge; R8 `/studies` rename + club layout; R9 verse-view on all layers, keyboard `?` help, community axe baseline, Devise paranoid mode.
+  - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md`.
+  - **Brand assets:** `public/icon.svg`, `public/icon.png` (v3 green concentric mark + pair dots), header `.wordmark-mark` disc. Preview page: `public/logo-preview.html` (research artifact — may lag DESIGN.md).
+- **GitHub Discussions:** Live. Welcome post pinned as discussion #92 in Announcements.
 
-- **Previous cluster (Sprint 25, 2026-05-12–13):** mobile highlighting / note-leaving / note-sharing flow. PRs #97–#101. See prior HANDOFF for detail.
-
-- **Session note (2026-05-26):** recovery session after GPU crash mid-redesign. No code written this session — this was orientation only. All redesign work from PR #111 was already committed before the crash; nothing was lost.
+- **Previous cluster (2026-05-26, PR #111):** post-Sprint-25 UI polish + homepage redesign. See git history for detail.
 
 ---
 
@@ -42,7 +35,7 @@
 These are the things sitting on the user's desk, not Claude's. Don't pick them blind.
 
 - **Legal pages** — `/terms`, `/privacy`, `/acceptable-use`. Sprint 15 blocker, still open. More pressing now that the repo is public and the app is accepting donations. Needs jurisdiction decision + drafted copy from the owner before any code can be written.
-- **Devise paranoid-mode stance** — currently `paranoid = false`; reset-password leaks account existence. Flip to `paranoid = true` is a one-liner; owner decides whether the UX trade-off (typo'd email silently "succeeds") is acceptable.
+- **Devise paranoid-mode stance** — `paranoid = true` on branch (Sprint R9); merge when ready.
 - **Language-switcher placement** — the account-sheet is overloaded (theme + locale + auth all in one dropdown). Two options exist; owner picks. Audit detail saved at `~/.claude/plans/what-do-you-need-enumerated-ember.md`.
 - **Pencil-bridge polish** (Sprint 16.5 PR E) — transition between toolbar dismiss and note-panel reveal. No UX spec locked: slide animation? auto-focus scroll? back-arrow to reopen toolbar? Owner decides the gesture before building.
 - **Contact form** — delivery channel undecided (Resend mailer pipe? Slack hook? Ticket queue?). Ready to build the moment the channel is decided.

@@ -24,7 +24,7 @@
     <% translation.books.order(:position).each do |book| %>
       <% book.chapters.order(:number).each do |chapter| %>
   <url>
-    <loc><%= public_bible_chapter_url(translation: translation.code.downcase, book: book.osis_code.downcase, chapter: chapter.number) %></loc>
+    <loc><%= bible_chapter_url(translation: translation.code.downcase, book: book.osis_code.downcase, chapter: chapter.number) %></loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>

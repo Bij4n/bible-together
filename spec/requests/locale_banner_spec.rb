@@ -26,19 +26,19 @@ RSpec.describe "Locale banner", type: :request do
 
   describe "visibility on the public reader" do
     it "renders the banner when UI locale differs from the translation's language" do
-      get "/public/bible/kjv/john/3?locale=es"
+      get "/bible/kjv/john/3?locale=es"
       expect(response.body).to include(%(action="/locale_banner/dismiss))
-      expect(response.body).to include("/public/bible/rv1909/john/3")
+      expect(response.body).to include("/bible/rv1909/john/3?layer=community")
     end
 
     it "hides the banner when UI locale matches the translation's language" do
-      get "/public/bible/kjv/john/3"
+      get "/bible/kjv/john/3"
       expect(response.body).not_to include(%(action="/locale_banner/dismiss))
     end
 
     it "hides the banner when no matching-language translation is installed" do
       rv1909.destroy
-      get "/public/bible/kjv/john/3?locale=es"
+      get "/bible/kjv/john/3?locale=es"
       expect(response.body).not_to include(%(action="/locale_banner/dismiss))
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe "Locale banner", type: :request do
 
     it "hides the banner after dismissal" do
       post "/locale_banner/dismiss", headers: { "HTTP_REFERER" => "/public/bible/kjv/john/3?locale=es" }
-      get "/public/bible/kjv/john/3?locale=es"
+      get "/bible/kjv/john/3?locale=es"
       expect(response.body).not_to include(%(action="/locale_banner/dismiss))
     end
 

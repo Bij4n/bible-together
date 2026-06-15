@@ -391,7 +391,7 @@
   }
 
   /*
-   * Wordmark mark. The accent-green disc next to "Open Bible" in the header
+   * Wordmark mark. The accent-green disc next to "Bible Together" in the header
    * and footer is the brand glyph — a 20x20 accent-700 disc with two
    * concentric outline rings (4px @ 25% accent, 9px @ 10% accent)
    * via box-shadow. Rendered as an inline-block on a decorative
@@ -425,12 +425,12 @@
       0 0 0 9px color-mix(in srgb, var(--color-accent-400) 10%, transparent);
   }
 
-  /* Split-weight wordmark. "Open" renders at weight 400 in a muted
+  /* Split-weight wordmark. "Together" renders at weight 400 in a muted
      surface tone so the noun "Bible" at weight 720 reads as primary.
      Inter variable axis covers 100–900 so 720 is a valid stop.
      A literal space character sits between the spans so Capybara and
-     screen readers see "Open Bible" as two words; flex collapses it
-     visually. margin-left on .wordmark-bible provides the actual gap. */
+     screen readers see "Bible Together" as two words; flex collapses it
+     visually. margin-left on .wordmark-open provides the actual gap. */
   .wordmark-open {
     font-weight: 400;
     letter-spacing: -0.02em;

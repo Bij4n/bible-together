@@ -2,8 +2,8 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t open_bible .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name open_bible open_bible
+# docker build -t bible_together .
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name bible_together bible_together
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 

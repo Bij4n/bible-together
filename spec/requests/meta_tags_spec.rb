@@ -43,15 +43,15 @@ RSpec.describe "Layout meta tags", type: :request do
   end
 
   describe "page-level title interpolation" do
-    it "appends ' · Open Bible' when a controller sets content_for :title" do
+    it "appends ' · Bible Together' when a controller sets content_for :title" do
       get "/about"
-      expect(response.body).to match(%r{<title>[^<]+ · Open Bible</title>})
+      expect(response.body).to match(%r{<title>[^<]+ · Bible Together</title>})
     end
 
     it "uses just the app name when no content_for :title is set" do
       # Homepage doesn't yield :title; falls through to app.name
       get "/"
-      expect(response.body).to match(%r{<title>Open Bible</title>})
+      expect(response.body).to match(%r{<title>Bible Together</title>})
     end
   end
 end

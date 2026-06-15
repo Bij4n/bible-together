@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Settings preferences", type: :system, js: true do
-  let(:user) { create(:user, email: "reader@open-bible.test", ui_locale: "en", theme: "system") }
+  let(:user) { create(:user, email: "reader@bible-together.test", ui_locale: "en", theme: "system") }
 
   before { sign_in user }
 

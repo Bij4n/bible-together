@@ -1,4 +1,4 @@
-# Open Bible — bible-together.org
+# Bible Together — bible-together.org
 # https://www.robotstxt.org/robotstxt.html
 
 User-agent: *

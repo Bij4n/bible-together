@@ -9,7 +9,7 @@ require "rails_helper"
 # this sprint, because no SMTP provider was configured and Action
 # Mailer silently dropped the delivery.
 RSpec.describe "Devise password reset flow", type: :request do
-  let!(:user) { create(:user, email: "scribe@open-bible.test") }
+  let!(:user) { create(:user, email: "scribe@bible-together.test") }
 
   it "delivers a reset-password email and stores a token on the user" do
     expect {

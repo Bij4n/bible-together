@@ -22,7 +22,7 @@ RSpec.describe "Errors", type: :request do
         path = Rails.root.join("public/#{code}.html")
         expect(path).to be_exist
         body = File.read(path)
-        expect(body).to include("Open Bible")
+        expect(body).to include("Bible Together")
         expect(body).to include("#0F5C3F")
         expect(body).to include("Back to home")
         case code

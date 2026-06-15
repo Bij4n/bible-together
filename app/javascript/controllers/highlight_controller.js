@@ -13,7 +13,7 @@ import { Controller } from "@hotwired/stimulus"
 // echoes data that's already on the page (verse ids, osis refs,
 // character offsets), so it doesn't expose anything sensitive.
 export default class extends Controller {
-  static targets = ["chapter", "toolbar"]
+  static targets = ["chapter", "toolbar", "shortcutsDialog"]
   static values = {
     translationCode: String,
     book: String,
@@ -76,7 +76,15 @@ export default class extends Controller {
       case "n":
       case "N": this.kbdNote(); break
       case "Escape": this.clearKbdFocus(); break
+      case "?": this.toggleShortcuts(); event.preventDefault(); break
     }
+  }
+
+  toggleShortcuts() {
+    if (!this.hasShortcutsDialogTarget) return
+    const dialog = this.shortcutsDialogTarget
+    if (dialog.open) dialog.close()
+    else dialog.showModal()
   }
 
   kbdVerses() {
