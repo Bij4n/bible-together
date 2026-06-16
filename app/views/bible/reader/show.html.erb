@@ -66,6 +66,7 @@
         <%= render "bible/reader/layer_switcher",
                    translation: @translation, book: @book, chapter: @chapter,
                    selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+        <%= render "bible/reader/book_picker", translation: @translation, book: @book %>
         <% translations = Translation.order(:name) %>
         <% if translations.size > 1 %>
           <%= render "shared/nav_select",

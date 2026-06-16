@@ -158,6 +158,9 @@ en:
       by_author: "by %{name}"
       breadcrumb_home: Bible Together
       translation_picker: Translation
+      book_picker: Book
+      old_testament: Old Testament
+      new_testament: New Testament
       cross_translation_badge_title: "You've annotated this verse in %{translation}. Click to jump there."
       dismiss_toolbar: Dismiss
       highlight_action: Highlight
