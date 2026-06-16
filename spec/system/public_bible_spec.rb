@@ -70,7 +70,6 @@ RSpec.describe "Public bible + moderation", type: :system, js: true do
     # redirect to verify Sign in is exposed.
     open_account_menu
     click_button "Sign out"
-    open_account_menu
     expect(page).to have_link(text: /sign in/i)
     visit "/public/bible/kjv/john/3"
     expect(page).not_to have_content("This will be hidden")

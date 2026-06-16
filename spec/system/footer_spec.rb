@@ -103,6 +103,22 @@ RSpec.describe "Footer", type: :system do
       end
     end
 
+    it "links Contact to /contact" do
+      visit "/"
+      within("footer") do
+        link = find_link(I18n.t("layout.contact_link"))
+        expect(link[:href]).to end_with("/contact")
+      end
+    end
+
+    it "links Terms and Privacy in the support column" do
+      visit "/"
+      within("footer") do
+        expect(page).to have_link(I18n.t("legal.terms.title"), href: "/terms")
+        expect(page).to have_link(I18n.t("legal.privacy.title"), href: "/privacy")
+      end
+    end
+
     # Active-state is the "you are here" cue: links pointing at the
     # current route render in mint accent instead of the idle surface
     # tone. About now points at /about (canonical page) so the

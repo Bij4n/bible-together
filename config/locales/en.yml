@@ -42,16 +42,45 @@ en:
     nav_section: Explore
     account_section: Account
     account: Account
+    open_study_menu: Open study menu
+    open_explore_menu: Open explore menu
+    open_account_menu: Open account menu
+    study_menu: Study
+    explore_menu: Explore
+    you_tab: You
     my_notes_link: My notes
+    my_studies_link: My studies
+    start_study_link: Start a study
+    join_with_code_link: Join with code
+    public_notes_link: Public notes
+    community_bible_link: Read with others
+    discover_studies_link: Discover studies
+    profile_link: Profile
+    start_reading_link: Start reading
     read_link: Read
     studies_link: Studies
     community_link: Community
     donate_link: Donate
     how_it_works_link: How it works
     about_link: About
+    contact_link: Contact
+    footer_product: Product
+    footer_support: Support
     footer_tagline: Read scripture with someone.
     footer_attribution_translations: "Public domain texts: KJV (English) · Reina-Valera 1909 (Spanish)."
-    footer_attribution_meta: "No tracking. © %{year}."
+    footer_attribution_meta: "BIBLE TOGETHER ORG © %{year}."
+  contact:
+    title: Contact
+    heading: Get in touch
+    description: Questions, feedback, or a problem to report? Send a message and we'll get back to you.
+    email_intro: "Prefer email? Reach us directly at"
+    name_label: Your name
+    email_label: Your email
+    message_label: Message
+    submit: Send message
+    success: Thanks for reaching out. We'll reply to your email soon.
+    error: Please enter your email and a message.
+    meta_description: Contact Bible Together with questions, feedback, or to report a problem.
   locale_banner:
     aria_label: Reading language suggestion
     reading: "You're reading %{name}."
@@ -63,7 +92,18 @@ en:
     cta_public_bible: Start reading
     cta_how_it_works: How it works
     how_it_works_title: How it works
-    tertiary: Free. KJV and Reina-Valera 1909. No ads, no tracking.
+    dashboard:
+      heading: Welcome back
+      subhead: Pick up where you left off, or jump into a study.
+      continue_heading: Continue reading
+      continue_cta: Open chapter
+      recent_notes_heading: Recent notes
+      view_all_notes: All notes
+      no_notes: You have not written any notes yet.
+      studies_heading: Your studies
+      view_all_studies: All studies
+      no_studies: You are not in any studies yet.
+      create_study: Start a study
     landing:
       points_label: What you can do
       points:

@@ -34,10 +34,8 @@ RSpec.describe "Auth flows", type: :system, js: true do
     expect(page).to have_button(text: /sign out/i)
     click_button "Sign out"
 
-    # Menu closes on the navigation that follows sign-out; reopen it to
-    # verify the signed-out state exposes Sign in where the signed-in
-    # state exposed Sign out.
-    open_account_menu
+    # Signed-out desktop chrome exposes Sign in as a direct header link
+    # (no account menu), where the signed-in state showed the avatar menu.
     expect(page).to have_link(text: /sign in/i)
   end
 end

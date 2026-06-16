@@ -1,0 +1,63 @@
+<%
+  footer_link_base = "site-footer-link transition-colors hover:text-accent-700"
+  footer_link_active = "site-footer-link--active text-accent-800"
+  footer_col_label = "font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500"
+%>
+
+<footer class="site-footer border-t border-surface-200 bg-surface-100">
+  <div class="mx-auto <%= layout_container_class %> space-y-8 px-6 py-10 sm:py-12">
+    <div class="grid gap-8 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-start sm:gap-16">
+      <div class="max-w-sm space-y-2">
+        <%= render "shared/wordmark", class: "text-base" %>
+        <p class="font-reading text-sm leading-relaxed text-surface-600">
+          <%= t("layout.footer_tagline") %>
+        </p>
+      </div>
+
+      <nav class="space-y-2 font-ui text-sm text-surface-600" aria-label="<%= t("layout.footer_product") %>">
+        <p class="<%= footer_col_label %>"><%= t("layout.footer_product") %></p>
+        <%= link_to t("layout.about_link"), about_path,
+            class: "#{footer_link_base} block #{footer_link_active if nav_active?(about_path)}" %>
+        <%= link_to t("layout.how_it_works_link"), how_it_works_path,
+            class: "#{footer_link_base} block #{footer_link_active if nav_active?(how_it_works_path)}" %>
+        <% if donate_link_visible? %>
+          <%= link_to t("layout.donate_link"), donate_path,
+              class: "#{footer_link_base} block #{footer_link_active if nav_active?(donate_path)}" %>
+        <% end %>
+      </nav>
+
+      <nav class="space-y-2 font-ui text-sm text-surface-600" aria-label="<%= t("layout.footer_support") %>">
+        <p class="<%= footer_col_label %>"><%= t("layout.footer_support") %></p>
+        <%= link_to t("legal.terms.title"), terms_path,
+            class: "#{footer_link_base} block #{footer_link_active if nav_active?(terms_path)}" %>
+        <%= link_to t("legal.privacy.title"), privacy_path,
+            class: "#{footer_link_base} block #{footer_link_active if nav_active?(privacy_path)}" %>
+        <%= link_to t("layout.contact_link"), contact_path,
+            class: "#{footer_link_base} block #{footer_link_active if nav_active?(contact_path)}" %>
+      </nav>
+    </div>
+
+    <div class="flex flex-col gap-4 border-t border-surface-200 pt-6 sm:flex-row sm:items-end sm:justify-between">
+      <div class="space-y-1">
+        <p class="font-ui text-xs text-balance text-surface-500">
+          <%= t("layout.footer_attribution_translations") %>
+        </p>
+        <p class="font-ui text-[10px] uppercase tracking-widest text-surface-500">
+          <%= t("layout.footer_attribution_meta", year: Date.current.year) %>
+        </p>
+      </div>
+
+      <div class="flex gap-1" aria-label="<%= t("layout.language_switcher") %>">
+        <% User::UI_LOCALES.each do |code| %>
+          <% active = I18n.locale.to_s == code %>
+          <% locale_classes = "rounded-full px-2.5 py-1 font-ui text-[10px] uppercase tracking-widest transition-colors #{active ? "bg-surface-200 text-surface-900" : "text-surface-500 hover:bg-surface-200/70 hover:text-surface-700"}" %>
+          <% if user_signed_in? %>
+            <%= button_to code.upcase, settings_path, method: :patch, params: { user: { ui_locale: code } }, form_class: "inline", class: locale_classes, aria: { label: t("layout.language_#{code}"), current: active ? "true" : nil } %>
+          <% else %>
+            <%= link_to code.upcase, url_for(locale: code), class: locale_classes, data: { turbo_prefetch: "false" }, aria: { label: t("layout.language_#{code}"), current: active ? "true" : nil } %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</footer>

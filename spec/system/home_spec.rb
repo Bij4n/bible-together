@@ -29,7 +29,6 @@ RSpec.describe "Home page", type: :system do
 
     expect(page).to have_css("h1", text: I18n.t("home.welcome"))
     expect(page).to have_content(I18n.t("home.subhead"))
-    expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
   it "renders the landing points" do

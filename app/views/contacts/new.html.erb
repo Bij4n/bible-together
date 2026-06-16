@@ -1,0 +1,45 @@
+<% content_for :title, t("contact.title") %>
+<% content_for :meta_description, t("contact.meta_description") %>
+<%
+  input_classes = "w-full rounded-md border border-surface-300 bg-surface-50 px-3 py-2 font-ui text-sm text-surface-900 transition-colors placeholder:text-surface-500 focus:border-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-700/20"
+  label_classes = "block font-ui text-sm font-medium text-surface-700"
+%>
+
+<article class="mx-auto max-w-2xl space-y-8">
+  <header class="space-y-2">
+    <p class="font-ui text-sm font-semibold uppercase tracking-[0.14em] text-accent-700">
+      <%= t("contact.title") %>
+    </p>
+    <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900 sm:text-4xl">
+      <%= t("contact.heading") %>
+    </h1>
+    <p class="font-reading text-base leading-relaxed text-pretty text-surface-600">
+      <%= t("contact.description") %>
+    </p>
+  </header>
+
+  <div class="rounded-2xl border border-surface-200 bg-surface-50 p-6 sm:p-8">
+    <%= form_with model: @contact, url: contact_path, method: :post, class: "space-y-5" do |f| %>
+      <div class="space-y-1.5">
+        <%= f.label :name, t("contact.name_label"), class: label_classes %>
+        <%= f.text_field :name, autocomplete: "name", class: input_classes %>
+      </div>
+      <div class="space-y-1.5">
+        <%= f.label :email, t("contact.email_label"), class: label_classes %>
+        <%= f.email_field :email, required: true, autocomplete: "email", class: input_classes %>
+      </div>
+      <div class="space-y-1.5">
+        <%= f.label :message, t("contact.message_label"), class: label_classes %>
+        <%= f.text_area :message, rows: 6, required: true, class: input_classes %>
+      </div>
+      <%= f.submit t("contact.submit"),
+          class: "inline-flex items-center rounded-full bg-accent-700 px-5 py-2.5 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800" %>
+    <% end %>
+  </div>
+
+  <p class="font-ui text-sm text-surface-600">
+    <%= t("contact.email_intro") %>
+    <%= mail_to "hello@bible-together.org", "hello@bible-together.org",
+        class: "font-medium text-accent-700 transition-colors hover:text-accent-800" %>
+  </p>
+</article>
