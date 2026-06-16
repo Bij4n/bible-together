@@ -23,4 +23,10 @@ RSpec.describe "About page", type: :request do
     get "/about"
     expect(response).to have_http_status(:ok)
   end
+
+  it "states it is a non-profit project run by a single developer, funded by donations" do
+    get "/about"
+    expect(response.body).to include(I18n.t("home.about.nonprofit_label"))
+    expect(response.body).to include(I18n.t("home.about.para_nonprofit"))
+  end
 end

@@ -143,6 +143,8 @@ en:
       para_3: Reading what it meant for them, then writing what it meant for you, is the whole point.
       para_4: KJV in English and RV1909 in Spanish are live now. The interface is bilingual. Both translations are public domain.
       para_5: Built and maintained by one person. Hosting runs on donations. No subscription, no ads, no tracker.
+      nonprofit_label: Non-profit
+      para_nonprofit: "Bible Together is run on a non-profit basis by a single developer. It is not a business and takes no profit — every donation goes entirely toward running the platform: hosting, email, domains, and the bills that keep it online."
     donate_cta:
       heading: Keep it open
       body: If this has been useful to you, help cover hosting so the next reader can find it.
