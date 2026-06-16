@@ -84,11 +84,11 @@
         <%= render "shared/wordmark", class: "text-lg" %>
 
         <% rail_idle   = "site-nav-link hidden sm:inline-flex items-center rounded-full px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50" %>
-        <% rail_active = "site-nav-link--active bg-surface-100 text-accent-700 dark:bg-surface-800 dark:text-accent-400" %>
+        <% rail_active = "site-nav-link--active bg-surface-100 text-accent-800 dark:bg-surface-800 dark:text-accent-400" %>
         <% rail_rest   = "text-surface-700 dark:text-surface-300" %>
         <% menu_item_base   = "block rounded-lg px-4 py-2.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50" %>
         <% menu_item_idle   = "text-surface-700 dark:text-surface-300" %>
-        <% menu_item_active = "bg-surface-100 text-accent-700 dark:bg-surface-800 dark:text-accent-400" %>
+        <% menu_item_active = "bg-surface-100 text-accent-800 dark:bg-surface-800 dark:text-accent-400" %>
 
         <nav class="site-nav flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.main_nav") %>">
           <%= link_to t("layout.read_link"), bible_entry_path,
@@ -209,7 +209,7 @@
 
     <%
       footer_link_base   = "site-footer-link transition-colors hover:text-accent-700 dark:hover:text-accent-400"
-      footer_link_active = "site-footer-link--active text-accent-700 dark:text-accent-400"
+      footer_link_active = "site-footer-link--active text-accent-800 dark:text-accent-400"
     %>
     <footer class="site-footer border-t border-surface-200 bg-surface-100 dark:border-surface-800 dark:bg-surface-950">
       <div class="mx-auto <%= layout_container_class %> space-y-8 px-6 py-10 sm:py-12">

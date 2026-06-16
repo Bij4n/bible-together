@@ -247,9 +247,9 @@
   }
 
   .site-nav-menu-trigger[aria-expanded="true"] {
-    border-color: color-mix(in srgb, var(--color-accent-700) 35%, var(--color-surface-200));
+    border-color: color-mix(in srgb, var(--color-accent-800) 35%, var(--color-surface-200));
     background: color-mix(in srgb, var(--color-accent-50) 70%, var(--color-surface-50));
-    color: var(--color-accent-700);
+    color: var(--color-accent-800);
   }
 
   html[data-theme="dark"] .site-nav-menu-trigger[aria-expanded="true"] {
@@ -263,10 +263,10 @@
    * surface-100 well, two-column link grid, pill locale toggles.
    */
   .site-footer-link--active {
-    color: var(--color-accent-700);
+    color: var(--color-accent-800);
     text-decoration: underline;
     text-underline-offset: 0.25rem;
-    text-decoration-color: color-mix(in srgb, var(--color-accent-700) 40%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--color-accent-800) 40%, transparent);
   }
 
   html[data-theme="dark"] .site-footer-link--active {
@@ -440,7 +440,7 @@
     font-family: var(--font-reading);
     font-style: italic;
     font-weight: 400;
-    color: var(--color-accent-700);
+    color: var(--color-accent-800);
     letter-spacing: -0.02em;
   }
 
@@ -726,7 +726,7 @@
 
   trix-editor:focus {
     outline: none;
-    border-color: var(--color-accent-700);
+    border-color: var(--color-accent-800);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent-700) 20%, transparent);
   }
 
@@ -767,7 +767,7 @@
     padding: 0 0.45em;
     border-radius: 9999px;
     background: color-mix(in srgb, var(--color-accent-700) 10%, transparent);
-    color: var(--color-accent-700);
+    color: var(--color-accent-800);
     font-family: var(--font-ui);
     font-size: 0.62em;
     font-weight: 600;
