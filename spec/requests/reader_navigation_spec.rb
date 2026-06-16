@@ -30,4 +30,19 @@ RSpec.describe "Reader navigation", type: :request do
       expect(response.body).to include(I18n.t("bible.reader.book_picker"))
     end
   end
+
+  describe "red-letter rendering" do
+    let!(:red_verse) do
+      create(:verse, chapter: gen_ch, number: 2,
+                     body_text: "And God said Let there be light",
+                     body_html: "And God said Let there be light",
+                     red_letter_ranges: [ [ 13, 31 ] ],
+                     osis_ref: "Bible.KJV.Gen.1.2")
+    end
+
+    it "wraps red_letter_ranges in a jesus-words span" do
+      get "/bible/kjv/gen/1"
+      expect(response.body).to include("jesus-words")
+    end
+  end
 end
