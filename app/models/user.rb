@@ -2,6 +2,7 @@ class User < ApplicationRecord
   UI_LOCALES = %w[en es].freeze
   DISPLAY_NAME_MAX = 60
   USERNAME_FORMAT = /\A[a-zA-Z0-9_]{3,30}\z/
+  BIO_MAX = 300
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -43,6 +44,7 @@ class User < ApplicationRecord
             allow_blank: true,
             format: { with: USERNAME_FORMAT },
             uniqueness: { case_sensitive: false }
+  validates :bio, length: { maximum: BIO_MAX }
 
   def follow!(user)
     follows.find_or_create_by!(followed: user)
