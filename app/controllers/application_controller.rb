@@ -53,8 +53,12 @@ class ApplicationController < ActionController::Base
     MARKETING_ROUTES.fetch(controller_name, []).include?(action_name)
   end
 
+  # Centred page container + responsive side gutters shared by the
+  # header, main, and footer so content never hugs the viewport edge on
+  # wide screens. Marketing pages get a wider max-width than app pages.
   def layout_container_class
-    marketing_page? ? "max-w-6xl" : "max-w-5xl"
+    base = marketing_page? ? "max-w-6xl" : "max-w-5xl"
+    "#{base} px-6 sm:px-8 lg:px-12"
   end
 
   private
