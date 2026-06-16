@@ -81,12 +81,12 @@ RSpec.describe "Navbar", type: :request do
 
     it "marks Settings active when on /settings" do
       get "/settings"
-      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Settings/)
+      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-800[^>]*>Settings/)
     end
 
     it "does not mark Settings active on the homepage" do
       get "/"
-      expect(response.body).not_to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Settings/)
+      expect(response.body).not_to match(/<a[^>]*bg-surface-100 text-accent-800[^>]*>Settings/)
     end
   end
 
@@ -96,17 +96,17 @@ RSpec.describe "Navbar", type: :request do
 
     it "marks Admin active anywhere under /admin" do
       get "/admin/notes"
-      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Admin/)
+      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-800[^>]*>Admin/)
     end
 
     it "marks Admin active on /admin/flags too (not just /admin/notes)" do
       get "/admin/flags"
-      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Admin/)
+      expect(response.body).to match(/<a[^>]*bg-surface-100 text-accent-800[^>]*>Admin/)
     end
 
     it "does not mark Admin active on /settings" do
       get "/settings"
-      expect(response.body).not_to match(/<a[^>]*bg-surface-100 text-accent-700[^>]*>Admin/)
+      expect(response.body).not_to match(/<a[^>]*bg-surface-100 text-accent-800[^>]*>Admin/)
     end
   end
 end
