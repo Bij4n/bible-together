@@ -14,9 +14,9 @@ RSpec.describe "Settings preferences", type: :system, js: true do
     expect(page).to have_content(/preferences saved/i)
     expect(user.reload.theme).to eq("dark")
 
-    # On a fresh page load, the server should render with data-theme=dark
-    # immediately (first-paint, before JS runs).
-    visit "/"
+    # On a fresh page load outside marketing surfaces, the server should
+    # render with data-theme=dark immediately (first-paint, before JS runs).
+    visit "/settings"
     expect(page).to have_css(%(html[data-theme="dark"]))
   end
 
@@ -28,18 +28,18 @@ RSpec.describe "Settings preferences", type: :system, js: true do
     expect(user.reload.ui_locale).to eq("es")
 
     visit "/"
-    expect(page).to have_content(/donde los versículos\s+encuentran voz/i)
+    expect(page).to have_content(I18n.t("home.welcome", locale: :es))
     expect(page).to have_css("html[lang='es']")
   end
 
   it "persists signed-out language switching via session" do
     sign_out user
     visit "/"
-    expect(page).to have_content(/where verses\s+meet voices/i)
+    expect(page).to have_content(I18n.t("home.welcome", locale: :en))
 
     # Language toggle is in the footer — no menu to open.
     within("footer") { click_on "ES" }
-    expect(page).to have_content(/donde los versículos\s+encuentran voz/i)
+    expect(page).to have_content(I18n.t("home.welcome", locale: :es))
 
     # Navigate elsewhere without carrying a locale param — session should
     # still apply.

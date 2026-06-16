@@ -30,25 +30,23 @@ RSpec.describe "Footer", type: :system do
     it "renders the wordmark on the homepage" do
       visit "/"
       within("footer") do
-        expect(page).to have_content(I18n.t("app.name"))
+        expect(page).to have_link(I18n.t("app.name"), href: "/")
+        expect(page).to have_css("a.wordmark")
       end
     end
 
-    it "renders the wordmark text without a mark glyph" do
+    it "matches the header wordmark treatment" do
       visit "/"
+      within("header") do
+        expect(page).to have_css("a.wordmark", text: I18n.t("app.name"))
+      end
       within("footer") do
-        expect(page).to have_css("span.wordmark-bible", text: "Bible")
-        expect(page).to have_css("span.wordmark-open", text: "Together")
-        expect(page).not_to have_css("span.wordmark-mark")
+        expect(page).to have_css("a.wordmark", text: I18n.t("app.name"))
       end
     end
 
-    # Tagline is hidden below the sm breakpoint via `hidden sm:block`
-    # — at desktop widths it shows, at mobile widths it's display:none
-    # but still in the DOM. rack_test doesn't honor responsive CSS,
-    # so we assert the tagline element is present in the DOM
-    # regardless of viewport.
-    it "includes the tagline element in the DOM" do
+    # Tagline is visible at all breakpoints in the redesigned footer.
+    it "includes the tagline in the footer" do
       visit "/"
       within("footer") do
         expect(page).to have_content(I18n.t("layout.footer_tagline"), wait: 0)
@@ -117,7 +115,7 @@ RSpec.describe "Footer", type: :system do
         visit "/donate"
         within("footer") do
           link = find_link(I18n.t("layout.donate_link"))
-          expect(link[:class]).to include("decoration-accent-700/40")
+          expect(link[:class]).to include("site-footer-link--active")
         end
       end
 
@@ -125,7 +123,7 @@ RSpec.describe "Footer", type: :system do
         visit "/"
         within("footer") do
           link = find_link(I18n.t("layout.donate_link"))
-          expect(link[:class]).not_to include("decoration-accent-700/40")
+          expect(link[:class]).not_to include("site-footer-link--active")
         end
       end
 
@@ -133,7 +131,7 @@ RSpec.describe "Footer", type: :system do
         visit "/how-it-works"
         within("footer") do
           link = find_link(I18n.t("layout.how_it_works_link"))
-          expect(link[:class]).to include("decoration-accent-700/40")
+          expect(link[:class]).to include("site-footer-link--active")
         end
       end
 
@@ -141,7 +139,7 @@ RSpec.describe "Footer", type: :system do
         visit "/"
         within("footer") do
           link = find_link(I18n.t("layout.about_link"))
-          expect(link[:class]).not_to include("decoration-accent-700/40")
+          expect(link[:class]).not_to include("site-footer-link--active")
         end
       end
 
@@ -149,7 +147,7 @@ RSpec.describe "Footer", type: :system do
         visit "/about"
         within("footer") do
           link = find_link(I18n.t("layout.about_link"))
-          expect(link[:class]).to include("decoration-accent-700/40")
+          expect(link[:class]).to include("site-footer-link--active")
         end
       end
     end

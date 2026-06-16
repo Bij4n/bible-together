@@ -53,13 +53,13 @@ RSpec.describe "Errors", type: :request do
 
     it "renders the en eyebrow + heading content" do
       get "/__error/404"
-      expect(response.body).to include("404 — Not found")
+      expect(response.body).to include("404: Not found")
       expect(response.body).to include("doesn't exist")
     end
 
     it "renders the es eyebrow + heading content with locale=es" do
       get "/__error/404?locale=es"
-      expect(response.body).to include("404 — No encontrada")
+      expect(response.body).to include("404: No encontrada")
       expect(response.body).to include("no existe")
     end
 

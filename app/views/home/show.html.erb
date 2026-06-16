@@ -1,71 +1,24 @@
-<%
-  hero_btn   = "inline-flex items-center gap-2 rounded-full bg-surface-950 px-7 py-3.5 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-700 hover:-translate-y-px dark:bg-surface-50 dark:text-surface-950 dark:hover:bg-accent-400"
-  section_h2 = "font-ui text-2xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl"
-%>
-
-<div class="space-y-24 sm:space-y-28">
-  <%# Hero. Two-column at md+ (1.1fr 1fr) — verse card on the right.
-      Single column on mobile; verse card stacks below the text. %>
-  <section class="pt-2 sm:pt-4 md:grid md:grid-cols-[1.1fr_1fr] md:items-center md:gap-x-12 md:gap-y-0">
-    <div class="space-y-5 sm:space-y-6">
-      <h1 class="font-ui text-[clamp(40px,5.5vw,68px)] font-semibold leading-[1.05] tracking-[-0.035em] text-surface-900 dark:text-surface-50">
-        <%= t("home.welcome_html") %>
-      </h1>
-      <p class="max-w-2xl font-reading text-lg leading-[1.6] text-pretty text-surface-700 dark:text-surface-300 sm:text-xl">
-        <%= t("home.subhead") %>
-      </p>
-
-      <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3">
-        <%= link_to t("home.cta_public_bible"),
-                    public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
-                    class: "#{hero_btn} justify-center sm:justify-start" %>
-        <%= link_to how_it_works_path,
-                    class: "inline-flex items-center justify-center gap-1.5 font-ui text-base font-medium text-surface-900 transition-colors hover:text-accent-700 dark:text-surface-50 dark:hover:text-accent-400 sm:justify-start" do %>
-          <%= t("home.cta_how_it_works") %>
-          <span aria-hidden="true">&rarr;</span>
-        <% end %>
-      </div>
-
-      <ul role="list" class="mt-8 flex flex-wrap gap-2.5 border-t border-surface-200 pt-5 font-ui text-xs font-medium text-surface-700 dark:border-surface-800 dark:text-surface-300">
-        <% %i[kjv rv1909 public_domain].each do |k| %>
-          <li class="inline-flex items-center rounded-full border border-surface-200 bg-surface-50 px-3 py-1.5 dark:border-surface-800 dark:bg-surface-900">
-            <%= t("home.hero_meta.#{k}") %>
-          </li>
-        <% end %>
-      </ul>
-
-      <p class="font-ui text-xs text-surface-500 dark:text-surface-400">
-        <%= t("home.tertiary") %>
-      </p>
-    </div>
-
-    <div class="mt-10 md:mt-0">
-      <% if @hero_verse %>
-        <%= render "hero_verse_card", note: @hero_note, verse: @hero_verse %>
-      <% else %>
-        <%= render "hero_empty_state" %>
-      <% end %>
-    </div>
-  </section>
+<div class="landing space-y-20 sm:space-y-24">
+  <%= render "landing_hero" %>
+  <%= render "landing_points" %>
 
   <% if @community_entries.any? %>
-    <%= render "community_section", section_h2: section_h2 %>
+    <%= render "community_section" %>
   <% end %>
 
-  <%# Donate CTA — gated on active-address check. Mint-tinted bg sets it
-      apart from the neutral card sections without shouting. %>
   <% if donate_link_visible? %>
-    <section data-section="donate-cta"
-             class="rounded-2xl border border-accent-700/20 bg-accent-700/5 p-8 text-center dark:border-accent-400/20 dark:bg-accent-400/5 sm:p-10">
-      <h2 class="font-ui text-xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-2xl">
-        <%= t("home.donate_cta.heading") %>
-      </h2>
-      <p class="mx-auto mt-3 max-w-md font-reading text-base leading-[1.7] text-pretty text-surface-600 dark:text-surface-400">
-        <%= t("home.donate_cta.body") %>
-      </p>
-      <div class="mt-6">
+    <section data-section="donate-cta" class="donate-callout rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
+      <div class="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div class="max-w-xl space-y-2">
+          <h2 class="font-ui text-2xl font-semibold tracking-tight text-surface-50">
+            <%= t("home.donate_cta.heading") %>
+          </h2>
+          <p class="font-reading text-base leading-relaxed text-surface-300">
+            <%= t("home.donate_cta.body") %>
+          </p>
+        </div>
         <%= link_to t("home.donate_cta.button"), donate_path,
-                    class: "inline-flex items-center rounded-full bg-accent-700 px-4 py-1.5 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300" %>
+                    class: "inline-flex shrink-0 items-center rounded-full bg-surface-50 px-6 py-3 font-ui text-base font-medium text-surface-950 transition-colors hover:bg-accent-50" %>
       </div>
     </section>
   <% end %>

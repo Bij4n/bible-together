@@ -209,8 +209,12 @@ header border/background, Tailwind `transition-colors` on interactive states. Gl
 
 ## Wordmark
 
-"Bible Together" in Inter (720 "Bible" / 400 "Together") with the 20×20 accent disc
-(`.wordmark-mark`) — now Medium green. Unchanged structurally.
+"Bible Together" in Inter (720 "Bible" / 400 "Together") with the 20×20 open-book mark
+(`.wordmark-mark`) — two spread pages in Medium green, two reader dots above for
+"together." Assets: `public/logo-mark.svg`, `public/logo.svg` (horizontal lockup),
+`public/icon.svg` / `public/icon.png` (favicon + social). Header renders the inline
+SVG partial `shared/_logo_mark.html.erb` so `data-theme` controls accent and dot
+contrast; footer is text-only.
 
 ---
 

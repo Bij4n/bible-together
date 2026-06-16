@@ -1,0 +1,23 @@
+<section class="landing-section" aria-label="<%= t("home.landing.points_label") %>">
+  <div class="grid gap-6 sm:grid-cols-3">
+    <% icons = {
+         "highlight" => '<path d="M4 20h16" stroke-linecap="round"/><path d="m6 16 9-9 3 3-9 9H6v-3Z"/>',
+         "note"      => '<path d="M5 4h11l4 4v12H5z"/><path d="M16 4v4h4"/><path d="M9 12h7M9 16h5" stroke-linecap="round"/>',
+         "together"  => '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 19a6 6 0 0 1 12 0M15 19a5 5 0 0 1 6-4" stroke-linecap="round"/>'
+       } %>
+    <% t("home.landing.points").each_with_index do |point, i| %>
+      <% icon = icons.values[i] %>
+      <div class="landing-bento-card flex flex-col gap-3">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-accent-700/10 text-accent-700" aria-hidden="true">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><%== icon %></svg>
+        </span>
+        <h3 class="font-ui text-base font-semibold text-surface-900">
+          <%= point[:title] %>
+        </h3>
+        <p class="font-reading text-sm leading-relaxed text-surface-600">
+          <%= point[:body] %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</section>

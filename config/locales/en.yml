@@ -2,32 +2,32 @@ en:
   app:
     name: Bible Together
     tagline: Read, annotate, and share the scriptures.
-    meta_description: A bilingual Bible reader with character-level highlights and notes — public-domain KJV English and Reina-Valera 1909 Spanish. No tracking, donation-supported.
+    meta_description: A bilingual Bible reader with character-level highlights and notes, public-domain KJV English and Reina-Valera 1909 Spanish. No tracking, donation-supported.
   errors:
     cta_home: Back to home
     cta_read: Read the Bible
     "404":
-      eyebrow: 404 — Not found
+      eyebrow: "404: Not found"
       heading_html: This page <em>doesn't exist.</em>
       title: Page not found
       body: You may have mistyped the address, or the page may have moved. Scripture is still where you left it.
     "422":
-      eyebrow: 422 — Unprocessable
+      eyebrow: "422: Unprocessable"
       heading_html: Something <em>didn't go through.</em>
       title: Couldn't process that request
       body: The change you tried to make couldn't be processed. Try again, or head back to where you were.
     "500":
-      eyebrow: 500 — Server error
+      eyebrow: "500: Server error"
       heading_html: Something <em>broke on our end.</em>
       title: Server error
-      body: Sorry — we hit an unexpected error. Try again in a moment, or head back to home.
+      body: Sorry, we hit an unexpected error. Try again in a moment, or head back to home.
     "400":
-      eyebrow: 400 — Bad request
+      eyebrow: "400: Bad request"
       heading_html: That request <em>wasn't quite right.</em>
       title: Bad request
       body: Something about that request didn't make sense. Try again, or head back to home.
     "406":
-      eyebrow: 406 — Unsupported browser
+      eyebrow: "406: Unsupported browser"
       heading_html: Your browser is <em>too old for this.</em>
       title: Unsupported browser
       body: Bible Together needs a modern browser to render the reader. Update your browser and try again.
@@ -42,6 +42,9 @@ en:
     skip_to_content: Skip to main content
     open_menu: Open menu
     close_menu: Close menu
+    main_nav: Main navigation
+    nav_section: Explore
+    account_section: Account
     account: Account
     my_notes_link: My notes
     read_link: Read
@@ -59,95 +62,54 @@ en:
     switch_to: "Switch to %{name}"
     dismiss: Dismiss
   home:
-    hero_meta:
-      kjv: KJV English
-      rv1909: RV1909 Español
-      public_domain: Public domain
-    hero_empty_state:
-      ref: John 3 · 16
-      verse: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."
-      cta: "Be the first to share a note on this verse →"
-    welcome_html: '<span class="block">Where verses</span> <span class="block">meet voices.</span>'
-    subhead: Highlight the words that pierced through. Share what they meant to you. Read what the same verse meant to someone else.
-    cta_public_bible: Read the Bible
-    cta_how_it_works: See how it works
+    welcome: Read the Bible together.
+    subhead: Highlight verses, write notes, and share with your study group.
+    cta_public_bible: Start reading
+    cta_how_it_works: How it works
     how_it_works_title: How it works
-    tertiary: No tracking. Donation-supported.
+    tertiary: Free. KJV and Reina-Valera 1909. No ads, no tracking.
+    landing:
+      points_label: What you can do
+      points:
+        - title: Highlight
+          body: Mark the exact phrase that stops you, not the whole verse.
+        - title: Take notes
+          body: Attach notes to your highlights. Private until you choose to share.
+        - title: Study together
+          body: Read the same chapter with your group, in real time.
+      how_page_intro: Open a chapter, mark what stands out, share when you are ready.
+      features_label: Included
+      feature_list:
+        - Character-level highlights
+        - Private notes with optional sharing
+        - Live study groups
+        - Public notes on each chapter
+        - KJV and Reina-Valera 1909, English and Spanish UI
+        - Keyword and semantic search
     community:
-      heading_html: Read what struck <em>someone else.</em>
-      intro: A small slice of what readers are sharing publicly. Public notes are visible to everyone. Private notes never leave your account.
-    features:
-      heading_html: Built around the way you <em>actually</em> read.
-      for_yourself: For yourself
-      with_others: With others
-      highlights:
-        title: Character-level highlighting
-        body: Mark the exact words that pierced through. Not just the verse — the line, the phrase, the comma where everything turned.
-        demo:
-          ref: 1 Kings 19 · 12
-          before: "And after the fire "
-          highlight: a still small voice
-          after: "."
-      notes:
-        title: Private and shared notes
-        body: Write what scripture means to you. Keep it between you and God, share it with one person, or open it up.
-        demo:
-          ref: Note · Psalm 46 · 10
-          private: Private
-          friends: Friends
-          public: Public
-          body: "\"Be still\" is not a feeling. It's an instruction."
-      groups:
-        title: Group Bibles, real-time
-        body: Read with the people closest to you. Highlights, notes, and comments update live — like sitting in the same pew, two hundred miles apart.
-      public:
-        title: Public notes with upvotes
-        body: Read how the same verse landed for someone whose life looks nothing like yours. Verses live differently in every life.
-      bilingual:
-        title: Bilingual — KJV and RV1909
-        body: Read in your heart language. King James English, Reina-Valera Spanish — switch between them on any verse, on any page.
-      keyword_search:
-        title: Keyword search
-        body: Find the verse you almost remember. The one your grandmother quoted. The phrase from a sermon ten years ago.
-        demo:
-          ref: Search
-          query: verses about feeling lost
-          result_1_ref: "Psalm 139:7"
-          result_1_text: Whither shall I go from thy spirit?
-          result_2_ref: "Luke 15:4"
-          result_2_text: Doth not leave the ninety and nine...
-      semantic_search:
-        title: Semantic search (English)
-        body: "Search by what you mean, not what's written. Ask for \"verses about feeling lost\" and find Psalms you'd never have looked up. KJV only for now."
+      heading: From the community
+      intro: Public notes on real verses.
     how:
-      heading_html: Three steps. <em>That's it.</em>
-      step_1_title: Open scripture
-      step_1_body: Pick a translation. Open a chapter.
-      step_1_demo:
-        ref: Matthew 5
-        text: "Blessed are the poor in spirit: for theirs is the kingdom of heaven. Blessed are they that mourn..."
-      step_2_title: Mark what matters
-      step_2_body: Select what struck you. Write what it meant. Yours by default.
-      step_2_demo:
-        ref: Matthew 5 · 4
-        before: "Blessed are "
-        highlight: "they that mourn: for they shall be comforted"
-        after: "."
-      step_3_title: Share your story
-      step_3_body: With one person. With a group. With everyone.
-      step_3_demo:
-        ref: Sharing with
-        group: Sunday small group · 4 readers
+      heading: Three steps
+      step_1_title: Open a chapter
+      step_1_body: KJV or RV1909. No account required.
+      step_2_title: Mark and note
+      step_2_body: Highlight a phrase and add a note. Private until you share.
+      step_3_title: Share when ready
+      step_3_body: With a friend, your study group, or the public chapter.
     about:
       heading: About
-      para_1: "Bible Together is built on a simple belief: scripture is meant to be read with someone."
-      para_2: The verse that wrecks you wrecks somebody else, somewhere.
-      para_3: Knowing that — being able to say so, being able to read what it meant for someone else — changes how you read it yourself.
-      para_4: "Two public-domain translations live: KJV in English, RV1909 in Spanish, with the interface in both languages."
-      para_5: Built and maintained by one person. Hosting is funded by donations — no subscription, no tracker, no upsell.
+      subhead: Read, annotate, and share scripture, without ads or tracking.
+      translations_label: Translations
+      support_label: Support
+      para_1: "Bible Together is a reader for people who mark up their Bible: highlights, notes, and a community layer when you want to read with others."
+      para_2: The verse that stops you has probably stopped someone else too.
+      para_3: Reading what it meant for them, then writing what it meant for you, is the whole point.
+      para_4: KJV in English and RV1909 in Spanish are live now. The interface is bilingual. Both translations are public domain.
+      para_5: Built and maintained by one person. Hosting runs on donations. No subscription, no ads, no tracker.
     donate_cta:
-      heading: Support Bible Together
-      body: If Bible Together has mattered to you, keep it open for whoever comes next.
+      heading: Keep it open
+      body: If this has been useful to you, help cover hosting so the next reader can find it.
       button: Donate
   bible:
     reader:
@@ -158,7 +120,7 @@ en:
       by_author: "by %{name}"
       breadcrumb_home: Bible Together
       translation_picker: Translation
-      cross_translation_badge_title: "You've annotated this verse in %{translation} — click to jump there."
+      cross_translation_badge_title: "You've annotated this verse in %{translation}. Click to jump there."
       dismiss_toolbar: Dismiss
       highlight_action: Highlight
       verse_view: Verse view
@@ -188,7 +150,7 @@ en:
         other: "This highlight has %{count} notes. Removing it will delete the notes. Continue?"
   settings:
     title: Settings
-    description: Customize your reading experience. Most changes save automatically — no save button needed.
+    description: Customize your reading experience. Most changes save automatically. No save button needed.
     updated: Preferences saved.
     save: Save
     sections:
@@ -250,14 +212,14 @@ en:
       invite_only: Invite-only
       open_group: Open
     discover_title: Discover studies
-    discover_subtitle: Open studies anyone can join — no invitation needed.
+    discover_subtitle: Open studies anyone can join, no invitation needed.
     discover_empty: No open studies yet. Create one and set it to "Open" so others can find it.
     join_open: Join study
     member_count:
       one: 1 member
       other: "%{count} members"
     not_found: That study wasn't found.
-    description: Read scripture together with people you trust. Studies are small spaces — a Bible study, a family thread, a friend group — where you can share notes, comments, and highlights in real-time. Notes stay private by default and only surface to the study when you choose to share them.
+    description: "Read scripture together with people you trust. Studies are small spaces: a Bible study, a family thread, a friend group, where you can share notes, comments, and highlights in real-time. Notes stay private by default and only surface to the study when you choose to share them."
     new_description: Start a small Bible study. Add a name and an optional description. Once you've created the study, you can invite friends by email or share an invitation code from the study page.
     empty: You aren't in any studies yet. Create one to start reading with friends, or paste an invitation code below to join one someone has shared with you.
   memberships:
@@ -307,7 +269,7 @@ en:
       public_note: Public
   community:
     title: Community
-    intro: Public notes from readers everywhere — what a verse meant to someone, in their own words. Anyone can read; sign in to add yours.
+    intro: "Public notes from readers everywhere: what a verse meant to someone, in their own words. Anyone can read; sign in to add yours."
     sort_label: Sort
     sort_recent: Recent
     sort_top: Top
@@ -346,7 +308,7 @@ en:
     destroy:
       cancelled: "Cancelled invitation to %{email}."
     show:
-      sign_in_to_accept: "Sign in to accept the invitation. New here? Use the sign-up link — your invitation is saved."
+      sign_in_to_accept: "Sign in to accept the invitation. New here? Use the sign-up link. Your invitation is saved."
       joined: "Welcome to %{group_name}."
       already_accepted: You've already joined this group.
     expired:
@@ -360,11 +322,11 @@ en:
       eyebrow: GROUP INVITATION
       heading_html: "%{inviter} wants to read scripture <em>with you.</em>"
       heading_text: "%{inviter} wants to read scripture with you in %{group_name}."
-      body_1: "%{inviter} invited you to join their group on Bible Together — a small, shared Bible reader where highlights, notes, and conversations stay between members."
+      body_1: "%{inviter} invited you to join their group on Bible Together, a small, shared Bible reader where highlights, notes, and conversations stay between members."
       cta: Accept the invitation
       expires_in: "This invitation expires in %{days} days."
-      footer_html: You're receiving this because someone invited you by email. If you weren't expecting this, you can safely ignore the message — no account is created until you accept.
-      footer_text: You're receiving this because someone invited you by email. If you weren't expecting this, ignore this message — no account is created until you accept.
+      footer_html: You're receiving this because someone invited you by email. If you weren't expecting this, you can safely ignore the message. No account is created until you accept.
+      footer_text: You're receiving this because someone invited you by email. If you weren't expecting this, ignore this message. No account is created until you accept.
   comments:
     title: Discussion
     post: Comment
@@ -376,7 +338,7 @@ en:
     timestamp: "%{ago} ago"
   public_bible:
     community_view: Community view
-    intro: Anyone can read this view. Highlights and notes shown here come from people who chose to share them publicly. Sign in to add your own — or to keep your reading private to your account.
+    intro: Anyone can read this view. Highlights and notes shown here come from people who chose to share them publicly. Sign in to add your own, or to keep your reading private to your account.
     community_notes: Community notes
     switch_to_my_bible: Switch to my bible
     no_notes_yet: No community notes on this chapter yet.
@@ -394,7 +356,7 @@ en:
     flag_failed: Couldn't submit the flag. Try again later.
   search:
     title: Search the Bible
-    subtitle: Search across every verse and every public note. Type a phrase you remember, or switch to semantic mode (English KJV) and search by what you mean — find verses you'd never have looked up.
+    subtitle: Search across every verse and every public note. Type a phrase you remember, or switch to semantic mode (English KJV) and search by what you mean. Find verses you'd never have looked up.
     input_placeholder: Search for verses, topics, or keywords…
     submit: Search
     filters:
@@ -471,7 +433,7 @@ en:
       cancel: Cancel
       address_label: Bitcoin address
       notes_label: Notes
-      notes_hint: Optional. Admin-only context — e.g. which wallet or account this address came from.
+      notes_hint: Optional. Admin-only context (e.g. which wallet or account this address came from).
       header_address: Address
       header_status: Status
       header_notes: Notes
@@ -483,14 +445,14 @@ en:
       empty: No addresses yet. Add the first one to enable the donate page.
   donations:
     title: Support Bible Together
-    intro_html: "Bible Together is independently funded. If it has been useful to you, a small donation goes a long way — there is no team behind it, just one person and a server bill."
+    intro_html: "Bible Together is independently funded. If it has been useful to you, a small donation goes a long way. There is no team behind it, just one person and a server bill."
     address_heading: Send to this Bitcoin address
     address_hint: Tap to copy. Or scan the QR with any wallet.
     copy: Copy
     copied: Copied
     qr_alt: "Bitcoin payment QR code containing the donation address"
     confirm_heading: Tell us you sent it (optional)
-    confirm_intro: "If you'd like a thank-you reply, drop your email below. A short note is welcome too. Both fields are optional — clicking the button alone is enough."
+    confirm_intro: "If you'd like a thank-you reply, drop your email below. A short note is welcome too. Both fields are optional. Clicking the button alone is enough."
     email_label: Email
     email_placeholder: you@example.com
     message_label: Message
@@ -501,7 +463,7 @@ en:
       body: "Between wallets at the moment. Check back soon, or get in touch if you would like to help in another way."
     thank_you:
       heading: Thank you
-      body: "Your support keeps Bible Together online for everyone reading it — no ads, no tracking, no subscription. If you left an email, expect a short reply soon."
+      body: "Your support keeps Bible Together online for everyone reading it: no ads, no tracking, no subscription. If you left an email, expect a short reply soon."
       back_to_reading: Back to reading
   legal:
     eyebrow: Bible Together
@@ -552,7 +514,7 @@ en:
       sharing_heading: Third-party sharing
       sharing_body: We do not sell, rent, or share your personal information with third parties. Your data is stored on servers operated by Render (our hosting provider) in the United States. Render's privacy policy governs their handling of infrastructure-level data.
       public_content_heading: Public content
-      public_content_body: Notes you mark as public are visible to anyone who reads the same passage — signed in or not — and may be indexed by search engines. Your display name (or if not set, your email's local-part) is shown alongside public notes. You can change a note's visibility back to private at any time, which removes it from the public view.
+      public_content_body: Notes you mark as public are visible to anyone who reads the same passage, signed in or not, and may be indexed by search engines. Your display name (or if not set, your email's local-part) is shown alongside public notes. You can change a note's visibility back to private at any time, which removes it from the public view.
       deletion_heading: Deleting your account
       deletion_body_html: 'You can delete your account at any time from <a href="/settings" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">Settings</a>. Deletion removes your email address, password, and all private content permanently and is irreversible. Public notes you authored may remain visible briefly until caches clear.'
       contact_heading: Questions

@@ -1,34 +1,43 @@
 #!/usr/bin/env python3
-"""Render public/icon.png from the v3 brand spec (Medium green concentric mark)."""
+"""Render public/icon.png from the open-book brand mark."""
 
 from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
 SIZE = 512
-CX, CY = SIZE // 2, SIZE // 2
+SCALE = SIZE / 48
 BRAND = (26, 137, 23, 255)  # #1A8917
-PAIR = (255, 255, 255, 255)
+SHINE = (255, 255, 255, 38)
+DOT = (255, 255, 255, 255)
 
 
-def ring(draw: ImageDraw.ImageDraw, radius: int, width: int, alpha: int) -> None:
-    color = (*BRAND[:3], alpha)
-    draw.ellipse(
-        (CX - radius, CY - radius, CX + radius, CY + radius),
-        outline=color,
-        width=width,
-    )
+def scale(x: float, y: float) -> tuple[float, float]:
+    return x * SCALE, y * SCALE
+
+
+def polygon(draw: ImageDraw.ImageDraw, points: list[tuple[float, float]], fill) -> None:
+    draw.polygon([scale(x, y) for x, y in points], fill=fill)
 
 
 def main() -> None:
     img = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    ring(draw, 200, 3, 64)
-    ring(draw, 160, 3, 115)
-    draw.ellipse((CX - 112, CY - 112, CX + 112, CY + 112), fill=BRAND)
-    draw.ellipse((CX - 72, CY - 18, CX - 36, CY + 18), fill=PAIR)
-    draw.ellipse((CX + 36, CY - 18, CX + 72, CY + 18), fill=PAIR)
+    left_book = [(24, 41), (24, 14.5), (9, 18), (7, 28.5), (10, 39.5), (24, 41)]
+    right_book = [(24, 41), (24, 14.5), (39, 18), (41, 28.5), (38, 39.5), (24, 41)]
+    left_shine = [(24, 16.5), (24, 39), (12.5, 35), (11, 27), (24, 16.5)]
+    right_shine = [(24, 16.5), (24, 39), (35.5, 35), (37, 27), (24, 16.5)]
+
+    polygon(draw, left_book, BRAND)
+    polygon(draw, right_book, BRAND)
+    polygon(draw, left_shine, SHINE)
+    polygon(draw, right_shine, SHINE)
+
+    for cx, cy, r in [(14.5, 10, 3.25), (33.5, 10, 3.25)]:
+        sx, sy = scale(cx, cy)
+        sr = r * SCALE
+        draw.ellipse((sx - sr, sy - sr, sx + sr, sy + sr), fill=DOT)
 
     out = "public/icon.png"
     img.save(out, format="PNG", optimize=True)
