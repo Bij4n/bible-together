@@ -1,12 +1,12 @@
 <%
-  footer_link_base = "site-footer-link transition-colors hover:text-accent-700"
+  footer_link_base = "site-footer-link block transition-colors hover:text-accent-700"
   footer_link_active = "site-footer-link--active text-accent-800"
   footer_col_label = "font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500"
 %>
 
 <footer class="site-footer border-t border-surface-200 bg-surface-100">
   <div class="mx-auto <%= layout_container_class %> space-y-8 px-6 py-10 sm:py-12">
-    <div class="grid gap-8 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-start sm:gap-16">
+    <div class="grid gap-8 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-16">
       <div class="max-w-sm space-y-2">
         <%= render "shared/wordmark", class: "text-base" %>
         <p class="font-reading text-sm leading-relaxed text-surface-600">
@@ -14,26 +14,28 @@
         </p>
       </div>
 
-      <nav class="space-y-2 font-ui text-sm text-surface-600" aria-label="<%= t("layout.footer_product") %>">
-        <p class="<%= footer_col_label %>"><%= t("layout.footer_product") %></p>
-        <%= link_to t("layout.about_link"), about_path,
-            class: "#{footer_link_base} block #{footer_link_active if nav_active?(about_path)}" %>
-        <%= link_to t("layout.how_it_works_link"), how_it_works_path,
-            class: "#{footer_link_base} block #{footer_link_active if nav_active?(how_it_works_path)}" %>
-        <% if donate_link_visible? %>
-          <%= link_to t("layout.donate_link"), donate_path,
-              class: "#{footer_link_base} block #{footer_link_active if nav_active?(donate_path)}" %>
-        <% end %>
-      </nav>
+      <nav class="site-footer-nav grid grid-cols-2 gap-x-12 gap-y-6 font-ui text-sm text-surface-600" aria-label="<%= t("layout.main_nav") %>">
+        <div class="space-y-2">
+          <p class="<%= footer_col_label %>"><%= t("layout.footer_product") %></p>
+          <%= link_to t("layout.about_link"), about_path,
+              class: "#{footer_link_base} #{footer_link_active if nav_active?(about_path)}" %>
+          <%= link_to t("layout.how_it_works_link"), how_it_works_path,
+              class: "#{footer_link_base} #{footer_link_active if nav_active?(how_it_works_path)}" %>
+          <% if donate_link_visible? %>
+            <%= link_to t("layout.donate_link"), donate_path,
+                class: "#{footer_link_base} #{footer_link_active if nav_active?(donate_path)}" %>
+          <% end %>
+        </div>
 
-      <nav class="space-y-2 font-ui text-sm text-surface-600" aria-label="<%= t("layout.footer_support") %>">
-        <p class="<%= footer_col_label %>"><%= t("layout.footer_support") %></p>
-        <%= link_to t("legal.terms.title"), terms_path,
-            class: "#{footer_link_base} block #{footer_link_active if nav_active?(terms_path)}" %>
-        <%= link_to t("legal.privacy.title"), privacy_path,
-            class: "#{footer_link_base} block #{footer_link_active if nav_active?(privacy_path)}" %>
-        <%= link_to t("layout.contact_link"), contact_path,
-            class: "#{footer_link_base} block #{footer_link_active if nav_active?(contact_path)}" %>
+        <div class="space-y-2">
+          <p class="<%= footer_col_label %>"><%= t("layout.footer_support") %></p>
+          <%= link_to t("legal.terms.title"), terms_path,
+              class: "#{footer_link_base} #{footer_link_active if nav_active?(terms_path)}" %>
+          <%= link_to t("legal.privacy.title"), privacy_path,
+              class: "#{footer_link_base} #{footer_link_active if nav_active?(privacy_path)}" %>
+          <%= link_to t("layout.contact_link"), contact_path,
+              class: "#{footer_link_base} #{footer_link_active if nav_active?(contact_path)}" %>
+        </div>
       </nav>
     </div>
 
