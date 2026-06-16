@@ -1,8 +1,8 @@
 <%# Single wordmark everywhere — header, footer, same markup. %>
 <% linked = local_assigns.fetch(:linked, true) %>
 <% extra_class = local_assigns[:class].to_s %>
-<% base_class = "wordmark font-ui font-semibold tracking-[-0.03em] text-surface-900 dark:text-surface-50 #{extra_class}".strip %>
-<% hover_class = "transition-colors hover:text-accent-700 dark:hover:text-accent-400" %>
+<% base_class = "wordmark font-ui font-semibold tracking-[-0.03em] text-surface-900 #{extra_class}".strip %>
+<% hover_class = "transition-colors hover:text-accent-700" %>
 
 <% if linked %>
   <%= link_to root_path, class: "#{base_class} #{hover_class}" do %>

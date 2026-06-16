@@ -1,14 +1,14 @@
 <%
-  label_classes  = "mb-1.5 block font-ui text-sm font-medium text-surface-900 dark:text-surface-100"
-  input_classes  = "w-full rounded-md border border-surface-300 bg-surface-50 px-3 py-2 font-ui text-sm text-surface-900 transition-colors placeholder:text-surface-500 focus:border-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-700/20 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-100 dark:focus:border-accent-400 dark:focus:ring-accent-400/20"
-  radio_classes  = "h-4 w-4 accent-accent-700 dark:accent-accent-400"
-  submit_classes = "rounded-full bg-accent-700 px-5 py-2 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300"
-  cancel_classes = "font-ui text-sm text-surface-600 transition-colors hover:text-accent-700 dark:text-surface-400 dark:hover:text-accent-400"
+  label_classes  = "mb-1.5 block font-ui text-sm font-medium text-surface-900"
+  input_classes  = "w-full rounded-md border border-surface-300 bg-surface-50 px-3 py-2 font-ui text-sm text-surface-900 transition-colors placeholder:text-surface-500 focus:border-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-700/20"
+  radio_classes  = "h-4 w-4 accent-accent-700"
+  submit_classes = "rounded-full bg-accent-700 px-5 py-2 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800"
+  cancel_classes = "font-ui text-sm text-surface-600 transition-colors hover:text-accent-700"
 %>
 
 <%= form_with model: group, class: "space-y-5" do |f| %>
   <% if group.errors.any? %>
-    <div role="alert" class="rounded-md border border-red-200 bg-red-50 px-4 py-3 font-ui text-sm text-red-800 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200">
+    <div role="alert" class="rounded-md border border-red-200 bg-red-50 px-4 py-3 font-ui text-sm text-red-800">
       <ul class="list-inside list-disc space-y-1">
         <% group.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -30,7 +30,7 @@
   <fieldset class="space-y-2">
     <legend class="<%= label_classes %>"><%= Group.human_attribute_name(:privacy) %></legend>
     <% Group::PRIVACIES.keys.each do |key| %>
-      <label class="flex items-center gap-2 font-ui text-sm text-surface-700 dark:text-surface-300">
+      <label class="flex items-center gap-2 font-ui text-sm text-surface-700">
         <%= f.radio_button :privacy, key, class: radio_classes %>
         <%= t("groups.privacy.#{key}") %>
       </label>

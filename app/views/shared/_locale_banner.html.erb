@@ -5,18 +5,18 @@
 <% if suggested %>
   <div role="region"
        aria-label="<%= t("locale_banner.aria_label") %>"
-       class="mx-auto mb-6 flex max-w-3xl items-center justify-between gap-3 rounded-md border border-accent-700/30 bg-accent-700/5 px-4 py-2.5 font-ui text-sm text-surface-700 dark:border-accent-400/40 dark:bg-accent-400/5 dark:text-surface-300">
+       class="mx-auto mb-6 flex max-w-3xl items-center justify-between gap-3 rounded-md border border-accent-700/30 bg-accent-700/5 px-4 py-2.5 font-ui text-sm text-surface-700">
     <p>
       <%= t("locale_banner.reading", name: @translation.name) %>
       <%= link_to locale_banner_target_path(suggested),
-                  class: "ml-1 font-medium text-accent-700 underline underline-offset-2 transition-colors hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300" do %>
+                  class: "ml-1 font-medium text-accent-700 underline underline-offset-2 transition-colors hover:text-accent-800" do %>
         <%= t("locale_banner.switch_to", name: suggested.name) %> &rarr;
       <% end %>
     </p>
     <%= button_to dismiss_locale_banner_path,
                   method: :post,
                   form_class: "inline-flex",
-                  class: "rounded-md p-1 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:text-surface-400 dark:hover:bg-surface-800 dark:hover:text-surface-100",
+                  class: "rounded-md p-1 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900",
                   aria: { label: t("locale_banner.dismiss") } do %>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
         <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />

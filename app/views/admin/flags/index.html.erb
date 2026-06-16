@@ -1,26 +1,26 @@
 <% content_for :title, t("admin.flags.title") %>
 <%
-  nav_link       = "transition-colors hover:text-accent-700 dark:hover:text-accent-400"
-  neutral_sm_btn = "rounded-full border border-surface-300 bg-transparent px-2.5 py-0.5 font-ui text-xs font-medium text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:border-surface-700 dark:text-surface-300 dark:hover:bg-surface-800 dark:hover:text-surface-50"
+  nav_link       = "transition-colors hover:text-accent-700"
+  neutral_sm_btn = "rounded-full border border-surface-300 bg-transparent px-2.5 py-0.5 font-ui text-xs font-medium text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900"
 %>
 
 <article class="mx-auto max-w-5xl space-y-6">
-  <header class="space-y-2 border-b border-surface-200 pb-6 dark:border-surface-800">
-    <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
+  <header class="space-y-2 border-b border-surface-200 pb-6">
+    <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500">
       <%= t("admin.title") %>
     </p>
-    <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-4xl">
+    <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900 sm:text-4xl">
       <%= t("admin.flags.title") %>
     </h1>
   </header>
 
-  <nav class="flex items-center gap-4 font-ui text-sm text-surface-700 dark:text-surface-300">
+  <nav class="flex items-center gap-4 font-ui text-sm text-surface-700">
     <%= link_to t("admin.nav.notes"), admin_notes_path, class: nav_link %>
   </nav>
 
   <% if @flags.any? %>
     <table class="w-full table-auto border-collapse font-ui text-sm">
-      <thead class="border-b border-surface-200 text-left text-xs font-semibold uppercase tracking-wider text-surface-500 dark:border-surface-800 dark:text-surface-400">
+      <thead class="border-b border-surface-200 text-left text-xs font-semibold uppercase tracking-wider text-surface-500">
         <tr>
           <th class="py-2 pr-3"><%= t("admin.flags.header_reporter") %></th>
           <th class="py-2 pr-3"><%= t("admin.flags.header_target") %></th>
@@ -30,14 +30,14 @@
           <th class="py-2 pr-3 text-right"><%= t("admin.notes.header_actions") %></th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-surface-200 text-surface-900 dark:divide-surface-800 dark:text-surface-100">
+      <tbody class="divide-y divide-surface-200 text-surface-900">
         <% @flags.each do |flag| %>
           <tr>
             <td class="py-2 pr-3"><%= flag.user.author_name %></td>
-            <td class="py-2 pr-3 text-xs text-surface-600 dark:text-surface-400"><%= flag.flaggable_type %> #<%= flag.flaggable_id %></td>
+            <td class="py-2 pr-3 text-xs text-surface-600"><%= flag.flaggable_type %> #<%= flag.flaggable_id %></td>
             <td class="py-2 pr-3"><%= flag.reason %></td>
             <td class="py-2 pr-3 max-w-md truncate"><%= flag.details %></td>
-            <td class="py-2 pr-3 text-xs text-surface-600 dark:text-surface-400"><%= l(flag.created_at, format: :short) %></td>
+            <td class="py-2 pr-3 text-xs text-surface-600"><%= l(flag.created_at, format: :short) %></td>
             <td class="py-2 pr-0 text-right">
               <%= button_to t("admin.flags.resolve"),
                             resolve_admin_flag_path(flag),
@@ -50,6 +50,6 @@
       </tbody>
     </table>
   <% else %>
-    <p class="font-ui text-sm text-surface-600 dark:text-surface-400"><%= t("admin.flags.empty") %></p>
+    <p class="font-ui text-sm text-surface-600"><%= t("admin.flags.empty") %></p>
   <% end %>
 </article>

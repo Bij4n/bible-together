@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_12_034048) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -398,7 +398,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_034048) do
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
-    t.string "theme", default: "system", null: false
     t.string "ui_locale", default: "en", null: false
     t.datetime "updated_at", null: false
     t.index "lower((display_name)::text)", name: "index_users_on_lower_display_name", unique: true, where: "(display_name IS NOT NULL)"
@@ -406,7 +405,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_034048) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.check_constraint "char_length(display_name::text) <= 60", name: "users_display_name_length_check"
-    t.check_constraint "theme::text = ANY (ARRAY['light'::character varying::text, 'dark'::character varying::text, 'system'::character varying::text])", name: "users_theme_check"
     t.check_constraint "ui_locale::text = ANY (ARRAY['en'::character varying::text, 'es'::character varying::text])", name: "users_ui_locale_check"
   end
 

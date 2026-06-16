@@ -1,18 +1,18 @@
 <% content_for :title, t("groups.title") %>
 <%
-  primary_btn = "rounded-full bg-accent-700 px-5 py-2 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300"
-  input_classes = "w-full rounded-md border border-surface-300 bg-surface-50 px-3 py-2 font-ui text-sm text-surface-900 transition-colors placeholder:text-surface-500 focus:border-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-700/20 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-100 dark:focus:border-accent-400 dark:focus:ring-accent-400/20"
+  primary_btn = "rounded-full bg-accent-700 px-5 py-2 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800"
+  input_classes = "w-full rounded-md border border-surface-300 bg-surface-50 px-3 py-2 font-ui text-sm text-surface-900 transition-colors placeholder:text-surface-500 focus:border-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-700/20"
 %>
 
 <article class="mx-auto max-w-3xl space-y-10">
-  <header class="flex items-end justify-between gap-4 border-b border-surface-200 pb-6 dark:border-surface-800">
-    <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 dark:text-surface-50 sm:text-5xl">
+  <header class="flex items-end justify-between gap-4 border-b border-surface-200 pb-6">
+    <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 sm:text-5xl">
       <%= t("groups.title") %>
     </h1>
     <%= link_to t("groups.new"), new_group_path, class: primary_btn %>
   </header>
 
-  <p class="max-w-2xl font-ui text-base leading-relaxed text-pretty text-surface-600 dark:text-surface-400">
+  <p class="max-w-2xl font-ui text-base leading-relaxed text-pretty text-surface-600">
     <%= t("groups.description") %>
   </p>
 
@@ -21,17 +21,17 @@
       <% @groups.each do |group| %>
         <li>
           <%= link_to group_path(group),
-                      class: "block rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-surface-900 hover:shadow-[0_12px_32px_-12px_rgba(14,20,17,0.12)] dark:border-surface-800 dark:bg-surface-900 dark:hover:border-surface-50 dark:hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.4)] sm:p-6" do %>
+                      class: "block rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-surface-900 hover:shadow-[0_12px_32px_-12px_rgba(14,20,17,0.12)] sm:p-6" do %>
             <div class="flex items-start justify-between gap-3">
               <div>
-                <p class="font-ui text-xl font-semibold text-surface-900 dark:text-surface-50">
+                <p class="font-ui text-xl font-semibold text-surface-900">
                   <%= group.name %>
                 </p>
-                <p class="mt-0.5 font-ui text-sm text-surface-600 dark:text-surface-400">
+                <p class="mt-0.5 font-ui text-sm text-surface-600">
                   <%= group.description.presence %>
                 </p>
               </div>
-              <span class="shrink-0 font-ui text-xs uppercase tracking-wider text-surface-500 dark:text-surface-400">
+              <span class="shrink-0 font-ui text-xs uppercase tracking-wider text-surface-500">
                 <%= group.owner_id == current_user.id ? t("groups.role.owner") : t("groups.role.member") %>
               </span>
             </div>
@@ -40,13 +40,13 @@
       <% end %>
     </ul>
   <% else %>
-    <p class="font-ui text-sm text-surface-600 dark:text-surface-400">
+    <p class="font-ui text-sm text-surface-600">
       <%= t("groups.empty") %>
     </p>
   <% end %>
 
-  <section class="rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-surface-800 dark:bg-surface-900 sm:p-6">
-    <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900 dark:text-surface-50">
+  <section class="rounded-2xl border border-surface-200 bg-surface-50 p-5 sm:p-6">
+    <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900">
       <%= t("groups.enter_code") %>
     </h2>
     <%= form_with url: join_groups_path, method: :post, class: "mt-3 flex gap-2" do |f| %>
