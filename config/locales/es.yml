@@ -42,6 +42,9 @@ es:
     skip_to_content: Saltar al contenido
     open_menu: Abrir menú
     close_menu: Cerrar menú
+    main_nav: Navegación principal
+    nav_section: Explorar
+    account_section: Cuenta
     account: Cuenta
     my_notes_link: Mis notas
     read_link: Leer
@@ -96,6 +99,9 @@ es:
       step_3_body: Con un amigo, tu grupo de estudio o el capítulo público.
     about:
       heading: Acerca de
+      subhead: Lee, anota y comparte las Escrituras—sin anuncios ni rastreo.
+      translations_label: Traducciones
+      support_label: Apoyo
       para_1: Bible Together es un lector para quienes marcan su Biblia—resaltados, notas y una capa comunitaria cuando quieres leer con otros.
       para_2: El versículo que te detiene probablemente también detuvo a alguien más.
       para_3: Leer lo que significó para ellos—y luego escribir lo que significó para ti—es el punto entero.

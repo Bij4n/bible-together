@@ -42,6 +42,9 @@ en:
     skip_to_content: Skip to main content
     open_menu: Open menu
     close_menu: Close menu
+    main_nav: Main navigation
+    nav_section: Explore
+    account_section: Account
     account: Account
     my_notes_link: My notes
     read_link: Read
@@ -96,6 +99,9 @@ en:
       step_3_body: With a friend, your study group, or the public chapter.
     about:
       heading: About
+      subhead: Read, annotate, and share scripture—without ads or tracking.
+      translations_label: Translations
+      support_label: Support
       para_1: Bible Together is a reader for people who mark up their Bible—highlights, notes, and a community layer when you want to read with others.
       para_2: The verse that stops you has probably stopped someone else too.
       para_3: Reading what it meant for them—then writing what it meant for you—is the whole point.

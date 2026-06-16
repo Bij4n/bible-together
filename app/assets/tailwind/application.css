@@ -242,6 +242,42 @@
     border-bottom-color: var(--color-surface-800);
   }
 
+  .site-nav-link--active {
+    font-weight: 500;
+  }
+
+  .site-nav-menu-trigger[aria-expanded="true"] {
+    border-color: color-mix(in srgb, var(--color-accent-700) 35%, var(--color-surface-200));
+    background: color-mix(in srgb, var(--color-accent-50) 70%, var(--color-surface-50));
+    color: var(--color-accent-700);
+  }
+
+  html[data-theme="dark"] .site-nav-menu-trigger[aria-expanded="true"] {
+    border-color: color-mix(in srgb, var(--color-accent-400) 35%, var(--color-surface-700));
+    background: color-mix(in srgb, var(--color-accent-900) 35%, var(--color-surface-900));
+    color: var(--color-accent-400);
+  }
+
+  /*
+   * Site footer — editorial chrome matching the landing rhythm: soft
+   * surface-100 well, two-column link grid, pill locale toggles.
+   */
+  .site-footer-link--active {
+    color: var(--color-accent-700);
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+    text-decoration-color: color-mix(in srgb, var(--color-accent-700) 40%, transparent);
+  }
+
+  html[data-theme="dark"] .site-footer-link--active {
+    color: var(--color-accent-400);
+    text-decoration-color: color-mix(in srgb, var(--color-accent-400) 40%, transparent);
+  }
+
+  .account-sheet__label {
+    letter-spacing: 0.14em;
+  }
+
   /*
    * Account menu shape per viewport. Below 640px the menu renders as
    * a bottom-sheet (full-width, slides up from the bottom of the
@@ -297,7 +333,7 @@
       top: 100%;
       bottom: auto;
       margin-top: 0.5rem;
-      width: 15rem;
+      width: 16.5rem;
       max-height: none;
       border-radius: 0.5rem;
       border-bottom: 1px solid var(--color-surface-200);
