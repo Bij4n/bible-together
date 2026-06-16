@@ -14,6 +14,9 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :upvotes, dependent: :destroy
 
+  has_many :forum_threads, dependent: :destroy
+  has_many :forum_posts, dependent: :destroy
+
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
   has_many :owned_groups, class_name: "Group", foreign_key: :owner_id, dependent: :destroy, inverse_of: :owner

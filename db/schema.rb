@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_16_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -133,6 +133,32 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_130000) do
     t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
     t.check_constraint "follower_id <> followed_id", name: "no_self_follows"
+  end
+
+  create_table "forum_posts", force: :cascade do |t|
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.bigint "forum_thread_id", null: false
+    t.datetime "hidden_at"
+    t.bigint "hidden_by_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
+    t.index ["hidden_by_id"], name: "index_forum_posts_on_hidden_by_id"
+    t.index ["user_id"], name: "index_forum_posts_on_user_id"
+  end
+
+  create_table "forum_threads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "hidden_at"
+    t.bigint "hidden_by_id"
+    t.datetime "last_posted_at"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["hidden_by_id"], name: "index_forum_threads_on_hidden_by_id"
+    t.index ["last_posted_at"], name: "index_forum_threads_on_last_posted_at"
+    t.index ["user_id"], name: "index_forum_threads_on_user_id"
   end
 
   create_table "group_invitations", force: :cascade do |t|
@@ -446,6 +472,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_130000) do
   add_foreign_key "flags", "users", column: "resolved_by_id"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "forum_posts", "forum_threads"
+  add_foreign_key "forum_posts", "users"
+  add_foreign_key "forum_posts", "users", column: "hidden_by_id"
+  add_foreign_key "forum_threads", "users"
+  add_foreign_key "forum_threads", "users", column: "hidden_by_id"
   add_foreign_key "group_invitations", "groups"
   add_foreign_key "group_invitations", "users", column: "invited_by_id"
   add_foreign_key "groups", "users", column: "owner_id"

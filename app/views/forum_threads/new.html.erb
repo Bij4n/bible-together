@@ -1,0 +1,31 @@
+<% content_for :title, t("forum.new_thread") %>
+<%
+  input = "w-full rounded-md border border-surface-300 bg-surface-50 px-3 py-2 font-ui text-sm text-surface-900 transition-colors placeholder:text-surface-500 focus:border-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-700/20"
+  label = "block font-ui text-sm font-medium text-surface-700"
+%>
+
+<article class="mx-auto max-w-2xl space-y-6">
+  <header class="space-y-2">
+    <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900"><%= t("forum.new_thread") %></h1>
+    <p class="font-reading text-surface-600"><%= t("forum.new_intro") %></p>
+  </header>
+
+  <% if @thread.errors.any? %>
+    <div class="rounded-md border border-red-500/30 bg-red-50 px-4 py-3 font-ui text-sm text-red-700">
+      <%= @thread.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @thread, url: forum_threads_path, method: :post, class: "space-y-4" do |f| %>
+    <div class="space-y-1.5">
+      <%= f.label :title, t("forum.title_label"), class: label %>
+      <%= f.text_field :title, maxlength: 150, required: true, class: input %>
+    </div>
+    <div class="space-y-1.5">
+      <%= label_tag "forum_thread_body", t("forum.body_label"), class: label %>
+      <%= text_area_tag "forum_thread[body]", @first_body, id: "forum_thread_body", rows: 6, required: true, class: input %>
+    </div>
+    <%= f.submit t("forum.post_thread"),
+        class: "rounded-full bg-accent-700 px-5 py-2.5 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800" %>
+  <% end %>
+</article>

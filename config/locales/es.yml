@@ -64,6 +64,7 @@ es:
     how_it_works_link: Cómo funciona
     about_link: Acerca de
     contact_link: Contacto
+    forum_link: Foro
     footer_product: Producto
     footer_support: Soporte
     footer_tagline: Lee la Escritura en compañía.
@@ -149,6 +150,31 @@ es:
       heading: Manténlo abierto
       body: Si esto te ha servido, ayuda a cubrir el alojamiento para que el próximo lector lo encuentre.
       button: Donar
+  forum:
+    title: Foro
+    intro: Un espacio público para hacer preguntas, compartir lo que lees y hablar de las Escrituras con cualquiera.
+    new_thread: Nuevo tema
+    new_intro: Inicia una conversación. Añade un título y tu primer mensaje.
+    title_label: Título
+    body_label: Mensaje
+    post_thread: Publicar tema
+    reply_heading: Añadir una respuesta
+    reply: Responder
+    started_by: "Iniciado por %{name}"
+    replies:
+      zero: Sin respuestas todavía
+      one: "1 respuesta"
+      other: "%{count} respuestas"
+    no_threads: No hay temas todavía. Sé el primero en iniciar una conversación.
+    sign_in_to_post: Inicia sesión para publicar
+    thread_created: Tema publicado.
+    reply_posted: Respuesta publicada.
+    body_required: Tu mensaje no puede estar vacío.
+    hide: Ocultar
+    thread_hidden: Tema oculto.
+    thread_unhidden: Tema restaurado.
+    post_hidden: Mensaje oculto.
+    post_unhidden: Mensaje restaurado.
   bible:
     reader:
       prev_chapter: Anterior
