@@ -235,6 +235,7 @@ es:
     role:
       owner: Propietario
       member: Miembro
+      admin: Administrador
     privacy:
       private_group: Privado
       invite_only: Solo por invitación
@@ -257,6 +258,11 @@ es:
     cannot_remove_last_owner: No se puede eliminar al último propietario.
     add_member: Añadir miembro
     remove: Eliminar
+    promote: Hacer administrador
+    demote: Hacer miembro
+    role_updated: Rol actualizado.
+    invalid_role: Ese rol no se puede asignar aquí.
+    insufficient_role: No tienes permiso para eliminar a ese miembro.
     email_placeholder: miembro@ejemplo.com
   notes:
     my_notes: Mis notas

@@ -19,8 +19,8 @@ class GroupInvitationsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
 
   def create
-    @group = current_user.owned_groups.find_by(id: params[:group_id])
-    return head :not_found unless @group
+    @group = Group.find_by(id: params[:group_id])
+    return head :not_found unless @group&.manager?(current_user)
 
     invitation = @group.group_invitations.build(
       email: invitation_params[:email],
@@ -46,7 +46,7 @@ class GroupInvitationsController < ApplicationController
   def destroy
     invitation = GroupInvitation.find_by(id: params[:id], group_id: params[:group_id])
     return head :not_found unless invitation
-    return head :not_found unless invitation.group.owner_id == current_user.id
+    return head :not_found unless invitation.group.manager?(current_user)
 
     invitation.destroy!
     redirect_to(group_path(invitation.group),

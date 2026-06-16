@@ -34,6 +34,15 @@ class Group < ApplicationRecord
     owner_id == user.id || memberships.exists?(user_id: user.id)
   end
 
+  # Owners and admins can manage the group: edit it, invite/cancel
+  # invitations, and remove plain members. Destroying the group and
+  # changing member roles stay owner-only (enforced in the controllers).
+  def manager?(user)
+    return false unless user
+
+    owner_id == user.id || memberships.where(role: [ :owner, :admin ]).exists?(user_id: user.id)
+  end
+
   # Member notes shared with this study (club feed on the show page).
   def recent_member_notes(limit: 25)
     Note.shared_with_group(self)

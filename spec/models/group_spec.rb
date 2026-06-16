@@ -69,6 +69,31 @@ RSpec.describe Group, type: :model do
     end
   end
 
+  describe "#manager?" do
+    let(:group) { create(:group) }
+
+    it "is true for the owner" do
+      expect(group.manager?(group.owner)).to be true
+    end
+
+    it "is true for an admin member" do
+      admin = create(:user)
+      create(:membership, user: admin, group: group, role: :admin)
+      expect(group.manager?(admin)).to be true
+    end
+
+    it "is false for a plain member" do
+      member = create(:user)
+      create(:membership, user: member, group: group, role: :member)
+      expect(group.manager?(member)).to be false
+    end
+
+    it "is false for a non-member and for nil" do
+      expect(group.manager?(create(:user))).to be false
+      expect(group.manager?(nil)).to be false
+    end
+  end
+
   describe ".generate_invitation_code" do
     it "produces 6-8 alphanumeric chars" do
       code = Group.generate_invitation_code
