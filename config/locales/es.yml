@@ -198,6 +198,10 @@ es:
       display_name:
         title: Nombre visible
         description: Se muestra en tus notas públicas. Déjalo en blanco para mantenerte anónimo.
+      username:
+        title: Nombre de usuario
+        description: "Tu identificador público, usado para el enlace de tu perfil (/@handle). Letras, números y guiones bajos."
+        placeholder: tunombre
   auth:
     sign_in: Iniciar sesión
     sign_up: Registrarse
@@ -330,6 +334,13 @@ es:
       one: "%{count} seguidor"
       other: "%{count} seguidores"
     following_count: "Sigue a %{count}"
+    view_and_comment:
+      zero: Ver y comentar
+      one: "Ver · 1 comentario"
+      other: "Ver · %{count} comentarios"
+    likes:
+      one: "%{count} me gusta"
+      other: "%{count} me gusta"
   group_invitations:
     invite_button: Enviar invitación
     pending_heading: Invitaciones pendientes

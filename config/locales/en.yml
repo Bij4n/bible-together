@@ -205,6 +205,10 @@ en:
       display_name:
         title: Display name
         description: Shown on your public notes. Leave blank to remain anonymous.
+      username:
+        title: Username
+        description: "Your public handle, used for your profile link (/@handle). Letters, numbers, and underscores."
+        placeholder: yourname
   auth:
     sign_in: Sign in
     sign_up: Sign up
@@ -337,6 +341,13 @@ en:
       one: "%{count} follower"
       other: "%{count} followers"
     following_count: "%{count} following"
+    view_and_comment:
+      zero: View and comment
+      one: "View · 1 comment"
+      other: "View · %{count} comments"
+    likes:
+      one: "%{count} like"
+      other: "%{count} likes"
   group_invitations:
     invite_button: Send invitation
     pending_heading: Pending invitations

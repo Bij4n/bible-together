@@ -1,7 +1,7 @@
 class AuthorsController < ApplicationController
   def show
-    @author = User.find(params[:id])
-    @notes  = @author.notes.public_note.order(updated_at: :desc)
+    @author = User.find_by_handle!(params[:username].presence || params[:id])
+    @notes  = @author.notes.public_note.includes(:highlights, :comments, :upvotes).order(updated_at: :desc)
   rescue ActiveRecord::RecordNotFound
     head :not_found
   end

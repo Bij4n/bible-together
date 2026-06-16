@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   UI_LOCALES = %w[en es].freeze
   DISPLAY_NAME_MAX = 60
+  USERNAME_FORMAT = /\A[a-zA-Z0-9_]{3,30}\z/
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -38,6 +39,10 @@ class User < ApplicationRecord
   validates :display_name,
             length: { maximum: DISPLAY_NAME_MAX },
             uniqueness: { case_sensitive: false, allow_blank: true }
+  validates :username,
+            allow_blank: true,
+            format: { with: USERNAME_FORMAT },
+            uniqueness: { case_sensitive: false }
 
   def follow!(user)
     follows.find_or_create_by!(followed: user)
@@ -69,5 +74,15 @@ class User < ApplicationRecord
     return display_name if display_name.present?
 
     email.to_s.split("@").first.presence || email
+  end
+
+  # Profile URLs use the username handle when set, falling back to the id
+  # for users who haven't picked one. Resolve either form via find_by_handle!.
+  def to_param
+    username.presence || id.to_s
+  end
+
+  def self.find_by_handle!(key)
+    find_by("lower(username) = ?", key.to_s.downcase) || find(key)
   end
 end

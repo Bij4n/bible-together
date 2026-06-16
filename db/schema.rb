@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_16_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -400,12 +400,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_090000) do
     t.string "reset_password_token"
     t.string "ui_locale", default: "en", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
     t.index "lower((display_name)::text)", name: "index_users_on_lower_display_name", unique: true, where: "(display_name IS NOT NULL)"
+    t.index "lower((username)::text)", name: "index_users_on_lower_username", unique: true, where: "(username IS NOT NULL)"
     t.index ["default_translation_id"], name: "index_users_on_default_translation_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.check_constraint "char_length(display_name::text) <= 60", name: "users_display_name_length_check"
-    t.check_constraint "ui_locale::text = ANY (ARRAY['en'::character varying::text, 'es'::character varying::text])", name: "users_ui_locale_check"
+    t.check_constraint "ui_locale::text = ANY (ARRAY['en'::character varying, 'es'::character varying]::text[])", name: "users_ui_locale_check"
   end
 
   create_table "verse_embeddings", force: :cascade do |t|

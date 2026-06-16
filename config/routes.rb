@@ -85,6 +85,9 @@ Rails.application.routes.draw do
     resource :follow, only: [ :create, :destroy ]
   end
 
+  # Vanity profile handle: /@username → the author's profile.
+  get "/@:username", to: "authors#show", as: :profile, constraints: { username: /[A-Za-z0-9_]+/ }
+
   get  "/about",             to: "about#show",             as: :about
   get  "/terms",             to: "legal#terms",            as: :terms
   get  "/privacy",           to: "legal#privacy",          as: :privacy

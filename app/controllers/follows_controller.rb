@@ -19,7 +19,7 @@ class FollowsController < ApplicationController
 
   def author
     @author ||= begin
-      found = User.find(params[:author_id])
+      found = User.find_by_handle!(params[:author_id])
       raise ActiveRecord::RecordNotFound if found == current_user
       found
     end
