@@ -48,6 +48,8 @@ class ApplicationController < ActionController::Base
   end
 
   def marketing_page?
+    return false if user_signed_in? && controller_name == "home" && action_name == "show"
+
     MARKETING_ROUTES.fetch(controller_name, []).include?(action_name)
   end
 

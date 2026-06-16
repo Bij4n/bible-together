@@ -13,7 +13,7 @@ RSpec.describe "Settings preferences", type: :system, js: true do
     expect(user.reload.ui_locale).to eq("es")
 
     visit "/"
-    expect(page).to have_content(I18n.t("home.welcome", locale: :es))
+    expect(page).to have_content(I18n.t("home.dashboard.heading", locale: :es))
     expect(page).to have_css("html[lang='es']")
   end
 

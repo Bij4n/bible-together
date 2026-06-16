@@ -56,16 +56,19 @@ RSpec.describe "Locale resolution", type: :request do
 
   context "when signed in" do
     let(:user) { create(:user, ui_locale: "es") }
+    # Signed-in "/" renders the dashboard, not the marketing hero, so the
+    # locale probe is the dashboard heading rather than the public-bible CTA.
+    let(:spanish_dashboard) { I18n.t("home.dashboard.heading", locale: :es) }
     before { sign_in user }
 
     it "uses the user's ui_locale over the default" do
       get "/"
-      expect(response.body).to include(spanish_greeting)
+      expect(response.body).to include(spanish_dashboard)
     end
 
     it "ignores a conflicting params[:locale]" do
       get "/?locale=en"
-      expect(response.body).to include(spanish_greeting)
+      expect(response.body).to include(spanish_dashboard)
     end
 
     it "ignores a conflicting session value set before sign-in" do
@@ -73,7 +76,7 @@ RSpec.describe "Locale resolution", type: :request do
       get "/?locale=en"
       sign_in user
       get "/"
-      expect(response.body).to include(spanish_greeting)
+      expect(response.body).to include(spanish_dashboard)
     end
   end
 end

@@ -54,6 +54,8 @@ Rails.application.routes.draw do
 
   root "home#show"
   get "/how-it-works", to: "home#how_it_works", as: :how_it_works
+  get  "/contact", to: "contacts#new", as: :contact
+  post "/contact", to: "contacts#create"
 
   get "/bible", to: "bible/reader#entry", as: :bible_entry
   get "/bible/:translation/:book/:chapter",

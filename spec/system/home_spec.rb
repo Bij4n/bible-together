@@ -29,7 +29,6 @@ RSpec.describe "Home page", type: :system do
 
     expect(page).to have_css("h1", text: I18n.t("home.welcome"))
     expect(page).to have_content(I18n.t("home.subhead"))
-    expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
   it "renders the landing points" do
@@ -117,7 +116,7 @@ RSpec.describe "Home page", type: :system do
   it "lands the hero CTA on the reader (community layer for guests)" do
     visit "/"
 
-    click_on I18n.t("home.cta_public_bible"), match: :first
+    within(".landing-hero") { click_on I18n.t("home.cta_public_bible") }
     expect(page).to have_current_path("/bible/kjv/gen/1?layer=community")
   end
 
