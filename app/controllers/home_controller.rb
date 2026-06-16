@@ -1,8 +1,17 @@
 class HomeController < ApplicationController
+  include NavigationHelper
   COMMUNITY_NOTE_LIMIT = 3
+  RECENT_NOTES_LIMIT = 5
+  ACTIVE_STUDIES_LIMIT = 5
 
   def show
-    @community_entries = community_entries
+    if user_signed_in?
+      @continue_reading = continue_reading_location(current_user)
+      @recent_notes = current_user.notes.order(updated_at: :desc).limit(RECENT_NOTES_LIMIT)
+      @active_studies = current_user.groups.distinct.order(updated_at: :desc).limit(ACTIVE_STUDIES_LIMIT)
+    else
+      @community_entries = community_entries
+    end
   end
 
   def how_it_works

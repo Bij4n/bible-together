@@ -46,16 +46,34 @@ en:
     nav_section: Explore
     account_section: Account
     account: Account
+    open_study_menu: Open study menu
+    open_explore_menu: Open explore menu
+    open_account_menu: Open account menu
+    study_menu: Study
+    explore_menu: Explore
+    you_tab: You
     my_notes_link: My notes
+    my_studies_link: My studies
+    start_study_link: Start a study
+    join_with_code_link: Join with code
+    public_notes_link: Public notes
+    community_bible_link: Read with others
+    discover_studies_link: Discover studies
+    profile_link: Profile
+    start_reading_link: Start reading
     read_link: Read
     studies_link: Studies
     community_link: Community
     donate_link: Donate
     how_it_works_link: How it works
     about_link: About
+    footer_product: Product
+    footer_legal: Legal
+    footer_support: Support
     footer_tagline: Read scripture with someone.
+    footer_donate_blurb: Bible Together is self-funded by its developer, a follower of Jesus who built this so scripture can be read and studied together without ads or tracking.
     footer_attribution_translations: "Public domain texts: KJV (English) · Reina-Valera 1909 (Spanish)."
-    footer_attribution_meta: "No tracking. © %{year}."
+    footer_attribution_meta: "BIBLE TOGETHER ORG © %{year}."
   locale_banner:
     aria_label: Reading language suggestion
     reading: "You're reading %{name}."
@@ -67,7 +85,6 @@ en:
     cta_public_bible: Start reading
     cta_how_it_works: How it works
     how_it_works_title: How it works
-    tertiary: Free. KJV and Reina-Valera 1909. No ads, no tracking.
     landing:
       points_label: What you can do
       points:
@@ -109,8 +126,20 @@ en:
       para_5: Built and maintained by one person. Hosting runs on donations. No subscription, no ads, no tracker.
     donate_cta:
       heading: Keep it open
-      body: If this has been useful to you, help cover hosting so the next reader can find it.
+      body: Bible Together is self-funded by its developer, a follower of Jesus. If this has been useful to you, help cover hosting so scripture stays free—no ads, no tracking.
       button: Donate
+    dashboard:
+      heading: Welcome back
+      subhead: Pick up where you left off, or jump into a study.
+      continue_heading: Continue reading
+      continue_cta: Open chapter
+      recent_notes_heading: Recent notes
+      view_all_notes: All notes
+      no_notes: You have not written any notes yet.
+      studies_heading: Your studies
+      view_all_studies: All studies
+      no_studies: You are not in any studies yet.
+      create_study: Start a study
   bible:
     reader:
       prev_chapter: Previous

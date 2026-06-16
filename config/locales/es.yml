@@ -46,16 +46,34 @@ es:
     nav_section: Explorar
     account_section: Cuenta
     account: Cuenta
+    open_study_menu: Abrir menú de estudio
+    open_explore_menu: Abrir menú explorar
+    open_account_menu: Abrir menú de cuenta
+    study_menu: Estudio
+    explore_menu: Explorar
+    you_tab: Tú
     my_notes_link: Mis notas
+    my_studies_link: Mis estudios
+    start_study_link: Iniciar un estudio
+    join_with_code_link: Unirse con código
+    public_notes_link: Notas públicas
+    community_bible_link: Leer con otros
+    discover_studies_link: Descubrir estudios
+    profile_link: Perfil
+    start_reading_link: Empezar a leer
     read_link: Leer
     studies_link: Estudios
     community_link: Comunidad
     donate_link: Donar
     how_it_works_link: Cómo funciona
     about_link: Acerca de
+    footer_product: Producto
+    footer_legal: Legal
+    footer_support: Apoyo
     footer_tagline: Lee la Escritura en compañía.
+    footer_donate_blurb: Bible Together es autofinanciado por su desarrollador, un seguidor de Jesús que lo construyó para que la Escritura se lea y estudie en comunidad, sin anuncios ni rastreo.
     footer_attribution_translations: "Textos de dominio público: KJV (inglés) · Reina-Valera 1909 (español)."
-    footer_attribution_meta: "Sin rastreo. © %{year}."
+    footer_attribution_meta: "BIBLE TOGETHER ORG © %{year}."
   locale_banner:
     aria_label: Sugerencia de idioma de lectura
     reading: "Estás leyendo %{name}."
@@ -67,7 +85,6 @@ es:
     cta_public_bible: Empezar a leer
     cta_how_it_works: Cómo funciona
     how_it_works_title: Cómo funciona
-    tertiary: Gratis. KJV y Reina-Valera 1909. Sin anuncios ni rastreo.
     landing:
       points_label: Qué puedes hacer
       points:
@@ -109,8 +126,20 @@ es:
       para_5: Hecho y mantenido por una sola persona. El alojamiento funciona con donaciones. Sin suscripción, sin anuncios, sin rastreo.
     donate_cta:
       heading: Manténlo abierto
-      body: Si esto te ha servido, ayuda a cubrir el alojamiento para que el próximo lector lo encuentre.
+      body: Bible Together es autofinanciado por su desarrollador, un seguidor de Jesús. Si te ha servido, ayuda a cubrir el alojamiento para que la Escritura siga libre—sin anuncios ni rastreo.
       button: Donar
+    dashboard:
+      heading: Bienvenido de nuevo
+      subhead: Retoma donde lo dejaste o únete a un estudio.
+      continue_heading: Seguir leyendo
+      continue_cta: Abrir capítulo
+      recent_notes_heading: Notas recientes
+      view_all_notes: Todas las notas
+      no_notes: Aún no has escrito notas.
+      studies_heading: Tus estudios
+      view_all_studies: Todos los estudios
+      no_studies: Aún no participas en ningún estudio.
+      create_study: Iniciar un estudio
   bible:
     reader:
       prev_chapter: Anterior

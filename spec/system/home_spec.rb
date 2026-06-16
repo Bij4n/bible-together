@@ -29,7 +29,6 @@ RSpec.describe "Home page", type: :system do
 
     expect(page).to have_css("h1", text: I18n.t("home.welcome"))
     expect(page).to have_content(I18n.t("home.subhead"))
-    expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
   it "renders the landing points" do
@@ -60,9 +59,21 @@ RSpec.describe "Home page", type: :system do
   it "renders marketing pages in light mode even when the user prefers dark" do
     user = create(:user, theme: "dark")
     sign_in user
-    visit "/"
+    visit "/how-it-works"
     expect(page).to have_css('html[data-theme="light"]')
     expect(page).to have_css("body.marketing-surface")
+  end
+
+  context "when signed in" do
+    before { sign_in create(:user) }
+
+    it "renders the dashboard instead of the marketing landing" do
+      visit "/"
+
+      expect(page).to have_content(I18n.t("home.dashboard.heading"))
+      expect(page).not_to have_css(".landing-hero")
+      expect(page).not_to have_css("body.marketing-surface")
+    end
   end
 
   it "renders the same wordmark in header and footer" do
@@ -105,7 +116,7 @@ RSpec.describe "Home page", type: :system do
 
     expect(page).to have_css("section[data-section='donate-cta'].donate-callout")
     within("section[data-section='donate-cta']") do
-      expect(page).to have_content("help cover hosting")
+      expect(page).to have_content("self-funded")
       expect(page).not_to have_content("donations keep it open")
     end
   end
@@ -121,7 +132,7 @@ RSpec.describe "Home page", type: :system do
     visit "/"
 
     click_on I18n.t("home.cta_public_bible"), match: :first
-    expect(page).to have_current_path("/bible/kjv/gen/1?layer=community")
+    expect(page).to have_current_path("/bible/kjv/gen/1", ignore_query: true)
   end
 
   it "lands the bottom donate-CTA button on /donate" do

@@ -14,7 +14,7 @@
 
     <div class="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
       <%= link_to t("home.cta_public_bible"),
-                  public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
+                  community_bible_path,
                   class: "inline-flex items-center rounded-full bg-accent-700 px-7 py-3.5 font-ui text-base font-medium text-surface-50 shadow-sm transition-colors hover:bg-accent-800" %>
       <%= link_to how_it_works_path,
                   class: "inline-flex items-center gap-1.5 font-ui text-base font-medium text-surface-700 transition-colors hover:text-accent-700" do %>
@@ -22,10 +22,6 @@
         <span aria-hidden="true">&rarr;</span>
       <% end %>
     </div>
-
-    <p class="font-ui text-sm text-surface-500">
-      <%= t("home.tertiary") %>
-    </p>
   </div>
 
   <div class="relative z-10">

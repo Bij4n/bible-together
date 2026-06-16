@@ -1,0 +1,119 @@
+<%
+  tab_base = "mobile-tab-bar__tab flex flex-1 flex-col items-center justify-center gap-0.5 px-1 py-2 font-ui text-[10px] font-medium transition-colors"
+  tab_idle = "text-surface-500"
+  tab_active = "text-accent-800"
+  sheet_item = "block rounded-lg px-4 py-3 font-ui text-sm transition-colors hover:bg-surface-100 hover:text-surface-900 text-surface-700"
+%>
+
+<nav class="mobile-tab-bar fixed inset-x-0 bottom-0 z-40 border-t border-surface-200 bg-surface-50/95 backdrop-blur-sm sm:hidden" aria-label="<%= t("layout.main_nav") %>">
+    <%= link_to read_nav_path,
+        class: "#{tab_base} #{read_nav_active? ? tab_active : tab_idle}",
+        aria: { current: read_nav_active? ? "page" : nil } do %>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+      <path d="M10.75 16.82A7.462 7.462 0 0 1 15 15.5c.71 0 1.396.098 2.046.282A.75.75 0 0 0 18 15.06v-11a.75.75 0 0 0-.546-.721A9.006 9.006 0 0 0 15 3a8.963 8.963 0 0 0-4.25 1.065A8.963 8.963 0 0 0 6.75 3 9.006 9.006 0 0 0 3 3.339a.75.75 0 0 0-.546.721v11a.75.75 0 0 0 .954.721A7.506 7.506 0 0 1 5 15.5c1.579 0 3.04.487 4.25 1.32V4.062A8.964 8.964 0 0 0 10 3c1.579 0 3.04.487 4.25 1.32v12.758Z" />
+    </svg>
+    <%= t("layout.read_link") %>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <div data-controller="user-menu" class="relative flex flex-1">
+      <button type="button"
+              data-user-menu-target="trigger"
+              data-action="user-menu#toggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="<%= t("layout.open_study_menu") %>"
+              class="<%= "#{tab_base} #{study_nav_active? ? tab_active : tab_idle} w-full" %>">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+          <path d="M9 4.804A7.968 7.968 0 0 0 5.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0 1 5.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0 1 14.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0 0 14.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 1 1-2 0V4.804Z" />
+        </svg>
+        <span aria-hidden="true"><%= t("layout.study_menu") %></span>
+      </button>
+      <div data-user-menu-target="menu" hidden role="menu" class="account-sheet mobile-nav-sheet">
+        <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
+          <%= t("layout.study_menu") %>
+        </p>
+        <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem", class: sheet_item %>
+        <%= link_to t("layout.my_studies_link"), groups_path, role: "menuitem", class: sheet_item %>
+        <%= link_to t("layout.start_study_link"), new_group_path, role: "menuitem", class: sheet_item %>
+        <%= link_to t("layout.join_with_code_link"), groups_path(anchor: "join"), role: "menuitem", class: sheet_item %>
+      </div>
+    </div>
+  <% else %>
+    <%= link_to how_it_works_path(anchor: "studies"),
+        class: "#{tab_base} #{study_nav_active? ? tab_active : tab_idle}",
+        aria: { current: study_nav_active? ? "page" : nil } do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+        <path d="M9 4.804A7.968 7.968 0 0 0 5.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0 1 5.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0 1 14.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0 0 14.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 1 1-2 0V4.804Z" />
+      </svg>
+      <%= t("layout.study_menu") %>
+    <% end %>
+  <% end %>
+
+  <div data-controller="user-menu" class="relative flex flex-1">
+    <button type="button"
+            data-user-menu-target="trigger"
+            data-action="user-menu#toggle"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-label="<%= t("layout.open_explore_menu") %>"
+            class="<%= "#{tab_base} #{explore_nav_active? ? tab_active : tab_idle} w-full" %>">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+        <path d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.925A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 .74.56l.82 3.127a.75.75 0 0 0 1.265-.545l-1.037-3.95A1.5 1.5 0 0 0 11.135 7.25H5.135a.75.75 0 0 1-.74-.56L3.105 2.289ZM9.5 11.25a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0v-1.5ZM9.5 14.25a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0v-1.5ZM12.75 11.25a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0v-1.5ZM12.75 14.25a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0v-1.5Z" />
+        <path fill-rule="evenodd" d="M10 2.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM10 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 15ZM3.75 9.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM14.25 9.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM4.591 4.591a.75.75 0 0 1 1.06 0l1.06 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06ZM13.349 13.349a.75.75 0 0 1 1.06 0l1.06 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06ZM4.591 15.409a.75.75 0 0 1 0-1.06l1.06-1.06a.75.75 0 1 1 1.06 1.06l-1.06 1.06a.75.75 0 0 1-1.06 0ZM13.349 6.651a.75.75 0 0 1 0-1.06l1.06-1.06a.75.75 0 1 1 1.06 1.06l-1.06 1.06a.75.75 0 0 1-1.06 0Z" clip-rule="evenodd" />
+      </svg>
+      <span aria-hidden="true"><%= t("layout.explore_menu") %></span>
+    </button>
+    <div data-user-menu-target="menu" hidden role="menu" class="account-sheet mobile-nav-sheet">
+      <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
+        <%= t("layout.explore_menu") %>
+      </p>
+      <%= link_to t("layout.public_notes_link"), community_path, role: "menuitem", class: sheet_item %>
+      <%= link_to t("layout.community_bible_link"), community_bible_path, role: "menuitem", class: sheet_item %>
+      <%= link_to t("search.submit"), search_path, role: "menuitem", class: sheet_item %>
+      <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem", class: sheet_item %>
+    </div>
+  </div>
+
+  <% if user_signed_in? %>
+    <div data-controller="user-menu" class="relative flex flex-1">
+      <button type="button"
+              data-user-menu-target="trigger"
+              data-action="user-menu#toggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="<%= t("layout.open_account_menu") %>"
+              class="<%= "#{tab_base} #{you_nav_active? ? tab_active : tab_idle} w-full" %>">
+        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-accent-700 font-ui text-[9px] font-semibold text-surface-50" aria-hidden="true">
+          <%= user_initials(current_user) %>
+        </span>
+        <%= t("layout.you_tab") %>
+      </button>
+      <div data-user-menu-target="menu" hidden role="menu" aria-label="<%= t("layout.open_account_menu") %>" class="account-sheet mobile-nav-sheet">
+        <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
+          <%= t("layout.account_section") %>
+        </p>
+        <div class="px-4 pb-1 font-ui text-xs text-surface-500">
+          <%= current_user.display_name.presence || current_user.email %>
+        </div>
+        <%= link_to t("layout.profile_link"), author_path(current_user), role: "menuitem", class: sheet_item %>
+        <%= link_to t("auth.settings"), settings_path, role: "menuitem", class: sheet_item %>
+        <% if current_user.admin? %>
+          <%= link_to t("admin.title"), admin_notes_path, role: "menuitem", class: sheet_item %>
+        <% end %>
+        <div class="my-1 border-t border-surface-200" role="separator"></div>
+        <%= button_to t("auth.sign_out"), destroy_user_session_path, method: :delete, form_class: "block",
+            class: "block w-full rounded-lg px-4 py-3 text-left font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900" %>
+      </div>
+    </div>
+  <% else %>
+    <%= link_to new_user_session_path,
+        class: "#{tab_base} #{you_nav_active? ? tab_active : tab_idle}",
+        aria: { current: you_nav_active? ? "page" : nil } do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+        <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.331.003Z" />
+      </svg>
+      <%= t("layout.you_tab") %>
+    <% end %>
+  <% end %>
+</nav>

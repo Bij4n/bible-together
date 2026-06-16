@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include NavigationHelper
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
@@ -68,6 +69,8 @@ class ApplicationController < ActionController::Base
   end
 
   def marketing_page?
+    return false if user_signed_in? && controller_name == "home" && action_name == "show"
+
     MARKETING_ROUTES.fetch(controller_name, []).include?(action_name)
   end
 

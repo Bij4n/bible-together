@@ -27,7 +27,6 @@ RSpec.describe "How it works page", type: :system do
 
     expect(page).to have_content(I18n.t("home.how_it_works_title"))
     expect(page).to have_css("h1", text: I18n.t("home.landing.how_page_intro"))
-    expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
   it "renders the three steps" do
@@ -59,7 +58,7 @@ RSpec.describe "How it works page", type: :system do
   it "links to the reader from the page CTA" do
     visit "/how-it-works"
 
-    click_on I18n.t("home.cta_public_bible")
-    expect(page).to have_current_path("/bible/kjv/gen/1?layer=community")
+    click_on I18n.t("home.cta_public_bible"), match: :first
+    expect(page).to have_current_path("/bible/kjv/gen/1", ignore_query: true)
   end
 end

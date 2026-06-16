@@ -186,11 +186,20 @@ RSpec.describe "Footer", type: :system do
   end
 
   describe "language toggle" do
-    it "renders EN and ES buttons in the footer" do
+    it "renders EN and ES buttons in the footer for guests" do
       visit "/"
       within("footer") do
         expect(page).to have_content("EN")
         expect(page).to have_content("ES")
+      end
+    end
+
+    it "hides language toggles when signed in" do
+      sign_in create(:user)
+      visit "/"
+      within("footer") do
+        expect(page).not_to have_content("EN")
+        expect(page).not_to have_content("ES")
       end
     end
 

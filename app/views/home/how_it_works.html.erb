@@ -6,12 +6,9 @@
     <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900 sm:text-4xl">
       <%= t("home.landing.how_page_intro") %>
     </h1>
-    <p class="font-reading text-lg leading-relaxed text-surface-600">
-      <%= t("home.tertiary") %>
-    </p>
   </header>
 
-  <section class="landing-section" aria-labelledby="how-steps-heading">
+  <section id="studies" class="landing-section" aria-labelledby="how-steps-heading">
     <h2 id="how-steps-heading" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
       <%= t("home.how.heading") %>
     </h2>
@@ -50,7 +47,7 @@
 
   <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
     <%= link_to t("home.cta_public_bible"),
-                public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
+                community_bible_path,
                 class: "inline-flex items-center rounded-full bg-accent-700 px-6 py-3 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-800" %>
     <%= link_to about_path,
                 class: "inline-flex items-center gap-1.5 font-ui text-base font-medium text-surface-700 transition-colors hover:text-accent-700" do %>
