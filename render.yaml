@@ -35,6 +35,11 @@ services:
         value: enabled
       - key: RAILS_MAX_THREADS
         value: "5"
+      # Run Solid Queue inside Puma (Rails 8 single-server pattern).
+      # Without this, deliver_later jobs (invitation emails, etc.) enqueue
+      # but never run because no separate worker process exists on Render.
+      - key: SOLID_QUEUE_IN_PUMA
+        value: "true"
       - key: RAILS_MASTER_KEY
         sync: false
       - key: DATABASE_URL
