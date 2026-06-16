@@ -143,6 +143,8 @@ es:
       para_3: Leer lo que significó para ellos, y luego escribir lo que significó para ti, es el punto entero.
       para_4: KJV en inglés y RV1909 en español están disponibles. La interfaz es bilingüe. Ambas traducciones son de dominio público.
       para_5: Hecho y mantenido por una sola persona. El alojamiento funciona con donaciones. Sin suscripción, sin anuncios, sin rastreo.
+      nonprofit_label: Sin fines de lucro
+      para_nonprofit: "Bible Together se gestiona sin fines de lucro por un solo desarrollador: no es un negocio y no genera ganancias. Cada donación va por completo a mantener la plataforma: alojamiento, correo, dominios y las cuentas que la mantienen en línea."
     donate_cta:
       heading: Manténlo abierto
       body: Si esto te ha servido, ayuda a cubrir el alojamiento para que el próximo lector lo encuentre.
