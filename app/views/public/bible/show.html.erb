@@ -18,6 +18,16 @@
         <%= render "bible/reader/layer_switcher",
                    translation: @translation, book: @book, chapter: @chapter,
                    selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number, layer: "community") %>
+        <%= render "bible/reader/book_picker", translation: @translation, book: @book, layer: "community" %>
+        <% if @book.chapters.size > 1 %>
+          <%= render "shared/nav_select",
+                     options: @book.chapters.order(:number).map { |ch|
+                       [ "#{t('bible.reader.chapter_label')} #{ch.number}",
+                         bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: ch.number, layer: "community") ]
+                     },
+                     selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number, layer: "community"),
+                     aria_label: t("bible.reader.chapter_label") %>
+        <% end %>
         <% translations = Translation.order(:name) %>
         <% if translations.size > 1 %>
           <%= render "shared/nav_select",

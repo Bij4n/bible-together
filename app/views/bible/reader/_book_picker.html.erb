@@ -1,0 +1,48 @@
+<%# Book picker: jump to any book of the current translation, grouped by
+    Old / New Testament. Reuses the nav-select dropdown behavior.
+    locals: translation, book (current). Optional: layer ("community"). %>
+<% layer = local_assigns[:layer] %>
+<% current_book_name = I18n.locale == :es ? book.name_es : book.name_en %>
+
+<div data-controller="nav-select" class="relative">
+  <button type="button"
+          data-nav-select-target="trigger"
+          data-action="nav-select#toggle"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="<%= t("bible.reader.book_picker") %>"
+          class="flex items-center gap-1.5 rounded-md border border-surface-300 bg-surface-50 px-3 py-1.5 font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100">
+    <span><%= current_book_name %></span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 opacity-60" aria-hidden="true">
+      <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+    </svg>
+  </button>
+
+  <ul data-nav-select-target="menu"
+      hidden
+      role="listbox"
+      aria-label="<%= t("bible.reader.book_picker") %>"
+      class="absolute right-0 z-20 mt-2 max-h-80 w-max min-w-full origin-top-right overflow-y-auto rounded-lg border border-surface-200 bg-surface-50 py-1 text-sm shadow-lg ring-1 ring-surface-900/5">
+    <% { old: t("bible.reader.old_testament"), new: t("bible.reader.new_testament") }.each do |testament_key, testament_label| %>
+      <% books = translation.books.where(testament: testament_key).order(:position) %>
+      <% if books.any? %>
+        <li role="presentation" class="px-4 pb-1 pt-3 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
+          <%= testament_label %>
+        </li>
+        <% books.each do |b| %>
+          <% url = bible_chapter_path(translation: translation.code.downcase, book: b.osis_code.downcase, chapter: 1, layer: layer.presence) %>
+          <li>
+            <button type="button"
+                    data-action="nav-select#select"
+                    data-url="<%= url %>"
+                    role="option"
+                    aria-selected="<%= b.id == book.id %>"
+                    class="block w-full cursor-pointer px-4 py-2 text-left text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 focus:bg-surface-100 focus:text-surface-900 focus:outline-none aria-selected:bg-accent-700/10 aria-selected:font-medium aria-selected:text-accent-700">
+              <%= I18n.locale == :es ? b.name_es : b.name_en %>
+            </button>
+          </li>
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
