@@ -25,8 +25,9 @@ RSpec.describe "How it works page", type: :system do
   it "renders the page title and intro" do
     visit "/how-it-works"
 
-    expect(page).to have_css("h1", text: I18n.t("home.how_it_works_title"))
-    expect(page).to have_content(I18n.t("home.landing.how_page_intro"))
+    expect(page).to have_content(I18n.t("home.how_it_works_title"))
+    expect(page).to have_css("h1", text: I18n.t("home.landing.how_page_intro"))
+    expect(page).to have_content(I18n.t("home.tertiary"))
   end
 
   it "renders the three steps" do
@@ -48,11 +49,11 @@ RSpec.describe "How it works page", type: :system do
     end
   end
 
-  it "does not render the About section or feature demos" do
+  it "does not render an embedded About section or feature demos" do
     visit "/how-it-works"
 
     expect(page).not_to have_css("section#about")
-    expect(page).not_to have_css(".landing-bento-card")
+    expect(page).not_to have_css(".landing-value-demo")
   end
 
   it "links to the reader from the page CTA" do

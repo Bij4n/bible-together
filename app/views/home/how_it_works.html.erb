@@ -1,24 +1,30 @@
-<div class="landing max-w-2xl space-y-12 py-2 sm:py-4">
-  <header class="space-y-4">
-    <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900 sm:text-4xl">
+<div class="landing space-y-16 py-2 sm:space-y-20 sm:py-4">
+  <header class="max-w-2xl space-y-4">
+    <p class="font-ui text-sm font-semibold uppercase tracking-[0.14em] text-accent-700">
       <%= t("home.how_it_works_title") %>
+    </p>
+    <h1 class="font-ui text-3xl font-semibold tracking-tight text-surface-900 sm:text-4xl">
+      <%= t("home.landing.how_page_intro") %>
     </h1>
     <p class="font-reading text-lg leading-relaxed text-surface-600">
-      <%= t("home.landing.how_page_intro") %>
+      <%= t("home.tertiary") %>
     </p>
   </header>
 
-  <section aria-labelledby="how-steps-heading">
+  <section class="landing-section" aria-labelledby="how-steps-heading">
     <h2 id="how-steps-heading" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
       <%= t("home.how.heading") %>
     </h2>
-    <ol class="mt-4 space-y-6">
+    <ol class="mt-6 grid gap-6 sm:grid-cols-3">
       <% (1..3).each do |n| %>
-        <li>
+        <li class="landing-bento-card flex h-full flex-col gap-3">
+          <span class="grid h-9 w-9 place-items-center rounded-full bg-accent-700/10 font-ui text-sm font-semibold text-accent-700" aria-hidden="true">
+            <%= n %>
+          </span>
           <h3 class="font-ui text-base font-semibold text-surface-900">
             <%= t("home.how.step_#{n}_title") %>
           </h3>
-          <p class="mt-1 font-reading text-base leading-relaxed text-surface-600">
+          <p class="font-reading text-sm leading-relaxed text-surface-600">
             <%= t("home.how.step_#{n}_body") %>
           </p>
         </li>
@@ -26,23 +32,30 @@
     </ol>
   </section>
 
-  <section aria-labelledby="how-features-heading">
-    <h2 id="how-features-heading" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
-      <%= t("home.landing.features_label") %>
-    </h2>
-    <ul class="mt-4 space-y-2 font-reading text-base leading-relaxed text-surface-700">
-      <% t("home.landing.feature_list").each do |item| %>
-        <li class="flex gap-3">
-          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-surface-400" aria-hidden="true"></span>
-          <span><%= item %></span>
-        </li>
-      <% end %>
-    </ul>
+  <section class="landing-section max-w-3xl" aria-labelledby="how-features-heading">
+    <div class="landing-bento-card">
+      <h2 id="how-features-heading" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
+        <%= t("home.landing.features_label") %>
+      </h2>
+      <ul class="mt-4 space-y-2.5 font-reading text-base leading-relaxed text-surface-700">
+        <% t("home.landing.feature_list").each do |item| %>
+          <li class="flex gap-3">
+            <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-700" aria-hidden="true"></span>
+            <span><%= item %></span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </section>
 
-  <p>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
     <%= link_to t("home.cta_public_bible"),
                 public_bible_chapter_path(translation: "kjv", book: "gen", chapter: 1),
                 class: "inline-flex items-center rounded-full bg-accent-700 px-6 py-3 font-ui text-base font-medium text-surface-50 transition-colors hover:bg-accent-800" %>
-  </p>
+    <%= link_to about_path,
+                class: "inline-flex items-center gap-1.5 font-ui text-base font-medium text-surface-700 transition-colors hover:text-accent-700" do %>
+      <%= t("layout.about_link") %>
+      <span aria-hidden="true">&rarr;</span>
+    <% end %>
+  </div>
 </div>

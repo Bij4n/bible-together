@@ -5,8 +5,11 @@ RSpec.describe "About page", type: :request do
     get "/about"
     expect(response).to have_http_status(:ok)
     expect(response.body).to include(I18n.t("home.about.heading"))
+    expect(response.body).to include(I18n.t("home.about.subhead"))
     expect(response.body).to include(I18n.t("home.about.para_1"))
     expect(response.body).to include(I18n.t("home.about.para_2"))
+    expect(response.body).to include(I18n.t("home.about.translations_label"))
+    expect(response.body).to include(I18n.t("home.about.support_label"))
   end
 
   it "renders the Spanish content with locale=es" do

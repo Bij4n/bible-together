@@ -2,32 +2,32 @@ es:
   app:
     name: Bible Together
     tagline: Lee, anota y comparte las Escrituras.
-    meta_description: Lector bíblico bilingüe con resaltados a nivel de carácter y notas — KJV inglés y Reina-Valera 1909 español, ambos de dominio público. Sin rastreo, sostenido por donaciones.
+    meta_description: Lector bíblico bilingüe con resaltados a nivel de carácter y notas, KJV inglés y Reina-Valera 1909 español, ambos de dominio público. Sin rastreo, sostenido por donaciones.
   errors:
     cta_home: Volver al inicio
     cta_read: Leer la Biblia
     "404":
-      eyebrow: 404 — No encontrada
+      eyebrow: "404: No encontrada"
       heading_html: Esta página <em>no existe.</em>
       title: Página no encontrada
       body: Quizás escribiste mal la dirección, o la página se movió. La Escritura sigue donde la dejaste.
     "422":
-      eyebrow: 422 — No procesable
+      eyebrow: "422: No procesable"
       heading_html: Algo <em>no se completó.</em>
       title: No se pudo procesar
       body: El cambio que intentaste hacer no se pudo procesar. Inténtalo de nuevo o vuelve a donde estabas.
     "500":
-      eyebrow: 500 — Error del servidor
+      eyebrow: "500: Error del servidor"
       heading_html: Algo <em>se rompió de nuestro lado.</em>
       title: Error del servidor
-      body: Lo sentimos — encontramos un error inesperado. Inténtalo de nuevo en un momento o vuelve al inicio.
+      body: Lo sentimos, encontramos un error inesperado. Inténtalo de nuevo en un momento o vuelve al inicio.
     "400":
-      eyebrow: 400 — Petición incorrecta
+      eyebrow: "400: Petición incorrecta"
       heading_html: Esa petición <em>no era válida.</em>
       title: Petición incorrecta
       body: Algo en esa petición no tenía sentido. Inténtalo de nuevo o vuelve al inicio.
     "406":
-      eyebrow: 406 — Navegador no compatible
+      eyebrow: "406: Navegador no compatible"
       heading_html: Tu navegador es <em>demasiado antiguo.</em>
       title: Navegador no compatible
       body: Bible Together necesita un navegador moderno para renderizar el lector. Actualízalo e inténtalo de nuevo.
@@ -72,7 +72,7 @@ es:
       points_label: Qué puedes hacer
       points:
         - title: Resalta
-          body: Marca la frase exacta que te detiene—no todo el versículo.
+          body: Marca la frase exacta que te detiene, no todo el versículo.
         - title: Toma notas
           body: Añade notas a tus resaltados. Privadas hasta que decidas compartir.
         - title: Estudia en grupo
@@ -99,14 +99,14 @@ es:
       step_3_body: Con un amigo, tu grupo de estudio o el capítulo público.
     about:
       heading: Acerca de
-      subhead: Lee, anota y comparte las Escrituras—sin anuncios ni rastreo.
+      subhead: Lee, anota y comparte las Escrituras, sin anuncios ni rastreo.
       translations_label: Traducciones
       support_label: Apoyo
-      para_1: Bible Together es un lector para quienes marcan su Biblia—resaltados, notas y una capa comunitaria cuando quieres leer con otros.
+      para_1: "Bible Together es un lector para quienes marcan su Biblia: resaltados, notas y una capa comunitaria cuando quieres leer con otros."
       para_2: El versículo que te detiene probablemente también detuvo a alguien más.
-      para_3: Leer lo que significó para ellos—y luego escribir lo que significó para ti—es el punto entero.
+      para_3: Leer lo que significó para ellos, y luego escribir lo que significó para ti, es el punto entero.
       para_4: KJV en inglés y RV1909 en español están disponibles. La interfaz es bilingüe. Ambas traducciones son de dominio público.
-      para_5: Hecho y mantenido por una sola persona. El alojamiento funciona con donaciones—sin suscripción, sin anuncios, sin rastreo.
+      para_5: Hecho y mantenido por una sola persona. El alojamiento funciona con donaciones. Sin suscripción, sin anuncios, sin rastreo.
     donate_cta:
       heading: Manténlo abierto
       body: Si esto te ha servido, ayuda a cubrir el alojamiento para que el próximo lector lo encuentre.
@@ -120,7 +120,7 @@ es:
       by_author: "por %{name}"
       breadcrumb_home: Bible Together
       translation_picker: Traducción
-      cross_translation_badge_title: "Has anotado este versículo en %{translation} — haz clic para ir allí."
+      cross_translation_badge_title: "Has anotado este versículo en %{translation}. Haz clic para ir allí."
       dismiss_toolbar: Cerrar
       highlight_action: Resaltar
       verse_view: Por versículo
@@ -143,7 +143,7 @@ es:
         other: "Este resaltado tiene %{count} notas. Quitarlo eliminará las notas. ¿Continuar?"
   settings:
     title: Ajustes
-    description: Personaliza tu experiencia de lectura. La mayoría de los cambios se guardan automáticamente — no hace falta un botón de guardar.
+    description: Personaliza tu experiencia de lectura. La mayoría de los cambios se guardan automáticamente. No hace falta un botón de guardar.
     updated: Preferencias guardadas.
     save: Guardar
     sections:
@@ -212,7 +212,7 @@ es:
       one: 1 miembro
       other: "%{count} miembros"
     not_found: No se encontró ese estudio.
-    description: Lee la Escritura con personas en quienes confías. Los estudios son espacios pequeños — un estudio bíblico, un hilo familiar, un grupo de amigos — donde puedes compartir notas, comentarios y resaltados en tiempo real. Las notas son privadas por defecto y sólo se muestran al estudio cuando tú eliges compartirlas.
+    description: "Lee la Escritura con personas en quienes confías. Los estudios son espacios pequeños: un estudio bíblico, un hilo familiar, un grupo de amigos, donde puedes compartir notas, comentarios y resaltados en tiempo real. Las notas son privadas por defecto y sólo se muestran al estudio cuando tú eliges compartirlas."
     new_description: Crea un estudio bíblico pequeño. Agrega un nombre y una descripción opcional. Una vez creado, podrás invitar a amigos por correo o compartir el código de invitación desde la página del estudio.
     empty: Aún no estás en ningún estudio. Crea uno para leer con amigos, o pega un código de invitación abajo para unirte a uno que alguien te haya compartido.
   memberships:
@@ -262,7 +262,7 @@ es:
       public_note: Pública
   community:
     title: Comunidad
-    intro: Notas públicas de lectores de todas partes — lo que un versículo significó para alguien, en sus propias palabras. Cualquiera puede leer; inicia sesión para añadir la tuya.
+    intro: "Notas públicas de lectores de todas partes: lo que un versículo significó para alguien, en sus propias palabras. Cualquiera puede leer; inicia sesión para añadir la tuya."
     sort_label: Ordenar
     sort_recent: Recientes
     sort_top: Destacadas
@@ -301,7 +301,7 @@ es:
     destroy:
       cancelled: "Invitación a %{email} cancelada."
     show:
-      sign_in_to_accept: "Inicia sesión para aceptar la invitación. ¿Eres nuevo? Usa el enlace de registro — tu invitación queda guardada."
+      sign_in_to_accept: "Inicia sesión para aceptar la invitación. ¿Eres nuevo? Usa el enlace de registro. Tu invitación queda guardada."
       joined: "Bienvenido a %{group_name}."
       already_accepted: Ya te uniste a este grupo.
     expired:
@@ -315,11 +315,11 @@ es:
       eyebrow: INVITACIÓN AL GRUPO
       heading_html: "%{inviter} quiere leer las Escrituras <em>contigo.</em>"
       heading_text: "%{inviter} quiere leer las Escrituras contigo en %{group_name}."
-      body_1: "%{inviter} te invitó a su grupo en Bible Together — un lector bíblico compartido donde los resaltados, las notas y las conversaciones se quedan entre los miembros."
+      body_1: "%{inviter} te invitó a su grupo en Bible Together, un lector bíblico compartido donde los resaltados, las notas y las conversaciones se quedan entre los miembros."
       cta: Aceptar la invitación
       expires_in: "Esta invitación caduca en %{days} días."
-      footer_html: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, puedes ignorarlo con tranquilidad — no se crea ninguna cuenta hasta que aceptes.
-      footer_text: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, ignóralo — no se crea ninguna cuenta hasta que aceptes.
+      footer_html: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, puedes ignorarlo con tranquilidad. No se crea ninguna cuenta hasta que aceptes.
+      footer_text: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, ignóralo. No se crea ninguna cuenta hasta que aceptes.
   comments:
     title: Discusión
     post: Comentar
@@ -331,7 +331,7 @@ es:
     timestamp: "hace %{ago}"
   public_bible:
     community_view: Vista de la comunidad
-    intro: Cualquiera puede leer esta vista. Los resaltados y notas que aparecen aquí son de personas que decidieron compartirlos públicamente. Inicia sesión para añadir los tuyos — o para mantener tu lectura privada en tu cuenta.
+    intro: Cualquiera puede leer esta vista. Los resaltados y notas que aparecen aquí son de personas que decidieron compartirlos públicamente. Inicia sesión para añadir los tuyos, o para mantener tu lectura privada en tu cuenta.
     community_notes: Notas de la comunidad
     switch_to_my_bible: Cambiar a mi biblia
     no_notes_yet: Aún no hay notas de la comunidad en este capítulo.
@@ -349,7 +349,7 @@ es:
     flag_failed: No se pudo enviar el reporte. Inténtalo más tarde.
   search:
     title: Busca en la Biblia
-    subtitle: Busca en cada versículo y en cada nota pública. Escribe una frase que recuerdes, o cambia al modo semántico (KJV inglés) y busca por significado — encuentra versículos que nunca habrías buscado.
+    subtitle: Busca en cada versículo y en cada nota pública. Escribe una frase que recuerdes, o cambia al modo semántico (KJV inglés) y busca por significado. Encuentra versículos que nunca habrías buscado.
     input_placeholder: Busca versículos, temas o palabras clave…
     submit: Buscar
     filters:
@@ -426,7 +426,7 @@ es:
       cancel: Cancelar
       address_label: Dirección Bitcoin
       notes_label: Notas
-      notes_hint: Opcional. Contexto sólo para administración — p. ej. de qué cartera o cuenta proviene esta dirección.
+      notes_hint: Opcional. Contexto sólo para administración (p. ej. de qué cartera o cuenta proviene esta dirección).
       header_address: Dirección
       header_status: Estado
       header_notes: Notas
@@ -445,7 +445,7 @@ es:
     copied: Copiado
     qr_alt: "Código QR de pago Bitcoin con la dirección de donación"
     confirm_heading: Dinos que enviaste (opcional)
-    confirm_intro: "Si te gustaría una respuesta de agradecimiento, deja tu correo abajo. Una nota breve también es bienvenida. Ambos campos son opcionales — basta con hacer clic en el botón."
+    confirm_intro: "Si te gustaría una respuesta de agradecimiento, deja tu correo abajo. Una nota breve también es bienvenida. Ambos campos son opcionales. Basta con hacer clic en el botón."
     email_label: Correo electrónico
     email_placeholder: tu@ejemplo.com
     message_label: Mensaje
@@ -456,7 +456,7 @@ es:
       body: "Estamos entre carteras en este momento. Vuelve pronto, o ponte en contacto si quieres ayudar de otra forma."
     thank_you:
       heading: Gracias
-      body: "Tu apoyo mantiene Bible Together en línea para todos los que lo leen — sin anuncios, sin rastreo, sin suscripción. Si dejaste un correo, espera una respuesta breve pronto."
+      body: "Tu apoyo mantiene Bible Together en línea para todos los que lo leen: sin anuncios, sin rastreo, sin suscripción. Si dejaste un correo, espera una respuesta breve pronto."
       back_to_reading: Volver a leer
   legal:
     eyebrow: Bible Together
@@ -507,7 +507,7 @@ es:
       sharing_heading: Compartición con terceros
       sharing_body: No vendemos, alquilamos ni compartimos tu información personal con terceros. Tus datos se almacenan en servidores operados por Render (nuestro proveedor de alojamiento) en los Estados Unidos. La política de privacidad de Render rige el manejo de los datos a nivel de infraestructura.
       public_content_heading: Contenido público
-      public_content_body: Las notas que marcas como públicas son visibles para cualquiera que lea el mismo pasaje —con o sin sesión iniciada— y pueden ser indexadas por motores de búsqueda. Tu nombre público (o si no está configurado, la parte local de tu correo) aparece junto a las notas públicas. Puedes cambiar la visibilidad de una nota a privada en cualquier momento, lo que la elimina de la vista pública.
+      public_content_body: Las notas que marcas como públicas son visibles para cualquiera que lea el mismo pasaje, con o sin sesión iniciada, y pueden ser indexadas por motores de búsqueda. Tu nombre público (o si no está configurado, la parte local de tu correo) aparece junto a las notas públicas. Puedes cambiar la visibilidad de una nota a privada en cualquier momento, lo que la elimina de la vista pública.
       deletion_heading: Eliminar tu cuenta
       deletion_body_html: 'Puedes eliminar tu cuenta en cualquier momento desde <a href="/settings" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">Ajustes</a>. La eliminación borra tu dirección de correo, contraseña y todo el contenido privado de forma permanente e irreversible. Las notas públicas que hayas creado pueden permanecer visibles brevemente hasta que los cachés se actualicen.'
       contact_heading: Preguntas
