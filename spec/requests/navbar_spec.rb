@@ -1,14 +1,8 @@
 require "rails_helper"
 
-# Structural assertions on the navbar dropdown introduced in Sprint 12.
-# Request-level coverage rather than a system spec because the
-# dropdown's JS behavior (toggle, click-outside, Escape) is a thin
-# Stimulus controller the user is verifying locally; what belongs in
-# CI is "does the rendered markup contain the right items behind the
-# user-menu trigger." Signed-out checks hit the home page (not the
-# Devise sign-in view) because Devise's shared _links partial renders
-# a "Sign up" link underneath the form, which would make it impossible
-# to assert that "Sign up" is absent from the navbar.
+# Structural assertions on the site header + footer chrome for the
+# Read / Study / Explore IA. Request-level rather than system because
+# dropdown JS is covered elsewhere; CI checks the rendered markup.
 RSpec.describe "Navbar", type: :request do
   describe "signed-out visitors" do
     before { get "/" }
@@ -19,17 +13,21 @@ RSpec.describe "Navbar", type: :request do
       expect(response.body).to include('data-user-menu-target="menu"')
     end
 
-    it "places sign-in inside the menu and omits sign-up (sign-up is one click away via the Devise form)" do
+    it "renders Study and Explore menu triggers in the site header" do
+      expect(response.body).to include(I18n.t("layout.open_explore_menu"))
+      expect(response.body).to include(I18n.t("layout.explore_menu"))
+    end
+
+    it "shows sign-in and start reading in the header rail" do
       expect(response.body).to include("Sign in")
+      expect(response.body).to include("Start reading")
       expect(response.body).not_to include("Sign up")
     end
 
-    it "places the theme toggle and both locale options inside the menu" do
-      expect(response.body).to include(%(aria-label="Switch theme"))
-      expect(response.body).to include(%(data-label-light="Light"))
-      expect(response.body).to include(%(data-label-dark="Dark"))
+    it "places locale options in the footer and omits a navbar theme toggle" do
       expect(response.body).to include("English")
       expect(response.body).to include("Español")
+      expect(response.body).not_to include(%(aria-label="Switch theme"))
     end
 
     it "does not render a signed-in-only item" do
@@ -71,10 +69,6 @@ RSpec.describe "Navbar", type: :request do
     end
   end
 
-  # The account-menu items pick up an active class when the user is on
-  # the route the link points at — same "you are here" cue the footer
-  # already uses, so a user opening the menu while on /settings sees
-  # Settings highlighted instead of all items reading equally.
   describe "account-menu active state" do
     let(:user) { create(:user) }
     before { sign_in user }

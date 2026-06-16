@@ -1,7 +1,5 @@
 require "rails_helper"
 
-# Primary nav parity: desktop rail destinations must also appear in the
-# mobile account sheet (which doubles as the mobile menu below sm).
 RSpec.describe "Site navigation", type: :system, js: true do
   let!(:translation) { create(:translation, :kjv) }
   let!(:book)        { create(:book, :genesis, translation: translation) }
@@ -14,44 +12,104 @@ RSpec.describe "Site navigation", type: :system, js: true do
                    osis_ref: "Bible.KJV.Gen.1.1")
   end
 
-  def open_mobile_menu
-    find("button[data-user-menu-target='trigger']").click
-    expect(page).to have_css("div[data-user-menu-target='menu']:not([hidden])")
-  end
-
   it "labels the header nav for assistive tech" do
     visit "/"
     expect(page).to have_css("nav.site-nav[aria-label='#{I18n.t("layout.main_nav")}']")
   end
 
-  context "when signed out" do
-    it "mirrors desktop destinations in the mobile menu" do
-      visit "/"
-      open_mobile_menu
+  context "desktop header" do
+    before { page.driver.browser.manage.window.resize_to(1280, 800) }
 
-      within("div[data-user-menu-target='menu']") do
-        expect(page).to have_link(I18n.t("layout.read_link"), visible: :all)
-        expect(page).to have_link(I18n.t("layout.community_link"), visible: :all)
-        expect(page).to have_link(I18n.t("layout.how_it_works_link"), visible: :all)
-        expect(page).to have_link(I18n.t("search.submit"), visible: :all)
-        expect(page).not_to have_link(I18n.t("layout.studies_link"), visible: :all)
+    context "when signed out" do
+      it "shows Read, Study, Explore, search icon, Sign in, and Start reading" do
+        visit "/"
+
+        within("header.site-header") do
+          expect(page).to have_link(I18n.t("layout.read_link"))
+          expect(page).to have_link(I18n.t("layout.study_menu"), href: %r{/how-it-works#studies})
+          expect(page).to have_button(I18n.t("layout.explore_menu"))
+          expect(page).to have_link(I18n.t("auth.sign_in"))
+          expect(page).to have_link(I18n.t("layout.start_reading_link"))
+          expect(page).not_to have_css("button[aria-label='#{I18n.t("layout.open_account_menu")}']")
+        end
+      end
+
+      it "lists explore destinations in the Explore menu" do
+        visit "/"
+        click_button(I18n.t("layout.explore_menu"))
+
+        within("[data-user-menu-target='menu']:not([hidden])") do
+          expect(page).to have_link(I18n.t("layout.public_notes_link"))
+          expect(page).to have_link(I18n.t("layout.community_bible_link"))
+          expect(page).to have_link(I18n.t("search.submit"))
+          expect(page).to have_link(I18n.t("layout.discover_studies_link"))
+        end
+      end
+    end
+
+    context "when signed in" do
+      before { sign_in create(:user) }
+
+      it "shows avatar menu instead of hamburger account nav" do
+        visit "/"
+
+        within("header.site-header") do
+          expect(page).to have_css("button[aria-label='#{I18n.t("layout.open_account_menu")}']", visible: :all)
+          expect(page).not_to have_button(I18n.t("layout.open_menu"))
+        end
+      end
+
+      it "lists study destinations in the Study menu" do
+        visit "/"
+        click_button(I18n.t("layout.study_menu"))
+
+        within("[data-user-menu-target='menu']:not([hidden])") do
+          expect(page).to have_link(I18n.t("layout.my_notes_link"))
+          expect(page).to have_link(I18n.t("layout.my_studies_link"))
+          expect(page).to have_link(I18n.t("layout.start_study_link"))
+          expect(page).to have_link(I18n.t("layout.join_with_code_link"))
+        end
+      end
+
+      it "does not duplicate Read or Studies links in the avatar menu" do
+        visit "/"
+        within("header.site-header") { find("button[aria-label='#{I18n.t("layout.open_account_menu")}']", visible: :all).click }
+
+        within("[data-user-menu-target='menu']:not([hidden])") do
+          expect(page).to have_link(I18n.t("auth.settings"))
+          expect(page).not_to have_link(I18n.t("layout.read_link"))
+          expect(page).not_to have_link(I18n.t("layout.my_notes_link"))
+          expect(page).not_to have_link(I18n.t("layout.public_notes_link"))
+        end
       end
     end
   end
 
-  context "when signed in" do
-    before { sign_in create(:user) }
+  context "mobile tab bar" do
+    before { page.driver.browser.manage.window.resize_to(390, 844) }
 
-    it "mirrors desktop destinations in the mobile menu" do
+    it "renders Read, Study, Explore, and You tabs" do
       visit "/"
-      open_mobile_menu
 
-      within("div[data-user-menu-target='menu']") do
-        expect(page).to have_link(I18n.t("layout.read_link"), visible: :all)
-        expect(page).to have_link(I18n.t("layout.studies_link"), visible: :all)
-        expect(page).to have_link(I18n.t("layout.community_link"), visible: :all)
-        expect(page).to have_link(I18n.t("search.submit"), visible: :all)
-        expect(page).not_to have_link(I18n.t("layout.how_it_works_link"), visible: :all)
+      within("nav.mobile-tab-bar") do
+        expect(page).to have_link(I18n.t("layout.read_link"))
+        expect(page).to have_content(I18n.t("layout.study_menu"))
+        expect(page).to have_button(I18n.t("layout.explore_menu"))
+        expect(page).to have_content(I18n.t("layout.you_tab"))
+      end
+    end
+
+    context "when signed in" do
+      before { sign_in create(:user) }
+
+      it "opens study links from the Study tab sheet" do
+        visit "/"
+        within("nav.mobile-tab-bar") { click_button(I18n.t("layout.study_menu")) }
+
+        within(".mobile-nav-sheet:not([hidden])") do
+          expect(page).to have_link(I18n.t("layout.my_notes_link"))
+          expect(page).to have_link(I18n.t("layout.my_studies_link"))
+        end
       end
     end
   end

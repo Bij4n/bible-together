@@ -1,0 +1,121 @@
+<%
+  rail_idle = "site-nav-link inline-flex items-center rounded-full px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900"
+  rail_active = "site-nav-link--active bg-surface-100 text-accent-800"
+  rail_rest = "text-surface-700"
+  menu_item_base = "block rounded-lg px-4 py-2.5 transition-colors hover:bg-surface-100 hover:text-surface-900"
+  menu_item_idle = "text-surface-700"
+  menu_item_active = "bg-surface-100 text-accent-800"
+  dropdown_trigger = "site-nav-dropdown-trigger inline-flex items-center gap-1 rounded-full border border-transparent px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900"
+  dropdown_menu = "nav-dropdown-menu"
+%>
+
+<header class="site-header" data-controller="site-header">
+  <div class="site-header__inner mx-auto flex <%= layout_container_class %> items-center justify-between gap-4 px-6 py-3.5">
+    <%= render "shared/wordmark", class: "text-lg" %>
+
+    <nav class="site-nav flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.main_nav") %>">
+      <%= link_to t("layout.read_link"), read_nav_path,
+          class: "#{rail_idle} #{read_nav_active? ? rail_active : rail_rest}" %>
+
+      <% if user_signed_in? %>
+        <div data-controller="user-menu" class="relative">
+          <button type="button"
+                  data-user-menu-target="trigger"
+                  data-action="user-menu#toggle"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-label="<%= t("layout.open_study_menu") %>"
+                  class="<%= "#{dropdown_trigger} #{study_nav_active? ? "#{rail_active} site-nav-dropdown-trigger--active" : rail_rest}" %>">
+            <span aria-hidden="true"><%= t("layout.study_menu") %></span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 opacity-60" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.939l3.71-3.71a.75.75 0 1 1 1.08 1.04l-4.25 4.25a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <div data-user-menu-target="menu" hidden role="menu" class="<%= dropdown_menu %>">
+            <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem",
+                class: "#{menu_item_base} #{nav_active?(notes_path) ? menu_item_active : menu_item_idle}" %>
+            <%= link_to t("layout.my_studies_link"), groups_path, role: "menuitem",
+                class: "#{menu_item_base} #{request.path.start_with?('/studies') ? menu_item_active : menu_item_idle}" %>
+            <%= link_to t("layout.start_study_link"), new_group_path, role: "menuitem",
+                class: "#{menu_item_base} #{nav_active?(new_group_path) ? menu_item_active : menu_item_idle}" %>
+            <%= link_to t("layout.join_with_code_link"), groups_path(anchor: "join"), role: "menuitem",
+                class: "#{menu_item_base} #{menu_item_idle}" %>
+          </div>
+        </div>
+      <% else %>
+        <%= link_to t("layout.study_menu"), how_it_works_path(anchor: "studies"),
+            class: "#{rail_idle} #{nav_active?(how_it_works_path) ? rail_active : rail_rest}" %>
+      <% end %>
+
+      <div data-controller="user-menu" class="relative">
+        <button type="button"
+                data-user-menu-target="trigger"
+                data-action="user-menu#toggle"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-label="<%= t("layout.open_explore_menu") %>"
+                class="<%= "#{dropdown_trigger} #{explore_nav_active? ? "#{rail_active} site-nav-dropdown-trigger--active" : rail_rest}" %>">
+          <span aria-hidden="true"><%= t("layout.explore_menu") %></span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 opacity-60" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.939l3.71-3.71a.75.75 0 1 1 1.08 1.04l-4.25 4.25a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div data-user-menu-target="menu" hidden role="menu" class="<%= dropdown_menu %>">
+          <%= link_to t("layout.public_notes_link"), community_path, role: "menuitem",
+              class: "#{menu_item_base} #{request.path.start_with?('/community') ? menu_item_active : menu_item_idle}" %>
+          <%= link_to t("layout.community_bible_link"), community_bible_path, role: "menuitem",
+              class: "#{menu_item_base} #{menu_item_idle}" %>
+          <%= link_to t("search.submit"), search_path, role: "menuitem",
+              class: "#{menu_item_base} #{nav_active?(search_path) ? menu_item_active : menu_item_idle}" %>
+          <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem",
+              class: "#{menu_item_base} #{nav_active?(discover_groups_path) ? menu_item_active : menu_item_idle}" %>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pl-2">
+        <%= link_to search_path,
+            class: "inline-flex items-center justify-center rounded-full p-2 text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900 #{nav_active?(search_path) ? 'bg-surface-100 text-accent-800' : ''}",
+            aria: { label: t("search.submit") } do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+          </svg>
+        <% end %>
+
+        <% if user_signed_in? %>
+          <div data-controller="user-menu" class="relative">
+            <button type="button"
+                    data-user-menu-target="trigger"
+                    data-action="user-menu#toggle"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-label="<%= t("layout.open_account_menu") %>"
+                    class="site-nav-avatar flex h-9 w-9 items-center justify-center rounded-full bg-accent-700 font-ui text-xs font-semibold text-surface-50 transition-colors hover:bg-accent-800">
+              <span aria-hidden="true"><%= user_initials(current_user) %></span>
+            </button>
+            <div data-user-menu-target="menu" hidden role="menu" aria-label="<%= t("layout.open_account_menu") %>" class="<%= dropdown_menu %> account-sheet account-sheet--avatar">
+              <div class="px-4 pb-1 pt-2 font-ui text-xs text-surface-500">
+                <%= current_user.display_name.presence || current_user.email %>
+              </div>
+              <%= link_to t("layout.profile_link"), author_path(current_user), role: "menuitem",
+                  class: "#{menu_item_base} #{menu_item_idle}" %>
+              <%= link_to t("auth.settings"), settings_path, role: "menuitem",
+                  class: "#{menu_item_base} #{nav_active?(settings_path) ? menu_item_active : menu_item_idle}" %>
+              <% if current_user.admin? %>
+                <%= link_to t("admin.title"), admin_notes_path, role: "menuitem",
+                    class: "#{menu_item_base} #{request.path.start_with?('/admin') ? menu_item_active : menu_item_idle}" %>
+              <% end %>
+              <div class="my-1 border-t border-surface-200" role="separator"></div>
+              <%= button_to t("auth.sign_out"), destroy_user_session_path, method: :delete, form_class: "block",
+                  class: "block w-full rounded-lg px-4 py-2.5 text-left text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900" %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to t("auth.sign_in"), new_user_session_path,
+              class: "hidden sm:inline-flex items-center rounded-full px-3.5 py-1.5 font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900" %>
+          <%= link_to t("layout.start_reading_link"), read_nav_path,
+              class: "hidden sm:inline-flex items-center rounded-full bg-accent-700 px-4 py-2 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800" %>
+        <% end %>
+      </div>
+    </nav>
+  </div>
+</header>

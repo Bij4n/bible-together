@@ -325,6 +325,58 @@
     border-color: var(--color-surface-800);
   }
 
+  /*
+   * Desktop nav dropdowns (Study, Explore, avatar). Same floating
+   * panel as the sm+ account sheet — not the mobile bottom sheet.
+   */
+  .nav-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 30;
+    margin-top: 0.5rem;
+    min-width: 13rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-surface-200);
+    background: var(--color-surface-50);
+    padding: 0.25rem;
+    font-size: 0.875rem;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.18);
+  }
+
+  html[data-theme="dark"] .nav-dropdown-menu {
+    background: var(--color-surface-900);
+    border-color: var(--color-surface-800);
+  }
+
+  .site-nav-dropdown-trigger--active {
+    font-weight: 500;
+  }
+
+  /*
+   * Mobile bottom tab bar — primary nav below sm. Body gets bottom
+   * padding so content clears the fixed bar + safe area inset.
+   */
+  .mobile-tab-bar {
+    display: flex;
+    align-items: stretch;
+    min-height: 3.5rem;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  html[data-theme="dark"] .mobile-tab-bar {
+    background: color-mix(in srgb, var(--color-surface-950) 92%, transparent);
+    border-color: var(--color-surface-800);
+  }
+
+  /* Sheets opened from the tab bar sit above the bar, not behind it. */
+  @media (max-width: 639px) {
+    .mobile-nav-sheet {
+      bottom: calc(3.5rem + env(safe-area-inset-bottom, 0)) !important;
+      border-radius: 1rem 1rem 0 0 !important;
+    }
+  }
+
   @media (min-width: 640px) {
     .account-sheet {
       position: absolute;
