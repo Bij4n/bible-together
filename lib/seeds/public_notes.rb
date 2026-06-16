@@ -49,7 +49,7 @@ module Seeds
     def call
       translation = Translation.find_by(code: "KJV")
       unless translation
-        puts "Seeds::PublicNotes skipped — import KJV first (bin/rails bible:import[kjv])"
+        puts "Seeds::PublicNotes skipped: import KJV first (bin/rails bible:import[kjv])"
         return
       end
 

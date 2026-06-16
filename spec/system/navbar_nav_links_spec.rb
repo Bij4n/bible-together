@@ -89,7 +89,7 @@ RSpec.describe "Navbar nav links", type: :system do
       visit groups_path
       within("header nav") do
         link = find_link(I18n.t("layout.studies_link"))
-        expect(link[:class]).to include("decoration-accent-700/40")
+        expect(link[:class]).to include("site-nav-link--active")
       end
     end
 
@@ -97,7 +97,7 @@ RSpec.describe "Navbar nav links", type: :system do
       visit "/"
       within("header nav") do
         link = find_link(I18n.t("layout.studies_link"))
-        expect(link[:class]).not_to include("decoration-accent-700/40")
+        expect(link[:class]).not_to include("site-nav-link--active")
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe "Navbar nav links", type: :system do
       visit "/"
       within("header nav") do
         link = find_link(I18n.t("layout.read_link"))
-        expect(link[:class]).not_to include("decoration-accent-700/40")
+        expect(link[:class]).not_to include("site-nav-link--active")
       end
     end
   end
