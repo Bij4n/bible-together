@@ -38,11 +38,6 @@
   font-display: swap;
 }
 
-/* Dark mode driven by a `data-theme="dark"` attribute on <html> (set by the
-   theme Stimulus controller from localStorage / prefers-color-scheme). This
-   overrides Tailwind's default media-query based dark variant. */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
 @theme {
   /* UI sans for navbar, buttons, headings, labels. */
   --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -102,16 +97,6 @@
   --color-jesus-dark:  #f97066;
 }
 
-/* Per-mode token override. Tokens redeclared here win over the @theme
-   default whenever the dark theme attribute is set, so Tailwind
-   utilities resolve to the right value per mode without any markup
-   change. Add new entries only when a token genuinely needs different
-   values for light vs. dark — the @theme block stays the source of
-   truth otherwise. */
-[data-theme="dark"] {
-  --color-surface-500: #a3a3a1;
-}
-
 @layer base {
   html {
     background-color: var(--color-surface-50);
@@ -137,11 +122,6 @@
     transition: background-color 150ms ease, color 150ms ease;
   }
 
-  html[data-theme="dark"] {
-    background-color: var(--color-surface-950);
-    color: var(--color-surface-100);
-    color-scheme: dark;
-  }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-ui);
@@ -160,9 +140,6 @@
     border-radius: 2px;
   }
 
-  html[data-theme="dark"] :focus-visible {
-    outline-color: var(--color-accent-400);
-  }
 
   /*
    * Text selection tinted with the accent so highlighting reads as a
@@ -174,9 +151,6 @@
     color: inherit;
   }
 
-  html[data-theme="dark"] ::selection {
-    background-color: color-mix(in srgb, var(--color-accent-400) 25%, transparent);
-  }
 
   /*
    * Search-match highlighting. pg_search_highlight wraps matched
@@ -190,23 +164,9 @@
     border-radius: 0.125rem;
   }
 
-  html[data-theme="dark"] mark {
-    background-color: color-mix(in srgb, var(--color-accent-400) 28%, transparent);
-  }
 }
 
 @layer components {
-  /*
-   * Theme toggle icons: both sun and moon live in the button's DOM;
-   * CSS shows whichever matches the current theme so the icon reads
-   * as "you are here" rather than "click to change." Swap keys off
-   * the same data-theme attribute the Stimulus controller flips.
-   */
-  .theme-icon-sun  { display: inline-block; }
-  .theme-icon-moon { display: none; }
-  html[data-theme="dark"] .theme-icon-sun  { display: none; }
-  html[data-theme="dark"] .theme-icon-moon { display: inline-block; }
-
   /*
    * Site header chrome. Sticks to the top of the viewport while the
    * page scrolls; backdrop-blur'd background renders as a frosted
@@ -234,13 +194,7 @@
     border-bottom-color: var(--color-surface-200);
   }
 
-  html[data-theme="dark"] .site-header {
-    background: color-mix(in srgb, var(--color-surface-950) 85%, transparent);
-  }
 
-  html[data-theme="dark"] .site-header.scrolled {
-    border-bottom-color: var(--color-surface-800);
-  }
 
   .site-nav-link--active {
     font-weight: 500;
@@ -252,11 +206,6 @@
     color: var(--color-accent-800);
   }
 
-  html[data-theme="dark"] .site-nav-menu-trigger[aria-expanded="true"] {
-    border-color: color-mix(in srgb, var(--color-accent-400) 35%, var(--color-surface-700));
-    background: color-mix(in srgb, var(--color-accent-900) 35%, var(--color-surface-900));
-    color: var(--color-accent-400);
-  }
 
   /*
    * Site footer — editorial chrome matching the landing rhythm: soft
@@ -269,10 +218,6 @@
     text-decoration-color: color-mix(in srgb, var(--color-accent-800) 40%, transparent);
   }
 
-  html[data-theme="dark"] .site-footer-link--active {
-    color: var(--color-accent-400);
-    text-decoration-color: color-mix(in srgb, var(--color-accent-400) 40%, transparent);
-  }
 
   .account-sheet__label {
     letter-spacing: 0.14em;
@@ -320,10 +265,6 @@
     box-shadow: 0 -10px 30px -10px rgba(0, 0, 0, 0.18);
   }
 
-  html[data-theme="dark"] .account-sheet {
-    background: var(--color-surface-900);
-    border-color: var(--color-surface-800);
-  }
 
   @media (min-width: 640px) {
     .account-sheet {
@@ -341,9 +282,6 @@
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.18);
     }
 
-    html[data-theme="dark"] .account-sheet {
-      border-bottom-color: var(--color-surface-800);
-    }
   }
 
   /* Bottom-sheet backdrop. Renders only at <640px when the sheet is
@@ -444,9 +382,6 @@
     letter-spacing: -0.02em;
   }
 
-  html[data-theme="dark"] .hero-emphasis em {
-    color: var(--color-accent-400);
-  }
 
   /*
    * Marketing / landing surfaces. Medium-style editorial rhythm:
@@ -476,11 +411,6 @@
     z-index: 0;
   }
 
-  html[data-theme="dark"] .landing-hero::before {
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 0%, color-mix(in srgb, var(--color-accent-400) 12%, transparent), transparent 70%),
-      radial-gradient(ellipse 60% 50% at 85% 10%, color-mix(in srgb, var(--color-accent-400) 6%, transparent), transparent 65%);
-  }
 
   .landing-preview {
     overflow: hidden;
@@ -518,22 +448,8 @@
       0 32px 72px -24px rgb(14 20 17 / 0.32);
   }
 
-  html[data-theme="dark"] .landing-preview {
-    border-color: var(--color-surface-800);
-    background: var(--color-surface-900);
-    box-shadow:
-      0 1px 2px rgb(0 0 0 / 0.35),
-      0 28px 72px -28px rgb(0 0 0 / 0.65);
-  }
 
-  html[data-theme="dark"] .landing-preview:hover {
-    border-color: color-mix(in srgb, var(--color-surface-50) 16%, var(--color-surface-800));
-  }
 
-  html[data-theme="dark"] .landing-preview-note {
-    border-color: var(--color-surface-800);
-    background: color-mix(in srgb, var(--color-surface-950) 65%, var(--color-surface-900));
-  }
 
   .landing-bento-card {
     border-radius: 1.25rem;
@@ -543,10 +459,6 @@
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.03);
   }
 
-  html[data-theme="dark"] .landing-bento-card {
-    border-color: var(--color-surface-800);
-    background: var(--color-surface-900);
-  }
 
   .landing-community-card {
     border-radius: 1.25rem;
@@ -562,10 +474,6 @@
     box-shadow: 0 20px 48px -28px rgb(14 20 17 / 0.22);
   }
 
-  html[data-theme="dark"] .landing-community-card {
-    border-color: var(--color-surface-800);
-    background: var(--color-surface-900);
-  }
 
   /*
    * Donate-CTA panel chrome. Light mode: dark statement panel
@@ -598,15 +506,7 @@
     pointer-events: none;
   }
 
-  html[data-theme="dark"] .donate-callout {
-    background: var(--color-surface-800);
-    border: 1px solid var(--color-surface-700);
-  }
 
-  html[data-theme="dark"] .donate-callout::before {
-    background: radial-gradient(circle, var(--color-accent-400) 0%, transparent 60%);
-    opacity: 0.28;
-  }
 
   /* Red-letter is upright roman on screen — color alone carries the
      "Jesus is speaking" signal (the italics read dated at body sizes).
@@ -616,9 +516,6 @@
     color: var(--color-jesus-light);
   }
 
-  html[data-theme="dark"] .jesus-words {
-    color: var(--color-jesus-dark);
-  }
 
   .verse-number {
     font-family: var(--font-ui);
@@ -632,12 +529,6 @@
     margin-right: 0.2em;
   }
 
-  html[data-theme="dark"] .verse-number {
-    /* Dark mode's 55% mix already lands at ~7:1 contrast on surface-950
-       — passes AAA. Alpha asymmetry between the two themes is
-       intentional (see decisions log). */
-    color: color-mix(in srgb, var(--color-surface-100) 55%, transparent);
-  }
 
   /*
    * Highlight overlays — design-v3 four-color palette ("real
@@ -658,23 +549,6 @@
   }
   .highlight-rose {
     background-color: rgba(228, 147, 142, 0.35);
-  }
-
-  html[data-theme="dark"] .highlight-yellow,
-  html[data-theme="dark"] .highlight-gold {
-    background-color: rgba(251, 218, 131, 0.26);
-  }
-  html[data-theme="dark"] .highlight-green,
-  html[data-theme="dark"] .highlight-sage {
-    background-color: rgba(169, 217, 164, 0.24);
-  }
-  html[data-theme="dark"] .highlight-blue,
-  html[data-theme="dark"] .highlight-sky,
-  html[data-theme="dark"] .highlight-lavender {
-    background-color: rgba(141, 187, 255, 0.24);
-  }
-  html[data-theme="dark"] .highlight-rose {
-    background-color: rgba(228, 147, 142, 0.24);
   }
 
   /* Toolbar swatches mirror the highlight colors at full opacity. */
@@ -702,10 +576,6 @@
     padding: 0.25rem 0.5rem;
   }
 
-  html[data-theme="dark"] trix-toolbar {
-    background-color: var(--color-surface-800);
-    border-color: var(--color-surface-700);
-  }
 
   trix-editor {
     display: block;
@@ -718,11 +588,6 @@
     padding: 0.75rem;
   }
 
-  html[data-theme="dark"] trix-editor {
-    border-color: var(--color-surface-700);
-    background-color: var(--color-surface-900);
-    color: var(--color-surface-100);
-  }
 
   trix-editor:focus {
     outline: none;
@@ -730,10 +595,6 @@
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent-700) 20%, transparent);
   }
 
-  html[data-theme="dark"] trix-editor:focus {
-    border-color: var(--color-accent-400);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent-400) 20%, transparent);
-  }
 
   /*
    * Reader-only typography polish: kerning + standard ligatures (Source
@@ -753,9 +614,6 @@
     text-underline-offset: 4px;
   }
 
-  html[data-theme="dark"] .community-highlight {
-    text-decoration-color: var(--color-surface-500);
-  }
 
   /* Per-verse note-count chip (design v3 margin chips, rendered
      inline at the verse's end). Quiet accent-tinted pill; the count
@@ -781,14 +639,7 @@
     background: color-mix(in srgb, var(--color-accent-700) 18%, transparent);
   }
 
-  html[data-theme="dark"] .verse-note-chip {
-    background: color-mix(in srgb, var(--color-accent-400) 14%, transparent);
-    color: var(--color-accent-400);
-  }
 
-  html[data-theme="dark"] .verse-note-chip:hover {
-    background: color-mix(in srgb, var(--color-accent-400) 22%, transparent);
-  }
 
   /* Keyboard verse focus (j/k verbs). A quiet accent ring around the
      focused verse — visible without shouting over highlights. */
@@ -798,9 +649,6 @@
     border-radius: 2px;
   }
 
-  html[data-theme="dark"] .verse.verse-kbd-focus {
-    outline-color: color-mix(in srgb, var(--color-accent-400) 45%, transparent);
-  }
 
   /* Verse-per-block "study mode" (reader_prefs controller). Verses are
      inline spans in continuous prose by default; the toggle stacks

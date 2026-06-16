@@ -1,6 +1,6 @@
 <% flash.each do |key, message| %>
   <% alert = key.to_s == "alert" %>
-  <div class="mb-6 rounded-md border px-4 py-3 font-ui text-sm <%= alert ? "border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200" : "border-surface-200 bg-surface-100 text-surface-700 dark:border-surface-800 dark:bg-surface-800 dark:text-surface-300" %>"
+  <div class="mb-6 rounded-md border px-4 py-3 font-ui text-sm <%= alert ? "border-red-200 bg-red-50 text-red-800" : "border-surface-200 bg-surface-100 text-surface-700" %>"
        role="<%= alert ? "alert" : "status" %>">
     <%= message %>
   </div>

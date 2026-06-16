@@ -1,6 +1,6 @@
 <dialog data-highlight-target="shortcutsDialog"
         aria-labelledby="keyboard-shortcuts-title"
-        class="w-[min(100%,24rem)] rounded-2xl border border-surface-200 bg-surface-50 p-6 font-ui text-sm text-surface-900 shadow-[0_4px_24px_rgb(0_0_0/0.08)] backdrop:bg-surface-950/40 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-100">
+        class="w-[min(100%,24rem)] rounded-2xl border border-surface-200 bg-surface-50 p-6 font-ui text-sm text-surface-900 shadow-[0_4px_24px_rgb(0_0_0/0.08)] backdrop:bg-surface-950/40">
   <h2 id="keyboard-shortcuts-title" class="text-lg font-semibold tracking-tight">
     <%= t("bible.reader.shortcuts_title") %>
   </h2>
@@ -14,13 +14,13 @@
       [ "?", t("bible.reader.shortcut_help") ]
     ].each do |key, label| %>
       <div class="flex items-center justify-between gap-4">
-        <dt class="text-surface-600 dark:text-surface-400"><%= label %></dt>
-        <dd><kbd class="rounded-md border border-surface-300 bg-surface-100 px-2 py-0.5 font-mono text-xs dark:border-surface-700 dark:bg-surface-950"><%= key %></kbd></dd>
+        <dt class="text-surface-600"><%= label %></dt>
+        <dd><kbd class="rounded-md border border-surface-300 bg-surface-100 px-2 py-0.5 font-mono text-xs"><%= key %></kbd></dd>
       </div>
     <% end %>
   </dl>
   <form method="dialog" class="mt-6">
-    <button type="submit" class="rounded-lg bg-accent-700 px-4 py-2 font-medium text-surface-50 hover:bg-accent-800 dark:bg-accent-400 dark:text-surface-950 dark:hover:bg-accent-300">
+    <button type="submit" class="rounded-lg bg-accent-700 px-4 py-2 font-medium text-surface-50 hover:bg-accent-800">
       <%= t("bible.reader.dismiss_toolbar") %>
     </button>
   </form>

@@ -1,5 +1,5 @@
 <div class="mt-6 space-y-2 text-center font-ui text-sm">
-  <% link_classes = "text-surface-600 transition-colors hover:text-accent-700 dark:text-surface-400 dark:hover:text-accent-400" %>
+  <% link_classes = "text-surface-600 transition-colors hover:text-accent-700" %>
 
   <% if controller_name != "sessions" %>
     <p><%= link_to t(".sign_in"), new_session_path(resource_name), class: link_classes %></p>

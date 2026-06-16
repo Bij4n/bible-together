@@ -40,20 +40,6 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe "theme" do
-      it "accepts light, dark, and system" do
-        %w[light dark system].each do |t|
-          expect(build(:user, theme: t)).to be_valid
-        end
-      end
-
-      it "rejects other values" do
-        user = build(:user, theme: "hyperspace")
-        expect(user).not_to be_valid
-        expect(user.errors[:theme]).to be_present
-      end
-    end
-
     describe "display_name" do
       it "is optional" do
         expect(build(:user, display_name: nil)).to be_valid
@@ -85,10 +71,9 @@ RSpec.describe User, type: :model do
   end
 
   describe "defaults" do
-    it "sets ui_locale and theme when the row is created" do
+    it "sets ui_locale when the row is created" do
       user = User.create!(email: "fresh@bible-together.test", password: "correct horse battery staple")
       expect(user.ui_locale).to eq("en")
-      expect(user.theme).to eq("system")
     end
   end
 

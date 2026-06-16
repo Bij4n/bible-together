@@ -57,11 +57,8 @@ RSpec.describe "Home page", type: :system do
     expect(page).not_to have_css("section#about")
   end
 
-  it "renders marketing pages in light mode even when the user prefers dark" do
-    user = create(:user, theme: "dark")
-    sign_in user
+  it "renders marketing pages with the marketing surface class" do
     visit "/"
-    expect(page).to have_css('html[data-theme="light"]')
     expect(page).to have_css("body.marketing-surface")
   end
 

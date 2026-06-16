@@ -33,7 +33,7 @@ class SettingsController < ApplicationController
   # Per-section forms each submit only the fields they control, so we
   # allow the full set here and let the form decide.
   def settings_params
-    params.require(:user).permit(:ui_locale, :theme, :default_translation_id, :display_name)
+    params.require(:user).permit(:ui_locale, :default_translation_id, :display_name)
   end
 
   # Turbo Frame submissions from the /settings page carry a Turbo-Frame

@@ -149,12 +149,11 @@ page chrome): `Highlight | ●●●● | Note ×`. The note composer carries vi
 **Post-to button** (`Post to: Only me ▾` — Only me / Specific people / My studies /
 Public), the Hypothes.is pattern; the amber confirm warning guards Public.
 
-### Dark mode strategy
+### Theme
 
-Unchanged mechanics: `data-theme="dark"` on `<html>` set before first paint; Tailwind's
-dark variant overridden by `@custom-variant`. Dark mode inverts the surface scale and
-shifts accent 700→400. Signed-in users get server-side resolution; signed-out get the
-localStorage snippet.
+Light-only. Dark mode was removed in 2026-06 — the product ships a single light palette
+(the `@theme` tokens are the source of truth) with no `data-theme` attribute, no theme
+toggle, and no per-user theme preference.
 
 ---
 
@@ -213,8 +212,8 @@ header border/background, Tailwind `transition-colors` on interactive states. Gl
 (`.wordmark-mark`) — two spread pages in Medium green, two reader dots above for
 "together." Assets: `public/logo-mark.svg`, `public/logo.svg` (horizontal lockup),
 `public/icon.svg` / `public/icon.png` (favicon + social). Header renders the inline
-SVG partial `shared/_logo_mark.html.erb` so `data-theme` controls accent and dot
-contrast; footer is text-only.
+SVG partial `shared/_logo_mark.html.erb` for crisp accent and dot rendering; footer is
+text-only.
 
 ---
 

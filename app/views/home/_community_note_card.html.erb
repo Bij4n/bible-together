@@ -5,23 +5,23 @@
 
 <%= link_to public_bible_chapter_path(translation: translation.code.downcase, book: book.osis_code.downcase, chapter: chapter.number),
             class: "landing-community-card block h-full" do %>
-  <p class="font-ui text-[10px] font-semibold uppercase tracking-[0.12em] text-surface-500 dark:text-surface-400">
+  <p class="font-ui text-[10px] font-semibold uppercase tracking-[0.12em] text-surface-500">
     <%= I18n.locale == :es ? book.name_es : book.name_en %> <%= chapter.number %> · <%= verse.number %>
   </p>
 
-  <p class="mt-4 line-clamp-3 font-reading text-lg leading-snug text-surface-900 dark:text-surface-50">
+  <p class="mt-4 line-clamp-3 font-reading text-lg leading-snug text-surface-900">
     <%= render_verse_with_highlights(verse, Array(note.highlights)) %>
   </p>
 
-  <p class="mt-4 line-clamp-3 font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
+  <p class="mt-4 line-clamp-3 font-reading text-sm leading-relaxed text-surface-600">
     <%= strip_tags(note.body.to_s) %>
   </p>
 
-  <div class="mt-6 flex items-center gap-3 border-t border-surface-200 pt-4 dark:border-surface-800">
-    <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent-700/10 font-ui text-xs font-semibold text-accent-700 dark:bg-accent-400/15 dark:text-accent-400" aria-hidden="true">
+  <div class="mt-6 flex items-center gap-3 border-t border-surface-200 pt-4">
+    <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent-700/10 font-ui text-xs font-semibold text-accent-700" aria-hidden="true">
       <%= author_initial %>
     </span>
-    <p class="font-ui text-sm font-medium text-surface-700 dark:text-surface-300">
+    <p class="font-ui text-sm font-medium text-surface-700">
       <%= note.user.author_name %>
     </p>
   </div>

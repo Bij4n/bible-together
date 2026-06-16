@@ -28,23 +28,18 @@ RSpec.describe "Settings", type: :request do
 
     it "renders the edit page for Turbo Frame submissions" do
       patch "/settings",
-            params: { user: { theme: "dark" } },
-            headers: { "Turbo-Frame" => "settings_theme" }
+            params: { user: { ui_locale: "es" } },
+            headers: { "Turbo-Frame" => "settings_language" }
       expect(response).to have_http_status(:ok)
-      expect(user.reload.theme).to eq("dark")
+      expect(user.reload.ui_locale).to eq("es")
     end
 
     it "returns no content for JSON submissions" do
       patch "/settings",
-            params: { user: { theme: "dark" } },
+            params: { user: { ui_locale: "es" } },
             as: :json
       expect(response).to have_http_status(:no_content)
-      expect(user.reload.theme).to eq("dark")
-    end
-
-    it "updates theme" do
-      patch "/settings", params: { user: { theme: "dark" } }
-      expect(user.reload.theme).to eq("dark")
+      expect(user.reload.ui_locale).to eq("es")
     end
 
     it "updates default_translation_id" do
@@ -65,16 +60,9 @@ RSpec.describe "Settings", type: :request do
       expect(user.reload.ui_locale).to eq(original)
     end
 
-    it "rejects an invalid theme" do
-      original = user.theme
-      patch "/settings", params: { user: { theme: "plaid" } }
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(user.reload.theme).to eq(original)
-    end
-
     it "redirects anonymous users" do
       sign_out user
-      patch "/settings", params: { user: { theme: "dark" } }
+      patch "/settings", params: { user: { ui_locale: "es" } }
       expect(response).to redirect_to(new_user_session_path)
     end
   end

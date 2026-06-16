@@ -1,9 +1,9 @@
 <% if flash.now[:notice].present? %>
-  <p class="font-ui text-xs italic text-surface-600 dark:text-surface-400">
+  <p class="font-ui text-xs italic text-surface-600">
     <%= flash.now[:notice] %>
   </p>
 <% elsif flash.now[:alert].present? %>
-  <p class="font-ui text-xs text-red-700 dark:text-red-300">
+  <p class="font-ui text-xs text-red-700">
     <%= flash.now[:alert] %>
   </p>
 <% end %>

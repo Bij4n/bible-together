@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
     "about" => %w[show]
   }.freeze
 
-  helper_method :resolved_theme, :page_theme, :marketing_page?, :layout_container_class,
-                :initial_theme_label, :donate_link_visible?
+  helper_method :marketing_page?, :layout_container_class, :donate_link_visible?
 
   # Admin gate for /admin/* controllers. Non-admins get 404 rather than
   # 403 so the existence of admin routes isn't advertised.
@@ -48,43 +47,12 @@ class ApplicationController < ActionController::Base
     @_donate_link_visible = BitcoinAddress.exists?(active: true)
   end
 
-  # Returns "light" / "dark" when the signed-in user has a concrete
-  # preference, nil otherwise. Used by the layout to set data-theme on the
-  # server so first paint doesn't flash the wrong palette. When nil, the
-  # theme Stimulus controller falls back to localStorage / system scheme.
-  def resolved_theme
-    return nil unless user_signed_in?
-
-    theme = current_user.theme
-    %w[light dark].include?(theme) ? theme : nil
-  end
-
-  # Marketing pages always render in light mode — editorial white ground
-  # per DESIGN.md. Signed-in dark-mode users still get light here.
-  def page_theme
-    return "light" if marketing_page?
-
-    resolved_theme
-  end
-
   def marketing_page?
     MARKETING_ROUTES.fetch(controller_name, []).include?(action_name)
   end
 
   def layout_container_class
     marketing_page? ? "max-w-6xl" : "max-w-5xl"
-  end
-
-  # Initial label for the header theme button before the Stimulus
-  # controller hydrates. Mirrors the user's saved mode — light, dark,
-  # or system — rather than the resolved palette, so a "system" user
-  # sees "System default" rather than "Light"/"Dark" until JS loads.
-  def initial_theme_label
-    case current_user&.theme
-    when "dark" then I18n.t("layout.theme_dark")
-    when "light" then I18n.t("layout.theme_light")
-    else I18n.t("layout.theme_system")
-    end
   end
 
   private

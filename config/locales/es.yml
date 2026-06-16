@@ -32,10 +32,6 @@ es:
       title: Navegador no compatible
       body: Bible Together necesita un navegador moderno para renderizar el lector. Actualízalo e inténtalo de nuevo.
   layout:
-    theme_switch: Cambiar tema
-    theme_light: Claro
-    theme_dark: Oscuro
-    theme_system: Predeterminado del sistema
     language_switcher: Idioma
     language_en: English
     language_es: Español
@@ -150,12 +146,6 @@ es:
       language:
         title: Idioma
         description: El idioma de la interfaz. Independiente de la traducción de la Biblia que lees.
-      theme:
-        title: Tema
-        description: Claro, oscuro, o seguir el ajuste del dispositivo.
-        light: Claro
-        dark: Oscuro
-        system: Predeterminado del sistema
       default_translation:
         title: Traducción predeterminada
         description: Se abre cuando navegas al lector sin especificar ninguna.
@@ -495,7 +485,7 @@ es:
         - Una copia cifrada de tu contraseña (nunca almacenamos el texto en claro)
         - Tus resaltados, notas y membresías de grupo
         - Un nombre público opcional si decides configurarlo
-        - Tu preferencia de idioma e interfaz
+        - Tu preferencia de idioma de la interfaz
       not_collect_heading: Qué no recopilamos
       not_collect_body: No usamos servicios de analítica, rastreadores publicitarios, cookies más allá de las necesarias para el inicio de sesión, ni ningún seguimiento de terceros. No recopilamos tu nombre, número de teléfono ni información de pago (las donaciones en Bitcoin van directamente a una dirección de cartera y son de naturaleza seudónima).
       use_heading: Cómo usamos tu información

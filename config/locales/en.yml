@@ -32,10 +32,6 @@ en:
       title: Unsupported browser
       body: Bible Together needs a modern browser to render the reader. Update your browser and try again.
   layout:
-    theme_switch: Switch theme
-    theme_light: Light
-    theme_dark: Dark
-    theme_system: System default
     language_switcher: Language
     language_en: English
     language_es: Español
@@ -157,12 +153,6 @@ en:
       language:
         title: Language
         description: The language of the interface. Independent of the Bible translation you read.
-      theme:
-        title: Theme
-        description: Light, dark, or follow your device setting.
-        light: Light
-        dark: Dark
-        system: System default
       default_translation:
         title: Default translation
         description: Opens when you navigate to the reader without specifying one.
@@ -502,7 +492,7 @@ en:
         - A hashed copy of your password (we never store the plaintext)
         - Your highlights, notes, and group memberships
         - An optional display name if you choose to set one
-        - Your UI language and theme preference
+        - Your UI language preference
       not_collect_heading: What we do not collect
       not_collect_body: We do not use analytics services, advertising trackers, cookies beyond what is necessary for login, or any third-party tracking. We do not collect your name, phone number, or payment information (Bitcoin donations go directly to a wallet address and are pseudonymous by nature).
       use_heading: How we use your information

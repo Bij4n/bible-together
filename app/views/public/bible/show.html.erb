@@ -1,9 +1,9 @@
 <% book_name = I18n.locale == :es ? @book.name_es : @book.name_en %>
 
 <article class="relative mx-auto max-w-3xl space-y-8" data-controller="reader-prefs">
-  <header class="space-y-3 border-b border-surface-200 pb-6 dark:border-surface-800">
+  <header class="space-y-3 border-b border-surface-200 pb-6">
     <div class="flex items-center justify-between gap-3">
-      <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-surface-400">
+      <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500">
         <%= @translation.name %> · <%= t("public_bible.community_view") %>
       </p>
       <div class="flex items-center gap-2">
@@ -12,7 +12,7 @@
                 data-reader-prefs-target="verseToggle"
                 aria-pressed="false"
                 title="<%= t("bible.reader.verse_view") %>"
-                class="rounded-md border border-surface-300 bg-surface-50 px-3 py-1.5 font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-accent-700/40 aria-pressed:text-accent-700 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-300 dark:hover:bg-surface-800 dark:aria-pressed:border-accent-400/40 dark:aria-pressed:text-accent-400">
+                class="rounded-md border border-surface-300 bg-surface-50 px-3 py-1.5 font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-accent-700/40 aria-pressed:text-accent-700">
           <%= t("bible.reader.verse_view") %>
         </button>
         <%= render "bible/reader/layer_switcher",
@@ -29,31 +29,31 @@
         <% end %>
       </div>
     </div>
-    <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 dark:text-surface-50 sm:text-5xl md:text-6xl">
+    <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 sm:text-5xl md:text-6xl">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
     </h1>
-    <p class="max-w-2xl pt-1 font-reading text-sm leading-[1.6] text-pretty text-surface-600 dark:text-surface-400">
+    <p class="max-w-2xl pt-1 font-reading text-sm leading-[1.6] text-pretty text-surface-600">
       <%= t("public_bible.intro") %>
     </p>
     <% if user_signed_in? %>
-      <p class="font-ui text-sm text-surface-600 dark:text-surface-400">
+      <p class="font-ui text-sm text-surface-600">
         <%= link_to t("public_bible.switch_to_my_bible"),
                     bible_chapter_path(translation: @translation.code.downcase,
                                        book: @book.osis_code.downcase,
                                        chapter: @chapter.number),
-                    class: "underline underline-offset-2 transition-colors hover:text-accent-700 dark:hover:text-accent-400" %>
+                    class: "underline underline-offset-2 transition-colors hover:text-accent-700" %>
       </p>
     <% end %>
   </header>
 
-  <div class="chapter-body font-reading text-surface-900 dark:text-surface-100"
+  <div class="chapter-body font-reading text-surface-900"
        data-reader-prefs-target="body">
     <% chip_map = verse_note_map(@highlights) %>
     <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, highlight_style: :underline, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: "#note_#{chip_ids.first}" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
   <aside id="public_notes_aside" class="space-y-4">
-    <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900 dark:text-surface-50">
+    <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900">
       <%= t("public_bible.community_notes") %>
     </h2>
 
@@ -64,11 +64,11 @@
         <% end %>
       </ul>
     <% else %>
-      <p class="font-ui text-sm text-surface-600 dark:text-surface-400">
+      <p class="font-ui text-sm text-surface-600">
         <%= t("public_bible.no_notes_yet") %>
         <% unless user_signed_in? %>
           <%= link_to t("public_bible.sign_in_to_add"), new_user_session_path,
-                      class: "ml-1 underline underline-offset-2 transition-colors hover:text-accent-700 dark:hover:text-accent-400" %>
+                      class: "ml-1 underline underline-offset-2 transition-colors hover:text-accent-700" %>
         <% end %>
       </p>
     <% end %>

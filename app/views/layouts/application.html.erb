@@ -1,29 +1,6 @@
 <!DOCTYPE html>
-<%# page_theme is "light" on marketing routes; resolved_theme when a
-    signed-in user pinned light/dark elsewhere; nil lets the inline
-    script + Stimulus pick system/localStorage. %>
-<html lang="<%= I18n.locale %>"<%= " data-theme=\"#{page_theme}\"".html_safe if page_theme %> data-controller="theme">
+<html lang="<%= I18n.locale %>">
   <head>
-    <%# No-flash theme: runs synchronously before any stylesheet is applied.
-        Sets data-theme on <html> so the first CSS evaluation already targets
-        the correct palette — no 150ms transition fires on initial load and
-        axe always sees a stable state. Server-set data-theme (pinned user
-        preference) takes precedence; script exits early if it is present. %>
-    <script>
-      (function(){
-        var el = document.documentElement;
-        if (el.dataset.theme === "light" || el.dataset.theme === "dark") return;
-        var key = "bible-together:theme";
-        var legacy = localStorage.getItem("open-bible:theme");
-        if (legacy && !localStorage.getItem(key)) {
-          localStorage.setItem(key, legacy);
-          localStorage.removeItem("open-bible:theme");
-        }
-        var stored = localStorage.getItem(key);
-        if (stored === "dark" || stored === "light") { el.dataset.theme = stored; return; }
-        el.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      })();
-    </script>
     <% page_title = content_for?(:title) ? "#{content_for(:title)} · #{t("app.name")}" : t("app.name") %>
     <% page_description = content_for?(:meta_description) ? content_for(:meta_description) : t("app.meta_description") %>
     <% canonical_url = request.original_url.split("?").first %>
@@ -83,12 +60,12 @@
       <div class="site-header__inner mx-auto flex <%= layout_container_class %> items-center justify-between gap-4 px-6 py-3.5">
         <%= render "shared/wordmark", class: "text-lg" %>
 
-        <% rail_idle   = "site-nav-link hidden sm:inline-flex items-center rounded-full px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50" %>
-        <% rail_active = "site-nav-link--active bg-surface-100 text-accent-800 dark:bg-surface-800 dark:text-accent-400" %>
-        <% rail_rest   = "text-surface-700 dark:text-surface-300" %>
-        <% menu_item_base   = "block rounded-lg px-4 py-2.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50" %>
-        <% menu_item_idle   = "text-surface-700 dark:text-surface-300" %>
-        <% menu_item_active = "bg-surface-100 text-accent-800 dark:bg-surface-800 dark:text-accent-400" %>
+        <% rail_idle   = "site-nav-link hidden sm:inline-flex items-center rounded-full px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900" %>
+        <% rail_active = "site-nav-link--active bg-surface-100 text-accent-800" %>
+        <% rail_rest   = "text-surface-700" %>
+        <% menu_item_base   = "block rounded-lg px-4 py-2.5 transition-colors hover:bg-surface-100 hover:text-surface-900" %>
+        <% menu_item_idle   = "text-surface-700" %>
+        <% menu_item_active = "bg-surface-100 text-accent-800" %>
 
         <nav class="site-nav flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.main_nav") %>">
           <%= link_to t("layout.read_link"), bible_entry_path,
@@ -105,7 +82,7 @@
           <% end %>
 
           <%= link_to search_path,
-                      class: "site-nav-link hidden sm:inline-flex items-center rounded-full px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-50 #{nav_active?(search_path) ? rail_active : rail_rest}" do %>
+                      class: "site-nav-link hidden sm:inline-flex items-center rounded-full px-3.5 py-1.5 transition-colors hover:bg-surface-100 hover:text-surface-900 #{nav_active?(search_path) ? rail_active : rail_rest}" do %>
             <%= t("search.submit") %>
           <% end %>
 
@@ -116,7 +93,7 @@
                     aria-expanded="false"
                     aria-haspopup="true"
                     aria-label="<%= t("layout.open_menu") %>"
-                    class="site-nav-menu-trigger flex items-center gap-1.5 rounded-full border border-surface-200 px-3 py-1.5 text-surface-700 transition-colors hover:border-surface-300 hover:bg-surface-100 hover:text-surface-900 dark:border-surface-700 dark:text-surface-300 dark:hover:border-surface-600 dark:hover:bg-surface-800 dark:hover:text-surface-50">
+                    class="site-nav-menu-trigger flex items-center gap-1.5 rounded-full border border-surface-200 px-3 py-1.5 text-surface-700 transition-colors hover:border-surface-300 hover:bg-surface-100 hover:text-surface-900">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
                 <path fill-rule="evenodd" d="M18 5.25a.75.75 0 0 1-.75.75H2.75a.75.75 0 0 1 0-1.5h14.5a.75.75 0 0 1 .75.75ZM18 10a.75.75 0 0 1-.75.75H2.75a.75.75 0 0 1 0-1.5h14.5A.75.75 0 0 1 18 10Zm0 4.75a.75.75 0 0 1-.75.75H2.75a.75.75 0 0 1 0-1.5h14.5a.75.75 0 0 1 .75.75Z" clip-rule="evenodd" />
               </svg>
@@ -131,7 +108,7 @@
 
               <%# Mobile: full primary nav mirrors the desktop rail + Search. %>
               <div class="sm:hidden" role="none">
-                <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500 dark:text-surface-400">
+                <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
                   <%= t("layout.nav_section") %>
                 </p>
                 <%= link_to t("layout.read_link"), bible_entry_path, role: "menuitem",
@@ -150,13 +127,13 @@
                             class: "#{menu_item_base} #{nav_active?(search_path) ? menu_item_active : menu_item_idle}" %>
               </div>
 
-              <div class="my-1 border-t border-surface-200 dark:border-surface-800 sm:hidden" role="separator"></div>
+              <div class="my-1 border-t border-surface-200 sm:hidden" role="separator"></div>
 
               <% if user_signed_in? %>
-                <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500 dark:text-surface-400">
+                <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
                   <%= t("layout.account_section") %>
                 </p>
-                <div class="px-4 pb-1 font-ui text-xs text-surface-500 dark:text-surface-400">
+                <div class="px-4 pb-1 font-ui text-xs text-surface-500">
                   <%= current_user.email %>
                 </div>
                 <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem", class: "#{menu_item_base} #{nav_active?(notes_path) ? menu_item_active : menu_item_idle}" %>
@@ -168,30 +145,9 @@
                 <%= link_to new_user_session_path, role: "menuitem", class: "#{menu_item_base} #{nav_active?(new_user_session_path) ? menu_item_active : menu_item_idle}" do %><%= t("auth.sign_in") %><% end %>
               <% end %>
 
-              <div class="my-1 border-t border-surface-200 dark:border-surface-800" role="separator"></div>
-
-              <button type="button"
-                      data-action="theme#toggle"
-                      role="menuitem"
-                      aria-label="<%= t("layout.theme_switch") %>"
-                      class="flex w-full items-center gap-2 rounded-lg px-4 py-2.5 text-left text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:text-surface-300 dark:hover:bg-surface-800 dark:hover:text-surface-50">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="theme-icon-sun h-4 w-4" aria-hidden="true">
-                  <path d="M10 2a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 2ZM10 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 15ZM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM15.657 5.404a.75.75 0 0 0-1.06-1.06l-1.061 1.06a.75.75 0 1 0 1.06 1.06l1.06-1.06ZM6.464 14.596a.75.75 0 0 0-1.06-1.06l-1.06 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM18 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 18 10ZM5 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 5 10ZM14.596 15.657a.75.75 0 0 0 1.06-1.06l-1.06-1.061a.75.75 0 1 0-1.06 1.06l1.06 1.06ZM5.404 6.464a.75.75 0 0 0 1.06-1.06l-1.06-1.06a.75.75 0 1 0-1.061 1.06l1.06 1.06Z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="theme-icon-moon h-4 w-4" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M7.455 2.004a.75.75 0 0 1 .26.77 7 7 0 0 0 9.958 7.967.75.75 0 0 1 1.067.853A8.5 8.5 0 1 1 6.647 1.921a.75.75 0 0 1 .808.083Z" clip-rule="evenodd" />
-                </svg>
-                <span data-theme-target="label"
-                      data-label-light="<%= t("layout.theme_light") %>"
-                      data-label-dark="<%= t("layout.theme_dark") %>"
-                      data-label-system="<%= t("layout.theme_system") %>">
-                  <%= initial_theme_label %>
-                </span>
-              </button>
-
               <% if user_signed_in? %>
-                <div class="my-1 border-t border-surface-200 dark:border-surface-800" role="separator"></div>
-                <%= button_to t("auth.sign_out"), destroy_user_session_path, method: :delete, form_class: "block", class: "block w-full rounded-lg px-4 py-2.5 text-left text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900 dark:text-surface-300 dark:hover:bg-surface-800 dark:hover:text-surface-50" %>
+                <div class="my-1 border-t border-surface-200" role="separator"></div>
+                <%= button_to t("auth.sign_out"), destroy_user_session_path, method: :delete, form_class: "block", class: "block w-full rounded-lg px-4 py-2.5 text-left text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900" %>
               <% end %>
             </div>
           </div>
@@ -208,20 +164,20 @@
     </main>
 
     <%
-      footer_link_base   = "site-footer-link transition-colors hover:text-accent-700 dark:hover:text-accent-400"
-      footer_link_active = "site-footer-link--active text-accent-800 dark:text-accent-400"
+      footer_link_base   = "site-footer-link transition-colors hover:text-accent-700"
+      footer_link_active = "site-footer-link--active text-accent-800"
     %>
-    <footer class="site-footer border-t border-surface-200 bg-surface-100 dark:border-surface-800 dark:bg-surface-950">
+    <footer class="site-footer border-t border-surface-200 bg-surface-100">
       <div class="mx-auto <%= layout_container_class %> space-y-8 px-6 py-10 sm:py-12">
         <div class="grid gap-8 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:justify-between">
           <div class="max-w-sm space-y-2">
             <%= render "shared/wordmark", class: "text-base" %>
-            <p class="font-reading text-sm leading-relaxed text-surface-600 dark:text-surface-400">
+            <p class="font-reading text-sm leading-relaxed text-surface-600">
               <%= t("layout.footer_tagline") %>
             </p>
           </div>
 
-          <nav class="site-footer-nav grid grid-cols-2 gap-x-10 gap-y-2 font-ui text-sm text-surface-600 dark:text-surface-400" aria-label="<%= t("layout.main_nav") %>">
+          <nav class="site-footer-nav grid grid-cols-2 gap-x-10 gap-y-2 font-ui text-sm text-surface-600" aria-label="<%= t("layout.main_nav") %>">
             <% if donate_link_visible? %>
               <%= link_to t("layout.donate_link"), donate_path, class: "#{footer_link_base} #{footer_link_active if nav_active?(donate_path)}" %>
             <% end %>
@@ -232,12 +188,12 @@
           </nav>
         </div>
 
-        <div class="flex flex-col gap-4 border-t border-surface-200 pt-6 dark:border-surface-800 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4 border-t border-surface-200 pt-6 sm:flex-row sm:items-end sm:justify-between">
           <div class="space-y-1">
-            <p class="font-ui text-xs text-balance text-surface-500 dark:text-surface-400">
+            <p class="font-ui text-xs text-balance text-surface-500">
               <%= t("layout.footer_attribution_translations") %>
             </p>
-            <p class="font-ui text-[10px] uppercase tracking-widest text-surface-500 dark:text-surface-400">
+            <p class="font-ui text-[10px] uppercase tracking-widest text-surface-500">
               <%= t("layout.footer_attribution_meta", year: Date.current.year) %>
             </p>
           </div>
@@ -245,7 +201,7 @@
           <div class="flex gap-1" aria-label="<%= t("layout.language_switcher") %>">
             <% User::UI_LOCALES.each do |code| %>
               <% active = I18n.locale.to_s == code %>
-              <% locale_classes = "rounded-full px-2.5 py-1 font-ui text-[10px] uppercase tracking-widest transition-colors #{active ? "bg-surface-200 text-surface-900 dark:bg-surface-700 dark:text-surface-50" : "text-surface-500 hover:bg-surface-200/70 hover:text-surface-700 dark:text-surface-400 dark:hover:bg-surface-800 dark:hover:text-surface-200"}" %>
+              <% locale_classes = "rounded-full px-2.5 py-1 font-ui text-[10px] uppercase tracking-widest transition-colors #{active ? "bg-surface-200 text-surface-900" : "text-surface-500 hover:bg-surface-200/70 hover:text-surface-700"}" %>
               <% if user_signed_in? %>
                 <%= button_to code.upcase, settings_path, method: :patch, params: { user: { ui_locale: code } }, form_class: "inline", class: locale_classes, aria: { label: t("layout.language_#{code}"), current: active ? "true" : nil } %>
               <% else %>
@@ -264,11 +220,11 @@
         would clip awkwardly. shadow-2xl gives the elevation in light
         mode. In dark mode both panel bg and page bg are surface-950,
         so shadow alone leaves the edge invisible — the explicit
-        dark:border-l + dark:border-surface-800 gives the panel a
+        + gives the panel a
         readable edge against the page. The note_panel_controller.js
         slide-in transform mechanic is untouched. %>
     <aside id="note-panel-container"
-           class="fixed inset-y-0 right-0 w-full max-w-full translate-x-full transform bg-surface-50 shadow-2xl transition-transform duration-150 ease-out sm:max-w-md sm:rounded-l-2xl dark:border-l dark:border-surface-800 dark:bg-surface-950"
+           class="fixed inset-y-0 right-0 w-full max-w-full translate-x-full transform bg-surface-50 shadow-2xl transition-transform duration-150 ease-out sm:max-w-md sm:rounded-l-2xl"
            aria-label="Note editor">
       <div class="h-full overflow-y-auto p-5 sm:p-6">
         <%= turbo_frame_tag "note_panel" %>

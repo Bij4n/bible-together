@@ -1,24 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Settings preferences", type: :system, js: true do
-  let(:user) { create(:user, email: "reader@bible-together.test", ui_locale: "en", theme: "system") }
+  let(:user) { create(:user, email: "reader@bible-together.test", ui_locale: "en") }
 
   before { sign_in user }
-
-  it "persists a signed-in user's theme choice across reloads without flash" do
-    visit "/settings"
-    choose "Dark"
-
-    # Wait for the frame to swap in the saved-indicator before asserting
-    # DB state — otherwise we race the Turbo fetch.
-    expect(page).to have_content(/preferences saved/i)
-    expect(user.reload.theme).to eq("dark")
-
-    # On a fresh page load outside marketing surfaces, the server should
-    # render with data-theme=dark immediately (first-paint, before JS runs).
-    visit "/settings"
-    expect(page).to have_css(%(html[data-theme="dark"]))
-  end
 
   it "persists a signed-in user's language choice across reloads" do
     visit "/settings"
