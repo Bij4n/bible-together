@@ -105,5 +105,36 @@
       <% end %>
       <%= render "shared/settings_flash" %>
     <% end %>
+
+    <%# ----------  Bio  ---------- %>
+    <%= turbo_frame_tag "settings_bio", class: "#{section_card} space-y-4" do %>
+      <div>
+        <h2 class="<%= section_h2 %>"><%= t("settings.sections.bio.title") %></h2>
+        <p class="<%= section_p %>"><%= t("settings.sections.bio.description") %></p>
+      </div>
+      <%= form_with model: current_user, url: settings_path, method: :patch, data: { turbo_frame: "settings_bio" }, class: "space-y-3" do |f| %>
+        <%= f.text_area :bio, rows: 3, maxlength: User::BIO_MAX, "aria-label": t("settings.sections.bio.title"), class: input_classes %>
+        <%= f.submit t("settings.save"), class: submit_classes %>
+      <% end %>
+      <%= render "shared/settings_flash" %>
+    <% end %>
+
+    <%# ----------  Notifications  ---------- %>
+    <%= turbo_frame_tag "settings_notifications", class: "#{section_card} space-y-4" do %>
+      <div>
+        <h2 class="<%= section_h2 %>"><%= t("settings.sections.notifications.title") %></h2>
+        <p class="<%= section_p %>"><%= t("settings.sections.notifications.description") %></p>
+      </div>
+      <%= form_with model: current_user, url: settings_path, method: :patch, data: { turbo_frame: "settings_notifications", controller: "preference-form" }, class: "space-y-3" do |f| %>
+        <label class="<%= label_classes %>">
+          <%= f.check_box :email_on_comment, data: { action: "change->preference-form#submit" }, class: "h-4 w-4 rounded accent-accent-700" %>
+          <%= t("settings.sections.notifications.email_on_comment") %>
+        </label>
+        <noscript>
+          <%= f.submit t("settings.save"), class: submit_classes %>
+        </noscript>
+      <% end %>
+      <%= render "shared/settings_flash" %>
+    <% end %>
   </div>
 </article>

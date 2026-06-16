@@ -202,6 +202,13 @@ es:
         title: Nombre de usuario
         description: "Tu identificador público, usado para el enlace de tu perfil (/@handle). Letras, números y guiones bajos."
         placeholder: tunombre
+      bio:
+        title: Biografía
+        description: Una línea breve sobre ti, visible en tu perfil público.
+      notifications:
+        title: Notificaciones
+        description: Elige qué correos te envía Bible Together.
+        email_on_comment: Avísame por correo cuando alguien comente mi nota
   auth:
     sign_in: Iniciar sesión
     sign_up: Registrarse
@@ -372,6 +379,10 @@ es:
       expires_in: "Esta invitación caduca en %{days} días."
       footer_html: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, puedes ignorarlo con tranquilidad. No se crea ninguna cuenta hasta que aceptes.
       footer_text: Recibes este correo porque alguien te invitó por email. Si no lo esperabas, ignóralo. No se crea ninguna cuenta hasta que aceptes.
+  comment_mailer:
+    new_comment:
+      subject: "%{name} comentó tu nota"
+      body: "%{name} comentó tu nota:"
   comments:
     title: Discusión
     post: Comentar

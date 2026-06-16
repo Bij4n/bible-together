@@ -29,6 +29,11 @@
         </span>
       <% end %>
     </p>
+    <% if @author.bio.present? %>
+      <p class="mt-3 max-w-2xl font-reading text-surface-700">
+        <%= @author.bio %>
+      </p>
+    <% end %>
   </header>
 
   <section>
