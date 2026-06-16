@@ -7,9 +7,10 @@ RSpec.describe Membership, type: :model do
   end
 
   describe "role enum" do
-    it "accepts owner and member" do
+    it "accepts owner, member, and admin" do
       expect(build(:membership, role: "owner")).to be_valid
       expect(build(:membership, role: "member")).to be_valid
+      expect(build(:membership, role: "admin")).to be_valid
     end
 
     it "rejects other values" do
