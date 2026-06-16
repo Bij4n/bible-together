@@ -2,7 +2,9 @@
 
 ## Project
 
-**Bible Together** (repo: `bible-together`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. Aesthetic: modern SaaS — Inter (UI/body sans) + Instrument Serif (verse + italic accents) + JetBrains Mono (refs/labels), mint accent (#0F5C3F), cool near-white light mode, cool near-black dark mode. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
+**Bible Together** (repo: `bible-together`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
+
+All visual direction — fonts, colors, spacing, aesthetic — lives in `DESIGN.md`, which is the single source of truth. Do not restate design tokens here (they drift). Read `DESIGN.md` before any UI work.
 
 Full roadmap lives in `PLAN.md`. Read it before starting any sprint. Update it when decisions change.
 
@@ -115,7 +117,7 @@ If a commit changes a view, layout, Stimulus controller, or any user-interaction
 | ERB linting | `erb_lint` | |
 | CI | GitHub Actions | |
 
-Gems pre-added to Gemfile but commented with sprint markers: `devise` (Sprint 2), `pg_search` (Sprint 8). Do not uncomment until that sprint starts.
+(Historical: `devise` and `pg_search` were sprint-gated in the early Gemfile; both are active now. No gems remain gated.)
 
 ---
 
@@ -180,14 +182,20 @@ Burning an hour on a wrong path is worse than pausing for a 2-minute check-in.
 
 ```bash
 bin/setup              # one-time
-bin/dev                # Rails + Tailwind watcher + jobs
+bin/dev                # Rails + Tailwind watcher + jobs + embedding service (Procfile.dev)
 bundle exec rspec      # full test suite
 bundle exec rspec spec/models/verse_spec.rb  # one file
 bundle exec rubocop    # lint
 bundle exec rubocop -a # autocorrect safe offenses
 bundle exec brakeman   # security scan
 bin/rails bible:import[kjv]  # seed KJV (Sprint 1+)
+bin/embedding          # semantic-search embedding service (Python, port 8000)
 ```
+
+The embedding service (`services/embedding-service/`) powers semantic search.
+`bin/dev` starts it automatically. It's optional for most work — specs that
+need it degrade gracefully when it's not running (they log that port 8000 is
+unreachable rather than failing).
 
 ## Project structure notes
 
