@@ -69,6 +69,8 @@
               class: "#{menu_item_base} #{nav_active?(search_path) ? menu_item_active : menu_item_idle}" %>
           <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem",
               class: "#{menu_item_base} #{nav_active?(discover_groups_path) ? menu_item_active : menu_item_idle}" %>
+          <%= link_to t("layout.forum_link"), forum_threads_path, role: "menuitem",
+              class: "#{menu_item_base} #{request.path.start_with?('/forum') ? menu_item_active : menu_item_idle}" %>
         </div>
       </div>
 

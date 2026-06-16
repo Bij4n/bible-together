@@ -64,6 +64,7 @@ en:
     how_it_works_link: How it works
     about_link: About
     contact_link: Contact
+    forum_link: Forum
     footer_product: Product
     footer_support: Support
     footer_tagline: Read scripture with someone.
@@ -149,6 +150,31 @@ en:
       heading: Keep it open
       body: If this has been useful to you, help cover hosting so the next reader can find it.
       button: Donate
+  forum:
+    title: Forum
+    intro: A public space to ask questions, share what you're reading, and talk scripture with anyone.
+    new_thread: New thread
+    new_intro: Start a conversation. Add a title and your first message.
+    title_label: Title
+    body_label: Message
+    post_thread: Post thread
+    reply_heading: Add a reply
+    reply: Reply
+    started_by: "Started by %{name}"
+    replies:
+      zero: No replies yet
+      one: "1 reply"
+      other: "%{count} replies"
+    no_threads: No threads yet. Be the first to start a conversation.
+    sign_in_to_post: Sign in to post
+    thread_created: Thread posted.
+    reply_posted: Reply posted.
+    body_required: Your message can't be blank.
+    hide: Hide
+    thread_hidden: Thread hidden.
+    thread_unhidden: Thread restored.
+    post_hidden: Post hidden.
+    post_unhidden: Post restored.
   bible:
     reader:
       prev_chapter: Previous

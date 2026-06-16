@@ -75,6 +75,21 @@ Rails.application.routes.draw do
   # the public comments/stories on highlighted verses."
   get "/community", to: "community#index", as: :community
 
+  # Public forum (Sprint 26) — anyone signed in can start a thread or
+  # reply; reading is open to everyone. Admins can hide threads/posts.
+  resources :forum_threads, path: "forum", only: %i[index show new create] do
+    member do
+      patch :hide
+      patch :unhide
+    end
+    resources :forum_posts, only: [ :create ] do
+      member do
+        patch :hide
+        patch :unhide
+      end
+    end
+  end
+
   # Legacy /groups bookmarks (Sprint R8) — 301 to /studies.
   get "/groups", to: redirect("/studies", status: 301)
   get "/groups/*legacy_path", to: redirect("/studies/%{legacy_path}", status: 301)
