@@ -87,5 +87,23 @@
       <% end %>
       <%= render "shared/settings_flash" %>
     <% end %>
+
+    <%# ----------  Username  ---------- %>
+    <%= turbo_frame_tag "settings_username", class: "#{section_card} space-y-4" do %>
+      <div>
+        <h2 class="<%= section_h2 %>"><%= t("settings.sections.username.title") %></h2>
+        <p class="<%= section_p %>"><%= t("settings.sections.username.description") %></p>
+      </div>
+      <%= form_with model: current_user, url: settings_path, method: :patch, data: { turbo_frame: "settings_username" }, class: "flex items-end gap-3" do |f| %>
+        <div class="flex-1">
+          <%= f.text_field :username,
+                           "aria-label": t("settings.sections.username.title"),
+                           placeholder: t("settings.sections.username.placeholder"),
+                           class: input_classes %>
+        </div>
+        <%= f.submit t("settings.save"), class: submit_classes %>
+      <% end %>
+      <%= render "shared/settings_flash" %>
+    <% end %>
   </div>
 </article>

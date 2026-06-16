@@ -24,4 +24,11 @@ RSpec.describe "Profiles", type: :request do
     get "/@nobody"
     expect(response).to have_http_status(:not_found)
   end
+
+  it "shows public notes with a view-and-comment link" do
+    note = create(:note, :public_note, user: user)
+    get author_path(user)
+    expect(response.body).to include(note_path(note))
+    expect(response.body).to include(I18n.t("authors.view_and_comment", count: 0))
+  end
 end
