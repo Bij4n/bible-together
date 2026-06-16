@@ -13,7 +13,7 @@
   <div class="site-header__inner mx-auto flex <%= layout_container_class %> items-center justify-between gap-4 px-6 py-3.5">
     <%= render "shared/wordmark", class: "text-lg" %>
 
-    <nav class="site-nav flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.main_nav") %>">
+    <nav class="site-nav hidden sm:flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.main_nav") %>">
       <%= link_to t("layout.read_link"), read_nav_path,
           class: "#{rail_idle} #{read_nav_active? ? rail_active : rail_rest}" %>
 
@@ -72,7 +72,7 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-2 pl-2">
+      <div class="hidden sm:flex items-center gap-2 pl-2">
         <%= link_to search_path,
             class: "inline-flex items-center justify-center rounded-full p-2 text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900 #{nav_active?(search_path) ? 'bg-surface-100 text-accent-800' : ''}",
             aria: { label: t("search.submit") } do %>

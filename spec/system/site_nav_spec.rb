@@ -54,14 +54,14 @@ RSpec.describe "Site navigation", type: :system, js: true do
         visit "/"
 
         within("header.site-header") do
-          expect(page).to have_css("button[aria-label='#{I18n.t("layout.open_account_menu")}']", visible: :all)
+          expect(page).to have_css("button[aria-label='#{I18n.t("layout.open_account_menu")}']")
           expect(page).not_to have_button(I18n.t("layout.open_menu"))
         end
       end
 
       it "lists study destinations in the Study menu" do
         visit "/"
-        click_button(I18n.t("layout.study_menu"))
+        within("header.site-header") { click_button(I18n.t("layout.study_menu")) }
 
         within("[data-user-menu-target='menu']:not([hidden])") do
           expect(page).to have_link(I18n.t("layout.my_notes_link"))
@@ -73,7 +73,7 @@ RSpec.describe "Site navigation", type: :system, js: true do
 
       it "does not duplicate Read or Studies links in the avatar menu" do
         visit "/"
-        within("header.site-header") { find("button[aria-label='#{I18n.t("layout.open_account_menu")}']", visible: :all).click }
+        within("header.site-header") { find("button[aria-label='#{I18n.t("layout.open_account_menu")}']").click }
 
         within("[data-user-menu-target='menu']:not([hidden])") do
           expect(page).to have_link(I18n.t("auth.settings"))
