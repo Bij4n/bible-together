@@ -1,8 +1,9 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_group, only: %i[show edit update destroy leave]
-  before_action :ensure_group_member, only: %i[show]
-  before_action :ensure_group_owner,  only: %i[edit update destroy]
+  before_action :ensure_group_member,  only: %i[show]
+  before_action :ensure_group_manager, only: %i[edit update]
+  before_action :ensure_group_owner,   only: %i[destroy]
 
   skip_before_action :authenticate_user!, only: [ :discover ]
 
@@ -32,7 +33,7 @@ class GroupsController < ApplicationController
 
   def show
     @memberships = @group.memberships.includes(:user)
-    @pending_invitations = @group.group_invitations.pending.order(created_at: :desc) if @group.owner_id == current_user.id
+    @pending_invitations = @group.group_invitations.pending.order(created_at: :desc) if @group.manager?(current_user)
     @member_notes = @group.recent_member_notes
     @reading_together = @group.reading_together_location
   end
@@ -106,6 +107,10 @@ class GroupsController < ApplicationController
 
   def ensure_group_owner
     head :not_found unless @group.owner_id == current_user.id
+  end
+
+  def ensure_group_manager
+    head :not_found unless @group.manager?(current_user)
   end
 
   def group_params
