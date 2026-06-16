@@ -2,7 +2,6 @@ require "rails_helper"
 
 # Top-level nav IA: Read · Study · Explore (+ account on desktop).
 RSpec.describe "Navbar nav links", type: :system, js: true do
-
   let!(:translation) { create(:translation, :kjv) }
   let!(:book)        { create(:book, :genesis, translation: translation) }
   let!(:chapter)     { create(:chapter, book: book, number: 1) }
