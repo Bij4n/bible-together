@@ -105,4 +105,34 @@ RSpec.describe User, type: :model do
       expect(user.admin?).to be true
     end
   end
+
+  describe "username" do
+    it "is optional" do
+      expect(build(:user, username: nil)).to be_valid
+      expect(build(:user, username: "")).to be_valid
+    end
+
+    it "enforces a handle format (3-30 letters, numbers, underscore)" do
+      expect(build(:user, username: "ab")).not_to be_valid
+      expect(build(:user, username: "has space")).not_to be_valid
+      expect(build(:user, username: "ok_name1")).to be_valid
+    end
+
+    it "is unique case-insensitively" do
+      create(:user, username: "Ruth")
+      dup = build(:user, username: "ruth")
+      expect(dup).not_to be_valid
+    end
+  end
+
+  describe "#to_param" do
+    it "uses the username when present" do
+      expect(create(:user, username: "ruth").to_param).to eq("ruth")
+    end
+
+    it "falls back to the id when no username is set" do
+      user = create(:user, username: nil)
+      expect(user.to_param).to eq(user.id.to_s)
+    end
+  end
 end
