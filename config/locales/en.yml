@@ -209,6 +209,13 @@ en:
         title: Username
         description: "Your public handle, used for your profile link (/@handle). Letters, numbers, and underscores."
         placeholder: yourname
+      bio:
+        title: Bio
+        description: A short line about you, shown on your public profile.
+      notifications:
+        title: Notifications
+        description: Choose which emails Bible Together sends you.
+        email_on_comment: Email me when someone comments on my note
   auth:
     sign_in: Sign in
     sign_up: Sign up
@@ -379,6 +386,10 @@ en:
       expires_in: "This invitation expires in %{days} days."
       footer_html: You're receiving this because someone invited you by email. If you weren't expecting this, you can safely ignore the message. No account is created until you accept.
       footer_text: You're receiving this because someone invited you by email. If you weren't expecting this, ignore this message. No account is created until you accept.
+  comment_mailer:
+    new_comment:
+      subject: "%{name} commented on your note"
+      body: "%{name} commented on your note:"
   comments:
     title: Discussion
     post: Comment

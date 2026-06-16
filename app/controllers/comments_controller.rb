@@ -15,6 +15,8 @@ class CommentsController < ApplicationController
     )
 
     if comment.save
+      notify_note_author(comment)
+
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
@@ -67,6 +69,14 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def notify_note_author(comment)
+    author = comment.note.user
+    return if author == current_user
+    return unless author.email_on_comment
+
+    CommentMailer.new_comment(comment).deliver_later
+  end
 
   def load_comment
     @comment = current_user.comments.find(params[:id])
