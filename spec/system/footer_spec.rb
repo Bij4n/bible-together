@@ -160,11 +160,11 @@ RSpec.describe "Footer", type: :system do
         end
       end
 
-      it "is visible when signed in" do
+      it "is hidden when signed in (settings live in avatar menu)" do
         sign_in create(:user)
         visit "/"
         within("footer") do
-          expect(page).to have_link(I18n.t("auth.settings"), href: "/settings")
+          expect(page).not_to have_link(I18n.t("auth.settings"))
         end
       end
     end
