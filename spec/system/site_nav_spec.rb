@@ -45,6 +45,21 @@ RSpec.describe "Site navigation", type: :system, js: true do
           expect(page).to have_link(I18n.t("layout.discover_studies_link"))
         end
       end
+
+      it "orders Explore by most-used first" do
+        visit "/"
+        click_button(I18n.t("layout.explore_menu"))
+
+        within("[data-user-menu-target='menu']:not([hidden])") do
+          expect(all("a[role='menuitem']").map(&:text)).to eq([
+            I18n.t("search.submit"),
+            I18n.t("layout.public_notes_link"),
+            I18n.t("layout.forum_link"),
+            I18n.t("layout.community_bible_link"),
+            I18n.t("layout.discover_studies_link")
+          ])
+        end
+      end
     end
 
     context "when signed in" do
@@ -68,6 +83,20 @@ RSpec.describe "Site navigation", type: :system, js: true do
           expect(page).to have_link(I18n.t("layout.my_studies_link"))
           expect(page).to have_link(I18n.t("layout.start_study_link"))
           expect(page).to have_link(I18n.t("layout.join_with_code_link"))
+        end
+      end
+
+      it "orders Study by most-used first" do
+        visit "/"
+        within("header.site-header") { click_button(I18n.t("layout.study_menu")) }
+
+        within("[data-user-menu-target='menu']:not([hidden])") do
+          expect(all("a[role='menuitem']").map(&:text)).to eq([
+            I18n.t("layout.my_studies_link"),
+            I18n.t("layout.my_notes_link"),
+            I18n.t("layout.start_study_link"),
+            I18n.t("layout.join_with_code_link")
+          ])
         end
       end
 

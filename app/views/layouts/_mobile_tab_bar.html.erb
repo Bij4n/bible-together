@@ -33,8 +33,8 @@
         <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
           <%= t("layout.study_menu") %>
         </p>
-        <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem", class: sheet_item %>
         <%= link_to t("layout.my_studies_link"), groups_path, role: "menuitem", class: sheet_item %>
+        <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem", class: sheet_item %>
         <%= link_to t("layout.start_study_link"), new_group_path, role: "menuitem", class: sheet_item %>
         <%= link_to t("layout.join_with_code_link"), groups_path(anchor: "join"), role: "menuitem", class: sheet_item %>
       </div>
@@ -68,11 +68,11 @@
       <p class="account-sheet__label px-4 py-2 font-ui text-[10px] font-semibold uppercase tracking-[0.14em] text-surface-500">
         <%= t("layout.explore_menu") %>
       </p>
-      <%= link_to t("layout.public_notes_link"), community_path, role: "menuitem", class: sheet_item %>
-      <%= link_to t("layout.community_bible_link"), community_bible_path, role: "menuitem", class: sheet_item %>
       <%= link_to t("search.submit"), search_path, role: "menuitem", class: sheet_item %>
-      <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem", class: sheet_item %>
+      <%= link_to t("layout.public_notes_link"), community_path, role: "menuitem", class: sheet_item %>
       <%= link_to t("layout.forum_link"), forum_threads_path, role: "menuitem", class: sheet_item %>
+      <%= link_to t("layout.community_bible_link"), community_bible_path, role: "menuitem", class: sheet_item %>
+      <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem", class: sheet_item %>
     </div>
   </div>
 
