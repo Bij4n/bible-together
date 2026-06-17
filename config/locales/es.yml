@@ -136,20 +136,16 @@ es:
       step_3_body: Con un amigo, tu grupo de estudio o el capítulo público.
     about:
       heading: Acerca de
-      subhead: Un lugar para leer, anotar y compartir las Escrituras, pensado para las personas y no para los anuncios.
+      subhead: Bible Together es un lugar para leer las Escrituras, marcar lo que te habla y compartirlo con personas que también las aman.
       translations_label: Traducciones
-      support_label: Apoyo
-      para_1: "Bible Together es un lector para quienes marcan su Biblia: subrayados, notas y una capa comunitaria para cuando quieras leer junto a otros."
-      para_2: El versículo que te detiene probablemente también detuvo a alguien más.
-      para_3: Leer lo que significó para ellos, y luego escribir lo que significa para ti, es de lo que se trata.
+      para_1: "En lo esencial es un lector limpio con resaltados, notas privadas y una capa comunitaria que puedes activar cuando quieras leer junto a otros."
       vision_label: Hacia dónde va
-      para_vision: "Por ahora es una herramienta de lectura sencilla y enfocada. La esperanza es mayor: una plataforma social para personas afines que quieran profundizar en las Escrituras y unirse en torno a nuestro amor por Jesús. Un lugar para seguir a otros, aprender de cómo leen y crecer juntos."
+      para_vision: "La esperanza es mayor que una herramienta de lectura: una plataforma social para personas afines que quieran profundizar en las Escrituras y unirse en torno a nuestro amor por Jesús, para seguir a otros, aprender de cómo leen y crecer juntos."
       team_label: Quién lo construye
-      para_team: Lo construye y lo mantiene una sola persona, alguien de negocios y a la vez desarrollador, que por ahora hace de todo. Ese es el punto de partida, no el destino. El plan es hacer crecer el equipo y construir algo que sirva a una comunidad real a medida que crece.
-      para_4: La KJV en inglés y la RV1909 en español ya están disponibles, y la interfaz es totalmente bilingüe. Ambas traducciones son de dominio público.
-      para_5: El alojamiento se financia con donaciones. No hay suscripción, ni publicidad, ni rastreo.
+      para_team: "Por ahora lo construye y lo mantiene una sola persona, alguien de negocios y a la vez desarrollador que hace de todo. Ese es el punto de partida, no el destino: el plan es hacer crecer el equipo y construir algo que sirva a una comunidad real."
+      para_4: Se lee en inglés (KJV) y español (Reina-Valera 1909) hoy, con una interfaz totalmente bilingüe. Ambas traducciones son de dominio público.
       nonprofit_label: Sin fines de lucro
-      para_nonprofit: "Bible Together se gestiona sin fines de lucro por un solo desarrollador. No es un negocio y no genera ganancias. Cada donación se destina por completo al funcionamiento de la plataforma: alojamiento, correo, dominios y las cuentas que la mantienen en línea."
+      para_nonprofit: "Bible Together es un proyecto sin fines de lucro, financiado por completo con donaciones. No hay suscripción, ni publicidad, ni rastreo. Cada aporte va directo a las cuentas que lo mantienen en línea: alojamiento, correo y dominios."
     donate_cta:
       heading: Mantén Bible Together gratis
       body: "Un proyecto sin fines de lucro de una sola persona. Cada donación se destina al alojamiento y las facturas: sin anuncios ni suscripciones."
