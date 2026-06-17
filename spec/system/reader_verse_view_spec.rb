@@ -1,9 +1,9 @@
 require "rails_helper"
 
-# Design-v3 verse-view toggle: continuous prose (default) vs
-# one-verse-per-block "study mode". Pure view-layer preference,
-# persisted in localStorage.
-RSpec.describe "Reader verse view toggle", type: :system, js: true do
+# Verse view is the only reader layout: every verse renders as its own
+# block, and the old continuous-prose toggle is gone. (It used to be a
+# localStorage preference switched by the reader-prefs controller.)
+RSpec.describe "Reader verse view", type: :system, js: true do
   let(:user) { create(:user) }
   let(:translation) { create(:translation, :kjv) }
   let(:book) { create(:book, :john, translation: translation) }
@@ -17,20 +17,16 @@ RSpec.describe "Reader verse view toggle", type: :system, js: true do
     sign_in user
   end
 
-  it "toggles verse-per-block layout and persists across reload" do
+  it "always renders verses as their own block and offers no view toggle" do
     visit "/bible/kjv/john/3"
 
-    expect(page).to have_css(".chapter-body")
-    expect(page).not_to have_css(".chapter-body.verse-blocks")
+    expect(page).to have_css(".chapter-body .verse")
+    expect(page).not_to have_css("[data-action='reader-prefs#toggleVerseBlocks']")
+    expect(page).not_to have_css("[data-controller~='reader-prefs']")
 
-    find("[data-action='reader-prefs#toggleVerseBlocks']").click
-    expect(page).to have_css(".chapter-body.verse-blocks")
-    expect(page).to have_css("[data-action='reader-prefs#toggleVerseBlocks'][aria-pressed='true']")
-
-    visit "/bible/kjv/john/3"
-    expect(page).to have_css(".chapter-body.verse-blocks")
-
-    find("[data-action='reader-prefs#toggleVerseBlocks']").click
-    expect(page).not_to have_css(".chapter-body.verse-blocks")
+    verse_display = page.evaluate_script(
+      "getComputedStyle(document.querySelector('.chapter-body .verse')).display"
+    )
+    expect(verse_display).to eq("block")
   end
 end
