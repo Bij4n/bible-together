@@ -388,13 +388,11 @@ en:
   authors:
     public_notes_heading: Public notes
     stats_heading: Notes
-    stats_summary: "%{total} notes total — %{public} public, %{private} private."
+    stats_summary: "%{total} notes total — %{private} private, %{public} public. Notes are private unless you publish them; sharing with friends or a study still counts as private."
     member_since: "Member since %{year}"
     stats:
-      total: Total notes
       public: Public
       private: Private
-      shared: Shared
     no_public_notes: This author hasn't published any public notes yet.
     follow: Follow
     unfollow: Following
