@@ -147,9 +147,9 @@ es:
       nonprofit_label: Sin fines de lucro
       para_nonprofit: "Bible Together se gestiona sin fines de lucro por un solo desarrollador: no es un negocio y no genera ganancias. Cada donación va por completo a mantener la plataforma: alojamiento, correo, dominios y las cuentas que la mantienen en línea."
     donate_cta:
-      heading: Manténlo abierto
-      body: Si esto te ha servido, ayuda a cubrir el alojamiento para que el próximo lector lo encuentre.
-      button: Donar
+      heading: Mantén Bible Together gratis
+      body: "Un proyecto sin fines de lucro de una sola persona. Cada donación se destina al alojamiento y las facturas: sin anuncios ni suscripciones."
+      button: Apoya el proyecto
   forum:
     title: Foro
     intro: Un espacio público para hacer preguntas, compartir lo que lees y hablar de las Escrituras con cualquiera.
