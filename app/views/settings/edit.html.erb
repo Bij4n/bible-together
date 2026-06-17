@@ -104,6 +104,26 @@
       <%= render "shared/settings_flash" %>
     <% end %>
 
+    <%# ----------  Profile photo  ---------- %>
+    <%= turbo_frame_tag "settings_avatar", class: section_wrap do %>
+      <div>
+        <h2 class="<%= section_h2 %>"><%= t("settings.sections.avatar.title") %></h2>
+        <p class="<%= section_p %>"><%= t("settings.sections.avatar.description") %></p>
+      </div>
+      <%= form_with model: current_user, url: settings_path, method: :patch,
+                    html: { multipart: true },
+                    data: { turbo_frame: "settings_avatar" },
+                    class: "flex flex-col gap-4 sm:flex-row sm:items-center" do |f| %>
+        <%= user_avatar(current_user, size: :lg) %>
+        <div class="flex-1 space-y-3">
+          <%= f.file_field :avatar, accept: "image/png,image/jpeg,image/webp",
+                           class: "block w-full font-ui text-sm text-surface-700 file:mr-3 file:rounded-full file:border-0 file:bg-surface-200 file:px-4 file:py-2 file:font-ui file:text-sm file:font-medium file:text-surface-800" %>
+          <%= f.submit t("settings.save"), class: submit_classes %>
+        </div>
+      <% end %>
+      <%= render "shared/settings_flash" %>
+    <% end %>
+
     <%# ----------  Bio  ---------- %>
     <%= turbo_frame_tag "settings_bio", class: section_wrap do %>
       <div>
@@ -112,6 +132,61 @@
       </div>
       <%= form_with model: current_user, url: settings_path, method: :patch, data: { turbo_frame: "settings_bio" }, class: "space-y-3" do |f| %>
         <%= f.text_area :bio, rows: 3, maxlength: User::BIO_MAX, "aria-label": t("settings.sections.bio.title"), class: input_classes %>
+        <%= f.submit t("settings.save"), class: submit_classes %>
+      <% end %>
+      <%= render "shared/settings_flash" %>
+    <% end %>
+
+    <%# ----------  Highlight toolbar  ---------- %>
+    <%= turbo_frame_tag "settings_highlights", class: section_wrap do %>
+      <div>
+        <h2 class="<%= section_h2 %>"><%= t("settings.sections.highlights.title") %></h2>
+        <p class="<%= section_p %>"><%= t("settings.sections.highlights.description") %></p>
+      </div>
+      <%= form_with model: current_user, url: settings_path, method: :patch,
+                    data: { turbo_frame: "settings_highlights" },
+                    class: "space-y-6" do |f| %>
+        <fieldset>
+          <legend class="mb-3 font-ui text-xs font-medium uppercase tracking-widest text-surface-500">
+            <%= t("settings.sections.highlights.toolbar_colors") %>
+          </legend>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <% Highlight::DEFAULT_TOOLBAR_COLORS.each do |color| %>
+              <div class="flex items-center gap-3 rounded-lg border border-surface-200 bg-surface-50 px-3 py-2">
+                <span class="h-5 w-5 shrink-0 rounded-full highlight-swatch-<%= color %>" aria-hidden="true"></span>
+                <label class="flex min-w-0 flex-1 items-center gap-2 font-ui text-sm text-surface-700">
+                  <%= check_box_tag "user[highlight_toolbar_colors][]", color,
+                                    current_user.toolbar_colors.include?(color),
+                                    id: "toolbar_color_#{color}",
+                                    class: "h-4 w-4 accent-accent-700" %>
+                  <%= t("highlights.colors.#{color}", default: color.capitalize) %>
+                </label>
+                <%= text_field_tag "user[highlight_color_labels][#{color}]",
+                                   current_user.highlight_color_labels[color],
+                                   placeholder: t("settings.sections.highlights.label_placeholder"),
+                                   maxlength: 40,
+                                   autocomplete: "off",
+                                   class: "#{input_classes} max-w-[9rem] text-xs" %>
+              </div>
+            <% end %>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="mb-3 font-ui text-xs font-medium uppercase tracking-widest text-surface-500">
+            <%= t("settings.sections.highlights.default_note_color") %>
+          </legend>
+          <div class="flex flex-wrap gap-3">
+            <% Note::NOTE_COLORS.each do |color| %>
+              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-surface-200 px-3 py-1.5 font-ui text-sm text-surface-700 hover:bg-surface-100">
+                <%= f.radio_button :default_note_color, color, class: radio_classes %>
+                <span class="h-4 w-4 rounded-full note-marker-swatch-<%= color %>" aria-hidden="true"></span>
+                <%= t("notes.colors.#{color}", default: color.capitalize) %>
+              </label>
+            <% end %>
+          </div>
+        </fieldset>
+
         <%= f.submit t("settings.save"), class: submit_classes %>
       <% end %>
       <%= render "shared/settings_flash" %>
