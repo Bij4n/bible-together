@@ -237,6 +237,15 @@ en:
       bio:
         title: Bio
         description: A short line about you, shown on your public profile.
+      avatar:
+        title: Profile photo
+        description: Shown on your public profile. PNG, JPEG, or WebP up to 2 MB.
+      highlights:
+        title: Highlights & notes
+        description: Choose which colors appear in your reader toolbar, rename them, and pick your default note marker color.
+        toolbar_colors: Toolbar colors
+        label_placeholder: Label
+        default_note_color: Default note marker
       notifications:
         title: Notifications
         description: Choose which emails Bible Together sends you.
@@ -321,7 +330,17 @@ en:
       shared_groups: With groups
       public_note: Public
     save: Save note
+    cancel: Cancel
+    close_panel: Close
     delete: Delete note
+    marker_heading: Note marker
+    label_field: Label (optional)
+    label_placeholder: e.g. Prayer, Question
+    colors:
+      violet: Violet
+      amber: Amber
+      teal: Teal
+      coral: Coral
     confirm_delete: Delete this note?
     share_with_users: Share with specific people
     share_with_groups: Share with groups
@@ -367,8 +386,15 @@ en:
     load_more: Load more
     empty: No public notes yet. Open the Bible, highlight a verse, and be the first to share what it means to you.
   authors:
-    public_notes_heading: Public Notes
+    public_notes_heading: Public notes
+    stats_heading: Notes
+    stats_summary: "%{total} notes total — %{public} public, %{private} private."
     member_since: "Member since %{year}"
+    stats:
+      total: Total notes
+      public: Public
+      private: Private
+      shared: Shared
     no_public_notes: This author hasn't published any public notes yet.
     follow: Follow
     unfollow: Following
@@ -384,6 +410,16 @@ en:
     likes:
       one: "%{count} like"
       other: "%{count} likes"
+  highlights:
+    colors:
+      yellow: Yellow
+      green: Green
+      blue: Blue
+      rose: Rose
+      orange: Orange
+      purple: Purple
+  avatars:
+    photo_alt: "Profile photo of %{name}"
   group_invitations:
     invite_button: Send invitation
     pending_heading: Pending invitations
