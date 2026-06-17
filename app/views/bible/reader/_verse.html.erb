@@ -7,8 +7,10 @@
     Rendered as a linked bridge badge so a click jumps to the same verse
     in the other translation. %>
 <% bridge_code = local_assigns[:cross_translation_highlights]&.dig(verse.number) %>
-<span class="verse"
+<% chip = local_assigns[:note_chip] %>
+<% note_marker_class = chip.present? ? "verse-has-note note-marker-#{chip[:color] || 'violet'}" : "" %>
+<span class="verse <%= note_marker_class %>"
       id="<%= dom_id(verse) %>"
       data-verse-id="<%= verse.id %>"
       data-osis-ref="<%= verse.osis_ref %>"
-      data-verse-text="<%= verse.body_text %>"><sup class="verse-number" data-ignore-selection><%= verse.number %></sup><% if bridge_code %><%= link_to bible_chapter_path(translation: bridge_code.downcase, book: verse.chapter.book.osis_code.downcase, chapter: verse.chapter.number), class: "cross-translation-badge ml-1 text-xs text-surface-500 hover:text-accent-700", data: { ignore_selection: true, turbo: false }, title: t("bible.reader.cross_translation_badge_title", translation: bridge_code) do %><sup data-ignore-selection>&#9775;</sup><% end %><% end %><%= render_verse_with_highlights(verse, Array(highlights), style: local_assigns.fetch(:highlight_style, :fill)) %><% chip = local_assigns[:note_chip] %><% if chip && chip[:count].to_i > 0 %><%= link_to chip[:count], chip[:href], class: "verse-note-chip", data: { ignore_selection: true, turbo_frame: chip[:turbo_frame] }.compact, aria: { label: t("bible.reader.verse_notes_chip", count: chip[:count]) } %><% end %></span>
+      data-verse-text="<%= verse.body_text %>"><sup class="verse-number" data-ignore-selection><%= verse.number %></sup><% if bridge_code %><%= link_to bible_chapter_path(translation: bridge_code.downcase, book: verse.chapter.book.osis_code.downcase, chapter: verse.chapter.number), class: "cross-translation-badge ml-1 text-xs text-surface-500 hover:text-accent-700", data: { ignore_selection: true, turbo: false }, title: t("bible.reader.cross_translation_badge_title", translation: bridge_code) do %><sup data-ignore-selection>&#9775;</sup><% end %><% end %><%= render_verse_with_highlights(verse, Array(highlights), style: local_assigns.fetch(:highlight_style, :fill)) %><% if chip && chip[:count].to_i > 0 %><%= link_to chip[:count], chip[:href], class: "verse-note-chip note-chip-#{chip[:color] || 'violet'}", data: { ignore_selection: true, turbo_frame: chip[:turbo_frame] }.compact, aria: { label: chip[:label].presence || t("bible.reader.verse_notes_chip", count: chip[:count]) }, title: chip[:label].presence %><% end %></span>

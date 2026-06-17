@@ -1,6 +1,7 @@
 <% note = local_assigns.fetch(:note) %>
 <% highlight_ids = local_assigns.fetch(:highlight_ids, []) %>
 <% existing = note.persisted? %>
+<% draft = local_assigns.fetch(:draft, !existing) %>
 <%
   # eyebrow_classes: section-eyebrow treatment (form section legends,
   # share-target labels). mono caps for the deliberate form-control
@@ -17,7 +18,8 @@
 <%= turbo_frame_tag "note_panel" do %>
   <section class="note-panel"
            data-controller="note-panel"
-           data-note-panel-open-value="true">
+           data-note-panel-open-value="true"
+           data-note-panel-draft-value="<%= draft %>">
     <% citation_osis = local_assigns[:citation_osis] %>
     <header class="flex items-start justify-between border-b border-surface-200 pb-3">
       <div>
@@ -31,8 +33,8 @@
         <% end %>
       </div>
       <button type="button"
-              data-action="note-panel#close"
-              aria-label="Close"
+              data-action="note-panel#dismiss"
+              aria-label="<%= draft ? t('notes.cancel') : t('notes.close_panel') %>"
               class="rounded-md p-1 text-xl text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900">
         &times;
       </button>
@@ -50,6 +52,25 @@
 
       <div>
         <%= f.rich_text_area :body, autofocus: true %>
+      </div>
+
+      <div class="space-y-3 border-t border-surface-200 pt-4">
+        <p class="<%= eyebrow_classes %>"><%= t("notes.marker_heading") %></p>
+        <div class="flex flex-wrap gap-2">
+          <% Note::NOTE_COLORS.each do |color| %>
+            <label class="flex cursor-pointer items-center gap-2 rounded-full border border-surface-200 px-3 py-1.5 font-ui text-sm text-surface-700 hover:bg-surface-100 has-[:checked]:border-accent-700 has-[:checked]:bg-accent-50">
+              <%= f.radio_button :color, color, class: "sr-only" %>
+              <span class="h-4 w-4 rounded-full note-marker-swatch-<%= color %>" aria-hidden="true"></span>
+              <%= t("notes.colors.#{color}", default: color.capitalize) %>
+            </label>
+          <% end %>
+        </div>
+        <div>
+          <label for="note_label" class="<%= eyebrow_classes %>"><%= t("notes.label_field") %></label>
+          <%= f.text_field :label, maxlength: 40, id: "note_label",
+                           placeholder: t("notes.label_placeholder"),
+                           class: "#{input_classes} mt-1.5" %>
+        </div>
       </div>
 
       <div data-note-panel-target="shareSection" data-visibility-dependent="shared_users">
@@ -156,6 +177,12 @@
                           form_class: "inline",
                           data: { turbo_confirm: t("notes.confirm_delete"), turbo_frame: "note_panel" },
                           class: danger_classes %>
+          <% else %>
+            <button type="button"
+                    data-action="note-panel#cancel"
+                    class="rounded-full border border-surface-300 px-5 py-2.5 font-ui text-sm font-medium text-surface-700 transition-colors hover:bg-surface-100">
+              <%= t("notes.cancel") %>
+            </button>
           <% end %>
           <%= f.submit t("notes.save"), class: submit_classes %>
         </div>

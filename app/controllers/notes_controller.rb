@@ -1,4 +1,6 @@
 class NotesController < ApplicationController
+  include VerseHighlightStreams
+
   before_action :authenticate_user!
   before_action :load_note, only: %i[show edit update destroy]
 
@@ -25,8 +27,8 @@ class NotesController < ApplicationController
     @highlight_ids = @note.highlights.ids
     citation_osis = @note.highlights.first&.osis_ref
     respond_to do |format|
-      format.html         { render partial: "form", locals: { note: @note, highlight_ids: @highlight_ids, citation_osis: citation_osis } }
-      format.turbo_stream { render partial: "form", locals: { note: @note, highlight_ids: @highlight_ids, citation_osis: citation_osis } }
+      format.html         { render partial: "form", locals: { note: @note, highlight_ids: @highlight_ids, citation_osis: citation_osis, draft: false } }
+      format.turbo_stream { render partial: "form", locals: { note: @note, highlight_ids: @highlight_ids, citation_osis: citation_osis, draft: false } }
     end
   end
 
@@ -37,10 +39,10 @@ class NotesController < ApplicationController
                    .distinct
                    .first
 
-    note = existing || current_user.notes.build(visibility: "private_note")
+    note = existing || current_user.notes.build(visibility: "private_note", color: current_user.default_note_color)
     ids  = existing ? existing.highlights.ids : current_user.highlights.where(id: highlight_ids).ids
     first_hl = existing ? existing.highlights.first : current_user.highlights.where(id: highlight_ids).first
-    render partial: "form", locals: { note: note, highlight_ids: ids, citation_osis: first_hl&.osis_ref }
+    render partial: "form", locals: { note: note, highlight_ids: ids, citation_osis: first_hl&.osis_ref, draft: !existing }
   end
 
   def create
@@ -78,6 +80,25 @@ class NotesController < ApplicationController
     end
   end
 
+  def discard_draft
+    highlight_ids = Array(params[:highlight_ids]).map(&:to_i).reject(&:zero?)
+    highlights = current_user.highlights.where(id: highlight_ids).includes(:notes)
+    affected = []
+    ActiveRecord::Base.transaction do
+      highlights.each do |highlight|
+        next if highlight.notes.any?
+
+        affected.concat(highlight.affected_verses.to_a)
+        highlight.destroy
+      end
+    end
+    affected = affected.uniq
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: verse_replace_streams(affected) }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def load_note
@@ -87,7 +108,7 @@ class NotesController < ApplicationController
   end
 
   def body_param
-    params.require(:note).permit(:body)
+    params.require(:note).permit(:body, :color, :label)
   end
 
   # All 4 Note visibilities (private_note, shared_users, shared_groups,
@@ -141,13 +162,16 @@ class NotesController < ApplicationController
   end
 
   def respond_to_change(note, status)
+    affected = note.highlights.flat_map { |h| h.affected_verses.to_a }.uniq
     respond_to do |format|
       format.turbo_stream do
         flash.now[:notice] = flash_notice(note)
-        render turbo_stream: [
+        streams = [
           turbo_stream.update("flash_container", partial: "shared/flashes"),
           turbo_stream.update("note_panel", html: "")
-        ], status: status
+        ]
+        streams.concat(verse_replace_streams(affected)) if affected.any?
+        render turbo_stream: streams, status: status
       end
       format.html { head status }
       format.json { render json: note_payload(note), status: status }

@@ -1,0 +1,41 @@
+<%# Highlight + note toolbar. Colors imply "highlight" — no labeled
+    Highlight button. The first swatch is the one-click default (keyboard h).
+    Swatch titles come from the user's custom labels in Settings. %>
+<%= tag.div data: {
+              highlight_target: "toolbar",
+              confirm_remove_singular: t("bible.reader.confirm_remove_with_notes.one", count: "%{count}"),
+              confirm_remove_plural:   t("bible.reader.confirm_remove_with_notes.other", count: "%{count}")
+            },
+            hidden: true,
+            class: "toolbar-sheet absolute z-20 flex items-center gap-1 rounded-full bg-surface-900 px-1.5 py-1.5 shadow-lg ring-1 ring-surface-50/10" do %>
+  <% toolbar_colors = current_user.toolbar_colors %>
+  <% toolbar_colors.each_with_index do |color, index| %>
+    <% label = current_user.highlight_label_for(color) || t("highlights.colors.#{color}", default: color.capitalize) %>
+    <button type="button"
+            data-action="highlight#apply"
+            data-color="<%= color %>"
+            <%= "data-highlight-default" if index.zero? %>
+            title="<%= label %>"
+            aria-pressed="false"
+            aria-label="<%= label %>"
+            class="h-6 w-6 rounded-full border border-surface-50/25 transition-transform hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-inset aria-pressed:ring-surface-900 highlight-swatch-<%= color %>">
+      <span class="sr-only"><%= label %></span>
+    </button>
+  <% end %>
+  <span class="h-4 w-px bg-surface-50/20" aria-hidden="true"></span>
+  <button type="button"
+          data-action="highlight#note"
+          title="<%= t("bible.reader.note_action") %>"
+          aria-label="<%= t("bible.reader.note_action") %>"
+          class="note-toolbar-btn h-7 rounded-full px-2.5 font-ui text-xs text-surface-50 transition-colors hover:bg-surface-700">
+    <span class="note-toolbar-marker note-marker-swatch-<%= current_user.default_note_color %>" aria-hidden="true"></span>
+    <span><%= t("bible.reader.note_action") %></span>
+  </button>
+  <button type="button"
+          data-action="highlight#dismiss"
+          title="<%= t("bible.reader.dismiss_toolbar") %>"
+          aria-label="<%= t("bible.reader.dismiss_toolbar") %>"
+          class="h-7 rounded-full px-2 font-ui text-sm text-surface-50/70 transition-colors hover:bg-surface-700 hover:text-surface-50">
+    &times;
+  </button>
+<% end %>
