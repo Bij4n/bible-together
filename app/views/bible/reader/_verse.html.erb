@@ -8,8 +8,9 @@
     in the other translation. %>
 <% bridge_code = local_assigns[:cross_translation_highlights]&.dig(verse.number) %>
 <% chip = local_assigns[:note_chip] %>
-<% note_marker_class = chip.present? ? "verse-has-note note-marker-#{chip[:color] || 'violet'}" : "" %>
-<span class="verse <%= note_marker_class %>"
+<% verse_classes = [ "verse" ] %>
+<% verse_classes << "verse-has-note note-marker-#{chip[:color] || 'violet'}" if chip.present? %>
+<span class="<%= verse_classes.join(" ") %>"
       id="<%= dom_id(verse) %>"
       data-verse-id="<%= verse.id %>"
       data-osis-ref="<%= verse.osis_ref %>"

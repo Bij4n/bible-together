@@ -117,6 +117,7 @@
         <%= user_avatar(current_user, size: :lg) %>
         <div class="flex-1 space-y-3">
           <%= f.file_field :avatar, accept: "image/png,image/jpeg,image/webp",
+                           "aria-label": t("settings.sections.avatar.title"),
                            class: "block w-full font-ui text-sm text-surface-700 file:mr-3 file:rounded-full file:border-0 file:bg-surface-200 file:px-4 file:py-2 file:font-ui file:text-sm file:font-medium file:text-surface-800" %>
           <%= f.submit t("settings.save"), class: submit_classes %>
         </div>
