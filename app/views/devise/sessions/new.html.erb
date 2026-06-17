@@ -5,7 +5,7 @@
   submit_classes = "w-full rounded-full bg-accent-700 px-4 py-2.5 font-ui text-sm font-medium text-surface-50 transition-colors hover:bg-accent-800"
 %>
 
-<%= render "devise/shared/auth_shell", heading: heading do %>
+<%= render "devise/shared/auth_shell", heading: heading, subhead: t("auth.tagline_sign_in") do %>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-5" }) do |f| %>
     <div>
       <%= f.label :email, class: label_classes %>

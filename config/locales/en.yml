@@ -247,6 +247,9 @@ en:
     sign_out: Sign out
     settings: Settings
     signed_in_as: Signed in as %{email}
+    tagline_sign_in: Welcome back. Pick up where you left off.
+    tagline_sign_up: "Free, forever. Your highlights and notes stay private until you choose to share them — no ads, no tracking."
+    tagline_reset: Enter your email and we will send you a link to reset your password.
   groups:
     title: Studies
     mine: Your studies
