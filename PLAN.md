@@ -2,22 +2,25 @@
 
 ## Current sprint
 
-**Redesign R1–R9 complete on branch `sprint-r7-community` (2026-06-15), ready to merge.**
-Owner-directed visual redesign (Medium/Grammarly) plus social-model completion. Full plan
-in `REDESIGN.md`; shipped design system in `DESIGN.md`. **On `main`:** R1–R6 (tokens,
-chrome, highlight/note flow, reader layers, follows, friends sharing). **On branch:**
-R7 community feed + public-bible merge; R8 `/studies` rename + club layout; R9
-verse-view on all layers, keyboard `?` help, community axe baseline, Devise paranoid
-mode. Also on branch: Open Bible → Bible Together rename, logo v3, DB rename to
-`bible_together_*`.
+**UI polish + platform features cluster closed (2026-06-17).** Everything through PR #153
+is merged to `main` and live on bible-together.org. The redesign (R1–R9) and the
+June 2026 feature sprints (reader book picker, group admins, profiles/usernames, settings
+expansion, public forum) are all shipped. Dark mode is fully removed. Nav uses Study/Explore
+dropdowns + mobile tab bar. Content pages (About, How it works, Contact, Donate) and the
+signed-in surfaces (auth, settings, group show, search, notes, dashboard) follow the
+editorial typographic style established on the About page. Reader renders verse-per-block
+only (no view toggle).
 
-Previously: Sprint 25 closed — mobile highlighting / note-leaving / note-sharing flow (PRs #97–#101), all merged and live. See `HANDOFF.md` for the prior polish queue.
+**Next up:** see `HANDOFF.md` "Next session queue". Owner-directed priorities: groups/studies
+deep-dive audit (highlighting, notes, admin workflows), legal pages (terms/privacy — needs
+owner copy), then autonomous items (`id="join"` anchor, editorial pass on remaining surfaces,
+multilingual semantic search, swipe-to-dismiss sheets).
 
-- PR #97 — Firefox/Xvfb workaround; mobile CSS (comment-indent cap, Trix min-height)
-- PR #98 — Citation header in note panel; touch-target-row labels; `inputmode="email"`; `osis_citation` helper
-- PR #99 — Tap highlight to open toolbar without drag selection
-- PR #100 — Inline amber warning panel replaces `window.confirm()` for public note visibility
-- PR #101 — Post-save Turbo Stream flash with contextual visibility-aware message
+Recent cluster (PRs #139–#153):
+- #139–#144 — Sprints 1–6: UI foundation, reader OT/NT picker, group admins, profiles, settings, forum
+- #145–#148 — Sprints A–D: landing hero, layout rhythm, nav IA, mobile overflow audit
+- #149–#152 — About rewrite + content pages + reader cleanup
+- #153 — Auth, settings, group page, search, notes/dashboard polish
 
 ---
 

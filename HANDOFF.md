@@ -8,22 +8,50 @@
 ## Where things are right now
 
 - **Production:** [bible-together.org](https://bible-together.org), live since 2026-04-21, on Render. `main` auto-deploys.
-- **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together` (renamed from `open-bible` 2026-06-15).
-- **Branch:** `sprint-r7-community` — R7–R9 complete locally; merge to `main` when ready.
-- **Redesign (REDESIGN.md R1–R9):**
-  - **Shipped on `main`:** R1 tokens/type (Source Serif 4, Medium green `#1A8917`, white ground), R2 chrome re-skin, R3 highlight/note flow, R4 reader layers + chips, R5 follows, R6 friends sharing.
-  - **On branch (ready to merge):** R7 community feed + public-bible merge; R8 `/studies` rename + club layout; R9 verse-view on all layers, keyboard `?` help, community axe baseline, Devise paranoid mode.
-  - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md`.
-  - **Brand assets:** `public/icon.svg`, `public/icon.png` (v3 green concentric mark + pair dots), header `.wordmark-mark` disc. Preview page: `public/logo-preview.html` (research artifact — may lag DESIGN.md).
-- **GitHub Discussions:** Live. Welcome post pinned as discussion #92 in Announcements.
+- **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together`.
+- **Branch:** `main` — all work through PR #153 merged and live (2026-06-17).
+- **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md` (R1–R9 shipped on `main`).
 
-- **Previous cluster (2026-05-26, PR #111):** post-Sprint-25 UI polish + homepage redesign. See git history for detail.
+### Shipped recently (2026-06-16 → 2026-06-17)
+
+**Platform features (Sprints 1–6, PRs #139–#144):**
+- About non-profit copy; UI polish foundation
+- Reader book picker with Old/New Testament filter; Jesus words in red
+- Group administrators (`admin` role on memberships, owner/manager permissions)
+- Usernames + vanity profiles at `/@username`; follow/unfollow; bio on profiles
+- Settings expansion (bio, notification preferences)
+- Public forum (`/forum` — threads + posts, anyone signed in can participate)
+
+**Landing + chrome (Sprints A–D, PRs #145–#148):**
+- Full-bleed hero gradient (no horizontal overflow at 375px); responsive donate CTA copy
+- Global vertical rhythm (`py-10 sm:py-12 lg:py-16` on `<main>`)
+- Nav IA: **Study** and **Explore** dropdown menus, items ordered by most-used first; two-column footer (Product / Support)
+- Platform-wide mobile overflow audit (`spec/system/mobile_overflow_audit_spec.rb`)
+
+**Content + reader (PRs #149–#152):**
+- About page rewritten — editorial typographic layout, vision ends on "Jesus.", non-profit + translations in a two-column footer section; reflective blockquote copy removed
+- How it works, Contact, Donate pages redesigned to match the About editorial style (thin rules, no card chrome)
+- Reader cleanup: verse-per-block is the **only** layout (`reader_prefs` controller deleted); book/chapter/translation controls consolidated into one row
+
+**UI polish pass (PR #153):**
+- Auth pages: value-prop subheads under headings
+- Settings: six stacked cards → divided editorial sections
+- Group show page: clearer hierarchy (members/invite/code consolidated; leave/delete at bottom)
+- Search: card chrome removed from form and empty state
+- Notes index + dashboard: editorial heading scale + one-line description
+
+**Also closed this cluster:**
+- Dark mode **fully removed** — no `data-theme`, no `theme_controller.js`, zero `dark:` classes in views
+- Invitation email bug fixed (group invites deliver via `GroupInvitationMailer`)
+- Navbar/footer/hero redesign live (dropdown nav + mobile tab bar)
+
+- **GitHub Discussions:** Live. Welcome post pinned as discussion #92 in Announcements.
 
 ---
 
 ## What to read next, in order
 
-1. **`CLAUDE.md`** — workflow rules (the 9 numbered rules, especially Rule 7 no-Chrome / Rule 8 no-Google-fonts / Rule 9 every-UI-commit-ships-its-spec), TDD discipline, commit style, confidence flagging.
+1. **`CLAUDE.md`** — workflow rules (especially Rule 7 no-Chrome / Rule 8 no-Google-fonts / Rule 9 every-UI-commit-ships-its-spec), TDD discipline, commit style, confidence flagging.
 2. **`PLAN.md` "Current sprint"** (top of file) — one-paragraph statement of where we are and what's queued. Keep this current as the project moves.
 3. **`PLAN.md` decisions log** — the most recent ~5 entries are append-only context for *why* the current code is what it is. Grep here when something looks wrong before assuming it's wrong.
 4. **`PROJECT_OVERVIEW.md`** — depth reference (stack, file tour, sprint history). Slower to read; only when you actually need it.
@@ -35,10 +63,9 @@
 These are the things sitting on the user's desk, not Claude's. Don't pick them blind.
 
 - **Legal pages** — `/terms`, `/privacy`, `/acceptable-use`. Sprint 15 blocker, still open. More pressing now that the repo is public and the app is accepting donations. Needs jurisdiction decision + drafted copy from the owner before any code can be written.
-- **Devise paranoid-mode stance** — `paranoid = true` on branch (Sprint R9); merge when ready.
-- **Language-switcher placement** — the account-sheet is overloaded (theme + locale + auth all in one dropdown). Two options exist; owner picks. Audit detail saved at `~/.claude/plans/what-do-you-need-enumerated-ember.md`.
+- **Groups / studies deep-dive** — owner wants a full pass on how groups work: highlighting, notes, sharing, settings, and administrator workflows. Audit for gaps before building more on top.
+- **Language-switcher placement** — the account menu still carries locale + auth. Two options exist; owner picks. Audit detail saved at `~/.claude/plans/what-do-you-need-enumerated-ember.md`.
 - **Pencil-bridge polish** (Sprint 16.5 PR E) — transition between toolbar dismiss and note-panel reveal. No UX spec locked: slide animation? auto-focus scroll? back-arrow to reopen toolbar? Owner decides the gesture before building.
-- **Contact form** — delivery channel undecided (Resend mailer pipe? Slack hook? Ticket queue?). Ready to build the moment the channel is decided.
 - **Donation rotation UX redesign** — current behavior forces a rotation on every "Add address." Backlogged design call: `Add` creates inactive, separate `Activate` action promotes. Low urgency; current behaviour works.
 - **Issue triage process** — now that the repo is public, how fast and by what criteria does the owner respond to incoming GitHub issues? No tooling needed; just a mental model to have.
 
@@ -47,14 +74,18 @@ These are the things sitting on the user's desk, not Claude's. Don't pick them b
 ## Next session queue
 
 **Owner input needed first:**
+- **Groups / studies audit** — walk through highlighting, notes, visibility, group admin permissions, and settings. Confirm nothing is missing before new social features.
+- **Legal pages** — jurisdiction + copy from owner; then wire `/terms`, `/privacy`, `/acceptable-use`.
 - **Language-switcher placement** — once decided, this is a focused Stimulus + CSS change. No code until the owner picks an option.
 - **Pencil-bridge polish** — same; the build is straightforward once the UX is specified.
 
 **Autonomous-doable (no owner input needed):**
+- **`id="join"` anchor on `/studies`** — nav "Join with code" links to `groups_path(anchor: "join")` but the studies index has no matching anchor. Small fix.
 - **Swipe-to-dismiss bottom sheet** — the mobile highlight toolbar (PR #50) and account menu have no swipe gesture. Substantive Stimulus + gesture work; roughly a full sprint segment.
-- **Public author profiles** — `/authors/:slug` showing public notes by an author. Useful now that public notes exist and accumulate.
 - **Multilingual semantic search (4-step sequenced)** — see `PROJECT_OVERVIEW.md` §8 for the full plan. Currently Concept search is English-only and labeled as such; multilingual covers RV1909. Steps: (1) make `embeddings.rake` translation-agnostic, (2) swap to multilingual model, (3) regenerate embeddings, (4) drop the "(English)" parenthetical from homepage.
 - **`/help` or FAQ** — usage guide. No clear demand yet; easy to add.
+- **Profile social layer polish** — liking and commenting on notes from profile pages; verify end-to-end UX now that profiles + forum exist.
+- **Remaining editorial surfaces** — forum thread show, notes show, admin pages, and Devise mailer HTML still carry pre-redesign card chrome. Low priority; apply the About-page editorial language when touched.
 
 ---
 
@@ -80,10 +111,15 @@ When the user provides explicit direction (e.g. "fix the about page eyebrow"), d
 - **Email-only auth.** No SMS. No phone fields. Ever.
 - **Bilingual (en + es) is a merge gate.** Both locales updated in the same PR.
 - **CI required checks:** `test`, `lint`, `scan_ruby`, `scan_js`, GitGuardian. Branch protection enforces.
-- **Theme system:** `data-theme="dark"` attribute on `<html>` set by `theme_controller.js` from server pin / localStorage / system; CSS uses `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *))`. No-flash theme script is in `<head>` as an inline `<script>` — sets `data-theme` before any stylesheet evaluates.
-- **Homepage layout (as of PR #111):** `/` shows only hero + community. Features grid, How it works, and About live at `/how-it-works`. Don't add content sections back to `/` without owner direction.
+- **Light mode only.** Dark mode was removed 2026-06-16. Do not reintroduce `data-theme`, theme toggles, or `dark:` view classes.
+- **Homepage layout:** `/` shows hero + community for signed-out visitors; signed-in users get the dashboard. Features, How it works, and About live at their own routes (`/how-it-works`, `/about`). Don't add content sections back to `/` without owner direction.
+- **Nav IA:** Study dropdown (My studies → My notes → Start a study → Join with code) and Explore dropdown (Search → Public notes → Forum → Community Bible → Discover studies). Mobile tab bar mirrors the primary destinations.
+- **Editorial content style:** About-page pattern — `max-w-2xl` article, uppercase eyebrow labels, thin `border-t border-surface-200` section dividers, no rounded card chrome on content pages. Apply when touching marketing or settings surfaces.
+- **Reader:** verses always render as blocks (one verse per line). No view toggle. Red-letter (Jesus words) enabled. Book picker filters Old/New Testament.
 - **OSIS refs** are canonical: `Bible.<TRANSLATION>.<Book>.<Chapter>.<Verse>[!offset]`. Don't reinvent — use `app/services/osis_ref.rb`.
-- **Test count:** ~800+ (estimate post PR #111 additions; last confirmed count was ~786 as of 2026-05-12). Full non-JS suite runs in ~10s locally.
+- **Profiles:** vanity URLs at `/@username`. Follow/unfollow on author pages. Forum at `/forum`.
+- **Contact form:** live at `/contact`, delivers via `ContactMailer` to `hello@bible-together.org`.
+- **Test count:** ~833 spec examples (estimate, 2026-06-17). Full non-JS suite runs in ~10s locally.
 
 ---
 
@@ -94,3 +130,4 @@ When the user provides explicit direction (e.g. "fix the about page eyebrow"), d
 - **Note panel + Turbo Frame testing pattern** — visiting `/notes/:id/edit` directly renders only the partial (no layout, no Stimulus). System specs that need JS features in the panel should visit a reader page and set the turbo-frame `src` via `execute_script`. Example in `spec/system/notes_spec.rb` "post-save flash" spec.
 - **Tailwind v4 translate vs transform** — Tailwind v4 uses the CSS `translate` property (not `transform`) for `translate-x-*` utilities. When forcing elements on-screen in specs, set both `element.classList.remove('translate-x-full')` and `element.style.translate = '0 0'`; `element.style.transform` alone has no effect. Production CSS override also uses `translate: 0` (not `transform`), outside all `@layer` blocks so it wins on specificity.
 - **`bin/embedding`** boots a Python venv + uvicorn for semantic search; skip with `EMBEDDING_SERVICE_SKIP=1 bin/dev` if you don't need it.
+- **Do not pipe rspec output** (`rspec ... | tail`) — hangs forever after js specs because rails_helper's Xvfb inherits stdout. Redirect to a file instead (`> log 2>&1`).
