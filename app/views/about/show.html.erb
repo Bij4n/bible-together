@@ -19,12 +19,12 @@
     </p>
   </div>
 
-  <section class="landing-bento-card max-w-3xl space-y-3">
-    <h2 class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
-      <%= t("home.about.nonprofit_label") %>
+  <section class="landing-bento-card max-w-3xl space-y-3" aria-labelledby="about-vision">
+    <h2 id="about-vision" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
+      <%= t("home.about.vision_label") %>
     </h2>
     <p class="font-reading text-lg leading-relaxed text-surface-700">
-      <%= t("home.about.para_nonprofit") %>
+      <%= t("home.about.para_vision") %>
     </p>
   </section>
 
@@ -34,6 +34,15 @@
       <p><%= t("home.about.para_3") %></p>
     </blockquote>
   </figure>
+
+  <section class="landing-bento-card max-w-3xl space-y-3" aria-labelledby="about-team">
+    <h2 id="about-team" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
+      <%= t("home.about.team_label") %>
+    </h2>
+    <p class="font-reading text-lg leading-relaxed text-surface-700">
+      <%= t("home.about.para_team") %>
+    </p>
+  </section>
 
   <div class="grid max-w-4xl gap-6 sm:grid-cols-2">
     <section class="landing-bento-card">
@@ -53,6 +62,15 @@
       </p>
     </section>
   </div>
+
+  <section class="landing-bento-card max-w-3xl space-y-3" aria-labelledby="about-nonprofit">
+    <h2 id="about-nonprofit" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
+      <%= t("home.about.nonprofit_label") %>
+    </h2>
+    <p class="font-reading text-lg leading-relaxed text-surface-700">
+      <%= t("home.about.para_nonprofit") %>
+    </p>
+  </section>
 
   <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
     <%= link_to t("home.cta_public_bible"),

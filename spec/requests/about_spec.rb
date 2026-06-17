@@ -29,4 +29,12 @@ RSpec.describe "About page", type: :request do
     expect(response.body).to include(I18n.t("home.about.nonprofit_label"))
     expect(response.body).to include(I18n.t("home.about.para_nonprofit"))
   end
+
+  it "shares the social-platform vision and that one person (a businessperson and developer) builds it" do
+    get "/about"
+    expect(response.body).to include(I18n.t("home.about.vision_label"))
+    expect(response.body).to include(I18n.t("home.about.para_vision"))
+    expect(response.body).to include(I18n.t("home.about.team_label"))
+    expect(response.body).to include(I18n.t("home.about.para_team"))
+  end
 end
