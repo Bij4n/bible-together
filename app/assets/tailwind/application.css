@@ -431,8 +431,15 @@
    * bleeding past the viewport edge (it uses negative horizontal
    * insets), which would otherwise trigger a mobile side-scroll.
    */
-  .landing {
+  /* Marketing pages clip horizontal overflow so the full-bleed hero glow
+     (a 100vw element) never produces a horizontal scrollbar. overflow:clip
+     (not hidden) keeps the sticky header working. */
+  .marketing-surface {
     overflow-x: clip;
+  }
+
+  .landing {
+    position: relative;
   }
 
   .landing-hero {
@@ -440,14 +447,22 @@
     isolation: isolate;
   }
 
+  /* Ambient hero glow is a full-bleed band (cohesive with the full-width
+     footer band) instead of a boxed ::before clipped to the content
+     column — so the hero copy never collides with a hard gradient edge.
+     The 100vw + left:50% + translateX trick breaks it out of the centered
+     container; .marketing-surface clips the resulting overflow. */
   .landing-hero::before {
     content: "";
     position: absolute;
-    inset: -4rem -2rem auto;
-    height: min(520px, 70vh);
+    top: -6rem;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    height: min(620px, 75vh);
     background:
-      radial-gradient(ellipse 80% 60% at 20% 0%, color-mix(in srgb, var(--color-accent-700) 9%, transparent), transparent 70%),
-      radial-gradient(ellipse 60% 50% at 85% 10%, color-mix(in srgb, var(--color-accent-700) 5%, transparent), transparent 65%);
+      radial-gradient(ellipse 70% 60% at 30% 0%, color-mix(in srgb, var(--color-accent-700) 10%, transparent), transparent 72%),
+      radial-gradient(ellipse 55% 55% at 80% 5%, color-mix(in srgb, var(--color-accent-700) 6%, transparent), transparent 68%);
     pointer-events: none;
     z-index: 0;
   }
