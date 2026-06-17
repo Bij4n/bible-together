@@ -305,6 +305,7 @@ es:
     email_placeholder: miembro@ejemplo.com
   notes:
     my_notes: Mis notas
+    description: Todo lo que has resaltado y escrito, reunido en un solo lugar.
     empty: Aún no hay notas. Abre la Biblia, resalta un versículo y escribe lo que significa para ti.
     badge:
       private_note: Privada

@@ -1,10 +1,13 @@
 <% content_for :title, t("notes.my_notes") %>
 
 <article class="mx-auto max-w-3xl space-y-8">
-  <header class="border-b border-surface-200 pb-6">
+  <header class="space-y-2 border-b border-surface-200 pb-6">
     <h1 class="font-ui text-4xl font-semibold tracking-tight text-surface-900 sm:text-5xl">
       <%= t("notes.my_notes") %>
     </h1>
+    <p class="font-reading text-lg leading-relaxed text-pretty text-surface-600">
+      <%= t("notes.description") %>
+    </p>
   </header>
 
   <% if @notes.any? %>

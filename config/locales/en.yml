@@ -312,6 +312,7 @@ en:
     email_placeholder: member@example.com
   notes:
     my_notes: My Notes
+    description: Everything you have highlighted and written, gathered in one place.
     empty: No notes yet. Open the Bible, highlight a verse, and write what it means to you.
     badge:
       private_note: Private
