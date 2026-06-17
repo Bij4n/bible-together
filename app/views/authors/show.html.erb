@@ -60,7 +60,7 @@
                 private: @note_stats[:private]) %>
         </p>
       <% end %>
-      <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-5 <%= is_owner ? 'sm:grid-cols-4' : 'max-w-xs' %>">
+      <dl class="mt-5 grid gap-x-6 gap-y-5 <%= is_owner ? 'grid-cols-2 max-w-md' : 'grid-cols-1 max-w-[12rem]' %>">
         <% stats.each do |label, count| %>
           <div class="space-y-1">
             <dt class="font-ui text-xs font-medium uppercase tracking-wide text-surface-500"><%= label %></dt>

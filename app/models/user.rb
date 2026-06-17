@@ -65,12 +65,17 @@ class User < ApplicationRecord
     highlight_color_labels.to_h[color.to_s].presence
   end
 
+  # Profile stats treat visibility as private-vs-public: a note is
+  # "private" unless it is published to everyone. Only-me, friends,
+  # specific people, and study/group shares all count as private —
+  # they're limited audiences, not the open web.
   def note_stats
+    total = notes.count
+    public_count = notes.public_note.count
     {
-      total: notes.count,
-      public: notes.public_note.count,
-      private: notes.private_bucket.count,
-      shared: notes.shared_bucket.count
+      total: total,
+      public: public_count,
+      private: total - public_count
     }
   end
 
