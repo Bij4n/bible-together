@@ -136,16 +136,20 @@ en:
       step_3_body: With a friend, your study group, or the public chapter.
     about:
       heading: About
-      subhead: Read, annotate, and share scripture, without ads or tracking.
+      subhead: A home for reading, marking, and sharing scripture, built around people instead of ads.
       translations_label: Translations
       support_label: Support
-      para_1: "Bible Together is a reader for people who mark up their Bible: highlights, notes, and a community layer when you want to read with others."
+      para_1: "Bible Together is a reader for people who mark up their Bible: highlights, notes, and a shared community layer for when you want to read alongside others."
       para_2: The verse that stops you has probably stopped someone else too.
-      para_3: Reading what it meant for them, then writing what it meant for you, is the whole point.
-      para_4: KJV in English and RV1909 in Spanish are live now. The interface is bilingual. Both translations are public domain.
-      para_5: Built and maintained by one person. Hosting runs on donations. No subscription, no ads, no tracker.
+      para_3: Reading what it meant for them, and then writing what it meant for you, is the whole point.
+      vision_label: Where this is going
+      para_vision: "Right now it is a quiet, focused reading tool. The hope is bigger: a social platform for like-minded people to go deeper in scripture and unite around our shared love for Jesus. A place to follow others, learn from how they read, and grow together."
+      team_label: Who builds it
+      para_team: It is built and run by one person, a businessperson and a developer, who wears every hat for now. That is the starting point, not the destination. The plan is to grow the team and build something that serves a real community as it expands.
+      para_4: KJV in English and RV1909 in Spanish are live now, and the interface is fully bilingual. Both translations are public domain.
+      para_5: Hosting runs on donations. There is no subscription, no advertising, and no tracking.
       nonprofit_label: Non-profit
-      para_nonprofit: "Bible Together is run on a non-profit basis by a single developer. It is not a business and takes no profit — every donation goes entirely toward running the platform: hosting, email, domains, and the bills that keep it online."
+      para_nonprofit: "Bible Together is run on a non-profit basis by a single developer. It is not a business and takes no profit. Every donation goes entirely toward running the platform: hosting, email, domains, and the bills that keep it online."
     donate_cta:
       heading: Keep Bible Together free
       body: "A non-profit project run by one developer. Every donation goes straight to hosting and the bills — no ads, no subscriptions."
