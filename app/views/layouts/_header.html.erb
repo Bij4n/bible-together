@@ -32,10 +32,10 @@
             </svg>
           </button>
           <div data-user-menu-target="menu" hidden role="menu" class="<%= dropdown_menu %>">
-            <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem",
-                class: "#{menu_item_base} #{nav_active?(notes_path) ? menu_item_active : menu_item_idle}" %>
             <%= link_to t("layout.my_studies_link"), groups_path, role: "menuitem",
                 class: "#{menu_item_base} #{request.path.start_with?('/studies') ? menu_item_active : menu_item_idle}" %>
+            <%= link_to t("layout.my_notes_link"), notes_path, role: "menuitem",
+                class: "#{menu_item_base} #{nav_active?(notes_path) ? menu_item_active : menu_item_idle}" %>
             <%= link_to t("layout.start_study_link"), new_group_path, role: "menuitem",
                 class: "#{menu_item_base} #{nav_active?(new_group_path) ? menu_item_active : menu_item_idle}" %>
             <%= link_to t("layout.join_with_code_link"), groups_path(anchor: "join"), role: "menuitem",
@@ -61,16 +61,16 @@
           </svg>
         </button>
         <div data-user-menu-target="menu" hidden role="menu" class="<%= dropdown_menu %>">
-          <%= link_to t("layout.public_notes_link"), community_path, role: "menuitem",
-              class: "#{menu_item_base} #{request.path.start_with?('/community') ? menu_item_active : menu_item_idle}" %>
-          <%= link_to t("layout.community_bible_link"), community_bible_path, role: "menuitem",
-              class: "#{menu_item_base} #{menu_item_idle}" %>
           <%= link_to t("search.submit"), search_path, role: "menuitem",
               class: "#{menu_item_base} #{nav_active?(search_path) ? menu_item_active : menu_item_idle}" %>
-          <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem",
-              class: "#{menu_item_base} #{nav_active?(discover_groups_path) ? menu_item_active : menu_item_idle}" %>
+          <%= link_to t("layout.public_notes_link"), community_path, role: "menuitem",
+              class: "#{menu_item_base} #{request.path.start_with?('/community') ? menu_item_active : menu_item_idle}" %>
           <%= link_to t("layout.forum_link"), forum_threads_path, role: "menuitem",
               class: "#{menu_item_base} #{request.path.start_with?('/forum') ? menu_item_active : menu_item_idle}" %>
+          <%= link_to t("layout.community_bible_link"), community_bible_path, role: "menuitem",
+              class: "#{menu_item_base} #{menu_item_idle}" %>
+          <%= link_to t("layout.discover_studies_link"), discover_groups_path, role: "menuitem",
+              class: "#{menu_item_base} #{nav_active?(discover_groups_path) ? menu_item_active : menu_item_idle}" %>
         </div>
       </div>
 
