@@ -10,18 +10,18 @@
     <% end %>
 
     <% if donate_link_visible? %>
-      <section data-section="donate-cta" class="donate-callout rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
-        <div class="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <section data-section="donate-cta" class="donate-callout rounded-2xl px-6 py-9 sm:px-10 sm:py-12">
+        <div class="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-8">
           <div class="max-w-xl space-y-2">
             <h2 class="font-ui text-2xl font-semibold tracking-tight text-surface-50">
               <%= t("home.donate_cta.heading") %>
             </h2>
-            <p class="font-reading text-base leading-relaxed text-surface-300">
+            <p class="font-reading text-base leading-relaxed text-pretty text-surface-300">
               <%= t("home.donate_cta.body") %>
             </p>
           </div>
           <%= link_to t("home.donate_cta.button"), donate_path,
-                      class: "inline-flex shrink-0 items-center rounded-full bg-surface-50 px-6 py-3 font-ui text-base font-medium text-surface-950 transition-colors hover:bg-accent-50" %>
+                      class: "inline-flex w-full shrink-0 items-center justify-center rounded-full bg-surface-50 px-6 py-3 font-ui text-base font-medium text-surface-950 transition-colors hover:bg-accent-50 md:w-auto" %>
         </div>
       </section>
     <% end %>
