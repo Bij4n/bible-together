@@ -3,9 +3,12 @@ class User < ApplicationRecord
   DISPLAY_NAME_MAX = 60
   USERNAME_FORMAT = /\A[a-zA-Z0-9_]{3,30}\z/
   BIO_MAX = 300
+  NOTE_COLOR_OPTIONS = Note::NOTE_COLORS
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one_attached :avatar
 
   belongs_to :default_translation, class_name: "Translation", optional: true
 
@@ -48,6 +51,34 @@ class User < ApplicationRecord
             format: { with: USERNAME_FORMAT },
             uniqueness: { case_sensitive: false }
   validates :bio, length: { maximum: BIO_MAX }
+  validates :default_note_color, inclusion: { in: NOTE_COLOR_OPTIONS }
+  validate :highlight_toolbar_colors_are_valid
+  validate :highlight_toolbar_colors_present, if: -> { highlight_toolbar_colors_changed? }
+  validate :acceptable_avatar
+
+  def toolbar_colors
+    chosen = Array(highlight_toolbar_colors).select { |c| Highlight::COLORS.include?(c) }
+    chosen.presence || Highlight::DEFAULT_TOOLBAR_COLORS
+  end
+
+  def highlight_label_for(color)
+    highlight_color_labels.to_h[color.to_s].presence
+  end
+
+  def note_stats
+    {
+      total: notes.count,
+      public: notes.public_note.count,
+      private: notes.private_bucket.count,
+      shared: notes.shared_bucket.count
+    }
+  end
+
+  def note_color_label(color)
+    return color.capitalize if color.blank?
+
+    I18n.t("notes.colors.#{color}", default: color.capitalize)
+  end
 
   def follow!(user)
     follows.find_or_create_by!(followed: user)
@@ -89,5 +120,31 @@ class User < ApplicationRecord
 
   def self.find_by_handle!(key)
     find_by("lower(username) = ?", key.to_s.downcase) || find(key)
+  end
+
+  private
+
+  def highlight_toolbar_colors_are_valid
+    return if highlight_toolbar_colors.blank?
+
+    invalid = Array(highlight_toolbar_colors).reject(&:blank?) - Highlight::COLORS
+    return if invalid.empty?
+
+    errors.add(:highlight_toolbar_colors, :invalid)
+  end
+
+  def highlight_toolbar_colors_present
+    if Array(highlight_toolbar_colors).reject(&:blank?).empty?
+      errors.add(:highlight_toolbar_colors, :blank)
+    end
+  end
+
+  def acceptable_avatar
+    return unless avatar.attached?
+
+    unless avatar.content_type.in?(%w[image/png image/jpeg image/webp])
+      errors.add(:avatar, "must be a PNG, JPEG, or WebP image")
+    end
+    errors.add(:avatar, "must be smaller than 2 MB") if avatar.byte_size > 2.megabytes
   end
 end

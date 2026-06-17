@@ -23,8 +23,9 @@ RSpec.describe Highlight, type: :model do
       expect { build(:highlight, color: "neon") }.to raise_error(ArgumentError)
     end
 
-    it "exposes the toolbar palette with yellow as the default" do
-      expect(Highlight::TOOLBAR_COLORS).to eq(%w[yellow green blue rose])
+    it "exposes the default toolbar palette with yellow as the default" do
+      expect(Highlight::DEFAULT_TOOLBAR_COLORS).to eq(%w[yellow green blue rose orange purple])
+      expect(Highlight::TOOLBAR_COLORS).to eq(Highlight::DEFAULT_TOOLBAR_COLORS)
       expect(Highlight::DEFAULT_COLOR).to eq("yellow")
     end
   end

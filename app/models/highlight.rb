@@ -7,12 +7,13 @@ class Highlight < ApplicationRecord
   # (gold→yellow, sage→green, sky+lavender→blue) with no data
   # migration. Hex values live in app/assets/tailwind/application.css
   # so light/dark overlays tune independently.
-  COLORS = %w[gold rose sage lavender sky yellow green blue].freeze
+  COLORS = %w[gold rose sage lavender sky yellow green blue orange purple].freeze
 
-  # What the highlight toolbar actually offers (design v3): four
-  # Readwise-saturation pastels, yellow first because it's the
-  # one-click default.
-  TOOLBAR_COLORS = %w[yellow green blue rose].freeze
+  # Default toolbar palette when the user hasn't customized theirs.
+  # Yellow is first — the one-click default for keyboard h and the
+  # first swatch in the toolbar.
+  DEFAULT_TOOLBAR_COLORS = %w[yellow green blue rose orange purple].freeze
+  TOOLBAR_COLORS = DEFAULT_TOOLBAR_COLORS
   DEFAULT_COLOR  = "yellow".freeze
 
   enum :color, COLORS.each_with_index.to_h

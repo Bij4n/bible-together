@@ -230,6 +230,15 @@ es:
       bio:
         title: Biografía
         description: Una línea breve sobre ti, visible en tu perfil público.
+      avatar:
+        title: Foto de perfil
+        description: Se muestra en tu perfil público. PNG, JPEG o WebP hasta 2 MB.
+      highlights:
+        title: Resaltados y notas
+        description: Elige qué colores aparecen en la barra del lector, ponles nombre y elige el color predeterminado del marcador de notas.
+        toolbar_colors: Colores de la barra
+        label_placeholder: Etiqueta
+        default_note_color: Marcador de nota predeterminado
       notifications:
         title: Notificaciones
         description: Elige qué correos te envía Bible Together.
@@ -314,7 +323,17 @@ es:
       shared_groups: Con grupos
       public_note: Pública
     save: Guardar nota
+    cancel: Cancelar
+    close_panel: Cerrar
     delete: Eliminar nota
+    marker_heading: Marcador de nota
+    label_field: Etiqueta (opcional)
+    label_placeholder: p. ej. Oración, Pregunta
+    colors:
+      violet: Violeta
+      amber: Ámbar
+      teal: Verde azulado
+      coral: Coral
     confirm_delete: ¿Eliminar esta nota?
     share_with_users: Compartir con personas específicas
     share_with_groups: Compartir con grupos
@@ -361,7 +380,14 @@ es:
     empty: Aún no hay notas públicas. Abre la Biblia, resalta un versículo y sé quien comparta primero lo que significa para ti.
   authors:
     public_notes_heading: Notas públicas
+    stats_heading: Notas
+    stats_summary: "%{total} notas en total — %{public} públicas, %{private} privadas."
     member_since: "Miembro desde %{year}"
+    stats:
+      total: Notas totales
+      public: Públicas
+      private: Privadas
+      shared: Compartidas
     no_public_notes: Este autor aún no ha publicado notas públicas.
     follow: Seguir
     unfollow: Siguiendo
@@ -377,6 +403,16 @@ es:
     likes:
       one: "%{count} me gusta"
       other: "%{count} me gusta"
+  highlights:
+    colors:
+      yellow: Amarillo
+      green: Verde
+      blue: Azul
+      rose: Rosa
+      orange: Naranja
+      purple: Morado
+  avatars:
+    photo_alt: "Foto de perfil de %{name}"
   group_invitations:
     invite_button: Enviar invitación
     pending_heading: Invitaciones pendientes

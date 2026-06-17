@@ -36,8 +36,12 @@
   <div class="chapter-body font-reading text-surface-900"
        data-highlight-target="chapter">
     <% chip_map = verse_note_map(@highlights) %>
-    <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: "#note_#{chip_ids.first}" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>
+    <% @verses.each_with_index do |verse, i| %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: "#note_#{meta[:ids].first}", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
+
+  <% if user_signed_in? %>
+    <%= render "bible/reader/toolbar" %>
+  <% end %>
 
   <aside id="group_notes_aside"
          class="rounded-2xl border border-surface-200 bg-surface-50 p-5 <%= "hidden" if @group_notes.empty? %>">

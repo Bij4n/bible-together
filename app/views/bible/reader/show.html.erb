@@ -47,70 +47,11 @@
   <div class="chapter-body font-reading text-surface-900"
        data-highlight-target="chapter">
     <% chip_map = verse_note_map(@highlights) %>
-    <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights || [], cross_translation_highlights: @cross_translation_highlights, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: edit_note_path(chip_ids.first), turbo_frame: "note_panel" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>
+    <% @verses.each_with_index do |verse, i| %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: edit_note_path(meta[:ids].first), turbo_frame: "note_panel", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights || [], cross_translation_highlights: @cross_translation_highlights, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
   <% if user_signed_in? %>
-    <%# Sprint 16.5 PR C: confirm-remove templates carry the
-        pluralized I18n forms as data attributes. JS picks `singular`
-        when noteCount == 1, `plural` otherwise, then string-replaces
-        the literal `%{count}` placeholder client-side. Rails escapes
-        the attribute values automatically when the data: hash is
-        used (vs raw inline `data-x="..."` which leaves us responsible
-        for the escaping). %>
-    <%# Medium-style dark pill toolbar (design v3): the labeled
-        Highlight button is the one-click happy path (default color,
-        zero decisions); the four swatches are the optional refinement.
-        Dark in BOTH themes — it floats above the text like a tooltip,
-        so it keeps tooltip chrome regardless of page theme. %>
-    <%= tag.div data: {
-                  highlight_target: "toolbar",
-                  confirm_remove_singular: t("bible.reader.confirm_remove_with_notes.one", count: "%{count}"),
-                  confirm_remove_plural:   t("bible.reader.confirm_remove_with_notes.other", count: "%{count}")
-                },
-                hidden: true,
-                class: "toolbar-sheet absolute z-20 flex items-center gap-1 rounded-full bg-surface-900 px-1.5 py-1.5 shadow-lg ring-1 ring-surface-50/10" do %>
-      <%# data-highlight-default marks the one-click default action; it
-          shares highlight#apply with the swatches via its data-color. %>
-      <button type="button"
-              data-action="highlight#apply"
-              data-color="<%= Highlight::DEFAULT_COLOR %>"
-              data-highlight-default
-              class="h-7 rounded-full px-3 font-ui text-xs font-medium text-surface-50 transition-colors hover:bg-surface-700">
-        <%= t("bible.reader.highlight_action") %>
-      </button>
-      <span class="h-4 w-px bg-surface-50/20" aria-hidden="true"></span>
-      <% Highlight::TOOLBAR_COLORS.each do |color| %>
-        <%# aria-pressed flips to "true" on the swatch matching the
-            existing highlight color under the current selection (set
-            by highlight#markActiveSwatch; legacy stored colors alias
-            onto these four). The inset ring stays surface-900 ink —
-            it draws on top of the pale pastel fill (9.4:1+), not on
-            the pill background. %>
-        <button type="button"
-                data-action="highlight#apply"
-                data-color="<%= color %>"
-                title="<%= color.capitalize %>"
-                aria-pressed="false"
-                class="h-6 w-6 rounded-full border border-surface-50/25 transition-transform hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-inset aria-pressed:ring-surface-900 highlight-swatch-<%= color %>">
-          <span class="sr-only"><%= color.capitalize %></span>
-        </button>
-      <% end %>
-      <span class="h-4 w-px bg-surface-50/20" aria-hidden="true"></span>
-      <button type="button"
-              data-action="highlight#note"
-              title="<%= t("bible.reader.note_action") %>"
-              class="h-7 rounded-full px-3 font-ui text-xs text-surface-50 transition-colors hover:bg-surface-700">
-        <%= t("bible.reader.note_action") %>
-      </button>
-      <button type="button"
-              data-action="highlight#dismiss"
-              title="<%= t("bible.reader.dismiss_toolbar") %>"
-              aria-label="<%= t("bible.reader.dismiss_toolbar") %>"
-              class="h-7 rounded-full px-2 font-ui text-sm text-surface-50/70 transition-colors hover:bg-surface-700 hover:text-surface-50">
-        &times;
-      </button>
-    <% end %>
+    <%= render "bible/reader/toolbar" %>
   <% end %>
 
   <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between border-t border-surface-200 pt-6 font-ui text-sm">

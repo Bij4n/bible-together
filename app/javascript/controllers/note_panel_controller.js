@@ -10,7 +10,7 @@ import { Controller } from "@hotwired/stimulus"
 // so only the currently chosen visibility's fields are visible.
 export default class extends Controller {
   static targets = ["shareSection", "publicWarning", "postMenu", "postLabel"]
-  static values = { open: Boolean }
+  static values = { open: Boolean, draft: Boolean }
 
   connect() {
     this.syncVisibility()
@@ -36,10 +36,49 @@ export default class extends Controller {
     if (frame) frame.innerHTML = ""
   }
 
+  // Header × and Escape route here so draft highlights are cleaned up
+  // instead of leaving orphan marks on the chapter.
+  dismiss() {
+    if (this.draftValue) {
+      this.cancel()
+    } else {
+      this.close()
+    }
+  }
+
+  async cancel() {
+    if (this.draftValue) {
+      const ids = [ ...this.element.querySelectorAll('input[name="note[highlight_ids][]"]') ]
+        .map((input) => input.value)
+        .filter(Boolean)
+      if (ids.length > 0) {
+        const csrf = document.querySelector('meta[name="csrf-token"]')?.content
+        const body = new URLSearchParams()
+        ids.forEach((id) => body.append("highlight_ids[]", id))
+        const response = await fetch("/notes/discard_draft", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "X-CSRF-Token": csrf,
+            "Accept": "text/vnd.turbo-stream.html"
+          },
+          body
+        })
+        if (response.ok) {
+          const html = await response.text()
+          if (html.trim() && window.Turbo?.renderStreamMessage) {
+            window.Turbo.renderStreamMessage(html)
+          }
+        }
+      }
+    }
+    this.close()
+  }
+
   keydown(event) {
     if (event.key === "Escape") {
       event.preventDefault()
-      this.close()
+      this.dismiss()
       return
     }
     const cmdOrCtrl = event.metaKey || event.ctrlKey

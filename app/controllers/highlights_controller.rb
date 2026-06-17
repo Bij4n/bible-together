@@ -1,4 +1,5 @@
 class HighlightsController < ApplicationController
+  include VerseHighlightStreams
   before_action :authenticate_user!
   before_action :load_highlight, only: %i[update destroy]
 
@@ -97,44 +98,6 @@ class HighlightsController < ApplicationController
       format.turbo_stream { render turbo_stream: verse_replace_streams(affected), status: status }
       format.html         { head status }
       format.json         { render json: highlight_payload(highlight), status: status }
-    end
-  end
-
-  # Builds the array of <turbo-stream action="replace"> tags targeting
-  # each affected verse's dom_id, rendering the bible/reader/verse
-  # partial with the freshly-loaded chapter highlights set + cross-
-  # translation map. Both create and destroy paths feed through here so
-  # the rendered shape matches the initial reader-page render byte-for-
-  # byte (data-highlight-ids, data-note-count, highlight-{color} class).
-  def verse_replace_streams(verses)
-    chapters = verses.map(&:chapter).uniq
-    chapter_locals_cache = chapters.each_with_object({}) do |chapter, acc|
-      prefix = "Bible.#{chapter.book.translation.code}.#{chapter.book.osis_code}.#{chapter.number}."
-      cross_map = current_user.highlights.from_other_translations_in_chapter(
-        translation_code: chapter.book.translation.code,
-        book:             chapter.book.osis_code,
-        chapter:          chapter.number
-      ).each_with_object({}) do |h, m|
-        h.affected_verses.each { |v| m[v.number] ||= h.translation.code }
-      end
-      acc[chapter.id] = {
-        highlights: current_user.highlights.includes(:notes).for_chapter(prefix).to_a,
-        cross_translation_highlights: cross_map
-      }
-    end
-
-    verses.map do |verse|
-      ctx = chapter_locals_cache[verse.chapter.id]
-      turbo_stream.replace(
-        ActionView::RecordIdentifier.dom_id(verse),
-        partial: "bible/reader/verse",
-        locals: {
-          verse: verse,
-          highlights: ctx[:highlights],
-          cross_translation_highlights: ctx[:cross_translation_highlights],
-          chapter_opener: false
-        }
-      )
     end
   end
 

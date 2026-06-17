@@ -27,7 +27,15 @@ class Note < ApplicationRecord
     friends_note:  4
   }.freeze
 
+  # Note markers use their own palette — distinct from highlight colors
+  # so a verse can show both a highlight fill and a note marker tint.
+  NOTE_COLORS = %w[violet amber teal coral].freeze
+  DEFAULT_COLOR = "violet".freeze
+
   enum :visibility, VISIBILITIES
+
+  validates :color, inclusion: { in: NOTE_COLORS }
+  validates :label, length: { maximum: 40 }, allow_blank: true
 
   has_rich_text :body
 
@@ -79,6 +87,11 @@ class Note < ApplicationRecord
   end
 
   validates :body, presence: true
+
+  scope :private_bucket, -> { where(visibility: visibilities[:private_note]) }
+  scope :shared_bucket, -> {
+    where(visibility: [ visibilities[:shared_users], visibilities[:shared_groups], visibilities[:friends_note] ])
+  }
 
   # Notes the user is allowed to see:
   #   - their own notes, any visibility

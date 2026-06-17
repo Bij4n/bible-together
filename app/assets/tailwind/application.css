@@ -601,12 +601,60 @@
   .highlight-rose {
     background-color: rgba(228, 147, 142, 0.35);
   }
+  .highlight-orange {
+    background-color: rgba(255, 184, 120, 0.40);
+  }
+  .highlight-purple {
+    background-color: rgba(196, 167, 231, 0.38);
+  }
 
   /* Toolbar swatches mirror the highlight colors at full opacity. */
   .highlight-swatch-yellow { background-color: #fbda83; }
   .highlight-swatch-green  { background-color: #a9d9a4; }
   .highlight-swatch-blue   { background-color: #8dbbff; }
   .highlight-swatch-rose   { background-color: #e4938e; }
+  .highlight-swatch-orange { background-color: #ffb878; }
+  .highlight-swatch-purple { background-color: #c4a7e7; }
+
+  /* Note markers — separate from highlight fills. Verses with notes get
+     a left accent bar and soft tint so you can keep reading and still
+     see where you left a note. */
+  .note-marker-swatch-violet { background-color: #9b8afb; }
+  .note-marker-swatch-amber  { background-color: #f5b942; }
+  .note-marker-swatch-teal    { background-color: #5ec4b6; }
+  .note-marker-swatch-coral   { background-color: #f08a7a; }
+
+  .chapter-body .verse.verse-has-note {
+    border-left: 3px solid var(--note-marker-color, #9b8afb);
+    padding-left: 0.55em;
+    margin-left: -0.15em;
+    border-radius: 0 4px 4px 0;
+    background: color-mix(in srgb, var(--note-marker-color, #9b8afb) 8%, transparent);
+  }
+
+  .chapter-body .verse.note-marker-violet { --note-marker-color: #9b8afb; }
+  .chapter-body .verse.note-marker-amber  { --note-marker-color: #f5b942; }
+  .chapter-body .verse.note-marker-teal   { --note-marker-color: #5ec4b6; }
+  .chapter-body .verse.note-marker-coral  { --note-marker-color: #f08a7a; }
+
+  .verse-note-chip.note-chip-violet { background: color-mix(in srgb, #9b8afb 18%, transparent); color: #5b4fc7; }
+  .verse-note-chip.note-chip-amber  { background: color-mix(in srgb, #f5b942 22%, transparent); color: #92680a; }
+  .verse-note-chip.note-chip-teal   { background: color-mix(in srgb, #5ec4b6 20%, transparent); color: #0f766e; }
+  .verse-note-chip.note-chip-coral  { background: color-mix(in srgb, #f08a7a 20%, transparent); color: #b45309; }
+
+  .note-toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .note-toolbar-marker {
+    display: inline-block;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
 
   @media (prefers-reduced-motion: reduce) {
     #note-panel-container { transition: none; }

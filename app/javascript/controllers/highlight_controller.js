@@ -217,7 +217,7 @@ export default class extends Controller {
     const color = this.canonicalColor(
       Array.from(span.classList).find((c) => c.startsWith("highlight-"))?.replace("highlight-", "")
     )
-    tb.querySelectorAll("button[data-color]:not([data-highlight-default])").forEach((btn) => {
+    tb.querySelectorAll("button[data-color]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.color === color ? "true" : "false")
     })
   }
@@ -446,14 +446,14 @@ export default class extends Controller {
     if (!this.hasToolbarTarget) return
     const dominant = this.dominantHighlightUnderSelection(range)
     const activeColor = this.canonicalColor(dominant?.color ?? null)
-    this.toolbarTarget.querySelectorAll("button[data-color]:not([data-highlight-default])").forEach((btn) => {
+    this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.color === activeColor ? "true" : "false")
     })
   }
 
   clearActiveSwatch() {
     if (!this.hasToolbarTarget) return
-    this.toolbarTarget.querySelectorAll("button[data-color]:not([data-highlight-default])").forEach((btn) => {
+    this.toolbarTarget.querySelectorAll("button[data-color]").forEach((btn) => {
       btn.setAttribute("aria-pressed", "false")
     })
   }

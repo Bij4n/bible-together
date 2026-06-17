@@ -6,14 +6,22 @@ module Bible
     # queries are the per-highlight affected_verses lookups — a handful
     # per chapter at most.
     def verse_note_map(highlights)
-      map = Hash.new { |h, k| h[k] = [] }
+      map = Hash.new { |h, k| h[k] = { ids: [], color: nil, label: nil } }
       Array(highlights).each do |hl|
-        note_ids = hl.notes.map(&:id)
-        next if note_ids.empty?
+        hl.notes.each do |note|
+          note_ids = [ note.id ]
+          next if note_ids.empty?
 
-        hl.affected_verses.each { |v| map[v.id].concat(note_ids) }
+          hl.affected_verses.each do |v|
+            entry = map[v.id]
+            entry[:ids].concat(note_ids)
+            entry[:ids].uniq!
+            entry[:color] ||= note.color
+            entry[:label] ||= note.label.presence
+          end
+        end
       end
-      map.transform_values(&:uniq)
+      map
     end
 
     # Emit verse HTML with highlight overlays layered over red-letter

@@ -33,7 +33,14 @@ class SettingsController < ApplicationController
   # Per-section forms each submit only the fields they control, so we
   # allow the full set here and let the form decide.
   def settings_params
-    params.require(:user).permit(:ui_locale, :username, :bio, :email_on_comment, :default_translation_id, :display_name)
+    permitted = params.require(:user).permit(
+      :ui_locale, :username, :bio, :email_on_comment, :default_translation_id, :display_name,
+      :default_note_color, :avatar, highlight_toolbar_colors: [], highlight_color_labels: {}
+    )
+    if permitted[:highlight_toolbar_colors].present?
+      permitted[:highlight_toolbar_colors].reject!(&:blank?)
+    end
+    permitted
   end
 
   # Turbo Frame submissions from the /settings page carry a Turbo-Frame
