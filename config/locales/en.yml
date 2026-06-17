@@ -194,7 +194,6 @@ en:
       cross_translation_badge_title: "You've annotated this verse in %{translation}. Click to jump there."
       dismiss_toolbar: Dismiss
       highlight_action: Highlight
-      verse_view: Verse view
       shortcuts_title: Keyboard shortcuts
       shortcut_j: Next verse
       shortcut_k: Previous verse
@@ -430,7 +429,6 @@ en:
     reply_placeholder: Write a reply…
     timestamp: "%{ago} ago"
   public_bible:
-    community_view: Community view
     intro: Anyone can read this view. Highlights and notes shown here come from people who chose to share them publicly. Sign in to add your own, or to keep your reading private to your account.
     community_notes: Community notes
     switch_to_my_bible: Switch to my bible

@@ -701,10 +701,10 @@
   }
 
 
-  /* Verse-per-block "study mode" (reader_prefs controller). Verses are
-     inline spans in continuous prose by default; the toggle stacks
-     them with breathing room for verse-by-verse study. */
-  .chapter-body.verse-blocks .verse {
+  /* Verses render one per block with breathing room for verse-by-verse
+     reading — the single reader layout (the old continuous-prose toggle
+     was removed). */
+  .chapter-body .verse {
     display: block;
     margin-bottom: 0.9em;
   }

@@ -4,79 +4,40 @@
 <% debug_selection = Rails.env.development? || params[:debug] == "1" %>
 
 <article class="relative mx-auto max-w-3xl space-y-8"
-         data-controller="highlight reader-prefs"
+         data-controller="highlight"
          data-highlight-translation-code-value="<%= @translation.code %>"
          data-highlight-book-value="<%= @book.osis_code %>"
          data-highlight-chapter-value="<%= @chapter.number %>"
          data-highlight-debug-value="<%= debug_selection %>">
-  <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="flex items-center justify-between gap-4 font-ui text-sm">
-    <% if prev_chapter %>
-      <%= link_to bible_chapter_path(translation: @translation.code.downcase,
-                                     book: prev_chapter.book.osis_code.downcase,
-                                     chapter: prev_chapter.number),
-                  class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
-        <span aria-hidden="true">&larr;</span>
-        <%= t("bible.reader.prev_chapter") %>
+  <header class="space-y-5 border-b border-surface-200 pb-6">
+    <%# Reading controls: book / chapter / version select the passage;
+        the layer switcher (whose notes you see) sits apart on the right
+        at sm+ and wraps below on mobile. %>
+    <div class="reader-controls flex flex-wrap items-center gap-2">
+      <%= render "bible/reader/book_picker", translation: @translation, book: @book %>
+      <%= render "shared/nav_select",
+                 options: @book.chapters.order(:number).map { |ch|
+                   [ "#{t('bible.reader.chapter_label')} #{ch.number}",
+                     bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: ch.number) ]
+                 },
+                 selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number),
+                 aria_label: t("bible.reader.chapter_label") %>
+      <% translations = Translation.order(:name) %>
+      <% if translations.size > 1 %>
+        <%= render "shared/nav_select",
+                   options: translations.map { |t|
+                     [ t.name, bible_chapter_path(translation: t.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) ]
+                   },
+                   selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number),
+                   aria_label: t("bible.reader.translation_picker") %>
       <% end %>
-    <% else %>
-      <span aria-hidden="true"></span>
-    <% end %>
-
-    <%= render "shared/nav_select",
-               options: @book.chapters.order(:number).map { |ch|
-                 [ "#{t('bible.reader.chapter_label')} #{ch.number}",
-                   bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: ch.number) ]
-               },
-               selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number),
-               aria_label: t("bible.reader.chapter_label") %>
-
-    <% if next_chapter %>
-      <%= link_to bible_chapter_path(translation: @translation.code.downcase,
-                                     book: next_chapter.book.osis_code.downcase,
-                                     chapter: next_chapter.number),
-                  class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
-        <%= t("bible.reader.next_chapter") %>
-        <span aria-hidden="true">&rarr;</span>
+      <% if user_signed_in? %>
+        <div class="w-full sm:ms-auto sm:w-auto">
+          <%= render "bible/reader/layer_switcher",
+                     translation: @translation, book: @book, chapter: @chapter,
+                     selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+        </div>
       <% end %>
-    <% else %>
-      <span aria-hidden="true"></span>
-    <% end %>
-  </nav>
-
-  <header class="space-y-4 border-b border-surface-200 pb-7">
-    <div class="flex items-center justify-between gap-3">
-      <%# Translation NAMES are mixed-case proper nouns ("King James
-          Version", "Reina-Valera 1909"); mono-caps would erase the
-          information. Sans uppercase tracked-out is the right eyebrow
-          treatment here. %>
-      <p class="font-ui text-xs font-medium uppercase tracking-widest text-surface-500">
-        <%= @translation.name %>
-      </p>
-      <div class="flex items-center gap-2">
-        <%# Verse-view toggle: continuous prose vs one-verse-per-block
-            study mode (reader_prefs controller, localStorage). %>
-        <button type="button"
-                data-action="reader-prefs#toggleVerseBlocks"
-                data-reader-prefs-target="verseToggle"
-                aria-pressed="false"
-                title="<%= t("bible.reader.verse_view") %>"
-                class="rounded-md border border-surface-300 bg-surface-50 px-3 py-1.5 font-ui text-sm text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-accent-700/40 aria-pressed:text-accent-700">
-          <%= t("bible.reader.verse_view") %>
-        </button>
-        <%= render "bible/reader/layer_switcher",
-                   translation: @translation, book: @book, chapter: @chapter,
-                   selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
-        <%= render "bible/reader/book_picker", translation: @translation, book: @book %>
-        <% translations = Translation.order(:name) %>
-        <% if translations.size > 1 %>
-          <%= render "shared/nav_select",
-                     options: translations.map { |t|
-                       [ t.name, bible_chapter_path(translation: t.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) ]
-                     },
-                     selected_url: bible_chapter_path(translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number),
-                     aria_label: t("bible.reader.translation_picker") %>
-        <% end %>
-      </div>
     </div>
     <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 sm:text-5xl md:text-6xl">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
@@ -84,7 +45,6 @@
   </header>
 
   <div class="chapter-body font-reading text-surface-900"
-       data-reader-prefs-target="body"
        data-highlight-target="chapter">
     <% chip_map = verse_note_map(@highlights) %>
     <% @verses.each_with_index do |verse, i| %><% chip_ids = chip_map[verse.id] || [] %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights || [], cross_translation_highlights: @cross_translation_highlights, chapter_opener: i == 0, note_chip: (chip_ids.any? ? { count: chip_ids.size, href: edit_note_path(chip_ids.first), turbo_frame: "note_panel" } : nil) } %><%= " " unless i == @verses.size - 1 %><% end %>

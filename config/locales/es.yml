@@ -194,7 +194,6 @@ es:
       cross_translation_badge_title: "Has anotado este versículo en %{translation}. Haz clic para ir allí."
       dismiss_toolbar: Cerrar
       highlight_action: Resaltar
-      verse_view: Por versículo
       shortcuts_title: Atajos de teclado
       shortcut_j: Versículo siguiente
       shortcut_k: Versículo anterior
@@ -423,7 +422,6 @@ es:
     reply_placeholder: Escribe una respuesta…
     timestamp: "hace %{ago}"
   public_bible:
-    community_view: Vista de la comunidad
     intro: Cualquiera puede leer esta vista. Los resaltados y notas que aparecen aquí son de personas que decidieron compartirlos públicamente. Inicia sesión para añadir los tuyos, o para mantener tu lectura privada en tu cuenta.
     community_notes: Notas de la comunidad
     switch_to_my_bible: Cambiar a mi biblia
