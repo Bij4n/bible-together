@@ -101,7 +101,7 @@ RSpec.describe "Home page", type: :system do
 
     expect(page).to have_css("section[data-section='donate-cta'].donate-callout")
     within("section[data-section='donate-cta']") do
-      expect(page).to have_content("help cover hosting")
+      expect(page).to have_content("hosting and the bills")
       expect(page).not_to have_content("donations keep it open")
     end
   end

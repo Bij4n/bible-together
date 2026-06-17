@@ -431,25 +431,35 @@
    * bleeding past the viewport edge (it uses negative horizontal
    * insets), which would otherwise trigger a mobile side-scroll.
    */
+  /* Full-bleed ambient glow for marketing pages. It hangs off the body so
+     it's edge-to-edge at exactly the content width (like the footer band),
+     instead of a 100vw element that adds horizontal scroll (scrollWidth
+     counts clipped overflow, so overflow:clip can't hide it). z-index:-1
+     sits it behind in-flow content; the page's bg shows through the fade,
+     so the hero copy never collides with a hard gradient edge. */
+  .marketing-surface {
+    position: relative;
+  }
+
+  .marketing-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: min(620px, 75vh);
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 0%, color-mix(in srgb, var(--color-accent-700) 10%, transparent), transparent 72%),
+      radial-gradient(ellipse 55% 55% at 80% 5%, color-mix(in srgb, var(--color-accent-700) 6%, transparent), transparent 68%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
   .landing {
-    overflow-x: clip;
+    position: relative;
   }
 
   .landing-hero {
     position: relative;
     isolation: isolate;
-  }
-
-  .landing-hero::before {
-    content: "";
-    position: absolute;
-    inset: -4rem -2rem auto;
-    height: min(520px, 70vh);
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 0%, color-mix(in srgb, var(--color-accent-700) 9%, transparent), transparent 70%),
-      radial-gradient(ellipse 60% 50% at 85% 10%, color-mix(in srgb, var(--color-accent-700) 5%, transparent), transparent 65%);
-    pointer-events: none;
-    z-index: 0;
   }
 
 
