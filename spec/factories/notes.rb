@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :note do
     association :user
     visibility { "private_note" }
+    color { "violet" }
     body { "A note." }
 
     trait :shared_users do
