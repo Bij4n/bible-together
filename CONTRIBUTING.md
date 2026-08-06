@@ -89,12 +89,17 @@ chromedriver. The driver setup is in `spec/rails_helper.rb`. If your Firefox
 is in a non-standard location, set `FIREFOX_BINARY` and `GECKODRIVER_PATH`
 environment variables before running the suite.
 
-### No Google-hosted dependencies
+### No Google-hosted dependencies in the app
 
-Fonts, analytics, tag managers — none. All fonts (Inter, Instrument Serif,
+Anything the app loads into a visitor's browser: fonts, analytics, tag
+managers, reCAPTCHA — none. All fonts (Inter, Instrument Serif,
 JetBrains Mono) are self-hosted OFL `.woff2` files in `public/fonts/`. If
 you need a font or icon, download it and commit it. No CDN links, no
 `fonts.googleapis.com`, no Google Analytics.
+
+This is about what we serve to users. The project's own mail inbox runs on
+Google Workspace, which ships no code to visitors and touches nothing in
+this repo — that's infrastructure, not a dependency, and it's fine.
 
 ### Bilingual — English and Spanish in the same PR
 

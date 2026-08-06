@@ -78,11 +78,13 @@ Browser automation (system specs, scripts, any tooling) uses **Firefox + geckodr
 
 Applies to `spec/rails_helper.rb` driver registrations, anything installed via `selenium-manager` / `webdrivers` gem cache, any script that spawns a browser. If you find yourself reaching for `Selenium::WebDriver::Chrome::Options` or `browser: :chrome`, stop.
 
-### 8. No Google-hosted third-party dependencies
+### 8. No Google-hosted third-party dependencies in the app
 
-No `fonts.googleapis.com`, `fonts.gstatic.com`, `www.google-analytics.com`, `ajax.googleapis.com`, Google Tag Manager, or any other Google-hosted asset.
+This rule governs **anything the app loads into a visitor's browser**. No `fonts.googleapis.com`, `fonts.gstatic.com`, `www.google-analytics.com`, `ajax.googleapis.com`, Google Tag Manager, reCAPTCHA, or any other Google-hosted asset, script, or font.
 
 Self-host open-licensed assets from `/public` or the asset pipeline. Fonts (Inter, Instrument Serif, JetBrains Mono, etc.) are OFL-licensed — download the `.woff2` into `public/fonts/` and declare `@font-face` rules in `application.css`. No CDN.
+
+**Out of scope: owner-side infrastructure.** The team inbox `hello@bible-together.org` has run on Google Workspace since 2026-08-06. A mail provider is not a browser-facing dependency — it ships no Google code to visitors and requires nothing in this repo. Don't flag it as drift. The rule is about what we serve to users, not what the owner reads mail in.
 
 ### 9. Every UI commit updates its matching system spec in the same commit
 

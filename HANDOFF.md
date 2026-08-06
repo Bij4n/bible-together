@@ -9,10 +9,16 @@
 
 - **Production:** [bible-together.org](https://bible-together.org), live since 2026-04-21, on Render. `main` auto-deploys.
 - **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together`.
-- **Branch:** `main` — all work through PR #153 merged and live (2026-06-17).
+- **Branch:** `main` — all work through PR #172 merged and live (2026-08-06).
 - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md` (R1–R9 shipped on `main`).
 
-### Shipped recently (2026-06-16 → 2026-06-17)
+### Shipped 2026-08-06 — contact form data loss + security bump
+
+- **The contact form was a black hole for three days.** A bot submission hard-bounced `hello@bible-together.org`, Resend suppressed the address account-wide, and every later submission was dropped while the visitor still saw a success message. `ContactMessage` (PR #169) now persists the row *first* and treats email as a notification; honeypot + per-IP rate limit added (PR #172). Full story in the `PLAN.md` decisions log — read it before touching mail code, especially the part about `raise_delivery_errors` not covering suppression.
+- **Inbound mail moved Proton → Google Workspace** on the apex. The Resend `send.` subdomain was untouched, which is why outbound never broke.
+- **Nine gems bumped for open advisories** (PR #171), including a high-severity `websocket-driver` DoS. `scan_ruby` was failing for `bundler-audit`, not Brakeman.
+
+### Shipped earlier (2026-06-16 → 2026-06-17)
 
 **Platform features (Sprints 1–6, PRs #139–#144):**
 - About non-profit copy; UI polish foundation
@@ -62,7 +68,7 @@
 
 These are the things sitting on the user's desk, not Claude's. Don't pick them blind.
 
-- **Legal pages** — `/terms`, `/privacy`, `/acceptable-use`. Sprint 15 blocker, still open. More pressing now that the repo is public and the app is accepting donations. Needs jurisdiction decision + drafted copy from the owner before any code can be written.
+- **Legal pages** — `/terms` and `/privacy` **shipped** (`LegalController`, live and serving 200, copy in both locales). Only `/acceptable-use` is still open: unrouted, no view. Needs a jurisdiction decision + drafted copy from the owner. Note there are **no request specs for `LegalController`** — a coverage gap worth closing when the third page lands.
 - **Groups / studies deep-dive** — owner wants a full pass on how groups work: highlighting, notes, sharing, settings, and administrator workflows. Audit for gaps before building more on top.
 - **Language-switcher placement** — the account menu still carries locale + auth. Two options exist; owner picks. Audit detail saved at `~/.claude/plans/what-do-you-need-enumerated-ember.md`.
 - **Pencil-bridge polish** (Sprint 16.5 PR E) — transition between toolbar dismiss and note-panel reveal. No UX spec locked: slide animation? auto-focus scroll? back-arrow to reopen toolbar? Owner decides the gesture before building.
@@ -80,6 +86,10 @@ These are the things sitting on the user's desk, not Claude's. Don't pick them b
 - **Pencil-bridge polish** — same; the build is straightforward once the UX is specified.
 
 **Autonomous-doable (no owner input needed):**
+- **Resend bounce webhook** — an endpoint for `email.bounced` / `email.complained` so a dead notification address alerts in minutes instead of rotting for three days, which is exactly what happened on 2026-08-06. Needs Resend's current (Svix-based) signature scheme verified against live docs before writing the verifier. Highest-value item on this list.
+- **`rails_helper.rb` Xvfb robustness** — poll for `:99` actually accepting connections instead of `sleep 1`, and fall back to `-headless` if it never comes up, rather than pointing Firefox at a dead display. See the three footguns under local environment quirks. Would make Rule 9 system specs runnable locally again.
+- **Stray `dark:` classes in locale files** — `config/locales/en.yml` and `es.yml` each carry 3 in the terms/privacy `contact_body_html` strings, contradicting the "dark mode fully removed" claim. The June sweep only covered `app/views/`; locale HTML renders into views too.
+- **`LegalController` request specs** — `/terms` and `/privacy` are live with zero specs covering them.
 - **`id="join"` anchor on `/studies`** — nav "Join with code" links to `groups_path(anchor: "join")` but the studies index has no matching anchor. Small fix.
 - **Swipe-to-dismiss bottom sheet** — the mobile highlight toolbar (PR #50) and account menu have no swipe gesture. Substantive Stimulus + gesture work; roughly a full sprint segment.
 - **Multilingual semantic search (4-step sequenced)** — see `PROJECT_OVERVIEW.md` §8 for the full plan. Currently Concept search is English-only and labeled as such; multilingual covers RV1909. Steps: (1) make `embeddings.rake` translation-agnostic, (2) swap to multilingual model, (3) regenerate embeddings, (4) drop the "(English)" parenthetical from homepage.
@@ -118,15 +128,24 @@ When the user provides explicit direction (e.g. "fix the about page eyebrow"), d
 - **Reader:** verses always render as blocks (one verse per line). No view toggle. Red-letter (Jesus words) enabled. Book picker filters Old/New Testament.
 - **OSIS refs** are canonical: `Bible.<TRANSLATION>.<Book>.<Chapter>.<Verse>[!offset]`. Don't reinvent — use `app/services/osis_ref.rb`.
 - **Profiles:** vanity URLs at `/@username`. Follow/unfollow on author pages. Forum at `/forum`.
-- **Contact form:** live at `/contact`, delivers via `ContactMailer` to `hello@bible-together.org`.
-- **Test count:** ~833 spec examples (estimate, 2026-06-17). Full non-JS suite runs in ~10s locally.
+- **Contact form:** live at `/contact`. Submissions **persist as `ContactMessage` rows first**, then `ContactMailer` notifies `hello@bible-together.org`. The email is a notification, not the transport — a Resend suppression silently destroyed every submission for three days in Aug 2026. Guarded by a honeypot (`website` field) plus a per-IP `rate_limit` of 5/hour. No admin UI; read them from the console, same as `DonationReport`.
+- **Test count:** 993 spec examples — 892 non-JS, 101 tagged `js: true` (measured 2026-08-06 via `rspec --dry-run`). The non-JS suite runs in ~14s locally; the JS ones only reliably run in CI (see the Xvfb note below).
 
 ---
 
 ## Local environment quirks (matters when running specs)
 
 - **Xvfb workaround for Nvidia SWGL deadlock** — the dev box has an Nvidia GPU that makes headless Firefox crash via the SWGL software renderer. `spec/rails_helper.rb` starts a dedicated Xvfb server on `:99` and sets `DISPLAY=:99`; the geckodriver runs Firefox with a real framebuffer instead of headless. If JS specs start hanging (after a reboot or if Xvfb dies), the fix is to reboot or manually run `Xvfb :99 -screen 0 1280x1024x24 &`. CI uses browser-actions/setup-firefox + setup-geckodriver which don't have the GPU issue; headless works fine there.
-- **Stale Firefox / geckodriver sessions** can still cause `Net::ReadTimeout` on `Selenium::WebDriver::Remote::Bridge#create_session` even with Xvfb. If a JS spec hangs, kill any orphaned geckodriver/firefox processes (`pkill -f geckodriver && pkill -f firefox`) and re-run. CI is the authoritative validator; don't chase local flakes.
+- **Stale Firefox / geckodriver sessions** can still cause `Net::ReadTimeout` on `Selenium::WebDriver::Remote::Bridge#create_session` even with Xvfb. The orphan to look for is a `firefox --marionette ... -profile /tmp/rust_mozprofile*` process; while one is alive, every new session creation times out (~4 min each), so a suite appears to hang. Kill orphans and re-run. CI is the authoritative validator; don't chase local flakes.
+
+  **Use the bracket trick when killing:** `pkill -f "[f]irefox"`, not `pkill -f firefox`. The plain form matches the *pkill command line itself* and kills your own shell — it looks like the terminal died for no reason. Same for geckodriver. Full cleanup: `pkill -9 -f "[m]arionette"; pkill -9 -f "[f]irefox-bin"; pkill -9 -f "[g]eckodriver"; rm -rf /tmp/rust_mozprofile*`.
+
+- **Three ways the local JS setup self-sabotages** (diagnosed 2026-08-06; `rails_helper.rb` not yet changed, so these are live footguns):
+  1. The helper does `system("Xvfb :99 … &")` then `sleep 1` — but Xvfb needs ~2s to accept connections on this box. It's a race.
+  2. It then sets `ENV["DISPLAY"] = ":99"` **unconditionally**, without re-checking that Xvfb came up. So a failed or slow start silently becomes a 4-minute `create_session` timeout instead of a clear error or a `-headless` fallback.
+  3. Xvfb is spawned inside the rspec process group, so killing a run (`timeout`, Ctrl-C) takes Xvfb down with it — **one killed run poisons every run after it.** Start Xvfb yourself outside the runner if you're iterating: `Xvfb :99 -screen 0 1400x1024x24 -ac +extension GLX +render &`.
+
+  Verify before blaming the specs: `DISPLAY=:99 xdpyinfo >/dev/null && echo alive`. Note `kernel.apparmor_restrict_unprivileged_userns = 1` is set on this box, the condition `rails_helper.rb` mitigates with `security.sandbox.content.level = 0`.
 - **Note panel + Turbo Frame testing pattern** — visiting `/notes/:id/edit` directly renders only the partial (no layout, no Stimulus). System specs that need JS features in the panel should visit a reader page and set the turbo-frame `src` via `execute_script`. Example in `spec/system/notes_spec.rb` "post-save flash" spec.
 - **Tailwind v4 translate vs transform** — Tailwind v4 uses the CSS `translate` property (not `transform`) for `translate-x-*` utilities. When forcing elements on-screen in specs, set both `element.classList.remove('translate-x-full')` and `element.style.translate = '0 0'`; `element.style.transform` alone has no effect. Production CSS override also uses `translate: 0` (not `transform`), outside all `@layer` blocks so it wins on specificity.
 - **`bin/embedding`** boots a Python venv + uvicorn for semantic search; skip with `EMBEDDING_SERVICE_SKIP=1 bin/dev` if you don't need it.

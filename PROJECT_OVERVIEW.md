@@ -36,7 +36,7 @@ That's the affordance. The **product** is something else: it's scripture-as-conv
 | Keyword search | `pg_search` (ts_headline highlighting) |
 | Semantic search | Sentence embeddings (`all-MiniLM-L6-v2`, 384-dim) stored as JSON text + in-Ruby cosine — pgvector deferred. **English-only** today; surfaced as "Semantic search (English)" on the homepage. |
 | Embedding service | Separate **Python pserv** at `services/embedding-service/` (FastAPI/uvicorn, sentence-transformers, torch). Rails calls it over HTTP via `EmbeddingService` client. In dev, `bin/embedding` boots `.venv` + uvicorn; on Render it's a private service (`type: pserv`). |
-| Email | **Resend** SMTP. Sender domain `send.bible-together.org` is **separately verified** as a subdomain so DNS records (SPF/DKIM/DMARC) live on the subdomain, not the apex. `raise_delivery_errors: true` is set deliberately — loud failure beats silent black holes (proved its worth during the 5-PR SMTP cascade). |
+| Email | Two independent halves. **Outbound: Resend** SMTP, sending as `noreply@send.bible-together.org` — a separately-verified subdomain carrying its own SPF, DKIM, and SES bounce MX. **Inbound: Google Workspace** on the apex for `hello@bible-together.org` (apex holds `MX 1 smtp.google.com`, `google._domainkey`, and a site-verification TXT), since 2026-08-06. Keeping outbound scoped to the subdomain is what let the apex be rewritten from Proton to Google without app mail noticing. `raise_delivery_errors: true` is deliberate — but note it **does not cover suppression**: Resend accepts the SMTP handoff and drops the message afterward, so a suppressed recipient raises nothing at all. See the 2026-08-06 decisions-log entry. |
 | QR codes | `rqrcode` (Ruby, MIT, inline SVG — no external API) |
 | Migrations | `strong_migrations` |
 | Testing | RSpec, FactoryBot, Capybara, Selenium-WebDriver, **geckodriver + Firefox** (never Chrome — Rule 7), `axe-core-rspec`, WebMock |
@@ -51,7 +51,12 @@ That's the affordance. The **product** is something else: it's scripture-as-conv
 
 Total ~$39/mo. `RAILS_MASTER_KEY` is set in Render env (sync: false in blueprint). Pushes to `main` auto-deploy.
 
-**Custom domain:** Namecheap → `bible-together.org` (apex + www). The send subdomain `send.bible-together.org` is configured separately in Resend so outbound mail is scoped — apex DNS stays clean, and a domain reset wouldn't take down email.
+**Custom domain:** Namecheap BasicDNS (`dns1`/`dns2.registrar-servers.com`) → `bible-together.org` (apex + www). The send subdomain `send.bible-together.org` is configured separately in Resend so outbound mail is scoped independently of the apex. That scoping earned its keep on 2026-08-06, when the apex was rewritten from Proton to Google Workspace and outbound app mail never noticed.
+
+The apex no longer "stays clean" — it carries Google's MX, DKIM, and verification records. Two DNS rules follow from that:
+
+- **Only one `v=spf1` record is valid per name.** Edit the apex SPF; never add a second. Two makes the check `permerror` and breaks both.
+- **Never add Resend/SES includes to the apex.** App mail sends as `@send.bible-together.org`, which has its own SPF. Keeping them separate is the whole point.
 
 ---
 
