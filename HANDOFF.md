@@ -9,14 +9,15 @@
 
 - **Production:** [bible-together.org](https://bible-together.org), live since 2026-04-21, on Render. `main` auto-deploys.
 - **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together`.
-- **Branch:** `main` — all work through PR #172 merged and live (2026-08-06).
+- **Branch:** `main` — all work through PR #175 merged and live (2026-08-06).
 - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md` (R1–R9 shipped on `main`).
 
 ### Shipped 2026-08-06 — contact form data loss + security bump
 
 - **The contact form was a black hole for three days.** A bot submission hard-bounced `hello@bible-together.org`, Resend suppressed the address account-wide, and every later submission was dropped while the visitor still saw a success message. `ContactMessage` (PR #169) now persists the row *first* and treats email as a notification; honeypot + per-IP rate limit added (PR #172). Full story in the `PLAN.md` decisions log — read it before touching mail code, especially the part about `raise_delivery_errors` not covering suppression.
 - **Inbound mail moved Proton → Google Workspace** on the apex. The Resend `send.` subdomain was untouched, which is why outbound never broke.
-- **Nine gems bumped for open advisories** (PR #171), including a high-severity `websocket-driver` DoS. `scan_ruby` was failing for `bundler-audit`, not Brakeman.
+- **Nine gems bumped for open advisories** (PR #171), including a high-severity `websocket-driver` DoS. `scan_ruby` was failing for `bundler-audit`, not Brakeman. **`bin/bundler-audit` now passes `--update`** (PR #174) — CI clones the advisory database fresh every run, so a stale local copy used to report clean while CI failed on the same lockfile.
+- **Docs corrected** (PR #173) — mail topology, legal-page status, test count, and the local Xvfb footguns.
 - **Resend failure webhook** — `POST /webhooks/resend` records bounces, complaints, failures, suppressions, and suppression-list changes as `MailEvent` rows. Svix signature verified in-house (no new gem). **Needs two setup steps before it does anything** — see the Resend webhook note in `PROJECT_OVERVIEW.md`. Recording only; no alerting yet, by design.
 
 ### Shipped earlier (2026-06-16 → 2026-06-17)
@@ -81,8 +82,10 @@ These are the things sitting on the user's desk, not Claude's. Don't pick them b
 ## Next session queue
 
 **Owner input needed first:**
+- **Finish wiring the Resend webhook (two steps, ~5 minutes).** The code shipped in PR #175 but is **inert** until both are done, and returns 500 on every delivery in the meantime — deliberately, so a missing secret is loud. (1) Register `https://bible-together.org/webhooks/resend` in Resend → Webhooks, subscribed to `email.bounced`, `email.complained`, `email.failed`, `email.suppressed`, `email.delivery_delayed`, `suppression.added`, `suppression.removed`. (2) Put the generated `whsec_…` secret into credentials as `resend.webhook_secret`. Details in `PROJECT_OVERVIEW.md`.
+- **Pick the alert channel** for `MailEvent` failures. Recording works; nothing pushes. It can't be email — that's what breaks. Options: a second address on a different provider, or opening a GitHub issue via the API.
 - **Groups / studies audit** — walk through highlighting, notes, visibility, group admin permissions, and settings. Confirm nothing is missing before new social features.
-- **Legal pages** — jurisdiction + copy from owner; then wire `/terms`, `/privacy`, `/acceptable-use`.
+- **Legal pages** — `/terms` and `/privacy` shipped; only `/acceptable-use` remains. Needs jurisdiction + copy from owner before any code.
 - **Language-switcher placement** — once decided, this is a focused Stimulus + CSS change. No code until the owner picks an option.
 - **Pencil-bridge polish** — same; the build is straightforward once the UX is specified.
 
@@ -130,7 +133,7 @@ When the user provides explicit direction (e.g. "fix the about page eyebrow"), d
 - **OSIS refs** are canonical: `Bible.<TRANSLATION>.<Book>.<Chapter>.<Verse>[!offset]`. Don't reinvent — use `app/services/osis_ref.rb`.
 - **Profiles:** vanity URLs at `/@username`. Follow/unfollow on author pages. Forum at `/forum`.
 - **Contact form:** live at `/contact`. Submissions **persist as `ContactMessage` rows first**, then `ContactMailer` notifies `hello@bible-together.org`. The email is a notification, not the transport — a Resend suppression silently destroyed every submission for three days in Aug 2026. Guarded by a honeypot (`website` field) plus a per-IP `rate_limit` of 5/hour. No admin UI; read them from the console, same as `DonationReport`.
-- **Test count:** 993 spec examples — 892 non-JS, 101 tagged `js: true` (measured 2026-08-06 via `rspec --dry-run`). The non-JS suite runs in ~14s locally; the JS ones only reliably run in CI (see the Xvfb note below).
+- **Test count:** 1028 spec examples — 927 non-JS, 101 tagged `js: true` (measured 2026-08-06 via `rspec --dry-run`). The non-JS suite runs in ~13s locally; the JS ones only reliably run in CI (see the Xvfb note below).
 
 ---
 
