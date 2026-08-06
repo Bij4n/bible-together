@@ -81,6 +81,7 @@ es:
     submit: Enviar mensaje
     success: Gracias por escribir. Responderemos a tu correo pronto.
     error: Ingresa tu correo y un mensaje.
+    rate_limited: Has enviado varios mensajes hace poco. Vuelve a intentarlo más tarde.
     meta_description: Contacta a Bible Together con preguntas, comentarios o para reportar un problema.
   locale_banner:
     aria_label: Sugerencia de idioma de lectura

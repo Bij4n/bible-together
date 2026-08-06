@@ -19,6 +19,12 @@
   </header>
 
   <%= form_with model: @contact, url: contact_path, method: :post, class: "space-y-5 border-t border-surface-200 pt-10" do |f| %>
+    <%# Honeypot — sr-only field bots fill but humans don't see. %>
+    <div class="sr-only" aria-hidden="true">
+      <label for="website">Leave this field empty</label>
+      <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+    </div>
+
     <div class="space-y-1.5">
       <%= f.label :name, t("contact.name_label"), class: label_classes %>
       <%= f.text_field :name, autocomplete: "name", class: input_classes %>
