@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -217,6 +217,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_120000) do
     t.index ["translation_id"], name: "index_highlights_on_translation_id"
     t.index ["user_id", "osis_ref", "color"], name: "index_highlights_on_user_osis_ref_color", unique: true
     t.index ["user_id"], name: "index_highlights_on_user_id"
+  end
+
+  create_table "mail_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email_id"
+    t.string "event_type", null: false
+    t.datetime "occurred_at"
+    t.jsonb "payload", default: {}, null: false
+    t.text "reason"
+    t.string "recipient"
+    t.string "subject"
+    t.string "svix_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_type", "occurred_at"], name: "index_mail_events_on_event_type_and_occurred_at"
+    t.index ["recipient"], name: "index_mail_events_on_recipient"
+    t.index ["svix_id"], name: "index_mail_events_on_svix_id", unique: true
   end
 
   create_table "memberships", force: :cascade do |t|

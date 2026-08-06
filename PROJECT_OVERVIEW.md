@@ -36,7 +36,7 @@ That's the affordance. The **product** is something else: it's scripture-as-conv
 | Keyword search | `pg_search` (ts_headline highlighting) |
 | Semantic search | Sentence embeddings (`all-MiniLM-L6-v2`, 384-dim) stored as JSON text + in-Ruby cosine — pgvector deferred. **English-only** today; surfaced as "Semantic search (English)" on the homepage. |
 | Embedding service | Separate **Python pserv** at `services/embedding-service/` (FastAPI/uvicorn, sentence-transformers, torch). Rails calls it over HTTP via `EmbeddingService` client. In dev, `bin/embedding` boots `.venv` + uvicorn; on Render it's a private service (`type: pserv`). |
-| Email | Two independent halves. **Outbound: Resend** SMTP, sending as `noreply@send.bible-together.org` — a separately-verified subdomain carrying its own SPF, DKIM, and SES bounce MX. **Inbound: Google Workspace** on the apex for `hello@bible-together.org` (apex holds `MX 1 smtp.google.com`, `google._domainkey`, and a site-verification TXT), since 2026-08-06. Keeping outbound scoped to the subdomain is what let the apex be rewritten from Proton to Google without app mail noticing. `raise_delivery_errors: true` is deliberate — but note it **does not cover suppression**: Resend accepts the SMTP handoff and drops the message afterward, so a suppressed recipient raises nothing at all. See the 2026-08-06 decisions-log entry. |
+| Email | Two independent halves. **Outbound: Resend** SMTP, sending as `noreply@send.bible-together.org` — a separately-verified subdomain carrying its own SPF, DKIM, and SES bounce MX. **Inbound: Google Workspace** on the apex for `hello@bible-together.org` (apex holds `MX 1 smtp.google.com`, `google._domainkey`, and a site-verification TXT), since 2026-08-06. Keeping outbound scoped to the subdomain is what let the apex be rewritten from Proton to Google without app mail noticing. `raise_delivery_errors: true` is deliberate — but note it **does not cover suppression**: Resend accepts the SMTP handoff and drops the message afterward, so a suppressed recipient raises nothing at all. See the 2026-08-06 decisions-log entry. **Failure visibility:** `POST /webhooks/resend` records bounces, complaints, failures, suppressions, and suppression-list changes as `MailEvent` rows — see the deployment note below. |
 | QR codes | `rqrcode` (Ruby, MIT, inline SVG — no external API) |
 | Migrations | `strong_migrations` |
 | Testing | RSpec, FactoryBot, Capybara, Selenium-WebDriver, **geckodriver + Firefox** (never Chrome — Rule 7), `axe-core-rspec`, WebMock |
@@ -57,6 +57,13 @@ The apex no longer "stays clean" — it carries Google's MX, DKIM, and verificat
 
 - **Only one `v=spf1` record is valid per name.** Edit the apex SPF; never add a second. Two makes the check `permerror` and breaks both.
 - **Never add Resend/SES includes to the apex.** App mail sends as `@send.bible-together.org`, which has its own SPF. Keeping them separate is the whole point.
+
+**Resend webhook — two setup steps, or it does nothing.** The endpoint verifies a Svix signature and refuses everything without one, so it stays inert until both are done:
+
+1. Add the endpoint in Resend's dashboard → Webhooks: `https://bible-together.org/webhooks/resend`. Subscribe at minimum to `email.bounced`, `email.complained`, `email.failed`, `email.suppressed`, `email.delivery_delayed`, `suppression.added`, `suppression.removed`.
+2. Copy the generated `whsec_…` signing secret into Rails credentials as `resend.webhook_secret` (`bin/rails credentials:edit`). Render already has `RAILS_MASTER_KEY`, so no new env var is needed.
+
+Until step 2, the endpoint returns 500 on every delivery — deliberately, so a missing secret is loud rather than silently accepting unverified posts. Read what it has collected with `MailEvent.failures.recent_first` (no admin UI, same as `DonationReport`).
 
 ---
 
