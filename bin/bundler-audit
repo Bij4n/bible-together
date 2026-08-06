@@ -2,5 +2,11 @@
 require_relative "../config/boot"
 require "bundler/audit/cli"
 
-ARGV.concat %w[ --config config/bundler-audit.yml ] if ARGV.empty? || ARGV.include?("check")
+# --update refreshes ruby-advisory-db before checking. CI clones the
+# database fresh on every run, so without this a stale local copy passes
+# while CI fails on the same lockfile — which is exactly what happened
+# with the Active Storage advisory on 2026-08-06. Costs a few seconds and
+# needs network; failing loudly when the database can't be refreshed is
+# the right outcome for a security check.
+ARGV.concat %w[ --config config/bundler-audit.yml --update ] if ARGV.empty? || ARGV.include?("check")
 Bundler::Audit::CLI.start
