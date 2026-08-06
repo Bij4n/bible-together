@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_17_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,6 +98,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_17_120000) do
     t.index ["note_id"], name: "index_comments_on_note_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contact_messages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.text "message", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
   end
 
   create_table "donation_reports", force: :cascade do |t|
