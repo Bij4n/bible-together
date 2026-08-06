@@ -81,6 +81,7 @@ en:
     submit: Send message
     success: Thanks for reaching out. We'll reply to your email soon.
     error: Please enter your email and a message.
+    rate_limited: You've sent several messages recently. Please try again a little later.
     meta_description: Contact Bible Together with questions, feedback, or to report a problem.
   locale_banner:
     aria_label: Reading language suggestion

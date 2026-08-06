@@ -16,6 +16,18 @@ RSpec.describe "Public contact flow", type: :system do
     expect(page).to have_css('textarea[name="contact_message[message]"]', visible: :all)
   end
 
+  # Asserts the markup that hides the field rather than Capybara
+  # visibility: rack_test applies no stylesheets, so a .sr-only element
+  # still reports as visible. The wrapper class, aria-hidden, and
+  # tabindex are what actually keep it away from humans, screen readers,
+  # and keyboard navigation.
+  it "carries a honeypot field wrapped so humans and screen readers skip it" do
+    visit "/contact"
+
+    expect(page).to have_css('.sr-only[aria-hidden="true"] input[name="website"]', visible: :all)
+    expect(page).to have_css('input[name="website"][tabindex="-1"]', visible: :all)
+  end
+
   it "persists the submission and confirms it to the visitor" do
     visit "/contact"
 

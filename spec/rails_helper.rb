@@ -95,6 +95,16 @@ RSpec.configure do |config|
     VerseEmbedding.reset_cache! if defined?(VerseEmbedding)
   end
 
+  # Action Controller's rate limiter counts requests in the controller
+  # cache store, which is a memory store in test and therefore shared by
+  # every example in the process. Transactional fixtures don't touch it,
+  # so without this a spec that POSTs repeatedly leaves counts behind and
+  # unrelated examples — in other files — start getting 429s depending on
+  # run order. Clear it every example so limits are per-example.
+  config.before(:each) do
+    ActionController::Base.cache_store.clear
+  end
+
   # Rebuild the Tailwind CSS bundle once before the suite runs IF
   # system specs are in this invocation. System specs exercise the
   # compiled bundle at app/assets/builds/application.css (which is
