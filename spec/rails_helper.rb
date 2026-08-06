@@ -74,6 +74,9 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+  # Webhook signature verification is time-sensitive (replay protection),
+  # so its specs pin a fixed clock around a known-good signature vector.
+  config.include ActiveSupport::Testing::TimeHelpers
   config.include Capybara::DSL, type: :system
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :system

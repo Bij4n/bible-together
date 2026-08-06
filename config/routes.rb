@@ -116,6 +116,10 @@ Rails.application.routes.draw do
   post "/donate/confirm",    to: "donations#create_report", as: :donate_confirm
   get  "/donate/thank_you",  to: "donations#thanks",       as: :donate_thank_you
 
+  # Machine-to-machine, authenticated by Svix signature rather than by
+  # session. Set this URL as the endpoint in Resend's dashboard.
+  post "/webhooks/resend",   to: "webhooks/resend#create", as: :resend_webhook
+
   namespace :admin do
     resources :notes, only: [ :index, :show ] do
       member do

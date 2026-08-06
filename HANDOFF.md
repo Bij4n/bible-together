@@ -17,6 +17,7 @@
 - **The contact form was a black hole for three days.** A bot submission hard-bounced `hello@bible-together.org`, Resend suppressed the address account-wide, and every later submission was dropped while the visitor still saw a success message. `ContactMessage` (PR #169) now persists the row *first* and treats email as a notification; honeypot + per-IP rate limit added (PR #172). Full story in the `PLAN.md` decisions log — read it before touching mail code, especially the part about `raise_delivery_errors` not covering suppression.
 - **Inbound mail moved Proton → Google Workspace** on the apex. The Resend `send.` subdomain was untouched, which is why outbound never broke.
 - **Nine gems bumped for open advisories** (PR #171), including a high-severity `websocket-driver` DoS. `scan_ruby` was failing for `bundler-audit`, not Brakeman.
+- **Resend failure webhook** — `POST /webhooks/resend` records bounces, complaints, failures, suppressions, and suppression-list changes as `MailEvent` rows. Svix signature verified in-house (no new gem). **Needs two setup steps before it does anything** — see the Resend webhook note in `PROJECT_OVERVIEW.md`. Recording only; no alerting yet, by design.
 
 ### Shipped earlier (2026-06-16 → 2026-06-17)
 
@@ -86,7 +87,7 @@ These are the things sitting on the user's desk, not Claude's. Don't pick them b
 - **Pencil-bridge polish** — same; the build is straightforward once the UX is specified.
 
 **Autonomous-doable (no owner input needed):**
-- **Resend bounce webhook** — an endpoint for `email.bounced` / `email.complained` so a dead notification address alerts in minutes instead of rotting for three days, which is exactly what happened on 2026-08-06. Needs Resend's current (Svix-based) signature scheme verified against live docs before writing the verifier. Highest-value item on this list.
+- **Alerting on top of `MailEvent`** — the recording layer shipped (`POST /webhooks/resend`); nothing yet *pushes* a failure to the owner. Deliberately deferred until there are real events to look at. The channel can't be email — that's the thing that breaks — so the options on the table were a second address on a different provider, or opening a GitHub issue via the API. Owner picks.
 - **`rails_helper.rb` Xvfb robustness** — poll for `:99` actually accepting connections instead of `sleep 1`, and fall back to `-headless` if it never comes up, rather than pointing Firefox at a dead display. See the three footguns under local environment quirks. Would make Rule 9 system specs runnable locally again.
 - **Stray `dark:` classes in locale files** — `config/locales/en.yml` and `es.yml` each carry 3 in the terms/privacy `contact_body_html` strings, contradicting the "dark mode fully removed" claim. The June sweep only covered `app/views/`; locale HTML renders into views too.
 - **`LegalController` request specs** — `/terms` and `/privacy` are live with zero specs covering them.
