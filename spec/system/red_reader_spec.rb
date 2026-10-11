@@ -66,15 +66,13 @@ RSpec.describe "Highlighted in Red reader", type: :system, js: true do
   end
 
   it "is axe-clean and fits a phone-width screen" do
-    original = page.driver.browser.manage.window.size
-    page.driver.browser.manage.window.resize_to(375, 800)
-    visit "/red/kjv/john/3"
+    at_window_size(375, 800) do
+      visit "/red/kjv/john/3"
 
-    expect(page).to be_axe_clean.according_to(:wcag2a, :wcag2aa)
-    overflow = page.evaluate_script("document.documentElement.scrollWidth - window.innerWidth")
-    expect(overflow).to be <= 1
-  ensure
-    page.driver.browser.manage.window.resize_to(original.width, original.height) if original
+      expect(page).to be_axe_clean.according_to(:wcag2a, :wcag2aa)
+      overflow = page.evaluate_script("document.documentElement.scrollWidth - window.innerWidth")
+      expect(overflow).to be <= 1
+    end
   end
 
   it "keeps highlighting working under the lens" do

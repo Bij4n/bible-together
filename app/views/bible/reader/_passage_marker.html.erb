@@ -1,0 +1,5 @@
+<%# Marks where a curated passage begins in the red chapter view and
+    links to its own page. Sits between verses, outside any verse, and
+    is skipped by text selection. locals: passage %>
+<a href="<%= passage_path(passage) %>" data-ignore-selection
+   class="passage-marker mb-1 mt-6 block font-ui text-xs font-semibold uppercase tracking-wide text-surface-600 transition-colors first:mt-0 hover:text-accent-700"><%= t("red.kinds.#{passage.kind}") %> &middot; <%= passage.title %></a>

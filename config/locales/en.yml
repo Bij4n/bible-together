@@ -233,6 +233,27 @@ en:
       word_pictures_heading: Word pictures in John
       word_pictures_note: John's gospel has no parables in the usual sense. In their place are the images Jesus uses for himself.
       told_in: Told in
+    sections_label: Highlighted in Red
+    encounters:
+      title: Encounters
+      all: All encounters
+      intro: "What Jesus did: the people he met, touched, ate with and stood beside. Here the story is shown in full, with his words in red."
+    sayings:
+      title: Sayings
+      all: All sayings
+      intro: Teaching that stands on its own, from the Sermon on the Mount to the last supper.
+    themes:
+      title: Themes
+      all: All themes
+      intro: Ways in to who he was. Each theme sets what he did beside what he said. They are a place to start, not the whole. Everything he said is in the red text.
+      did: What he did
+      said: What he said
+      told: The stories he told
+    kinds:
+      parable: Parable
+      word_picture: Word picture
+      encounter: Encounter
+      saying: Saying
   settings:
     title: Settings
     description: Customize your reading experience. Most changes save automatically. No save button needed.

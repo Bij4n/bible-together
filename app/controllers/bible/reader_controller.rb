@@ -55,14 +55,22 @@ module Bible
       render_reader
     end
 
-    # /red/parables/:slug -> one curated passage, read in the same
-    # reader under the red lens. A passage told in several gospels is
+    # /red/parables/:slug, /red/encounters/:slug, /red/sayings/:slug ->
+    # one curated passage, read in the same reader. A passage told in several gospels is
     # shown one telling at a time (?in=mark); every telling sits inside
     # a single chapter, so highlighting works exactly as it does on a
     # chapter page.
     def passage
       @lens        = :red
       @passage     = Bible::Passages.find(params[:slug]) or raise ActiveRecord::RecordNotFound
+      @collection  = Bible::Passages.collection_of(@passage)
+      if params[:collection] != @collection
+        redirect_to red_passage_path(collection: @collection, slug: @passage.slug, in: params[:in].presence,
+                                     translation: params[:translation].presence),
+                    status: :moved_permanently
+        return
+      end
+
       @translation = passage_translation
       @appearances = appearances_available_in(@translation, @passage)
       @appearance  = chosen_appearance or raise ActiveRecord::RecordNotFound

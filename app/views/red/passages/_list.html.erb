@@ -11,7 +11,7 @@
   <ul class="divide-y divide-surface-200">
     <% passages.each do |passage| %>
       <li class="py-4">
-        <%= link_to passage.title, red_parable_path(passage.slug),
+        <%= link_to passage.title, passage_path(passage),
                     class: "font-reading text-xl text-surface-900 underline-offset-4 transition-colors hover:text-accent-700 hover:underline" %>
         <p class="mt-1 font-ui text-sm text-surface-600">
           <%= safe_join(passage.appearances.map { |appearance| passage_reference(appearance) }, " · ") %>

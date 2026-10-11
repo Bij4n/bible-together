@@ -17,9 +17,9 @@
 The project is being focused on the words, parables and encounters of Jesus. Plan, sprint
 table and owner decisions are at the top of `PLAN.md`.
 
-- **Live:** the red reader at `/red` (#188), complete Spanish red text (#186, patch applied in production 2026-10-11), and the curated parable list (#189).
+- **Live:** the red reader at `/red` (#188), complete Spanish red text (#186, patch applied in production 2026-10-11), the parables at `/red/parables` (#189, #191), and the encounter, saying and theme lists in `config/passages.yml` and `config/themes.yml` (#192).
 - **Also shipped in this cluster:** the brakeman/mail/rubyzip bump (#184), the `/studies#join` anchor (#185), and the community layer fix for notes on phrase-level highlights (#187).
-- **Next:** the parables pages, then Encounters and themes (sprint 4), the `/red` front page and nav entries (sprint 5).
+- **Next:** the `/red` front page with its three doors, nav entries, homepage and dashboard entry points (sprint 5).
 - **Still provisional:** the Spanish section name, "En Rojo".
 - `bin/brakeman` runs with `--ensure-latest`, so `scan_ruby` fails on every branch the day a new brakeman is released. When that happens, bump brakeman first.
 
