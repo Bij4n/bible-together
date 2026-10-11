@@ -116,7 +116,10 @@ RSpec.describe "Site navigation", type: :system, js: true do
   end
 
   context "mobile tab bar" do
-    before { page.driver.browser.manage.window.resize_to(390, 844) }
+    # Settled, not a bare resize_to: under Xvfb the resize can land
+    # after the page has rendered at desktop width. The suite-level
+    # after hook puts the window back.
+    before { WindowSize.resize_and_settle(page.driver.browser.manage.window, 390, 844) }
 
     it "renders Read, In Red, Study, Explore, and You tabs" do
       visit "/"
