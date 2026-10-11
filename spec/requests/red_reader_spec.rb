@@ -23,9 +23,9 @@ RSpec.describe "Highlighted in Red reader", type: :request do
     verse!(acts, 9, 4, "Saul, Saul, why persecutest thou me?", red: [ 0, 36 ])
   end
 
-  describe "GET /red" do
+  describe "GET /red/words" do
     it "sends the reader to the first chapter with red text" do
-      get "/red"
+      get "/red/words"
 
       expect(response).to redirect_to("/red/kjv/matt/4")
     end

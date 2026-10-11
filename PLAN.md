@@ -14,8 +14,8 @@ our own.
 | 1 | Finish Spanish red text (642 partly-red RV1909 verses) | shipped (#186), applied in production 2026-10-11 |
 | 2 | The red reader: `/red/:translation/:book/:chapter`, dimmed narration, "His words only" | shipped (#188) |
 | 3 | Parables: curated list in `config/passages.yml`, `/red/parables` and `/red/parables/:slug` | shipped (#189, #191) |
-| 4 | Encounters, sayings and themes: lists (#192), then `/red/encounters`, `/red/sayings`, `/red/themes`, markers in the red chapter view | lists shipped; pages in review |
-| 5 | The `/red` front page, nav entries, homepage and dashboard entry points | not started |
+| 4 | Encounters, sayings and themes: lists, `/red/encounters`, `/red/sayings`, `/red/themes`, markers in the red chapter view | shipped (#192, #193) |
+| 5 | The `/red` front page, "In Red" nav entry (desktop and mobile tab bar), homepage section and dashboard card | in review |
 | 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | not started |
 | 7 | "Jesus's words only" search filter, sitemap, wrap-up | not started |
 

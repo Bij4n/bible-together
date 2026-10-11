@@ -12,7 +12,13 @@ module NavigationHelper
   end
 
   def read_nav_active?
-    request.path.start_with?("/bible", "/red") && params[:layer] != "community"
+    request.path.start_with?("/bible") && params[:layer] != "community"
+  end
+
+  # Highlighted in Red is its own destination: the front page, the red
+  # reader and the lists all sit under /red.
+  def red_nav_active?
+    request.path == "/red" || request.path.start_with?("/red/")
   end
 
   def study_nav_active?

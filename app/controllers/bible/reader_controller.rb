@@ -12,8 +12,8 @@ module Bible
       redirect_to bible_chapter_path(translation: code.downcase, book: "gen", chapter: 1)
     end
 
-    # /red -> the first chapter with red text in the reader's default
-    # translation.
+    # /red/words -> the first chapter with red text in the reader's
+    # default translation.
     def red_entry
       translation = Translation.find_by!(code: resolved_default_translation_code)
       first = Bible::RedLetterIndex.for(translation).first

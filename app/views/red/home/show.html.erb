@@ -1,0 +1,64 @@
+<% content_for :title, t("red.home.title") %>
+<% content_for :meta_description, t("red.home.lead") %>
+<%
+  doors = [
+    [ "words",      red_words_path ],
+    [ "parables",   red_passages_path(collection: "parables") ],
+    [ "encounters", red_passages_path(collection: "encounters") ]
+  ]
+%>
+
+<article class="mx-auto max-w-3xl space-y-12 sm:space-y-14">
+  <header class="max-w-2xl space-y-5">
+    <h1 class="font-ui text-4xl font-semibold tracking-[-0.03em] text-jesus-light sm:text-5xl">
+      <%= t("red.home.title") %>
+    </h1>
+    <p class="font-reading text-xl leading-relaxed text-pretty text-surface-700">
+      <%= t("red.home.lead") %>
+    </p>
+  </header>
+
+  <section aria-label="<%= t("red.home.doors_label") %>" class="red-doors grid gap-8 border-t border-surface-200 pt-10 sm:grid-cols-3">
+    <% doors.each do |key, path| %>
+      <div class="space-y-2">
+        <h2 class="font-ui text-lg font-semibold tracking-tight text-surface-900">
+          <%= t("red.home.doors.#{key}.title") %>
+        </h2>
+        <p class="font-reading text-base leading-relaxed text-pretty text-surface-600">
+          <%= t("red.home.doors.#{key}.body") %>
+        </p>
+        <%= link_to path, class: "inline-flex items-center gap-1 font-ui text-sm font-medium text-accent-700 underline-offset-4 transition-colors hover:text-accent-800 hover:underline" do %>
+          <%= t("red.home.doors.#{key}.cta") %>
+          <span aria-hidden="true">&rarr;</span>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+
+  <p class="font-ui text-sm text-surface-600">
+    <%= t("red.home.sayings_line") %>
+    <%= link_to t("red.sayings.title"), red_passages_path(collection: "sayings"),
+                class: "text-accent-700 underline underline-offset-2 transition-colors hover:text-accent-800" %>.
+  </p>
+
+  <section class="space-y-4 border-t border-surface-200 pt-10" aria-labelledby="red-themes-heading">
+    <h2 id="red-themes-heading" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-600">
+      <%= t("red.home.themes_heading") %>
+    </h2>
+    <p class="max-w-2xl font-reading text-base leading-relaxed text-pretty text-surface-600">
+      <%= t("red.themes.intro") %>
+    </p>
+    <ul class="red-themes grid gap-x-8 sm:grid-cols-2">
+      <% @themes.each do |theme| %>
+        <li class="border-b border-surface-200 py-3">
+          <%= link_to theme.name, red_theme_path(theme.slug),
+                      class: "font-reading text-lg text-surface-900 underline-offset-4 transition-colors hover:text-accent-700 hover:underline" %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <p class="max-w-2xl border-t border-surface-200 pt-8 font-reading text-base leading-relaxed text-pretty text-surface-600">
+    <%= t("red.home.note") %>
+  </p>
+</article>

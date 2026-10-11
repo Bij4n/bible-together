@@ -26,6 +26,7 @@ RSpec.describe "Site navigation", type: :system, js: true do
 
         within("header.site-header") do
           expect(page).to have_link(I18n.t("layout.read_link"))
+          expect(page).to have_link(I18n.t("layout.red_link"), href: red_home_path)
           expect(page).to have_link(I18n.t("layout.study_menu"), href: %r{/how-it-works#studies})
           expect(page).to have_button(I18n.t("layout.explore_menu"))
           expect(page).to have_link(I18n.t("auth.sign_in"))
@@ -117,11 +118,12 @@ RSpec.describe "Site navigation", type: :system, js: true do
   context "mobile tab bar" do
     before { page.driver.browser.manage.window.resize_to(390, 844) }
 
-    it "renders Read, Study, Explore, and You tabs" do
+    it "renders Read, In Red, Study, Explore, and You tabs" do
       visit "/"
 
       within("nav.mobile-tab-bar") do
         expect(page).to have_link(I18n.t("layout.read_link"))
+        expect(page).to have_link(I18n.t("layout.red_link"), href: red_home_path)
         expect(page).to have_content(I18n.t("layout.study_menu"))
         expect(page).to have_button(I18n.t("layout.explore_menu"))
         expect(page).to have_content(I18n.t("layout.you_tab"))

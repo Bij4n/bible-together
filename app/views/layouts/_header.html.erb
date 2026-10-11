@@ -16,6 +16,8 @@
     <nav class="site-nav hidden sm:flex items-center gap-1 font-ui text-sm" aria-label="<%= t("layout.main_nav") %>">
       <%= link_to t("layout.read_link"), read_nav_path,
           class: "#{rail_idle} #{read_nav_active? ? rail_active : rail_rest}" %>
+      <%= link_to t("layout.red_link"), red_home_path,
+          class: "#{rail_idle} #{red_nav_active? ? rail_active : rail_rest}" %>
 
       <% if user_signed_in? %>
         <div data-controller="user-menu" class="relative">

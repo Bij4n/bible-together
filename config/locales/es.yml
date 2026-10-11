@@ -58,6 +58,7 @@ es:
     profile_link: Perfil
     start_reading_link: Empezar a leer
     read_link: Leer
+    red_link: En Rojo
     studies_link: Estudios
     community_link: Comunidad
     donate_link: Donar
@@ -89,6 +90,10 @@ es:
     switch_to: "Cambiar a %{name}"
     dismiss: Descartar
   home:
+    red:
+      heading: En Rojo
+      body: Lee la Biblia a través de las palabras de Jesús. Lo que dijo, las historias que contó y cómo trató a las personas que encontró.
+      cta: Abrir En Rojo
     welcome: Lee la Biblia en compañía.
     subhead: Resalta versículos, escribe notas y comparte con tu grupo de estudio.
     cta_public_bible: Empezar a leer
@@ -218,6 +223,26 @@ es:
         one: "Este resaltado tiene %{count} nota. Quitarlo eliminará la nota. ¿Continuar?"
         other: "Este resaltado tiene %{count} notas. Quitarlo eliminará las notas. ¿Continuar?"
   red:
+    home:
+      title: En Rojo
+      lead: Lee la Biblia a través de las palabras de Jesús. Lo que dijo, las historias que contó y cómo trató a las personas que encontró.
+      doors_label: Tres caminos
+      doors:
+        words:
+          title: Sus palabras
+          body: Todo lo que está impreso en rojo, capítulo por capítulo, con el relato que lo rodea atenuado.
+          cta: Empezar a leer
+        parables:
+          title: Sus parábolas
+          body: Las historias que contó y las imágenes que usó para hablar de sí mismo.
+          cta: Ver las parábolas
+        encounters:
+          title: Sus encuentros
+          body: "Lo que hizo: las personas que tocó, con quienes comió y a quienes acompañó."
+          cta: Ver los encuentros
+      sayings_line: ¿Buscas una enseñanza en particular? Las bienaventuranzas, el Padre nuestro y otras están en
+      themes_heading: Empieza por un tema
+      note: Aquí está todo. Las palabras duras están en el texto en rojo junto a las tiernas, y no añadimos comentario propio.
     parables:
       title: Las Parábolas
       all: Todas las parábolas
