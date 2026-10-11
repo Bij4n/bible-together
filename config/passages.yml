@@ -1,0 +1,304 @@
+# Curated passages for Highlighted in Red.
+#
+# kind: parable       a story or comparison Jesus tells
+#       word_picture  an image he uses for himself in John's gospel,
+#                     which has no parables in the usual sense
+#
+# Each passage is listed once, with every gospel that tells it. An
+# appearance is Book.chapter.verses and must stay inside one chapter.
+# The order here is the order the site lists them in: Matthew's order,
+# then the parables only Mark has, then Luke's.
+
+- slug: lamp-on-a-stand
+  kind: parable
+  title_en: The Lamp on a Stand
+  title_es: La lámpara en el candelero
+  appearances: [Matt.5.14-16, Mark.4.21-22, Luke.8.16-17]
+
+- slug: wise-and-foolish-builders
+  kind: parable
+  title_en: The Wise and Foolish Builders
+  title_es: Los dos cimientos
+  appearances: [Matt.7.24-27, Luke.6.47-49]
+
+- slug: new-cloth-on-an-old-garment
+  kind: parable
+  title_en: New Cloth on an Old Garment
+  title_es: El remiendo de paño nuevo
+  appearances: [Matt.9.16, Mark.2.21, Luke.5.36]
+
+- slug: new-wine-in-old-wineskins
+  kind: parable
+  title_en: New Wine in Old Wineskins
+  title_es: El vino nuevo en odres viejos
+  appearances: [Matt.9.17, Mark.2.22, Luke.5.37-39]
+
+- slug: sower
+  kind: parable
+  title_en: The Sower
+  title_es: El sembrador
+  appearances: [Matt.13.3-9, Mark.4.3-9, Luke.8.5-8]
+
+- slug: wheat-and-weeds
+  kind: parable
+  title_en: The Wheat and the Weeds
+  title_es: El trigo y la cizaña
+  appearances: [Matt.13.24-30]
+
+- slug: mustard-seed
+  kind: parable
+  title_en: The Mustard Seed
+  title_es: El grano de mostaza
+  appearances: [Matt.13.31-32, Mark.4.30-32, Luke.13.18-19]
+
+- slug: leaven
+  kind: parable
+  title_en: The Leaven
+  title_es: La levadura
+  appearances: [Matt.13.33, Luke.13.20-21]
+
+- slug: hidden-treasure
+  kind: parable
+  title_en: The Hidden Treasure
+  title_es: El tesoro escondido
+  appearances: [Matt.13.44]
+
+- slug: pearl-of-great-price
+  kind: parable
+  title_en: The Pearl of Great Price
+  title_es: La perla de gran precio
+  appearances: [Matt.13.45-46]
+
+- slug: net
+  kind: parable
+  title_en: The Net
+  title_es: La red
+  appearances: [Matt.13.47-50]
+
+- slug: lost-sheep
+  kind: parable
+  title_en: The Lost Sheep
+  title_es: La oveja perdida
+  appearances: [Matt.18.12-14, Luke.15.3-7]
+
+- slug: unforgiving-servant
+  kind: parable
+  title_en: The Unforgiving Servant
+  title_es: El siervo que no quiso perdonar
+  appearances: [Matt.18.23-35]
+
+- slug: workers-in-the-vineyard
+  kind: parable
+  title_en: The Workers in the Vineyard
+  title_es: Los obreros de la viña
+  appearances: [Matt.20.1-16]
+
+- slug: two-sons
+  kind: parable
+  title_en: The Two Sons
+  title_es: Los dos hijos
+  appearances: [Matt.21.28-32]
+
+- slug: wicked-tenants
+  kind: parable
+  title_en: The Wicked Tenants
+  title_es: Los labradores malvados
+  appearances: [Matt.21.33-41, Mark.12.1-9, Luke.20.9-16]
+
+- slug: wedding-banquet
+  kind: parable
+  title_en: The Wedding Banquet
+  title_es: El banquete de bodas
+  appearances: [Matt.22.1-14]
+
+- slug: budding-fig-tree
+  kind: parable
+  title_en: The Budding Fig Tree
+  title_es: La higuera que brota
+  appearances: [Matt.24.32-35, Mark.13.28-31, Luke.21.29-33]
+
+- slug: faithful-and-wise-servant
+  kind: parable
+  title_en: The Faithful and Wise Servant
+  title_es: El siervo fiel y prudente
+  appearances: [Matt.24.45-51, Luke.12.42-48]
+
+- slug: ten-virgins
+  kind: parable
+  title_en: The Ten Virgins
+  title_es: Las diez vírgenes
+  appearances: [Matt.25.1-13]
+
+- slug: talents
+  kind: parable
+  title_en: The Talents
+  title_es: Los talentos
+  appearances: [Matt.25.14-30]
+
+- slug: sheep-and-goats
+  kind: parable
+  title_en: The Sheep and the Goats
+  title_es: Las ovejas y los cabritos
+  appearances: [Matt.25.31-46]
+
+- slug: growing-seed
+  kind: parable
+  title_en: The Growing Seed
+  title_es: La semilla que crece
+  appearances: [Mark.4.26-29]
+
+- slug: two-debtors
+  kind: parable
+  title_en: The Two Debtors
+  title_es: Los dos deudores
+  appearances: [Luke.7.41-43]
+
+- slug: good-samaritan
+  kind: parable
+  title_en: The Good Samaritan
+  title_es: El buen samaritano
+  appearances: [Luke.10.25-37]
+
+- slug: friend-at-midnight
+  kind: parable
+  title_en: The Friend at Midnight
+  title_es: El amigo a medianoche
+  appearances: [Luke.11.5-8]
+
+- slug: rich-fool
+  kind: parable
+  title_en: The Rich Fool
+  title_es: El rico insensato
+  appearances: [Luke.12.16-21]
+
+- slug: watchful-servants
+  kind: parable
+  title_en: The Watchful Servants
+  title_es: Los siervos vigilantes
+  appearances: [Luke.12.35-40, Mark.13.34-37]
+
+- slug: barren-fig-tree
+  kind: parable
+  title_en: The Barren Fig Tree
+  title_es: La higuera estéril
+  appearances: [Luke.13.6-9]
+
+- slug: lowest-seat
+  kind: parable
+  title_en: The Lowest Seat at the Feast
+  title_es: Los primeros asientos
+  appearances: [Luke.14.7-11]
+
+- slug: great-banquet
+  kind: parable
+  title_en: The Great Banquet
+  title_es: La gran cena
+  appearances: [Luke.14.16-24]
+
+- slug: counting-the-cost
+  kind: parable
+  title_en: Counting the Cost
+  title_es: Calcular el costo
+  appearances: [Luke.14.28-33]
+
+- slug: lost-coin
+  kind: parable
+  title_en: The Lost Coin
+  title_es: La moneda perdida
+  appearances: [Luke.15.8-10]
+
+- slug: prodigal-son
+  kind: parable
+  title_en: The Prodigal Son
+  title_es: El hijo pródigo
+  appearances: [Luke.15.11-32]
+
+- slug: shrewd-manager
+  kind: parable
+  title_en: The Shrewd Manager
+  title_es: El mayordomo infiel
+  appearances: [Luke.16.1-9]
+
+- slug: rich-man-and-lazarus
+  kind: parable
+  title_en: The Rich Man and Lazarus
+  title_es: El rico y Lázaro
+  appearances: [Luke.16.19-31]
+
+- slug: master-and-servant
+  kind: parable
+  title_en: The Master and the Servant
+  title_es: El siervo que cumple su deber
+  appearances: [Luke.17.7-10]
+
+- slug: persistent-widow
+  kind: parable
+  title_en: The Persistent Widow
+  title_es: La viuda y el juez injusto
+  appearances: [Luke.18.1-8]
+
+- slug: pharisee-and-tax-collector
+  kind: parable
+  title_en: The Pharisee and the Tax Collector
+  title_es: El fariseo y el publicano
+  appearances: [Luke.18.9-14]
+
+- slug: ten-minas
+  kind: parable
+  title_en: The Ten Minas
+  title_es: Las diez minas
+  appearances: [Luke.19.11-27]
+
+- slug: living-water
+  kind: word_picture
+  title_en: Living Water
+  title_es: El agua viva
+  appearances: [John.4.10-14]
+
+- slug: bread-of-life
+  kind: word_picture
+  title_en: The Bread of Life
+  title_es: El pan de vida
+  appearances: [John.6.32-40]
+
+- slug: light-of-the-world
+  kind: word_picture
+  title_en: The Light of the World
+  title_es: La luz del mundo
+  appearances: [John.8.12]
+
+- slug: door-of-the-sheep
+  kind: word_picture
+  title_en: The Door of the Sheep
+  title_es: La puerta de las ovejas
+  appearances: [John.10.1-10]
+
+- slug: good-shepherd
+  kind: word_picture
+  title_en: The Good Shepherd
+  title_es: El buen pastor
+  appearances: [John.10.11-18]
+
+- slug: resurrection-and-the-life
+  kind: word_picture
+  title_en: The Resurrection and the Life
+  title_es: La resurrección y la vida
+  appearances: [John.11.25-26]
+
+- slug: grain-of-wheat
+  kind: word_picture
+  title_en: The Grain of Wheat
+  title_es: El grano de trigo
+  appearances: [John.12.24-26]
+
+- slug: way-truth-and-life
+  kind: word_picture
+  title_en: The Way, the Truth, and the Life
+  title_es: El camino, la verdad y la vida
+  appearances: [John.14.1-7]
+
+- slug: true-vine
+  kind: word_picture
+  title_en: The True Vine
+  title_es: La vid verdadera
+  appearances: [John.15.1-8]
