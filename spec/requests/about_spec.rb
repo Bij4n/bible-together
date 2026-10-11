@@ -28,12 +28,47 @@ RSpec.describe "About page", type: :request do
     expect(response.body).to include(I18n.t("home.about.para_nonprofit"))
   end
 
-  it "shares the social-platform vision and that one person (a businessperson and developer) builds it" do
+  it "says why the site exists and what we owe each other" do
     get "/about"
     expect(response.body).to include(I18n.t("home.about.vision_label"))
-    expect(response.body).to include(I18n.t("home.about.para_vision"))
+    expect(response.body).to include(I18n.t("home.about.para_why_1"))
+    expect(response.body).to include(I18n.t("home.about.para_why_2"))
+    expect(response.body).to include(I18n.t("home.about.duty_label"))
+    expect(response.body).to include(I18n.t("home.about.para_duty"))
+  end
+
+  it "quotes Jesus, each quote linking to where he says it" do
+    get "/about"
+
+    page = Nokogiri::HTML(response.body)
+    quotes = page.css(".about-quotes li")
+    expect(quotes.size).to eq(5)
+    expect(quotes.first.text).to include("Thou shalt love thy neighbour as thyself.")
+    expect(quotes.map { |q| q.at_css("a")[:href] }).to eq(%w[
+      /red/kjv/mark/12 /red/kjv/matt/25 /red/kjv/matt/9 /red/kjv/matt/23 /red/kjv/john/13
+    ])
+  end
+
+  it "quotes him from the Reina-Valera in Spanish" do
+    get "/about?locale=es"
+
+    page = Nokogiri::HTML(response.body)
+    expect(page.css(".about-quotes li").first.text).to include("Amarás á tu prójimo como á ti mismo.")
+    expect(page.css(".about-quotes li a").first[:href]).to start_with("/red/rv1909/mark/12")
+    expect(response.body).not_to include("translation missing")
+  end
+
+  it "tells the founder's story briefly, in the first person" do
+    get "/about"
     expect(response.body).to include(I18n.t("home.about.team_label"))
     expect(response.body).to include(I18n.t("home.about.para_team"))
+    expect(I18n.t("home.about.para_team")).to start_with("I was raised Muslim.")
+  end
+
+  it "no longer carries the old social-platform pitch" do
+    get "/about"
+    expect(response.body).not_to include("social platform")
+    expect(response.body).not_to include("wearing every hat")
   end
 
   it "no longer shows the removed reflective blockquote" do
