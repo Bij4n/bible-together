@@ -4,6 +4,12 @@ class Group < ApplicationRecord
 
   enum :privacy, PRIVACIES
 
+  # What the study reads together: the whole Bible, or Highlighted in
+  # Red (Jesus's words, under the red lens). Integer-backed, so this
+  # hash is append-only.
+  FOCUSES = { bible: 0, red: 1 }.freeze
+  enum :focus, FOCUSES, prefix: true, validate: true
+
   belongs_to :owner, class_name: "User"
   # delete_all (not :destroy) bypasses the at-least-one-owner callback on
   # Membership — if the whole group is going away, there's nothing to
@@ -52,20 +58,30 @@ class Group < ApplicationRecord
   end
 
   # Most recently touched highlight shared with the study — drives the
-  # "reading together" card. Falls back to Genesis 1 KJV when empty.
+  # "reading together" card. Falls back to where the study starts when
+  # empty.
   def reading_together_location
     highlight = Highlight.joins(highlight_notes: { note: :note_shares })
                          .where(note_shares: { shareable_type: "Group", shareable_id: id })
                          .order("highlights.updated_at DESC")
                          .first
-    return { translation: "kjv", book: "gen", chapter: 1 } unless highlight
+    return starting_location unless highlight
 
     parts = highlight.osis_ref.split(".")
-    return { translation: "kjv", book: "gen", chapter: 1 } if parts.size < 4
+    return starting_location if parts.size < 4
 
     { translation: parts[1].downcase, book: parts[2].downcase, chapter: parts[3].to_i }
   rescue StandardError
     { translation: "kjv", book: "gen", chapter: 1 }
+  end
+
+  # Genesis 1 in the KJV, or for a study of Highlighted in Red the
+  # first chapter with any of his words.
+  def starting_location
+    first_red = focus_red? && (kjv = Translation.find_by(code: "KJV")) && Bible::RedLetterIndex.for(kjv).first
+    return { translation: "kjv", book: "gen", chapter: 1 } unless first_red
+
+    { translation: "kjv", book: first_red.book.downcase, chapter: first_red.number }
   end
 
   def self.generate_invitation_code

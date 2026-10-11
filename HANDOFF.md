@@ -156,6 +156,8 @@ When the user provides explicit direction (e.g. "fix the about page eyebrow"), d
 
   **Use the bracket trick when killing:** `pkill -f "[f]irefox"`, not `pkill -f firefox`. The plain form matches the *pkill command line itself* and kills your own shell — it looks like the terminal died for no reason. Same for geckodriver. Full cleanup: `pkill -9 -f "[m]arionette"; pkill -9 -f "[f]irefox-bin"; pkill -9 -f "[g]eckodriver"; rm -rf /tmp/rust_mozprofile*`.
 
+- **Window size no longer leaks between js examples** (2026-10-11). Under Xvfb a resize isn't applied by the time the call returns, so one example's restore could land after the next example's resize. That was behind the "random" local failures in the highlights, site nav and note marker specs. `spec/support/window_size.rb` now restores the opening size after every js example and waits for it to land; use its `at_window_size(w, h) { ... }` for any new phone-width example instead of calling `resize_to` directly. The full browser suite now passes locally, repeatedly.
+
 - **Three ways the local JS setup self-sabotages** (diagnosed 2026-08-06; `rails_helper.rb` not yet changed, so these are live footguns):
   1. The helper does `system("Xvfb :99 … &")` then `sleep 1` — but Xvfb needs ~2s to accept connections on this box. It's a race.
   2. It then sets `ENV["DISPLAY"] = ":99"` **unconditionally**, without re-checking that Xvfb came up. So a failed or slow start silently becomes a 4-minute `create_session` timeout instead of a clear error or a `-headless` fallback.

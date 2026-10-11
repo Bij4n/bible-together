@@ -87,6 +87,13 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) do
     driven_by :headless_firefox_ci
+    WindowSize.remember_default(page)
+  end
+
+  # Whatever an example did to the window, the next one starts at the
+  # size the browser opened with. See spec/support/window_size.rb.
+  config.after(:each, type: :system, js: true) do
+    WindowSize.restore_default(page)
   end
 
   # VerseEmbedding memoises parsed vectors in class state for performance.

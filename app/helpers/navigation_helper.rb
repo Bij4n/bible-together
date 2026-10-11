@@ -64,12 +64,17 @@ module NavigationHelper
         name = book_record ? (I18n.locale == :es ? book_record.name_es : book_record.name_en) : parts[2]
         return {
           label: "#{name} #{chapter}",
-          path: bible_chapter_path(translation: translation, book: book, chapter: chapter)
+          path: focused_chapter_path(user, book_record&.translation, parts[2], chapter) ||
+                bible_chapter_path(translation: translation, book: book, chapter: chapter)
         }
       end
     end
 
     code = user.default_translation&.code&.downcase || "kjv"
+    if user.focus_red? && (start = red_starting_location(code))
+      return start
+    end
+
     book_record = Book.joins(:translation)
                       .where(translations: { code: code.upcase })
                       .find_by(osis_code: "Gen")
@@ -78,6 +83,28 @@ module NavigationHelper
       label: "#{name} 1",
       path: bible_chapter_path(translation: code, book: "gen", chapter: 1)
     }
+  end
+
+  # For a reader studying Highlighted in Red: the chapter under the red
+  # lens, when it has any red text. nil otherwise, and the ordinary
+  # reader is used.
+  def focused_chapter_path(user, translation, book_code, chapter)
+    return unless user.focus_red? && translation
+    return unless Bible::RedLetterIndex.for(translation).include?(book_code, chapter)
+
+    red_chapter_path(translation: translation.code.downcase, book: book_code.downcase, chapter: chapter)
+  end
+
+  # Where a reader studying Highlighted in Red starts: the first
+  # chapter with red text in their translation.
+  def red_starting_location(code)
+    translation = Translation.find_by(code: code.upcase) or return
+    first = Bible::RedLetterIndex.for(translation).first or return
+    book = translation.books.find_by(osis_code: first.book)
+    name = book ? (I18n.locale == :es ? book.name_es : book.name_en) : first.book
+
+    { label: "#{name} #{first.number}",
+      path: red_chapter_path(translation: code, book: first.book.downcase, chapter: first.number) }
   end
 
   def continue_reading_path(user)

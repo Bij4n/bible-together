@@ -46,6 +46,38 @@ RSpec.describe Group, type: :model do
     end
   end
 
+  describe "focus" do
+    it "is the whole Bible by default" do
+      expect(build(:group)).to be_focus_bible
+    end
+
+    it "can be Highlighted in Red" do
+      expect(build(:group, focus: :red)).to be_focus_red
+    end
+  end
+
+  describe "#reading_together_location" do
+    let(:kjv) { create(:translation, :kjv) }
+
+    before do
+      matthew = create(:book, translation: kjv, osis_code: "Matt", name_en: "Matthew", name_es: "Mateo",
+                              position: 40, testament: :new)
+      chapter = create(:chapter, book: matthew, number: 3)
+      create(:verse, chapter: chapter, number: 15, body_text: "Suffer it to be so now.",
+                     body_html: "Suffer it to be so now.", red_letter_ranges: [ [ 0, 23 ] ],
+                     osis_ref: "Bible.KJV.Matt.3.15")
+    end
+
+    it "starts an ordinary study at Genesis 1" do
+      expect(create(:group).reading_together_location).to eq(translation: "kjv", book: "gen", chapter: 1)
+    end
+
+    it "starts a red study at the first chapter with red text" do
+      expect(create(:group, focus: :red).reading_together_location)
+        .to eq(translation: "kjv", book: "matt", chapter: 3)
+    end
+  end
+
   describe "#member?" do
     let(:group) { create(:group) }
     let(:outsider) { create(:user) }

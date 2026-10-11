@@ -37,6 +37,17 @@
     <% end %>
   </fieldset>
 
+  <fieldset class="space-y-2">
+    <legend class="<%= label_classes %>"><%= t("groups.focus.label") %></legend>
+    <% Group::FOCUSES.each_key do |key| %>
+      <label class="flex items-center gap-2 font-ui text-sm text-surface-700">
+        <%= f.radio_button :focus, key, class: radio_classes %>
+        <%= t("groups.focus.#{key}") %>
+      </label>
+    <% end %>
+    <p class="font-ui text-xs text-surface-600"><%= t("groups.focus.hint") %></p>
+  </fieldset>
+
   <div class="flex items-center justify-end gap-3">
     <%= link_to t("groups.cancel"), groups_path, class: cancel_classes %>
     <%= f.submit class: submit_classes %>

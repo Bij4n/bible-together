@@ -13,6 +13,15 @@ module Groups
       @chapter     = @book.chapters.find_by!(number: params[:chapter].to_i)
       @verses      = @chapter.verses.order(:number)
 
+      # A study of Highlighted in Red reads under the red lens and
+      # steps only through chapters that have his words. The lens is a
+      # class on the page, so the shared verse broadcasts are the same
+      # for every member whatever they have toggled.
+      if @group.focus_red?
+        @lens = :red
+        @red_index = Bible::RedLetterIndex.for(@translation)
+      end
+
       prefix = "Bible.#{@translation.code}.#{@book.osis_code}.#{@chapter.number}."
 
       # Sprint 5: the group bible shows only highlights anchored to a
