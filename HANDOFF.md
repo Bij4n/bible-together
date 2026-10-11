@@ -12,6 +12,21 @@
 - **Branch:** `main` — all work through PR #175 merged and live (2026-08-06).
 - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md` (R1–R9 shipped on `main`).
 
+### In flight 2026-10-10 — Highlighted in Red
+
+The project is being focused on the words, parables and encounters of Jesus. Plan, sprint
+table and owner decisions are at the top of `PLAN.md`. Nothing from this cluster is merged
+yet; the PRs are open and waiting on the owner:
+
+- **#184 — merge first.** Bumps brakeman, mail and rubyzip. `scan_ruby` fails on every other branch until it lands (`bin/brakeman` runs with `--ensure-latest`, and two advisories were published after the last merge).
+- **#185** — `id="join"` on `/studies` so the nav's "Join with code" link lands on the form.
+- **#187** — community layer was missing public notes attached to phrase-level highlights.
+- **#186** — Spanish red text for the 642 partly-red verses. **After deploy, run `bundle exec rails 'bible:red_letter:apply[rv1909]'` in the Render shell.**
+- **#188** — the red reader at `/red`.
+- **#189** — the parable list in `config/passages.yml`. Needs the owner's approval of the list itself before the parables pages are built.
+
+After #184 merges, the other branches need `main` merged in (or a re-run) to turn `scan_ruby` green.
+
 ### Shipped 2026-08-06 — contact form data loss + security bump
 
 - **The contact form was a black hole for three days.** A bot submission hard-bounced `hello@bible-together.org`, Resend suppressed the address account-wide, and every later submission was dropped while the visitor still saw a success message. `ContactMessage` (PR #169) now persists the row *first* and treats email as a notification; honeypot + per-IP rate limit added (PR #172). Full story in the `PLAN.md` decisions log — read it before touching mail code, especially the part about `raise_delivery_errors` not covering suppression.
