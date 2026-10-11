@@ -64,6 +64,25 @@ RSpec.describe "Highlighted in Red parables", type: :request do
         expect(response.body).to include("Matthew 13:3–9")
       end
 
+      it "shows his explanation under the parable, with a heading where it starts" do
+        (18..23).each { |n| verse!(matthew, 13, n, "Matthew sower explained #{n}.") }
+
+        get "/red/parables/sower"
+
+        page = Nokogiri::HTML(response.body)
+        expect(page.css(".chapter-body .verse").map { |v| v["data-osis-ref"].split(".").last.to_i })
+          .to eq((3..9).to_a + (18..23).to_a)
+        heading = page.at_css(".chapter-body .passage-explanation")
+        expect(heading.text.squish).to eq(I18n.t("red.explained"))
+        expect(heading.next_element["data-osis-ref"]).to eq("Bible.KJV.Matt.13.18")
+      end
+
+      it "shows no explanation heading for a telling that has none" do
+        get "/red/parables/sower", params: { in: "mark" }
+
+        expect(response.body).not_to include("passage-explanation")
+      end
+
       it "offers the other gospels that tell it, and switches to one" do
         get "/red/parables/sower"
         expect(response.body).to include(%(href="/red/parables/sower?in=mark"))

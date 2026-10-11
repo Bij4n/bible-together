@@ -21,12 +21,21 @@ module Bible
       "sayings"    => %w[saying]
     }.freeze
 
-    Appearance = Struct.new(:book, :chapter, :verses) do
+    # explained is the verse range, later in the same chapter, where
+    # Jesus explains the passage himself (the Sower, the Weeds). nil
+    # for nearly every telling.
+    Appearance = Struct.new(:book, :chapter, :verses, :explained) do
       # "Matt.13.3-9" or, for a single verse, "John.8.12".
       def self.parse(ref)
         book, chapter, verses = ref.split(".")
         first, last = verses.split("-").map(&:to_i)
         new(book, chapter.to_i, first..(last || first))
+      end
+
+      # Every verse the telling's page shows: the telling, then his
+      # explanation when there is one.
+      def verse_numbers
+        verses.to_a + explained.to_a
       end
 
       def osis_refs(translation_code)
@@ -45,8 +54,17 @@ module Bible
         @all ||= YAML.safe_load_file(CONFIG_PATH).map do |entry|
           Passage.new(slug: entry["slug"], kind: entry["kind"],
                       title_en: entry["title_en"], title_es: entry["title_es"],
-                      appearances: Array(entry["appearances"]).map { |ref| Appearance.parse(ref) },
+                      appearances: appearances_from(entry),
                       themes: Array(entry["themes"]))
+        end
+      end
+
+      def appearances_from(entry)
+        explanations = Array(entry["explained"]).map { |ref| Appearance.parse(ref) }
+        Array(entry["appearances"]).map do |ref|
+          telling = Appearance.parse(ref)
+          telling.explained = explanations.detect { |e| e.book == telling.book && e.chapter == telling.chapter }&.verses
+          telling
         end
       end
 

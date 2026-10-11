@@ -41,7 +41,7 @@ module Groups
 
       @book    = @translation.books.find_by!(osis_code: @appearance.book)
       @chapter = @book.chapters.find_by!(number: @appearance.chapter)
-      @verses  = @chapter.verses.where(number: @appearance.verses).order(:number)
+      @verses  = @chapter.verses.where(number: @appearance.verse_numbers).order(:number)
 
       load_shared_layer
       keep_notes_on_passage
@@ -107,7 +107,7 @@ module Groups
       @group_notes = @group_notes.select do |note|
         note.highlights.any? do |highlight|
           ref = highlight.parsed_ref
-          ref.start_verse <= @appearance.verses.last && ref.end_verse >= @appearance.verses.first
+          (ref.start_verse..ref.end_verse).any? { |verse| @appearance.verse_numbers.include?(verse) }
         end
       end
     end

@@ -14,6 +14,8 @@ RSpec.describe Bible::Passages do
           appearances:
             - Matt.13.3-9
             - Mark.4.3-9
+          explained:
+            - Matt.13.18-23
         - slug: light-of-the-world
           kind: word_picture
           title_en: The Light of the World
@@ -45,6 +47,15 @@ RSpec.describe Bible::Passages do
 
       expect([ first.book, first.chapter, first.verses ]).to eq([ "Matt", 13, 3..9 ])
       expect([ second.book, second.chapter, second.verses ]).to eq([ "Mark", 4, 3..9 ])
+    end
+
+    it "attaches his explanation to the telling in the same gospel" do
+      matthew, mark = described_class.find("sower").appearances
+
+      expect(matthew.explained).to eq(18..23)
+      expect(matthew.verse_numbers).to eq([ 3, 4, 5, 6, 7, 8, 9, 18, 19, 20, 21, 22, 23 ])
+      expect(mark.explained).to be_nil
+      expect(mark.verse_numbers).to eq((3..9).to_a)
     end
 
     it "reads a single verse as a one-verse range" do
@@ -125,6 +136,27 @@ RSpec.describe Bible::Passages do
     it "includes encounters and sayings alongside the parables" do
       expect(described_class.of_kind("encounter")).to be_present
       expect(described_class.of_kind("saying")).to be_present
+    end
+
+    # An explanation is shown under its telling on the same page, so it
+    # has to be in the same chapter and come after it.
+    it "keeps every explanation after its telling, in a gospel that tells it" do
+      raw = YAML.safe_load_file(described_class::CONFIG_PATH)
+
+      raw.each do |entry|
+        told = Array(entry["appearances"]).map { |ref| described_class::Appearance.parse(ref) }
+        Array(entry["explained"]).each do |ref|
+          explanation = described_class::Appearance.parse(ref)
+          telling = told.detect { |a| a.book == explanation.book && a.chapter == explanation.chapter }
+          expect(telling).to be_present, "#{entry['slug']}: #{ref} has no telling in that chapter"
+          expect(explanation.verses.first).to be > telling.verses.last
+        end
+      end
+    end
+
+    it "lists his explanations of the Sower and the Weeds" do
+      expect(described_class.find("sower").appearances.map(&:explained)).to eq([ 18..23, 13..20, 11..15 ])
+      expect(described_class.find("wheat-and-weeds").appearances.first.explained).to eq(36..43)
     end
 
     it "never lists the same gospel twice for one passage" do

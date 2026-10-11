@@ -55,7 +55,7 @@
   <div class="chapter-body font-reading <%= red ? "text-surface-500" : "text-surface-900" %>">
     <% chip_map = verse_note_map(@highlights) %>
     <% markers = passage_markers %>
-    <% @verses.each_with_index do |verse, i| %><% if (marked = markers[verse.number]) %><%= render "bible/reader/passage_marker", passage: marked %><% end %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: "#note_#{meta[:ids].first}", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, highlight_style: :underline, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
+    <% @verses.each_with_index do |verse, i| %><% if (marked = markers[verse.number]) %><%= render "bible/reader/passage_marker", passage: marked %><% end %><%= render "bible/reader/explanation_marker" if verse.number == @appearance&.explained&.first %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: "#note_#{meta[:ids].first}", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, highlight_style: :underline, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
   <%= render "bible/reader/passage_nav" if @passage %>

@@ -80,7 +80,7 @@ module Bible
 
       @book    = @translation.books.find_by!(osis_code: @appearance.book)
       @chapter = @book.chapters.find_by!(number: @appearance.chapter)
-      @verses  = @chapter.verses.where(number: @appearance.verses).order(:number)
+      @verses  = @chapter.verses.where(number: @appearance.verse_numbers).order(:number)
 
       render_reader
     end
@@ -135,7 +135,7 @@ module Bible
         note.highlights.any? do |highlight|
           ref = highlight.parsed_ref
           ref.start_chapter == @chapter.number &&
-            ref.start_verse <= @appearance.verses.last && ref.end_verse >= @appearance.verses.first
+            (ref.start_verse..ref.end_verse).any? { |verse| @appearance.verse_numbers.include?(verse) }
         end
       end
       @highlights = community_highlights_for(@public_notes)

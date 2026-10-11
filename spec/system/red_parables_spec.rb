@@ -41,6 +41,17 @@ RSpec.describe "Highlighted in Red parables", type: :system, js: true do
     expect(page).to have_content("Mark sower verse 3.")
   end
 
+  it "shows his explanation under the parable" do
+    matthew = Book.find_by!(osis_code: "Matt")
+    verse!(matthew, 13, 18, "Hear ye therefore the parable of the sower.")
+    verse!(matthew, 13, 19, "When any one heareth the word of the kingdom.")
+
+    visit "/red/parables/sower"
+
+    expect(page).to have_css(".passage-explanation", text: /#{I18n.t("red.explained")}/i)
+    expect(page).to have_css("span.jesus-words", text: "Hear ye therefore the parable of the sower.")
+  end
+
   it "steps to the next parable and back to the list" do
     visit "/red/parables/sower"
     within(".passage-nav") { click_on "The Wheat and the Weeds" }
