@@ -70,6 +70,8 @@ Rails.application.routes.draw do
   # Highlighted in Red: the same reader, stepping only through chapters
   # that contain Jesus's words, with the narration around them dimmed.
   get "/red", to: "bible/reader#red_entry", as: :red_entry
+  get "/red/parables", to: "red/passages#index", as: :red_parables
+  get "/red/parables/:slug", to: "bible/reader#passage", as: :red_parable
   get "/red/:translation/:book/:chapter",
       to: "bible/reader#show",
       as: :red_chapter,

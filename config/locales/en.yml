@@ -210,6 +210,7 @@ en:
         words_only: His words only
         whole_chapter: Read the whole chapter
         read_in_red: Read this chapter in red
+        in_its_chapter: Read it in its chapter
         gospels: The Gospels
         after_resurrection: After the resurrection
       note_action: Note
@@ -223,6 +224,15 @@ en:
       confirm_remove_with_notes:
         one: "This highlight has %{count} note. Removing it will delete the note. Continue?"
         other: "This highlight has %{count} notes. Removing it will delete the notes. Continue?"
+  red:
+    parables:
+      title: The Parables
+      all: All parables
+      intro: The stories Jesus told, and the pictures he used for himself. Each is listed once, with every gospel that tells it.
+      parables_heading: Parables
+      word_pictures_heading: Word pictures in John
+      word_pictures_note: John's gospel has no parables in the usual sense. In their place are the images Jesus uses for himself.
+      told_in: Told in
   settings:
     title: Settings
     description: Customize your reading experience. Most changes save automatically. No save button needed.

@@ -1,0 +1,22 @@
+<%# One group of passages: title linking to the passage, with every
+    gospel that tells it underneath.
+    locals: heading, note (optional line under the heading), passages, id %>
+<section class="space-y-5 border-t border-surface-200 pt-10" aria-labelledby="<%= id %>-heading">
+  <h2 id="<%= id %>-heading" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-600">
+    <%= heading %>
+  </h2>
+  <% if note %>
+    <p class="font-reading text-base leading-relaxed text-pretty text-surface-600"><%= note %></p>
+  <% end %>
+  <ul class="divide-y divide-surface-200">
+    <% passages.each do |passage| %>
+      <li class="py-4">
+        <%= link_to passage.title, red_parable_path(passage.slug),
+                    class: "font-reading text-xl text-surface-900 underline-offset-4 transition-colors hover:text-accent-700 hover:underline" %>
+        <p class="mt-1 font-ui text-sm text-surface-600">
+          <%= safe_join(passage.appearances.map { |appearance| passage_reference(appearance) }, " · ") %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</section>

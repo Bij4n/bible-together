@@ -1,0 +1,16 @@
+<%# The reader's heading: book and chapter, or on a passage page the
+    passage's title with where it is told underneath.
+    locals: book_name %>
+<h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 sm:text-5xl md:text-6xl">
+  <% if @passage %>
+    <% content_for :title, @passage.title %>
+    <span class="book-title-text"><%= @passage.title %></span>
+  <% else %>
+    <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
+  <% end %>
+</h1>
+<% if @passage %>
+  <p class="passage-reference font-ui text-sm text-surface-600">
+    <%= passage_reference(@appearance) %> &middot; <%= @translation.name %>
+  </p>
+<% end %>
