@@ -78,6 +78,34 @@ RSpec.describe "Public::Bible", type: :request do
       expect(response.body).to include('aria-label="' + I18n.t("public_bible.people_highlighted", count: 2) + '"')
     end
 
+    it "shows notes anchored to part of a verse, not only whole-verse highlights" do
+      user = create(:user)
+      highlight = create(:highlight, user: user, translation: translation, color: "gold",
+                                     osis_ref: "Bible.KJV.John.3.16!4-Bible.KJV.John.3.16!19")
+      note = create(:note, user: user, body: "<p>On a single phrase</p>", visibility: :public_note)
+      create(:highlight_note, highlight: highlight, note: note)
+
+      get "/bible/kjv/john/3"
+
+      expect(response.body).to include("On a single phrase")
+      expect(response.body).to include(%(class="community-highlight"))
+    end
+
+    it "does not pull in notes from a chapter whose number merely starts the same" do
+      other_chapter = create(:chapter, book: book, number: 30)
+      create(:verse, chapter: other_chapter, number: 1, body_text: "Elsewhere", body_html: "Elsewhere",
+                     osis_ref: "Bible.KJV.John.30.1")
+      user = create(:user)
+      highlight = create(:highlight, user: user, translation: translation, color: "gold",
+                                     osis_ref: "Bible.KJV.John.30.1")
+      note = create(:note, user: user, body: "<p>From chapter thirty</p>", visibility: :public_note)
+      create(:highlight_note, highlight: highlight, note: note)
+
+      get "/bible/kjv/john/3"
+
+      expect(response.body).not_to include("From chapter thirty")
+    end
+
     it "excludes hidden notes from anonymous view" do
       hidden = public_note!(body: "Bad content")
       hidden.update!(hidden_at: Time.current)
