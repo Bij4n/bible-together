@@ -63,7 +63,6 @@ Recent cluster (PRs #139–#153):
   - The search filter is verse-level. In a verse Jesus speaks for part of, a match can sit in the narration. Matching only inside the red ranges would need the ranges indexed as text.
   - Concept search is still English-only, so the filter does nothing for RV1909 there. Same dependency as the multilingual embeddings item in `HANDOFF.md`.
   - The sayings and parables show the telling only; Jesus's own explanations (the Sower, the Weeds) are not listed.
-  - *Prayer* has one encounter and *Love of enemies* five passages. Thin, by the owner's own themes.
   - A study of Highlighted in Red steps through red chapters. Stepping a study through a list (the parables, a theme) was not built.
 - **Semantic search provider for Sprint 9** — decide before Sprint 8 ends. Options: Anthropic Voyage, OpenAI embeddings, or a local open-source model (e.g., `all-MiniLM-L6-v2` via pgvector). Tradeoffs: cost, latency, privacy, quality.
 - **Moderation staffing model for Sprint 7** — single admin (you) for v1, or early invite of trusted moderators? Affects admin UX.
