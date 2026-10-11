@@ -62,6 +62,17 @@ RSpec.describe Bible::Passages do
       expect(described_class.of_kind("word_picture").map(&:slug)).to eq([ "light-of-the-world" ])
     end
 
+    it "groups kinds into the lists the site presents" do
+      expect(described_class.in_collection("parables").map(&:slug)).to eq(%w[sower light-of-the-world])
+      expect(described_class.in_collection("encounters")).to be_empty
+      expect(described_class.collection_of(described_class.find("light-of-the-world"))).to eq("parables")
+    end
+
+    it "finds the passages that begin in a chapter, by starting verse" do
+      expect(described_class.starting_in("Matt", 13).transform_values(&:slug)).to eq(3 => "sower")
+      expect(described_class.starting_in("Matt", 14)).to be_empty
+    end
+
     it "gives the verse refs of an appearance in a translation" do
       appearance = described_class.find("light-of-the-world").appearances.first
 

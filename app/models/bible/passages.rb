@@ -13,6 +13,14 @@ module Bible
     CONFIG_PATH = Rails.root.join("config", "passages.yml")
     KINDS = %w[parable word_picture encounter saying].freeze
 
+    # The lists the site presents, and the kinds each one holds. John's
+    # word pictures sit with the parables.
+    COLLECTIONS = {
+      "parables"   => %w[parable word_picture],
+      "encounters" => %w[encounter],
+      "sayings"    => %w[saying]
+    }.freeze
+
     Appearance = Struct.new(:book, :chapter, :verses) do
       # "Matt.13.3-9" or, for a single verse, "John.8.12".
       def self.parse(ref)
@@ -48,6 +56,27 @@ module Bible
 
       def of_kind(kind)
         all.select { |passage| passage.kind == kind.to_s }
+      end
+
+      def in_collection(name)
+        kinds = COLLECTIONS.fetch(name.to_s)
+        all.select { |passage| kinds.include?(passage.kind) }
+      end
+
+      def collection_of(passage)
+        COLLECTIONS.detect { |_name, kinds| kinds.include?(passage.kind) }&.first
+      end
+
+      # Passages with a telling that begins in this chapter, keyed by
+      # the verse it begins at.
+      def starting_in(book, chapter)
+        all.each_with_object({}) do |passage, starts|
+          passage.appearances.each do |appearance|
+            next unless appearance.book == book && appearance.chapter == chapter
+
+            starts[appearance.verses.first] ||= passage
+          end
+        end
       end
 
       def reset!
