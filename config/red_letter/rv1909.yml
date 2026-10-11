@@ -1,0 +1,1311 @@
+# Jesus's words in the Reina-Valera 1909, for verses where he speaks
+# for only part of the verse. Verses that are his words from end to
+# end are carried over from the KJV by Bible::RedLetterMirror and are
+# not listed here.
+#
+# Each verse lists the passages that are red, quoted exactly as they
+# appear in the verse. Applied by Bible::RedLetterPatch, which refuses
+# to write anything if a passage is not found.
+#
+# First drafted with `bin/rails 'bible:red_letter:propose[rv1909]'`,
+# then read against the KJV and corrected by hand. Which verses are
+# red follows the KJV source; where the speech begins and ends follows
+# the Spanish.
+Matt.3.15:
+  - "Deja ahora; porque así nos conviene cumplir toda justicia."
+Matt.4.4:
+  - "Escrito está: No con solo el pan vivirá el hombre, mas con toda palabra que sale de la boca de Dios."
+Matt.4.7:
+  - "Escrito está además: No tentarás al Señor tu Dios."
+Matt.4.10:
+  - "Vete, Satanás, que escrito está: Al Señor tu Dios adorarás y á él solo servirás."
+Matt.4.17:
+  - "Arrepentíos, que el reino de los cielos se ha acercado."
+Matt.4.19:
+  - "Venid en pos de mí, y os haré pescadores de hombres."
+Matt.8.3:
+  - "Quiero; sé limpio."
+Matt.8.4:
+  - "Mira, no lo digas á nadie; mas ve, muéstrate al sacerdote, y ofrece el presente que mandó Moisés, para testimonio á ellos."
+Matt.8.7:
+  - "Yo iré y le sanaré."
+Matt.8.10:
+  - "De cierto os digo, que ni aun en Israel he hallado fe tanta."
+Matt.8.13:
+  - "Ve, y como creiste te sea hecho."
+Matt.8.20:
+  - "Las zorras tienen cavernas, y las aves del cielo nidos; mas el Hijo del hombre no tiene donde recueste su cabeza."
+Matt.8.22:
+  - "Sígueme; deja que los muertos entierren á sus muertos."
+Matt.8.26:
+  - "¿Por qué teméis, hombres de poca fe?"
+Matt.8.32:
+  - "Id."
+Matt.9.2:
+  - "Confía, hijo; tus pecados te son perdonados."
+Matt.9.4:
+  - "¿Por qué pensáis mal en vuestros corazones?"
+Matt.9.6:
+  - "Pues para que sepáis que el Hijo del hombre tiene potestad en la tierra de perdonar pecados,"
+  - "Levántate, toma tu cama, y vete á tu casa."
+Matt.9.9:
+  - "Sígueme."
+Matt.9.12:
+  - "Los que están sanos no tienen necesidad de médico, sino los enfermos."
+Matt.9.15:
+  - "¿Pueden los que son de bodas tener luto entre tanto que el esposo está con ellos? mas vendrán días cuando el esposo será quitado de ellos, y entonces ayunarán."
+Matt.9.22:
+  - "Confía, hija, tu fe te ha salvado."
+Matt.9.24:
+  - "Apartaos, que la muchacha no es muerta, mas duerme."
+Matt.9.28:
+  - "¿Creéis que puedo hacer esto?"
+Matt.9.29:
+  - "Conforme á vuestra fe os sea hecho."
+Matt.9.30:
+  - "Mirad que nadie lo sepa."
+Matt.9.37:
+  - "A la verdad la mies es mucha, mas los obreros pocos."
+Matt.10.5:
+  - "Por el camino de los Gentiles no iréis, y en ciudad de Samaritanos no entréis;"
+Matt.11.4:
+  - "Id, y haced saber á Juan las cosas que oís y veis:"
+Matt.11.7:
+  - "¿Qué salisteis á ver al desierto? ¿una caña que es meneada del viento?"
+Matt.11.25:
+  - "Te alabo, Padre, Señor del cielo y de la tierra, que hayas escondido estas cosas de los sabios y de los entendidos, y las hayas revelado á los niños."
+Matt.11.27:
+  - "Todas las cosas me son entregadas de mi Padre: y nadie conoció al Hijo, sino el Padre; ni al Padre conoció alguno, sino el Hijo, y aquel á quien el Hijo lo quisiere revelar."
+Matt.12.3:
+  - "¿No habéis leído qué hizo David, teniendo él hambre y los que con él estaban:"
+Matt.12.11:
+  - "¿Qué hombre habrá de vosotros, que tenga una oveja, y si cayere ésta en una fosa en sábado, no le eche mano, y la levante?"
+Matt.12.13:
+  - "Extiende tu mano."
+Matt.12.25:
+  - "Todo reino dividido contra sí mismo, es desolado; y toda ciudad ó casa dividida contra sí misma, no permanecerá."
+Matt.12.39:
+  - "La generación mala y adulterina demanda señal; mas señal no le será dada, sino la señal de Jonás profeta."
+Matt.12.48:
+  - "¿Quién es mi madre y quiénes son mis hermanos?"
+Matt.12.49:
+  - "He aquí mi madre y mis hermanos."
+Matt.13.3:
+  - "He aquí el que sembraba salió á sembrar."
+Matt.13.11:
+  - "Por que á vosotros es concedido saber los misterios del reino de los cielos; mas á ellos no es concedido."
+Matt.13.17:
+  - "Porque de cierto os digo, que muchos profetas y justos desearon ver lo que veis, y no lo vieron: y oir lo que oís, y no lo oyeron."
+Matt.13.24:
+  - "El reino de los cielos es semejante al hombre que siembra buena simiente en su campo:"
+Matt.13.31:
+  - "El reino de los cielos es semejante al grano de mostaza, que tomándolo alguno lo sembró en su campo:"
+Matt.13.33:
+  - "El reino de los cielos es semejante á la levadura que tomó una mujer, y escondió en tres medidas de harina, hasta que todo quedó leudo."
+Matt.13.37:
+  - "El que siembra la buena simiente es el Hijo del hombre;"
+Matt.13.51:
+  - "¿Habéis entendido todas estas cosas?"
+Matt.13.52:
+  - "Por eso todo escriba docto en el reino de los cielos, es semejante á un padre de familia, que saca de su tesoro cosas nuevas y cosas viejas."
+Matt.14.16:
+  - "No tienen necesidad de irse: dadles vosotros de comer."
+Matt.14.18:
+  - "Traédmelos acá."
+Matt.14.27:
+  - "Confiad, yo soy; no tengáis miedo."
+Matt.14.29:
+  - "Ven."
+Matt.14.31:
+  - "Oh hombre de poca fe, ¿por qué dudaste?"
+Matt.15.3:
+  - "¿Por qué también vosotros traspasáis el mandamiento de Dios por vuestra tradición?"
+Matt.15.10:
+  - "Oid, y entended:"
+Matt.15.13:
+  - "Toda planta que no plantó mi Padre celestial, será desarraigada."
+Matt.15.16:
+  - "¿Aun también vosotros sois sin entendimiento?"
+Matt.15.24:
+  - "No soy enviado sino á las ovejas perdidas de la casa de Israel."
+Matt.15.26:
+  - "No es bien tomar el pan de los hijos, y echarlo á los perrillos."
+Matt.15.28:
+  - "Oh mujer, grande es tu fe; sea hecho contigo como quieres."
+Matt.15.32:
+  - "Tengo lástima de la gente, que ya hace tres días que perseveran conmigo, y no tienen qué comer; y enviarlos ayunos no quiero, porque no desmayen en el camino."
+Matt.15.34:
+  - "¿Cuántos panes tenéis?"
+Matt.16.2:
+  - "Cuando es la tarde del día, decís: Sereno; porque el cielo tiene arreboles."
+Matt.16.4:
+  - "La generación mala y adulterina demanda señal; mas señal no le será dada, sino la señal de Jonás profeta."
+Matt.16.6:
+  - "Mirad, y guardaos de la levadura de los Fariseos y de los Saduceos."
+Matt.16.8:
+  - "¿Por qué pensáis dentro de vosotros, hombres de poca fe, que no tomasteis pan?"
+Matt.16.13:
+  - "¿Quién dicen los hombres que es el Hijo del hombre?"
+Matt.16.15:
+  - "Y vosotros, ¿quién decís que soy?"
+Matt.16.17:
+  - "Bienaventurado eres, Simón, hijo de Jonás; porque no te lo reveló carne ni sangre, mas mi Padre que está en los cielos."
+Matt.16.23:
+  - "Quítate de delante de mí, Satanás; me eres escándalo; porque no entiendes lo que es de Dios sino lo que es de los hombres."
+Matt.16.24:
+  - "Si alguno quiere venir en pos de mí, niéguese á sí mismo, y tome su cruz, y sígame."
+Matt.17.7:
+  - "Levantaos, y no temáis."
+Matt.17.9:
+  - "No digáis á nadie la visión, hasta que el Hijo del hombre resucite de los muertos."
+Matt.17.11:
+  - "á la verdad, Elías vendrá primero, y restituirá todas las cosas."
+Matt.17.17:
+  - "­Oh generación infiel y torcida! ¿hasta cuándo tengo de estar con vosotros? ¿hasta cuándo os tengo de sufrir? traédmele acá."
+Matt.17.20:
+  - "Por vuestra incredulidad; porque de cierto os digo, que si tuviereis fe como un grano de mostaza, diréis á este monte: Pásate de aquí allá: y se pasará: y nada os será imposible."
+Matt.17.22:
+  - "El Hijo del hombre será entregado en manos de hombres,"
+Matt.17.23:
+  - "Y le matarán; mas al tercer día resucitará."
+Matt.17.25:
+  - "¿Qué te parece, Simón? Los reyes de la tierra, ¿de quién cobran los tributos ó el censo? ¿de sus hijos ó de los extraños?"
+Matt.17.26:
+  - "Luego los hijos son francos."
+Matt.18.3:
+  - "De cierto os digo, que si no os volviereis, y fuereis como niños, no entraréis en el reino de los cielos."
+Matt.18.22:
+  - "No te digo hasta siete, mas aun hasta setenta veces siete."
+Matt.19.4:
+  - "¿No habéis leído que el que los hizo al principio, macho y hembra los hizo,"
+Matt.19.8:
+  - "Por la dureza de vuestro corazón Moisés os permitió repudiar á vuestras mujeres: mas al principio no fué así."
+Matt.19.11:
+  - "No todos reciben esta palabra, sino aquellos á quienes es dado."
+Matt.19.14:
+  - "Dejad á los niños, y no les impidáis de venir á mí; porque de los tales es el reino de los cielos."
+Matt.19.17:
+  - "¿Por qué me llamas bueno? Ninguno es bueno sino uno, es á saber, Dios: y si quieres entrar en la vida, guarda los mandamientos."
+Matt.19.18:
+  - "No mataras: No adulterarás: No hurtarás: No dirás falso testimonio:"
+Matt.19.21:
+  - "Si quieres ser perfecto, anda, vende lo que tienes, y da lo á los pobres, y tendrás tesoro en el cielo; y ven, sígueme."
+Matt.19.23:
+  - "De cierto os digo, que un rico difícilmente entrará en el reino de los cielos."
+Matt.19.26:
+  - "Para con los hombres imposible es esto; mas para con Dios todo es posible."
+Matt.19.28:
+  - "De cierto os digo, que vosotros que me habéis seguido, en la regeneración, cuando se sentará el Hijo del hombre en el trono de su gloria, vosotros también os sentaréis sobre doce tronos, para juzgar á las doce tribus de Israel."
+Matt.20.21:
+  - "¿Qué quieres?"
+Matt.20.22:
+  - "No sabéis lo que pedís: ¿podéis beber el vaso que yo he de beber, y ser bautizados del bautismo de que yo soy bautizado?"
+Matt.20.23:
+  - "A la verdad mi vaso beberéis, y del bautismo de que yo soy bautizado, seréis bautizados; mas el sentaros á mi mano derecha y á mi izquierda, no es mío dar lo, sino á aquellos para quienes está aparejado de mi Padre."
+Matt.20.25:
+  - "Sabéis que los príncipes de los Gentiles se enseñorean sobre ellos, y los que son grandes ejercen sobre ellos potestad."
+Matt.20.32:
+  - "¿Qué queréis que haga por vosotros?"
+Matt.21.2:
+  - "Id á la aldea que está delante de vosotros, y luego hallaréis una asna atada, y un pollino con ella: desatad la, y traédme los."
+Matt.21.13:
+  - "Escrito está: Mi casa, casa de oración será llamada; mas vosotros cueva de ladrones la habéis hecho."
+Matt.21.16:
+  - "Sí: ¿nunca leísteis: De la boca de los niños y de los que maman perfeccionaste la alabanza?"
+Matt.21.19:
+  - "Nunca más para siempre nazca de ti fruto."
+Matt.21.21:
+  - "De cierto os digo, que si tuviereis fe, y no dudareis, no sólo haréis esto de la higuera: mas si á este monte dijereis: Quítate y échate en la mar, será hecho."
+Matt.21.24:
+  - "Yo también os preguntaré una palabra, la cual si me dijereis, también yo os diré con qué autoridad hago esto."
+Matt.21.25:
+  - "El bautismo de Juan, ¿de dónde era? ¿del cielo, ó de los hombres?"
+Matt.21.27:
+  - "Ni yo os digo con qué autoridad hago esto."
+Matt.21.31:
+  - "¿Cuál de los dos hizo la voluntad de su padre?"
+  - "De cierto os digo, que los publicanos y las rameras os van delante al reino de Dios."
+Matt.21.42:
+  - "¿Nunca leísteis en las Escrituras: La piedra que desecharon los que edificaban, Esta fué hecha por cabeza de esquina: Por el Señor es hecho esto, Y es cosa maravillosa en nuestros ojos?"
+Matt.22.18:
+  - "¿Por qué me tentáis, hipócritas?"
+Matt.22.19:
+  - "Mostradme la moneda del tributo."
+Matt.22.20:
+  - "¿Cúya es esta figura, y lo que está encima escrito?"
+Matt.22.21:
+  - "Pagad pues á César lo que es de César, y á Dios lo que es de Dios."
+Matt.22.29:
+  - "Erráis ignorando las Escrituras, y el poder de Dios."
+Matt.22.37:
+  - "Amarás al Señor tu Dios de todo tu corazón, y de toda tu alma, y de toda tu mente."
+Matt.22.42:
+  - "¿Qué os parece del Cristo? ¿de quién es Hijo?"
+Matt.22.43:
+  - "¿Pues cómo David en Espíritu le llama Señor, diciendo:"
+Matt.23.2:
+  - "Sobre la cátedra de Moisés se sentaron los escribas y los Fariseos:"
+Matt.24.4:
+  - "Mirad que nadie os engañe."
+Matt.26.10:
+  - "¿Por qué dais pena á esta mujer? Pues ha hecho conmigo buena obra."
+Matt.26.18:
+  - "Id á la ciudad á cierto hombre, y decidle: El Maestro dice: Mi tiempo está cerca; en tu casa haré la pascua con mis discípulos."
+Matt.26.21:
+  - "De cierto os digo, que uno de vosotros me ha de entregar."
+Matt.26.23:
+  - "El que mete la mano conmigo en el plato, ése me ha de entregar."
+Matt.26.25:
+  - "Tú lo has dicho."
+Matt.26.26:
+  - "Tomad, comed. esto es mi cuerpo."
+Matt.26.27:
+  - "Bebed de él todos;"
+Matt.26.31:
+  - "Todos vosotros seréis escandalizados en mí esta noche; porque escrito está: Heriré al Pastor, y las ovejas de la manada serán dispersas."
+Matt.26.34:
+  - "De cierto te digo que esta noche, antes que el gallo cante, me negarás tres veces."
+Matt.26.36:
+  - "Sentaos aquí, hasta que vaya allí y ore."
+Matt.26.38:
+  - "Mi alma está muy triste hasta la muerte; quedaos aquí, y velad conmigo."
+Matt.26.39:
+  - "Padre mío, si es posible, pase de mí este vaso; empero no como yo quiero, sino como tú."
+Matt.26.42:
+  - "Padre mío, si no puede este vaso pasar de mí sin que yo lo beba, hágase tu voluntad."
+Matt.26.45:
+  - "Dormid ya, y descansad: he aquí ha llegado la hora, y el Hijo del hombre es entregado en manos de pecadores."
+Matt.26.50:
+  - "Amigo, ¿á qué vienes?"
+Matt.26.52:
+  - "Vuelve tu espada á su lugar; porque todos los que tomaren espada, á espada perecerán."
+Matt.26.55:
+  - "¿Como á ladrón habéis salido con espadas y con palos á prenderme? Cada día me sentaba con vosotros enseñando en el templo, y no me prendisteis."
+Matt.26.56:
+  - "Mas todo esto se hace, para que se cumplan las Escrituras de los profetas."
+Matt.26.64:
+  - "Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo de los hombres sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."
+Matt.26.75:
+  - "Antes que cante el gallo, me negarás tres veces."
+Matt.27.11:
+  - "Tú lo dices."
+Matt.27.46:
+  - "Eli, Eli, ¿lama sabachtani?"
+  - "Dios mío, Dios mío, ¿por qué me has desamparado?"
+Matt.28.9:
+  - "Salve."
+Matt.28.10:
+  - "No temáis: id, dad las nuevas á mis hermanos, para que vayan á Galilea, y allí me verán."
+Matt.28.18:
+  - "Toda potestad me es dada en el cielo y en la tierra."
+Mark.1.15:
+  - "El tiempo es cumplido, y el reino de Dios está cerca: arrepentíos, y creed al evangelio."
+Mark.1.17:
+  - "Venid en pos de mí, y haré que seáis pescadores de hombres."
+Mark.1.25:
+  - "Enmudece, y sal de él."
+Mark.1.38:
+  - "Vamos á los lugares vecinos, para que predique también allí; porque para esto he venido."
+Mark.1.41:
+  - "Quiero, sé limpio."
+Mark.1.44:
+  - "Mira, no digas á nadie nada; sino ve, muéstrate al sacerdote, y ofrece por tu limpieza lo que Moisés mandó, para testimonio á ellos."
+Mark.2.5:
+  - "Hijo, tus pecados te son perdonados."
+Mark.2.8:
+  - "¿Por qué pensáis estas cosas en vuestros corazones?"
+Mark.2.10:
+  - "Pues para que sepáis que el Hijo del hombre tiene potestad en la tierra de perdonar los pecados,"
+Mark.2.14:
+  - "Sígueme."
+Mark.2.17:
+  - "Los sanos no tienen necesidad de médico, mas los que tienen mal. No he venido á llamar á los justos, sino á los pecadores."
+Mark.2.19:
+  - "¿Pueden ayunar los que están de bodas, cuando el esposo está con ellos? Entre tanto que tienen consigo al esposo no pueden ayunar."
+Mark.2.25:
+  - "¿Nunca leísteis qué hizo David cuando tuvo necesidad, y tuvo hambre, él y los que con él estaban:"
+Mark.2.27:
+  - "El sábado por causa del hombre es hecho; no el hombre por causa del sábado."
+Mark.3.3:
+  - "Levántate en medio."
+Mark.3.4:
+  - "¿Es lícito hacer bien en sábado, ó hacer mal? ¿salvar la vida, ó quitarla?"
+Mark.3.5:
+  - "Extiende tu mano."
+Mark.3.23:
+  - "¿Cómo puede Satanás echar fuera á Satanás?"
+Mark.3.33:
+  - "¿Quién es mi madre y mis hermanos?"
+Mark.3.34:
+  - "He aquí mi madre y hermanos."
+Mark.4.9:
+  - "El que tiene oídos para oir, oiga."
+Mark.4.11:
+  - "A vosotros es dado saber el misterio del reino de Dios; mas á los que están fuera, por parábolas todas las cosas;"
+Mark.4.13:
+  - "¿No sabéis esta parábola? ¿Cómo, pues, entenderéis todas las parábolas?"
+Mark.4.21:
+  - "¿Tráese la antorcha para ser puesta debajo del almud, ó debajo de la cama? ¿No es para ser puesta en el candelero?"
+Mark.4.24:
+  - "Mirad lo que oís: con la medida que medís, os medirán otros, y será añadido á vosotros los que oís."
+Mark.4.26:
+  - "Así es el reino de Dios, como si un hombre echa simiente en la tierra;"
+Mark.4.30:
+  - "¿A qué haremos semejante el reino de Dios? ¿ó con qué parábola le compararemos?"
+Mark.4.35:
+  - "Pasemos de la otra parte."
+Mark.4.39:
+  - "Calla, enmudece."
+Mark.4.40:
+  - "¿Por qué estáis así amedrentados? ¿Cómo no tenéis fe?"
+Mark.5.8:
+  - "Sal de este hombre, espíritu inmundo."
+Mark.5.9:
+  - "¿Cómo te llamas?"
+Mark.5.19:
+  - "Vete á tu casa, á los tuyos, y cuéntales cuán grandes cosas el Señor ha hecho contigo, y cómo ha tenido misericordia de ti."
+Mark.5.30:
+  - "¿Quién ha tocado mis vestidos?"
+Mark.5.34:
+  - "Hija, tu fe te ha hecho salva: ve en paz, y queda sana de tu azote."
+Mark.5.36:
+  - "No temas, cree solamente."
+Mark.5.39:
+  - "¿Por qué alborotáis y lloráis? La muchacha no es muerta, mas duerme."
+Mark.5.41:
+  - "Talitha cumi;"
+  - "Muchacha, á ti digo, levántate."
+Mark.6.4:
+  - "No hay profeta deshonrado sino en su tierra, y entre sus parientes, y en su casa."
+Mark.6.10:
+  - "Donde quiera que entréis en una casa, posad en ella hasta que salgáis de allí."
+Mark.6.31:
+  - "Venid vosotros aparte al lugar desierto, y reposad un poco."
+Mark.6.37:
+  - "Dadles de comer vosotros."
+Mark.6.38:
+  - "¿Cuántos panes tenéis? Id, y vedlo."
+Mark.6.50:
+  - "Alentaos; yo soy, no temáis."
+Mark.7.6:
+  - "Hipócritas, bien profetizó de vosotros Isaías, como está escrito: Este pueblo con los labios me honra, Mas su corazón lejos está de mí."
+Mark.7.9:
+  - "Bien invalidáis el mandamiento de Dios para guardar vuestra tradición."
+Mark.7.14:
+  - "Oidme todos, y entended:"
+Mark.7.18:
+  - "¿También vosotros estáis así sin entendimiento? ¿No entendéis que todo lo de fuera que entra en el hombre, no le puede contaminar;"
+Mark.7.20:
+  - "lo que del hombre sale, aquello contamina al hombre."
+Mark.7.27:
+  - "Deja primero hartarse los hijos, porque no es bien tomar el pan de los hijos y echarlo á los perrillos."
+Mark.7.29:
+  - "Por esta palabra, ve; el demonio ha salido de tu hija."
+Mark.7.34:
+  - "Ephphatha:"
+  - "Sé abierto."
+Mark.8.5:
+  - "¿Cuántos panes tenéis?"
+Mark.8.12:
+  - "¿Por qué pide señal esta generación? De cierto os digo que no se dará señal á esta generación."
+Mark.8.15:
+  - "Mirad, guardaos de la levadura de los Fariseos, y de la levadura de Herodes."
+Mark.8.17:
+  - "¿Qué altercáis, porque no tenéis pan? ¿no consideráis ni entendéis? ¿aun tenéis endurecido vuestro corazón?"
+Mark.8.19:
+  - "Cuando partí los cinco panes entre cinco mil, ¿cuántas espuertas llenas de los pedazos alzasteis?"
+Mark.8.20:
+  - "Y cuando los siete panes entre cuatro mil, ¿cuántas espuertas llenas de los pedazos alzasteis?"
+Mark.8.21:
+  - "¿Cómo aún no entendéis?"
+Mark.8.29:
+  - "Y vosotros, ¿quién decís que soy yo?"
+Mark.8.33:
+  - "Apártate de mí, Satanás; porque no sabes las cosas que son de Dios, sino las que son de los hombres."
+Mark.9.1:
+  - "De cierto os digo que hay algunos de los que están aquí, que no gustarán la muerte hasta que hayan visto el reino de Dios que viene con potencia."
+Mark.9.12:
+  - "Elías á la verdad, viniendo antes, restituirá todas las cosas: y como está escrito del Hijo del hombre, que padezca mucho y sea tenido en nada."
+Mark.9.16:
+  - "¿Qué disputáis con ellos?"
+Mark.9.19:
+  - "­Oh generación infiel! ¿hasta cuándo estaré con vosotros? ¿hasta cuándo os tengo de sufrir? Traédmele."
+Mark.9.21:
+  - "¿Cuánto tiempo há que le aconteció esto?"
+Mark.9.23:
+  - "Si puedes creer, al que cree todo es posible."
+Mark.9.25:
+  - "Espíritu mudo y sordo, yo te mando, sal de él, y no entres más en él."
+Mark.9.29:
+  - "Este género con nada puede salir, sino con oración y ayuno."
+Mark.9.31:
+  - "El Hijo del hombre será entregado en manos de hombres, y le matarán; mas muerto él, resucitará al tercer día."
+Mark.9.33:
+  - "¿Qué disputabais entre vosotros en el camino?"
+Mark.9.35:
+  - "Si alguno quiere ser el primero, será el postrero de todos, y el servidor de todos."
+Mark.9.39:
+  - "No se lo prohibáis; porque ninguno hay que haga milagro en mi nombre que luego pueda decir mal de mí."
+Mark.10.3:
+  - "¿Qué os mandó Moisés?"
+Mark.10.5:
+  - "Por la dureza de vuestro corazón os escribió este mandamiento;"
+Mark.10.11:
+  - "Cualquiera que repudiare á su mujer, y se casare con otra, comete adulterio contra ella:"
+Mark.10.14:
+  - "Dejad los niños venir, y no se lo estorbéis; porque de los tales es el reino de Dios."
+Mark.10.18:
+  - "¿Por qué me dices bueno? Ninguno hay bueno, sino sólo uno, Dios."
+Mark.10.21:
+  - "Una cosa te falta: ve, vende todo lo que tienes, y da á los pobres, y tendrás tesoro en el cielo; y ven, sígueme, tomando tu cruz."
+Mark.10.23:
+  - "­Cuán dificilmente entrarán en el reino de Dios los que tienen riquezas!"
+Mark.10.24:
+  - "­Hijos, cuán dificil es entrar en el reino de Dios, los que confían en las riquezas!"
+Mark.10.27:
+  - "Para los hombres es imposible; mas para Dios, no; porque todas las cosas son posibles para Dios."
+Mark.10.29:
+  - "De cierto os digo, que no hay ninguno que haya dejado casa, ó hermanos, ó hermanas, ó padre, ó madre, ó mujer, ó hijos, ó heredades, por causa de mí y del evangelio,"
+Mark.10.33:
+  - "He aquí subimos á Jerusalem, y el Hijo del hombre será entregado á los principes de los sacerdotes, y á los escribas, y le condenarán á muerte, y le entregarán á los Gentiles:"
+Mark.10.36:
+  - "¿Qué queréis que os haga?"
+Mark.10.38:
+  - "No sabéis lo que pedís. ¿Podéis beber del vaso que yo bebo, ó ser bautizados del bautismo de que yo soy bautizado?"
+Mark.10.39:
+  - "A la verdad, del vaso que yo bebo, beberéis; y del bautismo de que soy bautizado, seréis bautizados."
+Mark.10.42:
+  - "Sabéis que los que se ven ser príncipes entre las gentes, se enseñorean de ellas, y los que entre ellas son grandes, tienen sobre ellas potestad."
+Mark.10.51:
+  - "¿Qué quieres que te haga?"
+Mark.10.52:
+  - "Ve, tu fe te ha salvado."
+Mark.11.2:
+  - "Id al lugar que está delante de vosotros, y luego entrados en él, hallaréis un pollino atado, sobre el cual ningún hombre ha subido; desatadlo y traedlo."
+Mark.11.14:
+  - "Nunca más coma nadie fruto de ti para siempre."
+Mark.11.17:
+  - "¿No está escrito que mi casa, casa de oración será llamada por todas las gentes? Mas vosotros la habéis hecho cueva de ladrones."
+Mark.11.22:
+  - "Tened fe en Dios."
+Mark.11.24:
+  - "Por tanto, os digo que todo lo que orando pidiereis, creed que lo recibiréis, y os vendrá."
+Mark.11.29:
+  - "Os preguntaré también yo una palabra; y respondedme, y os diré con qué facultad hago estas cosas:"
+Mark.11.33:
+  - "Tampoco yo os diré con qué facultad hago estas cosas."
+Mark.12.1:
+  - "Plantó un hombre una viña, y la cercó con seto, y cavó un lagar, y edificó una torre, y la arrendó á labradores, y se partió lejos."
+Mark.12.15:
+  - "¿Por qué me tentáis? Traedme la moneda para que la vea."
+Mark.12.16:
+  - "¿Cúya es esta imagen y esta inscripción?"
+Mark.12.17:
+  - "Dad lo que es de César á César; y lo que es de Dios, á Dios."
+Mark.12.24:
+  - "¿No erráis por eso, porque no sabéis las Escrituras, ni la potencia de Dios?"
+Mark.12.29:
+  - "El primer mandamiento de todos es: Oye, Israel, el Señor nuestro Dios, el Señor uno es."
+Mark.12.34:
+  - "No estás lejos del reino de Dios."
+Mark.12.35:
+  - "¿Cómo dicen los escribas que el Cristo es hijo de David?"
+Mark.12.37:
+  - "Luego llamándole el mismo David Señor, ¿de dónde, pues, es su hijo?"
+Mark.12.38:
+  - "Guardaos de los escribas, que quieren andar con ropas largas, y aman las salutaciones en las plazas,"
+Mark.12.43:
+  - "De cierto os digo que esta viuda pobre echó más que todos los que han echado en el arca:"
+Mark.13.2:
+  - "¿Ves estos grandes edificios? no quedará piedra sobre piedra que no sea derribada."
+Mark.13.5:
+  - "Mirad, que nadie os engañe;"
+Mark.14.6:
+  - "Dejadla; ¿por qué la fatigáis? Buena obra me ha hecho;"
+Mark.14.13:
+  - "Id á la ciudad, y os encontrará un hombre que lleva un cántaro de agua; seguidle;"
+Mark.14.18:
+  - "De cierto os digo que uno de vosotros, que come conmigo, me ha de entregar."
+Mark.14.20:
+  - "Es uno de los doce que moja conmigo en el plato."
+Mark.14.22:
+  - "Tomad, esto es mi cuerpo."
+Mark.14.24:
+  - "Esto es mi sangre del nuevo pacto, que por muchos es derramada."
+Mark.14.27:
+  - "Todos seréis escandalizados en mí esta noche; porque escrito está: Heriré al pastor, y serán derramadas las ovejas."
+Mark.14.30:
+  - "De cierto te digo que tú, hoy, en esta noche, antes que el gallo haya cantado dos veces, me negarás tres veces."
+Mark.14.32:
+  - "Sentaos aquí, entre tanto que yo oro."
+Mark.14.34:
+  - "Está muy triste mi alma, hasta la muerte: esperad aquí y velad."
+Mark.14.36:
+  - "Abba, Padre, todas las cosas son á ti posibles: traspasa de mí este vaso; empero no lo que yo quiero, sino lo que tú."
+Mark.14.37:
+  - "¿Simón, duermes? ¿No has podido velar una hora?"
+Mark.14.41:
+  - "Dormid ya y descansad: basta, la hora es venida; he aquí, el Hijo del hombre es entregado en manos de los pecadores."
+Mark.14.48:
+  - "¿Como á ladrón habéis salido con espadas y con palos á tomarme?"
+Mark.14.62:
+  - "Yo soy; y veréis al Hijo del hombre sentado á la diestra de la potencia de Dios, y viniendo en las nubes del cielo."
+Mark.14.72:
+  - "Antes que el gallo cante dos veces, me negarás tres veces."
+Mark.15.2:
+  - "Tú lo dices."
+Mark.15.34:
+  - "Eloi, Eloi, ¿lama sabachthani?"
+  - "Dios mío, Díos mío, ¿por qué me has desamparado?"
+Mark.16.15:
+  - "Id por todo el mundo; predicad el evangelio á toda criatura."
+Luke.2.49:
+  - "¿Qué hay? ¿por qué me buscabais? ¿No sabíais que en los negocios de mi Padre me conviene estar?"
+Luke.4.4:
+  - "Escrito está: Que no con pan solo vivirá el hombre, mas con toda palabra de Dios."
+Luke.4.8:
+  - "Vete de mí, Satanás, porque escrito está: A tu Señor Dios adorarás, y á él solo servirás."
+Luke.4.12:
+  - "Dicho está: No tentarás al Señor tu Dios."
+Luke.4.21:
+  - "Hoy se ha cumplido esta Escritura en vuestros oídos."
+Luke.4.23:
+  - "Sin duda me diréis este refrán: Médico, cúrate á ti mismo: de tantas cosas que hemos oído haber sido hechas en Capernaum, haz también aquí en tu tierra."
+Luke.4.24:
+  - "De cierto os digo, que ningún profeta es acepto en su tierra."
+Luke.4.35:
+  - "Enmudece, y sal de él."
+Luke.4.43:
+  - "Que también á otras ciudades es necesario que anuncie el evangelio del reino de Dios; porque para esto soy enviado."
+Luke.5.4:
+  - "Tira á alta mar, y echad vuestras redes para pescar."
+Luke.5.10:
+  - "No temas: desde ahora pescarás hombres."
+Luke.5.13:
+  - "Quiero: sé limpio."
+Luke.5.14:
+  - "Mas ve, díjole, muéstrate al sacerdote, y ofrece por tu limpieza, como mandó Moisés, para testimonio á ellos."
+Luke.5.20:
+  - "Hombre, tus pecados te son perdonados."
+Luke.5.22:
+  - "¿Qué pensáis en vuestros corazones?"
+Luke.5.24:
+  - "Pues para que sepáis que el Hijo del hombre tiene potestad en la tierra de perdonar pecados,"
+  - "A ti digo, levántate, toma tu lecho, y vete á tu casa."
+Luke.5.27:
+  - "Sígueme."
+Luke.5.31:
+  - "Los que están sanos no necesitan médico, sino los que están enfermos."
+Luke.5.34:
+  - "¿Podéis hacer que los que están de bodas ayunen, entre tanto que el esposo está con ellos?"
+Luke.5.36:
+  - "Nadie mete remiendo de paño nuevo en vestido viejo; de otra manera el nuevo rompe, y al viejo no conviene remiendo nuevo."
+Luke.6.3:
+  - "¿Ni aun esto habéis leído, qué hizo David cuando tuvo hambre, él, y los que con él estaban;"
+Luke.6.5:
+  - "El Hijo del hombre es Señor aun del sábado."
+Luke.6.8:
+  - "Levántate, y ponte en medio."
+Luke.6.9:
+  - "Os preguntaré un cosa: ¿Es lícito en sábados hacer bien, ó hacer mal? ¿salvar la vida, ó quitarla?"
+Luke.6.10:
+  - "Extiende tu mano."
+Luke.6.20:
+  - "Bienaventurados vosotros los pobres; porque vuestro es el reino de Dios."
+Luke.6.39:
+  - "¿Puede el ciego guiar al ciego? ¿No caerán ambos en el hoyo?"
+Luke.7.13:
+  - "No llores."
+Luke.7.14:
+  - "Mancebo, á ti digo, levántate."
+Luke.7.22:
+  - "Id, dad las nuevas á Juan de lo que habéis visto y oído: que los ciegos ven, los cojos andan, los leprosos son limpiados, los sordos oyen, los muertos resucitan, á los pobres es anunciado el evangelio:"
+Luke.7.31:
+  - "¿A quién, pues, compararé los hombres de esta generación, y á qué son semejantes?"
+Luke.7.40:
+  - "Simón, una cosa tengo que decirte."
+Luke.7.43:
+  - "Rectamente has juzgado."
+Luke.7.44:
+  - "¿Ves esta mujer? Entré en tu casa, no diste agua para mis pies; mas ésta ha regado mis pies con lágrimas, y los ha limpiado con los cabellos."
+Luke.7.48:
+  - "Los pecados te son perdonados."
+Luke.7.50:
+  - "Tu fe te ha salvado, ve en paz."
+Luke.8.8:
+  - "Y otra parte cayó en buena tierra, y cuando fué nacida, llevó fruto á ciento por uno."
+  - "El que tiene oídos para oir, oiga."
+Luke.8.10:
+  - "A vosotros es dado conocer los misterios del reino de Dios; mas á los otros por parábolas, para que viendo no vean, y oyendo no entiendan."
+Luke.8.21:
+  - "Mi madre y mis hermanos son los que oyen la palabra de Dios, y la ejecutan."
+Luke.8.22:
+  - "Pasemos á la otra parte del lago."
+Luke.8.25:
+  - "¿Qué es de vuestra fe?"
+Luke.8.30:
+  - "¿Qué nombre tienes?"
+Luke.8.39:
+  - "Vuélvete á tu casa, y cuenta cuán grandes cosas ha hecho Dios contigo."
+Luke.8.45:
+  - "¿Quién es el que me ha tocado?"
+  - "¿Quién es el que me ha tocado?"
+Luke.8.46:
+  - "Me ha tocado alguien; porque yo he conocido que ha salido virtud de mí."
+Luke.8.48:
+  - "Hija, tu fe te ha salvado: ve en paz."
+Luke.8.50:
+  - "No temas: cree solamente, y será salva."
+Luke.8.52:
+  - "No lloréis; no es muerta, sino que duerme."
+Luke.8.54:
+  - "Muchacha, levántate."
+Luke.9.3:
+  - "No toméis nada para el camino, ni báculo, ni alforja, ni pan, ni dinero; ni tengáis dos vestidos cada uno."
+Luke.9.13:
+  - "Dadles vosotros de comer."
+Luke.9.14:
+  - "Hacedlos sentar en ranchos, de cincuenta en cincuenta."
+Luke.9.18:
+  - "¿Quién dicen las gentes que soy?"
+Luke.9.20:
+  - "¿Y vosotros, quién decís que soy?"
+Luke.9.22:
+  - "Es necesario que el Hijo del hombre padezca muchas cosas, y sea desechado de los ancianos, y de los príncipes de los sacerdotes, y de los escribas, y que sea muerto, y resucite al tercer día."
+Luke.9.23:
+  - "Si alguno quiere venir en pos de mí, niéguese á sí mismo, y tome su cruz cada día, y sígame."
+Luke.9.41:
+  - "­Oh generación infiel y perversa! ¿hasta cuándo tengo de estar con vosotros, y os sufriré? Trae tu hijo acá."
+Luke.9.48:
+  - "Cualquiera que recibiere este niño en mí nombre, á mí recibe; y cualquiera que me recibiere á mí, recibe al que me envió; porque el que fuere el menor entre todos vosotros, éste será el grande."
+Luke.9.50:
+  - "No se lo prohibáis; porque el que no es contra nosotros, por nosotros es."
+Luke.9.55:
+  - "Vosotros no sabéis de qué espíritu sois;"
+Luke.9.56:
+  - "Porque el Hijo del hombre no ha venido para perder las almas de los hombres, sino para salvarlas."
+Luke.9.58:
+  - "Las zorras tienen cuevas, y las aves de los cielos nidos; mas el Hijo del hombre no tiene donde recline la cabeza."
+Luke.9.59:
+  - "Sígueme."
+Luke.9.60:
+  - "Deja los muertos que entierren á sus muertos; y tú, ve, y anuncia el reino de Dios."
+Luke.9.62:
+  - "Ninguno que poniendo su mano al arado mira atrás, es apto para el reino de Dios."
+Luke.10.2:
+  - "La mies á la verdad es mucha, mas los obreros pocos; por tanto, rogad al Señor de la mies que envíe obreros á su mies."
+Luke.10.18:
+  - "Yo veía á Satanás, como un rayo, que caía del cielo."
+Luke.10.21:
+  - "Yo te alabo, oh Padre, Señor del cielo y de la tierra, que escondiste estas cosas á los sabios y entendidos, y las has revelado á los pequeños: así, Padre, porque así te agradó."
+Luke.10.22:
+  - "Todas las cosas me son entregadas de mi Padre: y nadie sabe quién sea el Hijo sino el Padre; ni quién sea el Padre, sino el Hijo, y á quien el Hijo lo quisiere revelar."
+Luke.10.23:
+  - "Bienaventurados los ojos que ven lo que vosotros veis:"
+Luke.10.26:
+  - "¿Qué está escrito de la ley? ¿cómo lees?"
+Luke.10.28:
+  - "Bien has respondido: haz esto, y vivirás."
+Luke.10.30:
+  - "Un hombre descendía de Jerusalem á Jericó, y cayó en manos de ladrones, los cuales le despojaron; é hiriéndole, se fueron, dejándole medio muerto."
+Luke.10.37:
+  - "Ve, y haz tú lo mismo."
+Luke.10.41:
+  - "Marta, Marta, cuidadosa estás, y con las muchas cosas estás turbada:"
+Luke.11.2:
+  - "Cuando orareis, decid: Padre nuestro que estás en los cielos; sea tu nombre santificado. Venga tu reino. Sea hecha tu voluntad, como en el cielo, así también en la tierra."
+Luke.11.5:
+  - "¿Quién de vosotros tendrá un amigo, é irá á él á media noche, y le dirá: Amigo, préstame tres panes,"
+Luke.11.17:
+  - "Todo reino dividido contra sí mismo, es asolado; y una casa dividida contra sí misma, cae."
+Luke.11.28:
+  - "Antes bienaventurados los que oyen la palabra de Dios, y la guardan."
+Luke.11.29:
+  - "Esta generación mala es: señal busca, mas señal no le será dada, sino la señal de Jonás."
+Luke.11.39:
+  - "Ahora vosotros los Fariseos lo de fuera del vaso y del plato limpiáis; mas lo interior de vosotros está lleno de rapiña y de maldad."
+Luke.11.46:
+  - "­Ay de vosotros también, doctores de la ley! que cargáis á los hombres con cargas que no pueden llevar; mas vosotros ni aun con un dedo tocáis las cargas."
+Luke.12.1:
+  - "Guardaos de la levadura de los Fariseos, que es hipocresía."
+Luke.12.14:
+  - "Hombre, ¿quién me puso por juez ó partidor sobre vosotros?"
+Luke.12.15:
+  - "Mirad, y guardaos de toda avaricia; porque la vida del hombre no consiste en la abundancia de los bienes que posee."
+Luke.12.16:
+  - "La heredad de un hombre rico había llevado mucho;"
+Luke.12.22:
+  - "Por tanto os digo: No estéis afanosos de vuestra vida, qué comeréis; ni del cuerpo, qué vestiréis."
+Luke.12.42:
+  - "¿Quién es el mayordomo fiel y prudente, al cual el señor pondrá sobre su familia, para que á tiempo les dé su ración?"
+Luke.13.2:
+  - "¿Pensáis que estos Galileos, porque han padecido tales cosas, hayan sido más pecadores que todos los Galileos?"
+Luke.13.6:
+  - "Tenía uno una higuera plantada en su viña, y vino á buscar fruto en ella, y no lo halló."
+Luke.13.12:
+  - "Mujer, libre eres de tu enfermedad."
+Luke.13.15:
+  - "Hipócrita, cada uno de vosotros ¿no desata en sábado su buey ó su asno del pesebre, y lo lleva á beber?"
+Luke.13.18:
+  - "¿A qué es semejante el reino de Dios, y á qué le compararé?"
+Luke.13.20:
+  - "¿A qué compararé el reino de Dios?"
+Luke.13.32:
+  - "Id, y decid á aquella zorra: He aquí, echo fuera demonios y acabo sanidades hoy y mañana, y al tercer día soy consumado."
+Luke.14.3:
+  - "¿Es lícito sanar en sábado?"
+Luke.14.5:
+  - "¿El asno ó el buey de cuál de vosotros caerá en algún pozo, y no lo sacará luego en día de sábado?"
+Luke.14.12:
+  - "Cuando haces comida ó cena, no llames á tus amigos, ni á tus hermanos, ni á tus parientes, ni á vecinos ricos; porque también ellos no te vuelvan á convidar, y te sea hecha compensación."
+Luke.14.16:
+  - "Un hombre hizo una grande cena, y convido á muchos."
+Luke.15.11:
+  - "Un hombre tenía dos hijos;"
+Luke.16.1:
+  - "Había un hombre rico, el cual tenía un mayordomo, y éste fué acusado delante de él como disipador de sus bienes."
+Luke.16.15:
+  - "Vosotros sois los que os justificáis á vosotros mismos delante de los hombres; mas Dios conoce vuestros corazones; porque lo que los hombres tienen por sublime, delante de Dios es abominación."
+Luke.17.1:
+  - "Imposible es que no vengan escándalos; mas ­ay de aquél por quien vienen!"
+Luke.17.6:
+  - "Si tuvieseis fe como un grano de mostaza, diréis á este sicómoro: Desarráigate, y plántate en el mar; y os obedecerá."
+Luke.17.14:
+  - "Id, mostraos á los sacerdotes. Y aconteció, que yendo ellos, fueron limpios."
+Luke.17.17:
+  - "¿No son diez los que fueron limpios? ¿Y los nueve dónde están?"
+Luke.17.19:
+  - "Levántate, vete; tu fe te ha salvado."
+Luke.17.20:
+  - "El reino de Dios no vendrá con advertencia;"
+Luke.17.22:
+  - "Tiempo vendrá, cuando desearéis ver uno de los días del Hijo del hombre, y no lo veréis."
+Luke.17.37:
+  - "Donde estuviere el cuerpo, allá se juntarán también las águilas."
+Luke.18.2:
+  - "Había un juez en una ciudad, el cual ni temía á Dios, ni respetaba á hombre."
+Luke.18.6:
+  - "Oid lo que dice el juez injusto."
+Luke.18.16:
+  - "Dejad los niños venir á mí, y no los impidáis; porque de tales es el reino de Dios."
+Luke.18.19:
+  - "¿Por qué me llamas bueno? ninguno hay bueno sino sólo Dios."
+Luke.18.22:
+  - "Aun te falta una cosa: vende todo lo que tienes, y da á los pobres, y tendrás tesoro en el cielo; y ven, sígueme."
+Luke.18.24:
+  - "­Cuán dificultosamente entrarán en el reino de Dios los que tienen riquezas!"
+Luke.18.27:
+  - "Lo que es imposible para con los hombres, posible es para Dios."
+Luke.18.29:
+  - "De cierto os digo, que nadie hay que haya dejado casa, padres, ó hermanos, ó mujer, ó hijos, por el reino de Dios,"
+Luke.18.31:
+  - "He aquí subimos á Jerusalem, y serán cumplidas todas las cosas que fueron escritas por los profetas, del Hijo del hombre."
+Luke.18.41:
+  - "¿Qué quieres que te haga?"
+Luke.18.42:
+  - "Ve, tu fe te ha hecho salvo."
+Luke.19.5:
+  - "Zaqueo, date priesa, desciende, porque hoy es necesario que pose en tu casa."
+Luke.19.9:
+  - "Hoy ha venido la salvación á esta casa; por cuanto él también es hijo de Abraham."
+Luke.19.12:
+  - "Un hombre noble partió á una provincia lejos, para tomar para sí un reino, y volver."
+Luke.19.30:
+  - "Id á la aldea de enfrente; en la cual como entrareis, hallaréis un pollino atado, en el que ningún hombre se ha sentado jamás; desatadlo, y traedlo."
+Luke.19.40:
+  - "Os digo que si éstos callaren, las piedras clamarán."
+Luke.19.42:
+  - "­Oh si también tú conocieses, á lo menos en este tu día, lo que toca á tu paz! mas ahora está encubierto de tus ojos."
+Luke.19.46:
+  - "Escrito está: Mi casa, casa de oración es; mas vosotros la habéis hecho cueva de ladrones."
+Luke.20.3:
+  - "Os preguntaré yo también una palabra; respondedme:"
+Luke.20.8:
+  - "Ni yo os digo con qué potestad hago estas cosas."
+Luke.20.9:
+  - "Un hombre plantó una viña, y arrendóla á labradores, y se ausentó por mucho tiempo."
+Luke.20.16:
+  - "Vendrá, y destruirá á estos labradores, y dará su viña á otros."
+Luke.20.17:
+  - "¿Qué pues es lo que está escrito: La piedra que condenaron los edificadores, Esta fué por cabeza de esquina?"
+Luke.20.23:
+  - "¿Por qué me tentáis?"
+Luke.20.24:
+  - "Mostradme la moneda. ¿De quién tiene la imagen y la inscripción?"
+Luke.20.25:
+  - "Pues dad á César lo que es de César; y lo que es de Dios, á Dios."
+Luke.20.34:
+  - "Los hijos de este siglo se casan, y son dados en casamiento:"
+Luke.20.41:
+  - "¿Cómo dicen que el Cristo es hijo de David?"
+Luke.21.3:
+  - "De verdad os digo, que esta pobre viuda echó más que todos:"
+Luke.21.8:
+  - "Mirad, no seáis engañados; porque vendrán muchos en mi nombre, diciendo: Yo soy; y, el tiempo está cerca: por tanto, no vayáis en pos de ellos."
+Luke.21.10:
+  - "Se levantará gente contra gente, y reino contra reino;"
+Luke.21.29:
+  - "Mirad la higuera y todos los árboles:"
+Luke.22.8:
+  - "Id, aparejadnos la pascua para que comamos."
+Luke.22.10:
+  - "He aquí cuando entrareis en la ciudad, os encontrará un hombre que lleva un cántaro de agua: seguidle hasta la casa donde entrare,"
+Luke.22.15:
+  - "En gran manera he deseado comer con vosotros esta pascua antes que padezca;"
+Luke.22.17:
+  - "Tomad esto, y partidlo entre vosotros;"
+Luke.22.19:
+  - "Esto es mi cuerpo, que por vosotros es dado: haced esto en memoria de mí."
+Luke.22.20:
+  - "Este vaso es el nuevo pacto en mi sangre, que por vosotros se derrama."
+Luke.22.25:
+  - "Los reyes de las gentes se enseñorean de ellas; y los que sobre ellas tienen potestad, son llamados bienhechores:"
+Luke.22.31:
+  - "Simón, Simón, he aquí Satanás os ha pedido para zarandaros como á trigo;"
+Luke.22.34:
+  - "Pedro, te digo que el gallo no cantará hoy antes que tú niegues tres veces que me conoces."
+Luke.22.35:
+  - "Cuando os envié sin bolsa, y sin alforja, y sin zapatos, ¿os faltó algo?"
+Luke.22.36:
+  - "Pues ahora, el que tiene bolsa, tómela, y también la alforja, y el que no tiene, venda su capa y compre espada."
+Luke.22.38:
+  - "Basta."
+Luke.22.40:
+  - "Orad que no entréis en tentación."
+Luke.22.42:
+  - "Padre, si quieres, pasa este vaso de mí; empero no se haga mi voluntad, sino la tuya."
+Luke.22.46:
+  - "¿Por qué dormís? Levantaos, y orad que no entréis en tentación."
+Luke.22.48:
+  - "Judas, ¿con beso entregas al Hijo del hombre?"
+Luke.22.51:
+  - "Dejad hasta aquí."
+Luke.22.52:
+  - "¿Como á ladrón habéis salido con espadas y con palos?"
+Luke.22.67:
+  - "Si os lo dijere, no creeréis;"
+Luke.22.70:
+  - "Vosotros decís que yo soy."
+Luke.23.3:
+  - "Tú lo dices."
+Luke.23.28:
+  - "Hijas de Jerusalem, no me lloréis á mí, mas llorad por vosotras mismas, y por vuestros hijos."
+Luke.23.34:
+  - "Padre, perdónalos, porque no saben lo que hacen."
+Luke.23.43:
+  - "De cierto te digo, que hoy estarás conmigo en el paraíso."
+Luke.23.46:
+  - "Padre, en tus manos encomiendo mi espíritu."
+Luke.24.17:
+  - "¿Qué pláticas son estas que tratáis entre vosotros andando, y estáis tristes?"
+Luke.24.19:
+  - "¿Qué cosas?"
+Luke.24.25:
+  - "­Oh insensatos, y tardos de corazón para creer todo lo que los profetas han dicho!"
+Luke.24.36:
+  - "Paz á vosotros."
+Luke.24.38:
+  - "¿Por qué estáis turbados, y suben pensamientos á vuestros corazones?"
+Luke.24.41:
+  - "¿Tenéis aquí algo de comer?"
+Luke.24.44:
+  - "Estas son las palabras que os hablé, estando aún con vosotros: que era necesario que se cumpliesen todas las cosas que están escritas de mí en la ley de Moisés, y en los profetas, y en los salmos."
+Luke.24.46:
+  - "Así está escrito, y así fué necesario que el Cristo padeciese, y resucitase de los muertos al tercer día;"
+John.1.38:
+  - "¿Qué buscáis?"
+John.1.39:
+  - "Venid y ved."
+John.1.42:
+  - "Tú eres Simón, hijo de Jonás: tú serás llamado Cephas"
+John.1.43:
+  - "Sígueme."
+John.1.47:
+  - "He aquí un verdadero Israelita, en el cual no hay engaño."
+John.1.48:
+  - "Antes que Felipe te llamara, cuando estabas debajo de la higuera te vi."
+John.1.50:
+  - "¿Porque te dije, te vi debajo de la higuera, crees? cosas mayores que éstas verás."
+John.1.51:
+  - "De cierto, de cierto os digo: De aquí adelante veréis el cielo abierto, y los ángeles de Dios que suben y descienden sobre el Hijo del hombre."
+John.2.4:
+  - "¿Qué tengo yo contigo, mujer? aun no ha venido mi hora."
+John.2.7:
+  - "Henchid estas tinajuelas de agua."
+John.2.8:
+  - "Sacad ahora, y presentad al maestresala."
+John.2.16:
+  - "Quitad de aquí esto, y no hagáis la casa de mi Padre casa de mercado."
+John.2.19:
+  - "Destruid este templo, y en tres días lo levantaré."
+John.3.3:
+  - "De cierto, de cierto te digo, que el que no naciere otra vez, no puede ver el reino de Dios."
+John.3.5:
+  - "De cierto, de cierto te digo, que el que no naciere de agua y del Espíritu, no puede entrar en el reino de Dios."
+John.3.10:
+  - "¿Tú eres el maestro de Israel, y no sabes esto?"
+John.4.7:
+  - "Dame de beber."
+John.4.10:
+  - "Si conocieses el don de Dios, y quién es el que te dice: Dame de beber: tú pedirías de él, y él te daría agua viva."
+John.4.13:
+  - "Cualquiera que bebiere de esta agua, volverá á tener sed;"
+John.4.16:
+  - "Ve, llama á tu marido, y ven acá."
+John.4.17:
+  - "Bien has dicho, No tengo marido;"
+John.4.21:
+  - "Mujer, créeme, que la hora viene, cuando ni en este monte, ni en Jerusalem adoraréis al Padre."
+John.4.26:
+  - "Yo soy, que hablo contigo."
+John.4.32:
+  - "Yo tengo una comida que comer, que vosotros no sabéis."
+John.4.34:
+  - "Mi comida es que haga la voluntad del que me envió, y que acabe su obra."
+John.4.48:
+  - "Si no viereis señales y milagros no creeréis."
+John.4.50:
+  - "Ve, tu hijo vive."
+John.4.53:
+  - "Tu hijo vive;"
+John.5.6:
+  - "¿Quieres ser sano?"
+John.5.8:
+  - "Levántate, toma tu lecho, y anda."
+John.5.11:
+  - "Toma tu lecho y anda."
+John.5.12:
+  - "Toma tu lecho y anda"
+John.5.14:
+  - "He aquí, has sido sanado; no peques más, porque no te venga alguna cosa peor."
+John.5.17:
+  - "Mi Padre hasta ahora obra, y yo obro."
+John.5.19:
+  - "De cierto, de cierto os digo: No puede el Hijo hacer nada de sí mismo, sino lo que viere hacer al Padre: porque todo lo que él hace, esto también hace el Hijo juntamente."
+John.6.5:
+  - "¿De dónde compraremos pan para que coman éstos?"
+John.6.10:
+  - "Haced recostar la gente."
+John.6.12:
+  - "Recoged los pedazos que han quedado, porque no se pierda nada."
+John.6.20:
+  - "Yo soy; no tengáis miedo."
+John.6.26:
+  - "De cierto, de cierto os digo, que me buscáis, no porque habéis visto las señales, sino porque comisteis el pan y os hartasteis."
+John.6.29:
+  - "Esta es la obra de Dios, que creáis en el que él ha enviado."
+John.6.32:
+  - "De cierto, de cierto os digo: No os dió Moisés pan del cielo; mas mi Padre os da el verdadero pan del cielo."
+John.6.35:
+  - "Yo soy el pan de vida: el que á mí viene, nunca tendrá hambre; y el que en mí cree, no tendrá sed jamás."
+John.6.41:
+  - "Yo soy el pan que descendí del cielo."
+John.6.42:
+  - "Del cielo he descendido"
+John.6.43:
+  - "No murmuréis entre vosotros."
+John.6.53:
+  - "De cierto, de cierto os digo: Si no comiereis la carne del Hijo del hombre, y bebiereis su sangre, no tendréis vida en vosotros."
+John.6.61:
+  - "¿Esto os escandaliza?"
+John.6.64:
+  - "Mas hay algunos de vosotros que no creen."
+John.6.65:
+  - "Por eso os he dicho que ninguno puede venir á mí, si no le fuere dado del Padre."
+John.6.67:
+  - "¿Queréis vosotros iros también?"
+John.6.70:
+  - "¿No he escogido yo á vosotros doce, y uno de vosotros es diablo?"
+John.7.6:
+  - "Mi tiempo aun no ha venido; mas vuestro tiempo siempre está presto."
+John.7.16:
+  - "Mi doctrina no es mía, sino de aquél que me envió."
+John.7.21:
+  - "Una obra hice, y todos os maravilláis."
+John.7.28:
+  - "Y á mí me conocéis, y sabéis de dónde soy: y no he venido de mí mismo; mas el que me envió es verdadero, al cual vosotros no conocéis."
+John.7.33:
+  - "Aun un poco de tiempo estaré con vosotros, é iré al que me envió."
+John.7.36:
+  - "Me buscaréis, y no me hallaréis; y donde yo estaré, vosotros no podréis venir?"
+John.7.37:
+  - "Si alguno tiene sed, venga á mí y beba."
+John.8.7:
+  - "El que de vosotros esté sin pecado, arroje contra ella la piedra el primero."
+John.8.10:
+  - "¿Mujer, dónde están los que te acusaban? ¿Ninguno te ha condenado?"
+John.8.11:
+  - "Ni yo te condeno: vete, y no peques más."
+John.8.12:
+  - "Yo soy la luz del mundo: el que me sigue, no andará en tinieblas, mas tendrá la lumbre de la vida."
+John.8.14:
+  - "Aunque yo doy testimonio de mí mismo, mi testimonio es verdadero, porque sé de dónde he venido y á dónde voy; mas vosotros no sabéis de dónde vengo, y á dónde voy."
+John.8.19:
+  - "Ni á mí me conocéis, ni á mi Padre; si á mí me conocieseis, á mi Padre también conocierais."
+John.8.21:
+  - "Yo me voy, y me buscaréis, mas en vuestro pecado moriréis: á donde yo voy, vosotros no podéis venir."
+John.8.22:
+  - "A donde yo voy, vosotros no podéis venir"
+John.8.23:
+  - "Vosotros sois de abajo, yo soy de arriba; vosotros sois de este mundo, yo no soy de este mundo."
+John.8.25:
+  - "El que al principio también os he dicho."
+John.8.28:
+  - "Cuando levantareis al Hijo del hombre, entonces entenderéis que yo soy, y que nada hago de mí mismo; mas como el Padre me enseñó, esto hablo."
+John.8.31:
+  - "Si vosotros permaneciereis en mi palabra, seréis verdaderamente mis discípulos;"
+John.8.33:
+  - "Seréis libres"
+John.8.34:
+  - "De cierto, de cierto os digo, que todo aquel que hace pecado, es siervo de pecado."
+John.8.39:
+  - "Si fuerais hijos de Abraham, las obras de Abraham harías."
+John.8.41:
+  - "Vosotros hacéis las obras de vuestro padre."
+John.8.42:
+  - "Si vuestro padre fuera Dios, ciertamente me amaríais: porque yo de Dios he salido, y he venido; que no he venido de mí mismo, mas él me envió."
+John.8.49:
+  - "Yo no tengo demonio, antes honro á mi Padre; y vosotros me habéis deshonrado."
+John.8.52:
+  - "El que guardare mi palabra, no gustará muerte para siempre."
+John.8.54:
+  - "Si yo me glorifico á mí mismo, mi gloria es nada: mi Padre es el que me glorifica; el que vosotros decís que es vuestro Dios;"
+John.8.58:
+  - "De cierto, de cierto os digo: Antes que Abraham fuese, yo soy."
+John.9.3:
+  - "Ni éste pecó, ni sus padres: mas para que las obras de Dios se manifiesten en él."
+John.9.7:
+  - "Ve, lávate en el estanque de Siloé"
+John.9.11:
+  - "Ve al Siloé, y lávate:"
+John.9.35:
+  - "¿Crees tú en el Hijo de Dios?"
+John.9.37:
+  - "Y le has visto, y el que habla contigo, él es."
+John.9.39:
+  - "Yo, para juicio he venido á este mundo: para que los que no ven, vean; y los que ven, sean cegados."
+John.9.41:
+  - "Si fuerais ciegos, no tuvierais pecado: mas ahora porque decís, Vemos, por tanto vuestro pecado permanece."
+John.10.7:
+  - "De cierto, de cierto os digo: Yo soy la puerta de las ovejas."
+John.10.25:
+  - "Os lo he dicho, y no creéis: las obras que yo hago en nombre de mi Padre, ellas dan testimonio de mí;"
+John.10.32:
+  - "Muchas buenas obras os he mostrado de mi Padre, ¿por cuál obra de esas me apedreáis?"
+John.10.34:
+  - "¿No está escrito en vuestra ley: Yo dije, Dioses sois?"
+John.11.4:
+  - "Esta enfermedad no es para muerte, mas por gloria de Dios, para que el Hijo de Dios sea glorificado por ella."
+John.11.7:
+  - "Vamos á Judea otra vez."
+John.11.9:
+  - "¿No tiene el día doce horas? El que anduviere de día, no tropieza, porque ve la luz de este mundo."
+John.11.11:
+  - "Lázaro nuestro amigo duerme; mas voy á despertarle del sueño."
+John.11.14:
+  - "Lázaro es muerto;"
+John.11.23:
+  - "Resucitará tu hermano."
+John.11.25:
+  - "Yo soy la resurrección y la vida: el que cree en mí, aunque esté muerto, vivirá."
+John.11.34:
+  - "¿Dónde le pusisteis?"
+John.11.39:
+  - "Quitad la piedra."
+John.11.40:
+  - "¿No te he dicho que, si creyeres, verás la gloria de Dios?"
+John.11.41:
+  - "Padre, gracias te doy que me has oído."
+John.11.43:
+  - "Lázaro, ven fuera."
+John.11.44:
+  - "Desatadle, y dejadle ir."
+John.12.7:
+  - "Déjala; para el día de mi sepultura ha guardado esto;"
+John.12.23:
+  - "La hora viene en que el Hijo del hombre ha de ser glorificado."
+John.12.28:
+  - "Padre, glorifica tu nombre."
+John.12.30:
+  - "No ha venido esta voz por mi causa, mas por causa de vosotros."
+John.12.34:
+  - "Conviene que el Hijo del hombre sea levantado"
+John.12.35:
+  - "Aun por un poco estará la luz entre vosotros: andad entre tanto que tenéis luz, porque no os sorprendan las tinieblas; porque el que anda en tinieblas, no sabe dónde va."
+John.12.36:
+  - "Entre tanto que tenéis la luz, creed en la luz, para que seáis hijos de luz."
+John.12.44:
+  - "El que cree en mí, no cree en mí, sino en el que me envió;"
+John.13.7:
+  - "Lo que yo hago, tú no entiendes ahora; mas lo entenderás después."
+John.13.8:
+  - "Si no te lavare, no tendrás parte conmigo."
+John.13.10:
+  - "El que está lavado, no necesita sino que lave los pies, mas está todo limpio: y vosotros limpios estáis, aunque no todos."
+John.13.11:
+  - "No estáis limpios todos."
+John.13.12:
+  - "¿Sabéis lo que os he hecho?"
+John.13.21:
+  - "De cierto, de cierto os digo, que uno de vosotros me ha de entregar."
+John.13.26:
+  - "Aquél es, á quien yo diere el pan mojado."
+John.13.27:
+  - "Lo que haces, haz lo más presto."
+John.13.31:
+  - "Ahora es glorificado el Hijo del hombre, y Dios es glorificado en él."
+John.13.36:
+  - "Donde yo voy, no me puedes ahora seguir; mas me seguirás después."
+John.13.38:
+  - "¿Tu alma pondrás por mí? De cierto, de cierto te digo: No cantará el gallo, sin que me hayas negado tres veces."
+John.14.6:
+  - "Yo soy el camino, y la verdad, y la vida: nadie viene al Padre, sino por mí."
+John.14.9:
+  - "¿Tanto tiempo ha que estoy con vosotros, y no me has conocido, Felipe? El que me ha visto, ha visto al Padre; ¿cómo, pues, dices tú: Muéstranos el Padre?"
+John.14.23:
+  - "El que me ama, mi palabra guardará; y mi Padre le amará, y vendremos á él, y haremos con él morada."
+John.16.19:
+  - "¿Preguntáis entre vosotros de esto que dije: Un poquito, y no me veréis, y otra vez un poquito, y me veréis?"
+John.16.31:
+  - "¿Ahora creéis?"
+John.17.1:
+  - "Padre, la hora es llegada; glorifica á tu Hijo, para que también tu Hijo te glorifique á ti;"
+John.18.4:
+  - "¿A quién buscáis?"
+John.18.5:
+  - "Yo soy"
+John.18.6:
+  - "Yo soy"
+John.18.7:
+  - "¿A quién buscáis?"
+John.18.8:
+  - "Os he dicho que yo soy: pues si á mi buscáis, dejad ir á éstos."
+John.18.9:
+  - "De los que me diste, ninguno de ellos perdí."
+John.18.11:
+  - "Mete tu espada en la vaina: el vaso que el Padre me ha dado, ¿no lo tengo de beber?"
+John.18.20:
+  - "Yo manifiestamente he hablado al mundo: yo siempre he enseñado en la sinagoga y en el templo, donde se juntan todos los Judíos, y nada he hablado en oculto."
+John.18.23:
+  - "Si he hablado mal, da testimonio del mal: y si bien, ¿por qué me hieres?"
+John.18.34:
+  - "¿Dices tú esto de ti mismo, ó te lo han dicho otros de mí?"
+John.18.36:
+  - "Mi reino no es de este mundo: si de este mundo fuera mi reino, mis servidores pelearían para que yo no fuera entregado á los Judíos: ahora, pues, mi reino no es de aquí."
+John.18.37:
+  - "Tu dices que yo soy rey. Yo para esto he nacido, y para esto he venido al mundo, para dar testimonio á la verdad. Todo aquél que es de la verdad, oye mi voz."
+John.19.11:
+  - "Ninguna potestad tendrías contra mí, si no te fuese dado de arriba: por tanto, el que á ti me ha entregado, mayor pecado tiene."
+John.19.26:
+  - "Mujer, he ahí tu hijo."
+John.19.27:
+  - "He ahí tu madre."
+John.19.28:
+  - "Sed tengo."
+John.19.30:
+  - "Consumado es."
+John.20.15:
+  - "Mujer, ¿por qué lloras? ¿á quién buscas?"
+John.20.16:
+  - "­María!"
+John.20.17:
+  - "No me toques: porque aun no he subido á mi Padre: mas ve á mis hermanos, y diles: Subo á mi Padre y á vuestro Padre, á mi Dios y á vuestro Dios."
+John.20.19:
+  - "Paz á vosotros."
+John.20.21:
+  - "Paz á vosotros: como me envió el Padre, así también yo os envío."
+John.20.22:
+  - "Tomad el Espíritu Santo:"
+John.20.26:
+  - "Paz á vosotros."
+John.20.27:
+  - "Mete tu dedo aquí, y ve mis manos: y alarga acá tu mano, y métela en mi costado: y no seas incrédulo, sino fiel."
+John.20.29:
+  - "Porque me has visto, Tomás, creiste: bienaventurados los que no vieron y creyeron."
+John.21.5:
+  - "Mozos, ¿tenéis algo de comer?"
+John.21.6:
+  - "Echad la red á la mano derecha del barco, y hallaréis."
+John.21.10:
+  - "Traed de los peces que cogisteis ahora."
+John.21.12:
+  - "Venid, comed."
+John.21.15:
+  - "Simón, hijo de Jonás, ¿me amas más que estos?"
+  - "Apacienta mis corderos."
+John.21.16:
+  - "Simón, hijo de Jonás, ¿me amas?"
+  - "Apacienta mis ovejas."
+John.21.17:
+  - "Simón, hijo de Jonás, ¿me amas?"
+  - "Apacienta mis ovejas."
+John.21.19:
+  - "Sígueme."
+John.21.22:
+  - "Si quiero que él quede hasta que yo venga, ¿qué á tí? Sígueme tú."
+John.21.23:
+  - "Si quiero que él quede hasta que yo venga ¿qué á ti?"
+Acts.1.4:
+  - "que oísteis,"
+  - "de mí."
+Acts.1.7:
+  - "No toca á vosotros saber los tiempos ó las sazones que el Padre puso en su sola potestad;"
+Acts.9.4:
+  - "Saulo, Saulo, ¿por qué me persigues?"
+Acts.9.5:
+  - "Yo soy Jesús á quien tú persigues: dura cosa te es dar coses contra el aguijón."
+Acts.9.6:
+  - "Levántate y entra en la ciudad, y se te dirá lo que te conviene hacer."
+Acts.9.10:
+  - "Ananías."
+Acts.9.11:
+  - "Levántate, y ve á la calle que se llama la Derecha, y busca en casa de Judas á uno llamado Saulo, de Tarso: porque he aquí, él ora;"
+Acts.9.15:
+  - "Ve: porque instrumento escogido me es éste, para que lleve mi nombre en presencia de los Gentiles, y de reyes, y de los hijos de Israel:"
+Acts.10.13:
+  - "Levántate, Pedro, mata y come."
+Acts.10.15:
+  - "Lo que Dios limpió, no lo llames tú común."
+Acts.11.7:
+  - "Levántate, Pedro, mata y come."
+Acts.11.9:
+  - "Lo que Dios limpió, no lo llames tú común."
+Acts.11.16:
+  - "Juan ciertamente bautizó en agua; mas vosotros seréis bautizados en Espíritu Santo."
+Acts.18.9:
+  - "No temas, sino habla, y no calles:"
+Acts.20.35:
+  - "Más bienaventurada cosa es dar que recibir."
+Acts.22.7:
+  - "Saulo, Saulo, ¿por qué me persigues?"
+Acts.22.8:
+  - "Yo soy Jesús de Nazaret, á quién tú persigues."
+Acts.22.10:
+  - "Levántate, y ve á Damasco, y allí te será dicho todo lo que te está señalado hacer."
+Acts.22.18:
+  - "Date prisa, y sal prestamente fuera de Jerusalem; porque no recibirán tu testimonio de mí."
+Acts.22.21:
+  - "Ve, porque yo te tengo que enviar lejos á los Gentiles."
+Acts.23.11:
+  - "Confía, Pablo; que como has testificado de mí en Jerusalem, así es menester testifiques también en Roma."
+Acts.26.14:
+  - "Saulo, Saulo, ¿por qué me persigues? Dura cosa te es dar coces contra los aguijones."
+Acts.26.15:
+  - "Yo soy Jesús, á quien tú persigues."
+1Cor.11.24:
+  - "Tomad, comed: esto es mi cuerpo que por vosotros es partido: haced esto en memoria de mí."
+1Cor.11.25:
+  - "Esta copa es el nuevo pacto en mi sangre: haced esto todas las veces que bebiereis, en memoria de mí."
+2Cor.12.9:
+  - "Bástate mi gracia; porque mi potencia en la flaqueza se perfecciona."
+1Tim.5.18:
+  - "Digno es el obrero de su jornal."
+Rev.1.8:
+  - "Yo soy el Alpha y la Omega, principio y fin,"
+  - "que es y que era y que ha de venir, el Todopoderoso."
+Rev.1.11:
+  - "Yo soy el Alpha y Omega, el primero y el último. Escribe en un libro lo que ves, y envía lo á las siete iglesias que están en Asia; á Efeso, y á Smirna, y á Pérgamo, y á Tiatira, y á Sardis, y á Filadelfia, y á Laodicea."
+Rev.1.17:
+  - "No temas: yo soy el primero y el último;"
+Rev.22.20:
+  - "Ciertamente, vengo en breve."

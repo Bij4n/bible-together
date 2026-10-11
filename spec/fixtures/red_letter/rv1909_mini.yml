@@ -1,0 +1,5 @@
+# Test-only patch for the RV1909 mini fixture. John 3:14 is not really
+# a partial verse; it stands in for one so the import task has
+# something to apply.
+John.3.14:
+  - "así es necesario que el Hijo del hombre sea levantado;"

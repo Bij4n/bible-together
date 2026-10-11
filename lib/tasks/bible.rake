@@ -36,12 +36,48 @@ namespace :bible do
       result = Bible::RedLetterMirror.call(target_translation_code: translation.code)
       puts "Red-letter mirror: #{result}"
     end
+
+    # The mirror only carries verses that are red end to end. Verses
+    # where Jesus speaks for part of the verse come from a reviewed
+    # file, when the translation has one.
+    if Bible::RedLetterPatch.exists_for?(translation.code)
+      puts "Red-letter patch: #{Bible::RedLetterPatch.call(translation_code: translation.code)}"
+    end
   end
 
   namespace :import do
     desc "Import the King James Version"
     task kjv: :environment do
       Rake::Task["bible:import"].invoke("kjv")
+    end
+  end
+
+  namespace :red_letter do
+    desc "Apply config/red_letter/<code>.yml. Usage: bin/rails 'bible:red_letter:apply[rv1909]'"
+    task :apply, [ :code ] => :environment do |_, args|
+      code = args[:code] || ENV["CODE"]
+      abort "Usage: bin/rails 'bible:red_letter:apply[rv1909]'" if code.blank?
+
+      puts "Red-letter patch: #{Bible::RedLetterPatch.call(translation_code: code)}"
+    rescue Bible::RedLetterPatch::Mismatch => e
+      abort e.message
+    end
+
+    desc "Print a draft patch for review. Usage: bin/rails 'bible:red_letter:propose[rv1909]'"
+    task :propose, [ :code, :source ] => :environment do |_, args|
+      code = args[:code] || ENV["CODE"]
+      abort "Usage: bin/rails 'bible:red_letter:propose[rv1909]'" if code.blank?
+
+      RedLetterProposeTask.each_draft(target: code, source: args[:source] || "KJV") do |ref, text, result|
+        if result.ranges.nil?
+          puts "# #{ref}: no proposal -- #{text}"
+          next
+        end
+
+        puts "# check: #{text}" unless result.confident?
+        puts "#{ref}:"
+        result.ranges.each { |from, to| puts "  - #{JSON.generate(text[from...to])}" }
+      end
     end
   end
 end
@@ -124,6 +160,35 @@ module BibleImportTask
         end
       end
       Dir[extract_dir.join("**/*.xml")].first || abort("No .xml found inside #{zip_path}")
+    end
+  end
+end
+
+# Pairs each partly-red source verse with its counterpart in the target
+# translation and yields the proposed ranges, in canon order.
+module RedLetterProposeTask
+  def self.each_draft(target:, source:)
+    source_code = source.to_s.upcase
+    target_code = target.to_s.upcase
+
+    partly_red = Verse.joins(chapter: { book: :translation })
+                      .where(translations: { code: source_code })
+                      .where("red_letter_ranges::text <> '[]'")
+                      .where.not("red_letter_ranges = jsonb_build_array(jsonb_build_array(0, char_length(body_text)))")
+                      .order("books.position, chapters.number, verses.number")
+
+    partly_red.each_slice(500) do |batch|
+      refs = batch.to_h { |v| [ v.osis_ref.delete_prefix("Bible.#{source_code}."), v ] }
+      targets = Verse.where(osis_ref: refs.keys.map { |ref| "Bible.#{target_code}.#{ref}" }).index_by(&:osis_ref)
+
+      refs.each do |ref, source_verse|
+        target_verse = targets["Bible.#{target_code}.#{ref}"] or next
+
+        result = Bible::RedLetterProposer.call(source_text: source_verse.body_text,
+                                               source_ranges: source_verse.red_letter_ranges,
+                                               target_text: target_verse.body_text)
+        yield ref, target_verse.body_text, result
+      end
     end
   end
 end

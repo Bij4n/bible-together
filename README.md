@@ -15,7 +15,9 @@ a white ground / cool near-black dark).
   Reina-Valera 1909 (RV1909). Translation picker preserves book and chapter
   across switches.
 - Red-letter Jesus words from character-offset ranges at import time. RV1909
-  inherits KJV red coverage at verse granularity.
+  has the same red verses as the KJV: fully red verses are mirrored, and
+  verses where he speaks for part of the verse come from a reviewed file,
+  `config/red_letter/rv1909.yml`.
 - Reader layers (signed in): your highlights, a group's shared layer, or the
   community layer — one lens at a time via the layer switcher.
 - Anonymous visitors read the community layer at `/bible/...` (public notes,
@@ -84,7 +86,7 @@ git clone git@github.com:Bij4n/bible-together.git
 cd bible-together
 bin/setup                          # gems, db:create, db:schema:load
 bin/rails bible:import[kjv]        # ~30s
-bin/rails bible:import[rv1909]     # ~10s; mirrors red-letter from KJV
+bin/rails bible:import[rv1909]     # ~10s; red-letter from KJV + config/red_letter
 bin/dev                            # web + Tailwind + embedding service
 ```
 
