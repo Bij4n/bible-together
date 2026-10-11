@@ -707,7 +707,7 @@ es:
       warranty_heading: Descargo de garantía
       warranty_body: Bible Together se proporciona "tal cual" sin garantía de ningún tipo. Hacemos nuestro mejor esfuerzo para mantenerlo funcionando y tu información segura, pero no ofrecemos garantías de disponibilidad, conservación de datos ni idoneidad para ningún propósito en particular.
       contact_heading: Contacto
-      contact_body_html: '¿Preguntas sobre estos términos? Escríbenos a <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">hello@bible-together.org</a>.'
+      contact_body_html: '¿Preguntas sobre estos términos? Escríbenos a <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800">hello@bible-together.org</a>.'
     privacy:
       title: Política de privacidad
       summary_heading: La versión corta
@@ -733,6 +733,6 @@ es:
       public_content_heading: Contenido público
       public_content_body: Las notas que marcas como públicas son visibles para cualquiera que lea el mismo pasaje, con o sin sesión iniciada, y pueden ser indexadas por motores de búsqueda. Tu nombre público (o si no está configurado, la parte local de tu correo) aparece junto a las notas públicas. Puedes cambiar la visibilidad de una nota a privada en cualquier momento, lo que la elimina de la vista pública.
       deletion_heading: Eliminar tu cuenta
-      deletion_body_html: 'Puedes eliminar tu cuenta en cualquier momento desde <a href="/settings" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">Ajustes</a>. La eliminación borra tu dirección de correo, contraseña y todo el contenido privado de forma permanente e irreversible. Las notas públicas que hayas creado pueden permanecer visibles brevemente hasta que los cachés se actualicen.'
+      deletion_body_html: 'Puedes eliminar tu cuenta en cualquier momento desde <a href="/settings" class="text-accent-700 underline underline-offset-2 hover:text-accent-800">Ajustes</a>. La eliminación borra tu dirección de correo, contraseña y todo el contenido privado de forma permanente e irreversible. Las notas públicas que hayas creado pueden permanecer visibles brevemente hasta que los cachés se actualicen.'
       contact_heading: Preguntas
-      contact_body_html: 'Para preguntas de privacidad o solicitudes de datos, escribe a <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">hello@bible-together.org</a>.'
+      contact_body_html: 'Para preguntas de privacidad o solicitudes de datos, escribe a <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800">hello@bible-together.org</a>.'

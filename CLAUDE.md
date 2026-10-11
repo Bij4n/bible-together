@@ -4,6 +4,8 @@
 
 **Bible Together** (repo: `bible-together`) — a Ruby on Rails web app for reading the Bible, making character-level highlights, attaching rich-text notes, and sharing those notes privately, with specific users, with groups, or publicly. Group Bibles support real-time collaboration. Public notes surface on a curated public Bible view with upvoting and threaded comments. UI in English and Spanish. KJV + RV1909 Spanish Bible live.
 
+Since October 2026 the product is focused on the words of Jesus: the **Highlighted in Red** section (`/red`) reads the red-letter text, with curated parables, encounters, sayings and themes (`config/passages.yml`, `config/themes.yml`), and a reader or a study can choose it instead of the whole Bible. Two principles: show all of the red text, hard sayings included, and add no commentary of our own.
+
 All visual direction — fonts, colors, spacing, aesthetic — lives in `DESIGN.md`, which is the single source of truth. Do not restate design tokens here (they drift). Read `DESIGN.md` before any UI work.
 
 Full roadmap lives in `PLAN.md`. Read it before starting any sprint. Update it when decisions change.
@@ -191,6 +193,7 @@ bundle exec rubocop    # lint
 bundle exec rubocop -a # autocorrect safe offenses
 bundle exec brakeman   # security scan
 bin/rails bible:import[kjv]  # seed KJV (Sprint 1+)
+bin/rails 'bible:red_letter:apply[rv1909]'  # re-apply config/red_letter/<code>.yml after editing it
 bin/embedding          # semantic-search embedding service (Python, port 8000)
 ```
 

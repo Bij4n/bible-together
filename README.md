@@ -1,12 +1,13 @@
 # Bible Together
 
 A Ruby on Rails app for reading, highlighting, annotating, and sharing the
-Bible — privately, with friends, in Bible-study groups, or publicly.
-Live at [bible-together.org](https://bible-together.org). Bilingual UI
-(English + Spanish) with KJV and Reina-Valera 1909 text, character-level
-highlights, rich-text notes, keyword and semantic search, and a reading-first
-design (Source Serif 4 for scripture, Inter for chrome, Medium green accent on
-a white ground / cool near-black dark).
+Bible — privately, with friends, in Bible-study groups, or publicly — built
+around the words of Jesus. Live at
+[bible-together.org](https://bible-together.org). Bilingual UI (English +
+Spanish) with KJV and Reina-Valera 1909 text, character-level highlights,
+rich-text notes, keyword and semantic search, and a reading-first design
+(Source Serif 4 for scripture, Inter for chrome, Medium green accent on a
+white ground).
 
 ## Features
 
@@ -24,6 +25,19 @@ a white ground / cool near-black dark).
 - Anonymous visitors read the community layer at `/bible/...` (public notes,
   dotted underlines, no personal toolbar).
 
+**Highlighted in Red** ([`/red`](https://bible-together.org/red))
+- A reading mode built on the red-letter text: narration dimmed, his words in
+  red, and a "His words only" toggle. Steps only through chapters where he
+  speaks.
+- Curated passages, each with every gospel that tells it: 40 parables, 9 word
+  pictures from John, 31 encounters (what he did) and 20 sayings. An
+  encounter's page shows the story at full strength.
+- Eight themes that set what he did beside what he said.
+- All of the red text is there, hard sayings included, and the site adds no
+  commentary of its own.
+- The lists live in `config/passages.yml` and `config/themes.yml`; edit them
+  and deploy, with no data step.
+
 **Annotation**
 - Character-level highlights in four muted colors. OSIS-ref anchoring survives
   schema changes and maps across translations at the verse level.
@@ -37,6 +51,10 @@ a white ground / cool near-black dark).
 - Group Bibles with real-time broadcast via Action Cable — shared notes and
   comments appear live for others on the same chapter.
 - Join groups via invitation code or email link (token survives sign-up).
+- A study chooses what it reads: the whole Bible, Highlighted in Red chapter
+  by chapter, or a list or theme one passage at a time with a "We are here"
+  marker a manager moves. A reader can make Highlighted in Red what Read
+  opens, in settings.
 
 **Community**
 - [`/community`](https://bible-together.org/community) — global feed of public
@@ -55,12 +73,14 @@ a white ground / cool near-black dark).
   the service is down.
 - Scope: verses / notes / both; current translation or all installed
   translations.
+- "Search only the words of Jesus": keyword search then matches inside the
+  red text alone.
 
 **Accessibility**
 - WCAG 2.1 AA checked on major surfaces (`axe-core-rspec`).
 - Accent-green `:focus-visible` rings; `prefers-reduced-motion` honored
   globally.
-- Tri-state theme (Light / Dark / System), no-flash on first paint.
+- Light theme only; dark mode was removed in June 2026.
 - Print stylesheet for chapter output.
 
 ## Stack

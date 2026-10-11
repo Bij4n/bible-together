@@ -2,8 +2,8 @@
 
 ## Current sprint
 
-**Highlighted in Red (2026-10-10 → 2026-10-11): all seven sprints shipped and live.** What is
-left is in the open questions below, not in the table.
+**Highlighted in Red (2026-10-10 → 2026-10-11): all seven sprints and the follow-ups shipped
+and live.** What is left is in the open questions below and in `HANDOFF.md`, not in the table.
 
 **Highlighted in Red (started 2026-10-10).** The project is being focused on who Jesus
 was: his words, his parables, and how he treated people. A new section at `/red` is built
@@ -21,6 +21,7 @@ our own.
 | 5 | The `/red` front page, "In Red" nav entry (desktop and mobile tab bar), homepage section and dashboard card | shipped (#194) |
 | 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | shipped (#196) |
 | 7 | "Only verses where Jesus speaks" search filter (keyword and concept), sitemap entries for the section | shipped (#197) |
+| + | Follow-ups: seven KJV red-letter corrections (#201), Prayer and Love of enemies filled out (#202), studies that work through a list with a "We are here" marker (#203, form folded into one control in #206), keyword search inside his words via `verses.red_text` (#204), his explanations under the Sower and the Weeds (#205), About page and donate heading rewritten (#198) | shipped |
 
 Owner decisions so far: the name is "Highlighted in Red" (Spanish "En Rojo", confirmed 2026-10-11);
 the gospels are the main path and his words in Acts, the epistles and Revelation sit apart
@@ -44,10 +45,8 @@ signed-in surfaces (auth, settings, group show, search, notes, dashboard) follow
 editorial typographic style established on the About page. Reader renders verse-per-block
 only (no view toggle).
 
-**Next up:** see `HANDOFF.md` "Next session queue". Owner-directed priorities: groups/studies
-deep-dive audit (highlighting, notes, admin workflows), legal pages (terms/privacy — needs
-owner copy), then autonomous items (`id="join"` anchor, editorial pass on remaining surfaces,
-multilingual semantic search, swipe-to-dismiss sheets).
+**Next up (as of 2026-06-17, superseded):** see `HANDOFF.md` "Next session queue" for the
+current list.
 
 Recent cluster (PRs #139–#153):
 - #139–#144 — Sprints 1–6: UI foundation, reader OT/NT picker, group admins, profiles, settings, forum

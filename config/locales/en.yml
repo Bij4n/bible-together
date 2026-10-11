@@ -714,7 +714,7 @@ en:
       warranty_heading: Warranty disclaimer
       warranty_body: Bible Together is provided "as is" without warranty of any kind. We do our best to keep it running and your data safe, but we make no guarantees of uptime, data preservation, or fitness for any particular purpose.
       contact_heading: Contact
-      contact_body_html: 'Questions about these terms? Email us at <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">hello@bible-together.org</a>.'
+      contact_body_html: 'Questions about these terms? Email us at <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800">hello@bible-together.org</a>.'
     privacy:
       title: Privacy Policy
       summary_heading: The short version
@@ -740,6 +740,6 @@ en:
       public_content_heading: Public content
       public_content_body: Notes you mark as public are visible to anyone who reads the same passage, signed in or not, and may be indexed by search engines. Your display name (or if not set, your email's local-part) is shown alongside public notes. You can change a note's visibility back to private at any time, which removes it from the public view.
       deletion_heading: Deleting your account
-      deletion_body_html: 'You can delete your account at any time from <a href="/settings" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">Settings</a>. Deletion removes your email address, password, and all private content permanently and is irreversible. Public notes you authored may remain visible briefly until caches clear.'
+      deletion_body_html: 'You can delete your account at any time from <a href="/settings" class="text-accent-700 underline underline-offset-2 hover:text-accent-800">Settings</a>. Deletion removes your email address, password, and all private content permanently and is irreversible. Public notes you authored may remain visible briefly until caches clear.'
       contact_heading: Questions
-      contact_body_html: 'For privacy questions or data requests, email <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-300">hello@bible-together.org</a>.'
+      contact_body_html: 'For privacy questions or data requests, email <a href="mailto:hello@bible-together.org" class="text-accent-700 underline underline-offset-2 hover:text-accent-800">hello@bible-together.org</a>.'
