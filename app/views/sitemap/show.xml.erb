@@ -20,6 +20,40 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <%# Highlighted in Red: the front page, the lists, every passage and
+      theme, and each chapter that has red text. %>
+  <% red_pages = [ red_home_url, red_themes_url ] +
+                 Bible::Passages::COLLECTIONS.keys.map { |collection| red_passages_url(collection: collection) } %>
+  <% red_pages.each do |loc| %>
+  <url>
+    <loc><%= loc %></loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <% end %>
+  <% Bible::Passages.all.each do |passage| %>
+  <url>
+    <loc><%= red_passage_url(collection: Bible::Passages.collection_of(passage), slug: passage.slug) %></loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <% end %>
+  <% Bible::Themes.all.each do |theme| %>
+  <url>
+    <loc><%= red_theme_url(theme.slug) %></loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <% end %>
+  <% @translations.each do |translation| %>
+    <% Bible::RedLetterIndex.for(translation).chapters.each do |stop| %>
+  <url>
+    <loc><%= red_chapter_url(translation: translation.code.downcase, book: stop.book.downcase, chapter: stop.number) %></loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+    <% end %>
+  <% end %>
   <% @translations.each do |translation| %>
     <% translation.books.order(:position).each do |book| %>
       <% book.chapters.order(:number).each do |chapter| %>

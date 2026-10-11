@@ -49,6 +49,11 @@
       <% end %>
     </fieldset>
 
+    <label class="flex items-center gap-1.5 font-ui text-sm text-surface-700">
+      <%= check_box_tag :red, "1", @red_only, class: "h-4 w-4 accent-accent-700" %>
+      <%= t("search.red_only") %>
+    </label>
+
     <% if Translation.count > 1 %>
       <fieldset class="flex items-center gap-4 font-ui text-sm text-surface-700">
         <legend class="sr-only"><%= t("search.translations.all") %></legend>

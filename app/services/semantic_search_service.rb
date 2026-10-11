@@ -17,13 +17,14 @@ class SemanticSearchService
   VALID_SCOPES         = %w[current all].freeze
   DEFAULT_TRANSLATION  = "KJV".freeze
 
-  attr_reader :query, :user, :translations, :translation_code
+  attr_reader :query, :user, :translations, :translation_code, :red_only
 
-  def initialize(query:, user: nil, translations: "current", translation_code: DEFAULT_TRANSLATION)
+  def initialize(query:, user: nil, translations: "current", translation_code: DEFAULT_TRANSLATION, red_only: false)
     @query            = query.to_s.strip
     @user             = user
     @translations     = VALID_SCOPES.include?(translations.to_s) ? translations.to_s : "current"
     @translation_code = translation_code.to_s.presence || DEFAULT_TRANSLATION
+    @red_only         = red_only
   end
 
   def call
@@ -39,7 +40,8 @@ class SemanticSearchService
       query_vector,
       limit: VERSE_LIMIT,
       threshold: SIMILARITY_THRESHOLD,
-      translation_codes: codes_for_scope
+      translation_codes: codes_for_scope,
+      red_only: red_only
     )
 
     { verses: verses, available: true }

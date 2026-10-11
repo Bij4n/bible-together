@@ -99,6 +99,21 @@ RSpec.describe VerseEmbedding, type: :model do
       expect(results).to eq([ close ])
     end
 
+    # The filter has to apply before the limit. Applied after, a search
+    # whose closest matches are narration would come back short or empty.
+    it "can keep only verses where Jesus speaks, before applying the limit" do
+      verse_with_embedding(number: 1, vector: [ 1.0, 0.0 ] + Array.new(382, 0.0))
+      verse_with_embedding(number: 2, vector: [ 0.99, 0.0 ] + Array.new(382, 0.0))
+      red = verse_with_embedding(number: 3, vector: [ 0.5, 0.5 ] + Array.new(382, 0.0))
+      red.update_columns(red_letter_ranges: [ [ 0, 8 ] ])
+      VerseEmbedding.reset_cache!
+
+      query   = [ 1.0, 0.0 ] + Array.new(382, 0.0)
+      results = VerseEmbedding.search_by_similarity(query, limit: 1, threshold: 0.0, red_only: true)
+
+      expect(results).to eq([ red ])
+    end
+
     it "respects the limit argument" do
       3.times do |i|
         verse_with_embedding(number: i + 1,

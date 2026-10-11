@@ -30,6 +30,21 @@ RSpec.describe "Search", type: :system do
     expect(page).to have_content(/grace/i)
   end
 
+  it "narrows results to verses where Jesus speaks" do
+    create(:verse, chapter: chapter, number: 34, body_text: "Love one another",
+                   body_html: "Love one another", red_letter_ranges: [ [ 0, 16 ] ],
+                   osis_ref: "Bible.KJV.John.3.34")
+
+    visit "/search"
+    fill_in "q", with: "love"
+    check I18n.t("search.red_only")
+    find("input[type='submit'][value='#{I18n.t('search.submit')}']").click
+
+    expect(page).to have_content("John 3:34")
+    expect(page).not_to have_content("John 3:16")
+    expect(page).to have_checked_field(I18n.t("search.red_only"))
+  end
+
   it "filters to verses only" do
     author = create(:user, display_name: "Hiddenauthor")
     create(:note, user: author, visibility: :public_note,

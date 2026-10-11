@@ -119,7 +119,7 @@ RSpec.describe "Highlights", type: :system, js: true do
 
     it "tapping a verse selects its full text and the Highlight button marks the whole verse" do
       v16 = Verse.find_by!(osis_ref: "Bible.KJV.John.3.16")
-      page.driver.browser.manage.window.resize_to(390, 844)
+      WindowSize.resize_and_settle(page.driver.browser.manage.window, 390, 844)
       visit "/bible/kjv/john/3"
 
       find("[data-verse-id='#{v16.id}']").click

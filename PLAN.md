@@ -16,8 +16,8 @@ our own.
 | 3 | Parables: curated list in `config/passages.yml`, `/red/parables` and `/red/parables/:slug` | shipped (#189, #191) |
 | 4 | Encounters, sayings and themes: lists, `/red/encounters`, `/red/sayings`, `/red/themes`, markers in the red chapter view | shipped (#192, #193) |
 | 5 | The `/red` front page, "In Red" nav entry (desktop and mobile tab bar), homepage section and dashboard card | shipped (#194) |
-| 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | in review |
-| 7 | "Jesus's words only" search filter, sitemap, wrap-up | not started |
+| 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | shipped (#196) |
+| 7 | "Only verses where Jesus speaks" search filter (keyword and concept), sitemap entries for the section | in review |
 
 Owner decisions so far: the name is "Highlighted in Red" (Spanish "En Rojo" is provisional);
 the gospels are the main path and his words in Acts, the epistles and Revelation sit apart
