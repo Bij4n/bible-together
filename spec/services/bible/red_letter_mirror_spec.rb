@@ -37,6 +37,7 @@ RSpec.describe Bible::RedLetterMirror do
 
       rv = Verse.find_by!(osis_ref: "Bible.RV1909.John.3.16")
       expect(rv.red_letter_ranges).to eq([ [ 0, es.length ] ])
+      expect(rv.red_text).to eq(es)
       expect(result.updated).to eq(1)
       expect(result.fully_red_verses).to eq(1)
     end
