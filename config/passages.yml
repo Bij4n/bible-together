@@ -9,6 +9,10 @@
 #
 # themes: optional slugs from config/themes.yml.
 #
+# explained: optional. Where Jesus explains the passage himself, as
+# Book.chapter.verses in the same chapter as the telling and after it.
+# The page shows it under the telling.
+#
 # Each passage is listed once, with every gospel that tells it. An
 # appearance is Book.chapter.verses and must stay inside one chapter.
 # The order here is the order the site lists them in: Matthew's order,
@@ -43,12 +47,14 @@
   title_en: The Sower
   title_es: El sembrador
   appearances: [Matt.13.3-9, Mark.4.3-9, Luke.8.5-8]
+  explained: [Matt.13.18-23, Mark.4.13-20, Luke.8.11-15]
 
 - slug: wheat-and-weeds
   kind: parable
   title_en: The Wheat and the Weeds
   title_es: El trigo y la cizaña
   appearances: [Matt.13.24-30]
+  explained: [Matt.13.36-43]
 
 - slug: mustard-seed
   kind: parable

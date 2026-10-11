@@ -62,7 +62,6 @@ Recent cluster (PRs #139–#153):
 - **Highlighted in Red, after the first seven sprints** (2026-10-11):
   - In concept search the "words of Jesus" filter is still verse-level (keyword search matches inside his words since 2026-10-11).
   - Concept search is still English-only, so the filter does nothing for RV1909 there. Same dependency as the multilingual embeddings item in `HANDOFF.md`.
-  - The sayings and parables show the telling only; Jesus's own explanations (the Sower, the Weeds) are not listed.
 - **Semantic search provider for Sprint 9** — decide before Sprint 8 ends. Options: Anthropic Voyage, OpenAI embeddings, or a local open-source model (e.g., `all-MiniLM-L6-v2` via pgvector). Tradeoffs: cost, latency, privacy, quality.
 - **Moderation staffing model for Sprint 7** — single admin (you) for v1, or early invite of trusted moderators? Affects admin UX.
 - ~~**Group Bible default visibility**~~ — resolved 2026-06-12 (Sprint R6): stays opt-in per note; the Post-to menu makes the audience an explicit per-note choice.

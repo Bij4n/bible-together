@@ -51,7 +51,7 @@
        data-highlight-target="chapter">
     <% chip_map = verse_note_map(@highlights) %>
     <% markers = passage_markers %>
-    <% @verses.each_with_index do |verse, i| %><% if (marked = markers[verse.number]) %><%= render "bible/reader/passage_marker", passage: marked %><% end %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: edit_note_path(meta[:ids].first), turbo_frame: "note_panel", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights || [], cross_translation_highlights: @cross_translation_highlights, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
+    <% @verses.each_with_index do |verse, i| %><% if (marked = markers[verse.number]) %><%= render "bible/reader/passage_marker", passage: marked %><% end %><%= render "bible/reader/explanation_marker" if verse.number == @appearance&.explained&.first %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: edit_note_path(meta[:ids].first), turbo_frame: "note_panel", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights || [], cross_translation_highlights: @cross_translation_highlights, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
   </div>
 
   <% if user_signed_in? %>

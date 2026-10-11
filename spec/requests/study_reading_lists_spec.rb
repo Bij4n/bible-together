@@ -102,6 +102,17 @@ RSpec.describe "A study that works through a list", type: :request do
       expect(response.body).to include("Matthew 13:3–9")
     end
 
+    it "shows his explanation under the parable in a study too" do
+      matthew = Book.find_by!(osis_code: "Matt")
+      (18..23).each { |n| verse!(matthew, 13, n, "Matthew sower explained #{n}.") }
+
+      get "/studies/#{group.id}/passages/sower"
+
+      page = Nokogiri::HTML(response.body)
+      expect(page.css(".chapter-body .verse").size).to eq(13)
+      expect(page.at_css(".chapter-body .passage-explanation").text.squish).to eq(I18n.t("red.explained"))
+    end
+
     it "steps through the study's list, not through chapters" do
       get "/studies/#{group.id}/passages/wise-and-foolish-builders"
 
