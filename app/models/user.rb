@@ -12,6 +12,12 @@ class User < ApplicationRecord
 
   belongs_to :default_translation, class_name: "Translation", optional: true
 
+  # What the reader studies by default: the whole Bible, or Highlighted
+  # in Red. Drives where Read and "continue reading" lead. Integer-
+  # backed, so this hash is append-only.
+  STUDY_FOCUSES = { bible: 0, red: 1 }.freeze
+  enum :study_focus, STUDY_FOCUSES, prefix: :focus, validate: true
+
   has_many :highlights, dependent: :destroy
   has_many :notes, dependent: :destroy
   has_many :comments, dependent: :destroy
