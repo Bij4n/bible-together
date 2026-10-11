@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
-  # Public XML sitemap for SEO crawlers. Lists static marketing routes
-  # plus every public bible chapter URL. Bible content is public-domain
+  # Public XML sitemap for SEO crawlers. Lists static marketing routes,
+  # the Highlighted in Red section, and every public bible chapter URL. Bible content is public-domain
   # KJV + RV1909, never changes once imported, so the sitemap is highly
   # cache-friendly. Cached with a 1-day TTL via fragment caching in
   # the view; the eager-loaded Translation→Book→Chapter graph stays
