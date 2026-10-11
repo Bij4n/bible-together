@@ -14,12 +14,16 @@ module CommunityChapterLoading
     @highlights   = community_highlights_for(@public_notes)
   end
 
+  # Matches on the chapter prefix rather than exact verse refs: a
+  # highlight on part of a verse carries character offsets
+  # ("...John.3.16!4-...John.3.16!19"), which an exact match on the
+  # verse's own ref never finds.
   def community_notes_for(prefix)
     scope = Note.public_visible
     scope = scope.or(Note.where(visibility: Note.visibilities[:public_note])) if current_user&.admin?
     scope
       .joins(:highlights)
-      .where(highlights: { osis_ref: community_osis_refs_for(prefix) })
+      .merge(Highlight.for_chapter(prefix))
       .includes(:user, :highlights)
       .sorted_for_public
       .distinct
@@ -32,13 +36,5 @@ module CommunityChapterLoading
     # guard as the personal reader so the renderer's contract is
     # uniform.
     Highlight.where(id: ids).includes(:notes).to_a
-  end
-
-  def community_osis_refs_for(prefix)
-    Verse
-      .joins(chapter: :book)
-      .where(books: { translation_id: @translation.id, osis_code: @book.osis_code },
-             chapters: { number: @chapter.number })
-      .pluck(:osis_ref)
   end
 end
