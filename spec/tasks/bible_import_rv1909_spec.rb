@@ -69,6 +69,14 @@ RSpec.describe "bible:import rake task for RV1909" do
     expect(john_3_16.body_text).to include("á su Hijo unigénito")
   end
 
+  it "applies the reviewed red-letter patch for the translation" do
+    Rake::Task["bible:import"].invoke("rv1909_mini")
+
+    verse = Verse.find_by!(osis_ref: "Bible.RV1909_MINI.John.3.14")
+    expect(verse.red_letter_ranges.map { |s, e| verse.body_text[s...e] })
+      .to eq([ "así es necesario que el Hijo del hombre sea levantado;" ])
+  end
+
   it "records empty red_letter_ranges (source has no <q who='Jesus'>)" do
     Rake::Task["bible:import"].invoke("rv1909_mini")
     expect(Verse.where(osis_ref: "Bible.RV1909_MINI.John.3.16").pick(:red_letter_ranges)).to eq([])
