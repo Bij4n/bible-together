@@ -7,6 +7,7 @@ class SearchController < ApplicationController
     @mode         = MODES.include?(params[:mode]) ? params[:mode] : "keyword"
     @translations = SearchService::VALID_TRANSLATIONS.include?(params[:translations]) ? params[:translations] : "current"
     @translation_code = params[:translation_code].to_s.presence || default_translation_code
+    @red_only     = params[:red] == "1"
 
     @semantic_available = !rv1909_only?
     @mode = "keyword" if @mode == "semantic" && !@semantic_available
@@ -22,7 +23,8 @@ class SearchController < ApplicationController
       user: current_user,
       scope: @scope,
       translations: @translations,
-      translation_code: @translation_code
+      translation_code: @translation_code,
+      red_only: @red_only
     ).call
   end
 
@@ -31,7 +33,8 @@ class SearchController < ApplicationController
       query: @query,
       user: current_user,
       translations: @translations,
-      translation_code: @translation_code
+      translation_code: @translation_code,
+      red_only: @red_only
     ).call
     return keyword_results.merge(semantic_fallback: true) unless semantic[:available]
 

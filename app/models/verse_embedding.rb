@@ -55,12 +55,17 @@ class VerseEmbedding < ApplicationRecord
   # exceeds `threshold`. One DB round trip total: the Verse lookup at the
   # end. Cached vectors are the hot path; cold path rebuilds the cache
   # once (~200ms for a full KJV corpus).
-  def self.search_by_similarity(query_embedding, limit: 20, threshold: 0.3, translation_codes: [ "KJV" ])
+  #
+  # red_only keeps only verses where Jesus speaks. It filters before
+  # scoring, so the limit is filled from red verses rather than cut
+  # down after the fact.
+  def self.search_by_similarity(query_embedding, limit: 20, threshold: 0.3, translation_codes: [ "KJV" ],
+                                red_only: false)
     codes = Array(translation_codes).map(&:to_s).map(&:upcase).to_set
 
     scored = cached_entries
-               .select { |_, _, code| codes.include?(code) }
-               .filter_map do |verse_id, vec, _code|
+               .select { |_, _, code, red| codes.include?(code) && (red || !red_only) }
+               .filter_map do |verse_id, vec, _code, _red|
                  score = cosine_similarity(vec, query_embedding)
                  next if score < threshold
                  [ verse_id, score ]
@@ -85,7 +90,8 @@ class VerseEmbedding < ApplicationRecord
   end
 
   # Cached representation: array of [verse_id, embedding_array,
-  # translation_code]. Loaded once per process; invalidated on any write.
+  # translation_code, red] where red is whether the verse has any of
+  # Jesus's words. Loaded once per process; invalidated on any write.
   def self.cached_entries
     @cached_entries ||= build_cached_entries
   end
@@ -96,8 +102,9 @@ class VerseEmbedding < ApplicationRecord
 
   def self.build_cached_entries
     rows = joins(verse: { chapter: { book: :translation } })
-             .pluck(:verse_id, :embedding_data, "translations.code")
-    rows.map { |verse_id, json, code| [ verse_id, JSON.parse(json), code ] }
+             .pluck(:verse_id, :embedding_data, "translations.code",
+                    Arel.sql("verses.red_letter_ranges <> '[]'::jsonb"))
+    rows.map { |verse_id, json, code, red| [ verse_id, JSON.parse(json), code, red ] }
   end
   private_class_method :build_cached_entries
 

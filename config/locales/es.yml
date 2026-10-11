@@ -560,6 +560,7 @@ es:
     translations:
       current: Esta traducción
       all: Todas las traducciones
+    red_only: Solo versículos donde habla Jesús
     empty_hint: Escribe algo que recuerdes de la Escritura, o un sentimiento que no puedas nombrar. Si no sabes por dónde empezar, prueba una de las sugerencias abajo.
     no_results_html: "Sin resultados para <strong>%{query}</strong>. Prueba otras palabras o revisa la ortografía."
     results_for_html: "Resultados para <strong>%{query}</strong>"

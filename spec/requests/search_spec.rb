@@ -63,6 +63,22 @@ RSpec.describe "Search", type: :request do
       expect(response.body).not_to include("For God so loved the world")
     end
 
+    it "offers a filter for verses where Jesus speaks, and applies it" do
+      chapter = Chapter.first || create(:chapter)
+      create(:verse, chapter: chapter, number: 40, body_text: "And the people loved the narration",
+                     body_html: "And the people loved the narration", osis_ref: "Bible.KJV.Red.1.40")
+      create(:verse, chapter: chapter, number: 41, body_text: "Love your enemies",
+                     body_html: "Love your enemies", red_letter_ranges: [ [ 0, 17 ] ],
+                     osis_ref: "Bible.KJV.Red.1.41")
+
+      get "/search", params: { q: "love", scope: "verses", red: "1" }
+
+      expect(response.body).to include(I18n.t("search.red_only"))
+      expect(Nokogiri::HTML(response.body).at_css("input[name='red']")["checked"]).to be_present
+      expect(response.body).to include("enemies")
+      expect(response.body).not_to include("narration")
+    end
+
     it "shows an empty-query hint when q is blank" do
       get "/search"
       # Compare against the HTML-escaped form since ERB <%= escapes

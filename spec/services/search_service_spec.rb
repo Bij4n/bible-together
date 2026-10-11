@@ -67,6 +67,28 @@ RSpec.describe SearchService do
     end
   end
 
+  describe "#call with red_only" do
+    let!(:red_verse) do
+      create(:verse, chapter: chapter, number: 18,
+                     body_text: "Jesus said, This is my commandment, That ye love one another",
+                     body_html: "Jesus said, This is my commandment, That ye love one another",
+                     red_letter_ranges: [ [ 12, 60 ] ],
+                     osis_ref: "Bible.KJV.John.3.18")
+    end
+
+    it "keeps only verses where Jesus speaks" do
+      results = described_class.new(query: "love", scope: "verses", red_only: true).call
+
+      expect(results[:verses]).to eq([ red_verse ])
+    end
+
+    it "is off by default" do
+      results = described_class.new(query: "love", scope: "verses").call
+
+      expect(results[:verses]).to include(love_verse, red_verse)
+    end
+  end
+
   describe "#call with a blank query" do
     it "returns empty result buckets" do
       results = described_class.new(query: "   ").call
