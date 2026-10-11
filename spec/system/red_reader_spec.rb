@@ -1,4 +1,5 @@
 require "rails_helper"
+require "axe-rspec"
 
 RSpec.describe "Highlighted in Red reader", type: :system, js: true do
   let(:user)        { create(:user) }
