@@ -1,6 +1,7 @@
 module Bible
   # Loads the curated passages from config/passages.yml: the parables,
-  # and the word pictures Jesus uses for himself in John. Like
+  # the word pictures Jesus uses for himself in John, his encounters
+  # with people, and sayings that stand on their own. Like
   # CanonicalBooks, this is reference data that ships with the code, so
   # there is nothing to load into a database on deploy.
   #
@@ -10,7 +11,7 @@ module Bible
   # span chapters and neither can a group's live-update stream.
   module Passages
     CONFIG_PATH = Rails.root.join("config", "passages.yml")
-    KINDS = %w[parable word_picture].freeze
+    KINDS = %w[parable word_picture encounter saying].freeze
 
     Appearance = Struct.new(:book, :chapter, :verses) do
       # "Matt.13.3-9" or, for a single verse, "John.8.12".
@@ -25,7 +26,7 @@ module Bible
       end
     end
 
-    Passage = Struct.new(:slug, :kind, :title_en, :title_es, :appearances, keyword_init: true) do
+    Passage = Struct.new(:slug, :kind, :title_en, :title_es, :appearances, :themes, keyword_init: true) do
       def title
         I18n.locale == :es ? title_es : title_en
       end
@@ -36,7 +37,8 @@ module Bible
         @all ||= YAML.safe_load_file(CONFIG_PATH).map do |entry|
           Passage.new(slug: entry["slug"], kind: entry["kind"],
                       title_en: entry["title_en"], title_es: entry["title_es"],
-                      appearances: Array(entry["appearances"]).map { |ref| Appearance.parse(ref) })
+                      appearances: Array(entry["appearances"]).map { |ref| Appearance.parse(ref) },
+                      themes: Array(entry["themes"]))
         end
       end
 

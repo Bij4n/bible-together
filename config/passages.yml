@@ -3,6 +3,11 @@
 # kind: parable       a story or comparison Jesus tells
 #       word_picture  an image he uses for himself in John's gospel,
 #                     which has no parables in the usual sense
+#       encounter     something he did: a meeting with a person, told
+#                     mostly in the narration around his words
+#       saying        teaching that stands on its own
+#
+# themes: optional slugs from config/themes.yml.
 #
 # Each passage is listed once, with every gospel that tells it. An
 # appearance is Book.chapter.verses and must stay inside one chapter.
@@ -80,24 +85,28 @@
   title_en: The Lost Sheep
   title_es: La oveja perdida
   appearances: [Matt.18.12-14, Luke.15.3-7]
+  themes: [welcoming-outsiders, forgiveness]
 
 - slug: unforgiving-servant
   kind: parable
   title_en: The Unforgiving Servant
   title_es: El siervo que no quiso perdonar
   appearances: [Matt.18.23-35]
+  themes: [forgiveness]
 
 - slug: workers-in-the-vineyard
   kind: parable
   title_en: The Workers in the Vineyard
   title_es: Los obreros de la viña
   appearances: [Matt.20.1-16]
+  themes: [welcoming-outsiders]
 
 - slug: two-sons
   kind: parable
   title_en: The Two Sons
   title_es: Los dos hijos
   appearances: [Matt.21.28-32]
+  themes: [against-religious-show, welcoming-outsiders]
 
 - slug: wicked-tenants
   kind: parable
@@ -110,6 +119,7 @@
   title_en: The Wedding Banquet
   title_es: El banquete de bodas
   appearances: [Matt.22.1-14]
+  themes: [welcoming-outsiders]
 
 - slug: budding-fig-tree
   kind: parable
@@ -140,6 +150,7 @@
   title_en: The Sheep and the Goats
   title_es: Las ovejas y los cabritos
   appearances: [Matt.25.31-46]
+  themes: [the-poor-and-the-sick, children-and-the-least]
 
 - slug: growing-seed
   kind: parable
@@ -152,24 +163,28 @@
   title_en: The Two Debtors
   title_es: Los dos deudores
   appearances: [Luke.7.41-43]
+  themes: [forgiveness]
 
 - slug: good-samaritan
   kind: parable
   title_en: The Good Samaritan
   title_es: El buen samaritano
   appearances: [Luke.10.25-37]
+  themes: [welcoming-outsiders, love-of-enemies, the-poor-and-the-sick]
 
 - slug: friend-at-midnight
   kind: parable
   title_en: The Friend at Midnight
   title_es: El amigo a medianoche
   appearances: [Luke.11.5-8]
+  themes: [prayer]
 
 - slug: rich-fool
   kind: parable
   title_en: The Rich Fool
   title_es: El rico insensato
   appearances: [Luke.12.16-21]
+  themes: [money-and-possessions]
 
 - slug: watchful-servants
   kind: parable
@@ -188,42 +203,49 @@
   title_en: The Lowest Seat at the Feast
   title_es: Los primeros asientos
   appearances: [Luke.14.7-11]
+  themes: [against-religious-show]
 
 - slug: great-banquet
   kind: parable
   title_en: The Great Banquet
   title_es: La gran cena
   appearances: [Luke.14.16-24]
+  themes: [welcoming-outsiders, the-poor-and-the-sick]
 
 - slug: counting-the-cost
   kind: parable
   title_en: Counting the Cost
   title_es: Calcular el costo
   appearances: [Luke.14.28-33]
+  themes: [money-and-possessions]
 
 - slug: lost-coin
   kind: parable
   title_en: The Lost Coin
   title_es: La moneda perdida
   appearances: [Luke.15.8-10]
+  themes: [welcoming-outsiders]
 
 - slug: prodigal-son
   kind: parable
   title_en: The Prodigal Son
   title_es: El hijo pródigo
   appearances: [Luke.15.11-32]
+  themes: [forgiveness, welcoming-outsiders]
 
 - slug: shrewd-manager
   kind: parable
   title_en: The Shrewd Manager
   title_es: El mayordomo infiel
   appearances: [Luke.16.1-9]
+  themes: [money-and-possessions]
 
 - slug: rich-man-and-lazarus
   kind: parable
   title_en: The Rich Man and Lazarus
   title_es: El rico y Lázaro
   appearances: [Luke.16.19-31]
+  themes: [money-and-possessions, the-poor-and-the-sick]
 
 - slug: master-and-servant
   kind: parable
@@ -236,12 +258,14 @@
   title_en: The Persistent Widow
   title_es: La viuda y el juez injusto
   appearances: [Luke.18.1-8]
+  themes: [prayer]
 
 - slug: pharisee-and-tax-collector
   kind: parable
   title_en: The Pharisee and the Tax Collector
   title_es: El fariseo y el publicano
   appearances: [Luke.18.9-14]
+  themes: [against-religious-show, prayer, forgiveness]
 
 - slug: ten-minas
   kind: parable
@@ -278,6 +302,7 @@
   title_en: The Good Shepherd
   title_es: El buen pastor
   appearances: [John.10.11-18]
+  themes: [welcoming-outsiders]
 
 - slug: resurrection-and-the-life
   kind: word_picture
@@ -302,3 +327,329 @@
   title_en: The True Vine
   title_es: La vid verdadera
   appearances: [John.15.1-8]
+
+# Encounters, in rough gospel order.
+
+- slug: cleansing-a-leper
+  kind: encounter
+  title_en: The Leper He Touched
+  title_es: El leproso que tocó
+  appearances: [Mark.1.40-45, Matt.8.1-4, Luke.5.12-16]
+  themes: [the-poor-and-the-sick, welcoming-outsiders]
+
+- slug: paralytic-through-the-roof
+  kind: encounter
+  title_en: The Paralytic Let Down Through the Roof
+  title_es: El paralítico bajado por el techo
+  appearances: [Mark.2.1-12, Matt.9.1-8, Luke.5.17-26]
+  themes: [forgiveness, the-poor-and-the-sick]
+
+- slug: eating-with-sinners
+  kind: encounter
+  title_en: Matthew the Tax Collector and the Meal with Sinners
+  title_es: Mateo el publicano y la comida con pecadores
+  appearances: [Matt.9.9-13, Mark.2.13-17, Luke.5.27-32]
+  themes: [welcoming-outsiders, against-religious-show]
+
+- slug: withered-hand-on-the-sabbath
+  kind: encounter
+  title_en: The Withered Hand on the Sabbath
+  title_es: La mano seca en sábado
+  appearances: [Mark.3.1-6, Matt.12.9-14, Luke.6.6-11]
+  themes: [against-religious-show, the-poor-and-the-sick]
+
+- slug: centurions-servant
+  kind: encounter
+  title_en: The Centurion's Servant
+  title_es: El siervo del centurión
+  appearances: [Matt.8.5-13, Luke.7.1-10]
+  themes: [welcoming-outsiders, love-of-enemies]
+
+- slug: widow-of-nain
+  kind: encounter
+  title_en: The Widow of Nain
+  title_es: La viuda de Naín
+  appearances: [Luke.7.11-17]
+  themes: [the-poor-and-the-sick]
+
+- slug: woman-who-anointed-his-feet
+  kind: encounter
+  title_en: The Woman Who Anointed His Feet
+  title_es: La mujer que ungió sus pies
+  appearances: [Luke.7.36-50]
+  themes: [forgiveness, welcoming-outsiders, against-religious-show]
+
+- slug: jairus-daughter-and-the-woman-in-the-crowd
+  kind: encounter
+  title_en: Jairus's Daughter and the Woman in the Crowd
+  title_es: La hija de Jairo y la mujer entre la multitud
+  appearances: [Mark.5.21-43, Matt.9.18-26, Luke.8.40-56]
+  themes: [the-poor-and-the-sick, children-and-the-least]
+
+- slug: feeding-the-five-thousand
+  kind: encounter
+  title_en: Feeding the Five Thousand
+  title_es: La alimentación de los cinco mil
+  appearances: [Mark.6.30-44, Matt.14.13-21, Luke.9.10-17, John.6.1-14]
+  themes: [the-poor-and-the-sick]
+
+- slug: canaanite-woman
+  kind: encounter
+  title_en: The Canaanite Woman
+  title_es: La mujer cananea
+  appearances: [Matt.15.21-28, Mark.7.24-30]
+  themes: [welcoming-outsiders]
+
+- slug: mary-and-martha
+  kind: encounter
+  title_en: Mary and Martha
+  title_es: Marta y María
+  appearances: [Luke.10.38-42]
+
+- slug: bent-woman-on-the-sabbath
+  kind: encounter
+  title_en: The Bent Woman on the Sabbath
+  title_es: La mujer encorvada en sábado
+  appearances: [Luke.13.10-17]
+  themes: [against-religious-show, the-poor-and-the-sick]
+
+- slug: ten-lepers
+  kind: encounter
+  title_en: The Ten Lepers
+  title_es: Los diez leprosos
+  appearances: [Luke.17.11-19]
+  themes: [the-poor-and-the-sick, welcoming-outsiders]
+
+- slug: blessing-the-children
+  kind: encounter
+  title_en: He Blesses the Children
+  title_es: Bendice a los niños
+  appearances: [Mark.10.13-16, Matt.19.13-15, Luke.18.15-17]
+  themes: [children-and-the-least]
+
+- slug: rich-young-ruler
+  kind: encounter
+  title_en: The Rich Young Ruler
+  title_es: El joven rico
+  appearances: [Mark.10.17-27, Matt.19.16-26, Luke.18.18-27]
+  themes: [money-and-possessions]
+
+- slug: blind-bartimaeus
+  kind: encounter
+  title_en: Blind Bartimaeus
+  title_es: El ciego Bartimeo
+  appearances: [Mark.10.46-52, Luke.18.35-43]
+  themes: [the-poor-and-the-sick]
+
+- slug: zacchaeus
+  kind: encounter
+  title_en: Zacchaeus
+  title_es: Zaqueo
+  appearances: [Luke.19.1-10]
+  themes: [welcoming-outsiders, money-and-possessions, forgiveness]
+
+- slug: cleansing-the-temple
+  kind: encounter
+  title_en: He Clears the Temple
+  title_es: Limpia el templo
+  appearances: [Matt.21.12-17, Mark.11.15-18, John.2.13-17]
+  themes: [against-religious-show, money-and-possessions]
+
+- slug: widows-offering
+  kind: encounter
+  title_en: The Widow's Offering
+  title_es: La ofrenda de la viuda
+  appearances: [Mark.12.41-44, Luke.21.1-4]
+  themes: [money-and-possessions, the-poor-and-the-sick]
+
+- slug: nicodemus
+  kind: encounter
+  title_en: Nicodemus by Night
+  title_es: Nicodemo, de noche
+  appearances: [John.3.1-21]
+
+- slug: woman-at-the-well
+  kind: encounter
+  title_en: The Woman at the Well
+  title_es: La mujer samaritana
+  appearances: [John.4.5-30]
+  themes: [welcoming-outsiders]
+
+- slug: woman-caught-in-adultery
+  kind: encounter
+  title_en: The Woman Caught in Adultery
+  title_es: La mujer sorprendida en adulterio
+  appearances: [John.8.1-11]
+  themes: [forgiveness, against-religious-show]
+
+- slug: man-born-blind
+  kind: encounter
+  title_en: The Man Born Blind
+  title_es: El ciego de nacimiento
+  appearances: [John.9.1-41]
+  themes: [the-poor-and-the-sick, against-religious-show]
+
+- slug: raising-lazarus
+  kind: encounter
+  title_en: The Raising of Lazarus
+  title_es: La resurrección de Lázaro
+  appearances: [John.11.17-44]
+
+- slug: washing-the-disciples-feet
+  kind: encounter
+  title_en: He Washes the Disciples' Feet
+  title_es: Lava los pies de sus discípulos
+  appearances: [John.13.1-17]
+  themes: [children-and-the-least]
+
+- slug: gethsemane
+  kind: encounter
+  title_en: In Gethsemane
+  title_es: En Getsemaní
+  appearances: [Mark.14.32-42, Matt.26.36-46, Luke.22.39-46]
+  themes: [prayer]
+
+- slug: the-arrest
+  kind: encounter
+  title_en: The Arrest and the Healed Ear
+  title_es: El arresto y la oreja sanada
+  appearances: [Luke.22.47-53, Matt.26.47-56]
+  themes: [love-of-enemies]
+
+- slug: thief-on-the-cross
+  kind: encounter
+  title_en: The Cross and the Thief Beside Him
+  title_es: La cruz y el ladrón a su lado
+  appearances: [Luke.23.32-43]
+  themes: [forgiveness, love-of-enemies]
+
+- slug: peter-restored
+  kind: encounter
+  title_en: Peter Restored
+  title_es: Pedro restaurado
+  appearances: [John.21.15-19]
+  themes: [forgiveness]
+
+# Sayings that stand on their own.
+
+- slug: good-news-to-the-poor
+  kind: saying
+  title_en: Good News to the Poor
+  title_es: Buenas nuevas a los pobres
+  appearances: [Luke.4.16-21]
+  themes: [the-poor-and-the-sick]
+
+- slug: beatitudes
+  kind: saying
+  title_en: The Beatitudes
+  title_es: Las bienaventuranzas
+  appearances: [Matt.5.3-12, Luke.6.20-26]
+  themes: [the-poor-and-the-sick]
+
+- slug: love-your-enemies
+  kind: saying
+  title_en: Love Your Enemies
+  title_es: Amad a vuestros enemigos
+  appearances: [Matt.5.43-48, Luke.6.27-36]
+  themes: [love-of-enemies]
+
+- slug: in-secret
+  kind: saying
+  title_en: Giving and Praying in Secret
+  title_es: Dar y orar en secreto
+  appearances: [Matt.6.1-8]
+  themes: [against-religious-show, prayer]
+
+- slug: lords-prayer
+  kind: saying
+  title_en: The Lord's Prayer
+  title_es: El Padre nuestro
+  appearances: [Matt.6.9-15, Luke.11.1-4]
+  themes: [prayer, forgiveness]
+
+- slug: treasure-in-heaven
+  kind: saying
+  title_en: Treasure in Heaven
+  title_es: Tesoros en el cielo
+  appearances: [Matt.6.19-24, Luke.12.32-34]
+  themes: [money-and-possessions]
+
+- slug: do-not-worry
+  kind: saying
+  title_en: Do Not Worry
+  title_es: No os afanéis
+  appearances: [Matt.6.25-34, Luke.12.22-31]
+  themes: [money-and-possessions]
+
+- slug: judge-not
+  kind: saying
+  title_en: Judge Not
+  title_es: No juzguéis
+  appearances: [Matt.7.1-5, Luke.6.37-42]
+  themes: [against-religious-show, forgiveness]
+
+- slug: golden-rule
+  kind: saying
+  title_en: The Golden Rule
+  title_es: La regla de oro
+  appearances: [Matt.7.12, Luke.6.31]
+
+- slug: come-unto-me
+  kind: saying
+  title_en: Come unto Me
+  title_es: Venid a mí
+  appearances: [Matt.11.28-30]
+  themes: [the-poor-and-the-sick]
+
+- slug: take-up-your-cross
+  kind: saying
+  title_en: Take Up Your Cross
+  title_es: Toma tu cruz
+  appearances: [Mark.8.34-38, Matt.16.24-27, Luke.9.23-26]
+
+- slug: greatest-in-the-kingdom
+  kind: saying
+  title_en: The Greatest in the Kingdom
+  title_es: El mayor en el reino
+  appearances: [Matt.18.1-6, Mark.9.33-37, Luke.9.46-48]
+  themes: [children-and-the-least]
+
+- slug: seventy-times-seven
+  kind: saying
+  title_en: Seventy Times Seven
+  title_es: Setenta veces siete
+  appearances: [Matt.18.21-22]
+  themes: [forgiveness]
+
+- slug: not-to-be-served
+  kind: saying
+  title_en: Not to Be Served but to Serve
+  title_es: No para ser servido, sino para servir
+  appearances: [Mark.10.42-45, Matt.20.25-28]
+  themes: [children-and-the-least]
+
+- slug: greatest-commandment
+  kind: saying
+  title_en: The Greatest Commandment
+  title_es: El gran mandamiento
+  appearances: [Matt.22.34-40, Mark.12.28-34]
+
+- slug: practice-what-they-preach
+  kind: saying
+  title_en: They Say and Do Not
+  title_es: Dicen y no hacen
+  appearances: [Matt.23.1-12]
+  themes: [against-religious-show]
+
+- slug: woes
+  kind: saying
+  title_en: Woe to You, Scribes and Pharisees
+  title_es: Ay de vosotros, escribas y fariseos
+  appearances: [Matt.23.13-36, Luke.11.37-52]
+  themes: [against-religious-show]
+
+- slug: new-commandment
+  kind: saying
+  title_en: A New Commandment
+  title_es: Un mandamiento nuevo
+  appearances: [John.13.34-35]
