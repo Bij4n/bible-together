@@ -1,0 +1,39 @@
+# Themes in Highlighted in Red. A theme page sets what Jesus said
+# beside what he did: every theme must have at least one encounter and
+# at least one parable, word picture or saying (a spec checks this).
+#
+# Themes are a way in, never a filter: the reader always has the whole
+# of the red text, hard sayings included. Passages are tagged in
+# config/passages.yml.
+
+- slug: welcoming-outsiders
+  name_en: He welcomes the outsider
+  name_es: Recibe al que está fuera
+
+- slug: the-poor-and-the-sick
+  name_en: The poor and the sick
+  name_es: Los pobres y los enfermos
+
+- slug: forgiveness
+  name_en: Forgiveness
+  name_es: El perdón
+
+- slug: against-religious-show
+  name_en: Against religious show
+  name_es: Contra la religión de apariencias
+
+- slug: money-and-possessions
+  name_en: Money and possessions
+  name_es: El dinero y las posesiones
+
+- slug: prayer
+  name_en: Prayer
+  name_es: La oración
+
+- slug: love-of-enemies
+  name_en: Love of enemies
+  name_es: El amor a los enemigos
+
+- slug: children-and-the-least
+  name_en: Children and the least
+  name_es: Los niños y los más pequeños

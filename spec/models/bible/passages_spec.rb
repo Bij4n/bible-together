@@ -53,6 +53,10 @@ RSpec.describe Bible::Passages do
       expect(appearance.verses).to eq(12..12)
     end
 
+    it "carries a passage's themes, none by default" do
+      expect(described_class.find("sower").themes).to eq([])
+    end
+
     it "lists passages of one kind, in file order" do
       expect(described_class.of_kind("parable").map(&:slug)).to eq([ "sower" ])
       expect(described_class.of_kind("word_picture").map(&:slug)).to eq([ "light-of-the-world" ])
@@ -97,6 +101,19 @@ RSpec.describe Bible::Passages do
           expect(appearance.verses.first).to be_between(1, appearance.verses.last)
         end
       end
+    end
+
+    it "tags passages only with themes that exist" do
+      known = Bible::Themes.all.map(&:slug)
+
+      passages.each do |passage|
+        expect(passage.themes - known).to be_empty, "#{passage.slug}: unknown theme"
+      end
+    end
+
+    it "includes encounters and sayings alongside the parables" do
+      expect(described_class.of_kind("encounter")).to be_present
+      expect(described_class.of_kind("saying")).to be_present
     end
 
     it "never lists the same gospel twice for one passage" do
