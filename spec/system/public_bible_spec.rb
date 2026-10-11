@@ -45,6 +45,9 @@ RSpec.describe "Public bible + moderation", type: :system, js: true do
 
     visit "/admin/notes"
     click_button("Feature")
+    # Wait for the action to land before navigating away; visiting
+    # first can cancel the request.
+    expect(page).to have_button(I18n.t("admin.notes.unfeature"))
 
     visit "/public/bible/kjv/john/3"
     expect(page).to have_content(/featured/i)
@@ -59,6 +62,10 @@ RSpec.describe "Public bible + moderation", type: :system, js: true do
     page.accept_confirm do
       click_button("Hide")
     end
+    # Wait for the hide to land before navigating away. Without this
+    # the next visit could cancel the request, and the note was then
+    # still public for the anonymous check below (seen once in CI).
+    expect(page).to have_button(I18n.t("admin.notes.unhide"))
 
     # Verify admin still sees it (opacity-60 treatment)
     visit "/public/bible/kjv/john/3"

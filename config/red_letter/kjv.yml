@@ -1,0 +1,25 @@
+# Corrections to the red-letter ranges the KJV source ships with.
+# Applied by Bible::RedLetterPatch after import, like the RV1909 file.
+#
+# Two kinds of slip in the source:
+#   - three verses where the range stops one character short, leaving
+#     the final full stop black
+#   - four verses where the range starts at the narrator's lead-in
+#     ("Saying,", "And Jesus said unto them,") instead of at his words
+#
+# Lead-ins inside a parable ("And he said unto him, Son, thou art
+# ever with me") are left alone: there Jesus is the one narrating.
+Matt.11.27:
+  - "All things are delivered unto me of my Father: and no man knoweth the Son, but the Father; neither knoweth any man the Father, save the Son, and he to whomsoever the Son will reveal him."
+Matt.13.17:
+  - "For verily I say unto you, That many prophets and righteous men have desired to see those things which ye see, and have not seen them; and to hear those things which ye hear, and have not heard them."
+Matt.22.42:
+  - "What think ye of Christ? whose son is he?"
+Matt.24.2:
+  - "See ye not all these things? verily I say unto you, There shall not be left here one stone upon another, that shall not be thrown down."
+Luke.7.40:
+  - "Simon, I have somewhat to say unto thee."
+Luke.10.22:
+  - "All things are delivered to me of my Father: and no man knoweth who the Son is, but the Father; and who the Father is, but the Son, and he to whom the Son will reveal him."
+Luke.12.54:
+  - "When ye see a cloud rise out of the west, straightway ye say, There cometh a shower; and so it is."

@@ -330,6 +330,13 @@
 
 # Encounters, in rough gospel order.
 
+- slug: praying-before-dawn
+  kind: encounter
+  title_en: He Prays Alone Before Dawn
+  title_es: Ora a solas antes del amanecer
+  appearances: [Mark.1.35-39]
+  themes: [prayer]
+
 - slug: cleansing-a-leper
   kind: encounter
   title_en: The Leper He Touched
@@ -399,6 +406,13 @@
   title_es: La mujer cananea
   appearances: [Matt.15.21-28, Mark.7.24-30]
   themes: [welcoming-outsiders]
+
+- slug: samaritan-village
+  kind: encounter
+  title_en: The Samaritan Village That Turned Him Away
+  title_es: La aldea samaritana que no lo recibió
+  appearances: [Luke.9.51-56]
+  themes: [love-of-enemies]
 
 - slug: mary-and-martha
   kind: encounter
@@ -494,6 +508,7 @@
   title_en: The Raising of Lazarus
   title_es: La resurrección de Lázaro
   appearances: [John.11.17-44]
+  themes: [prayer]
 
 - slug: washing-the-disciples-feet
   kind: encounter
@@ -545,6 +560,13 @@
   title_es: Las bienaventuranzas
   appearances: [Matt.5.3-12, Luke.6.20-26]
   themes: [the-poor-and-the-sick]
+
+- slug: turn-the-other-cheek
+  kind: saying
+  title_en: Turn the Other Cheek
+  title_es: Volver la otra mejilla
+  appearances: [Matt.5.38-42, Luke.6.29-30]
+  themes: [love-of-enemies]
 
 - slug: love-your-enemies
   kind: saying
@@ -653,3 +675,10 @@
   title_en: A New Commandment
   title_es: Un mandamiento nuevo
   appearances: [John.13.34-35]
+
+- slug: prayer-for-his-followers
+  kind: saying
+  title_en: His Prayer for Those Who Follow Him
+  title_es: Su oración por los que le siguen
+  appearances: [John.17.1-26]
+  themes: [prayer]
