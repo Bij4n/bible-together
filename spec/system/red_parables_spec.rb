@@ -86,16 +86,13 @@ RSpec.describe "Highlighted in Red parables", type: :system, js: true do
   end
 
   it "is axe-clean and fits a phone-width screen" do
-    original = page.driver.browser.manage.window.size
-    page.driver.browser.manage.window.resize_to(375, 800)
-
-    [ "/red/parables", "/red/parables/sower" ].each do |path|
-      visit path
-      expect(page).to be_axe_clean.according_to(:wcag2a, :wcag2aa)
-      overflow = page.evaluate_script("document.documentElement.scrollWidth - window.innerWidth")
-      expect(overflow).to be <= 1, "#{path} overflows by #{overflow}px"
+    at_window_size(375, 800) do
+      [ "/red/parables", "/red/parables/sower" ].each do |path|
+        visit path
+        expect(page).to be_axe_clean.according_to(:wcag2a, :wcag2aa)
+        overflow = page.evaluate_script("document.documentElement.scrollWidth - window.innerWidth")
+        expect(overflow).to be <= 1, "#{path} overflows by #{overflow}px"
+      end
     end
-  ensure
-    page.driver.browser.manage.window.resize_to(original.width, original.height) if original
   end
 end
