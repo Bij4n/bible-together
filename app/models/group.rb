@@ -91,6 +91,21 @@ class Group < ApplicationRecord
     { translation: "kjv", book: first_red.book.downcase, chapter: first_red.number }
   end
 
+  # What the study reads, as the one choice the form offers: "bible",
+  # "red" (Highlighted in Red, chapter by chapter), or a reading list.
+  def plan
+    reading_list.presence || focus
+  end
+
+  def plan=(value)
+    if FOCUSES.key?(value.to_s.to_sym)
+      self.focus = value
+      self.reading_list = nil
+    else
+      self.reading_list = value
+    end
+  end
+
   # The passages on the study's list, in the order the list presents
   # them. Empty for a study with no list.
   def passages

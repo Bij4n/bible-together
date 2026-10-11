@@ -41,7 +41,7 @@ RSpec.describe "Studying Highlighted in Red", type: :system, js: true do
     visit "/studies/new"
     fill_in "Name", with: "Red letters"
     find("input[value='invite_only']").click
-    choose I18n.t("groups.focus.red")
+    select I18n.t("groups.plan.red"), from: I18n.t("groups.focus.label")
     find('input[type="submit"]').click
 
     expect(page).to have_content(/red letters/i)

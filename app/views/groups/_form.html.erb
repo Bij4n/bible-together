@@ -37,28 +37,21 @@
     <% end %>
   </fieldset>
 
-  <fieldset class="space-y-2">
-    <legend class="<%= label_classes %>"><%= t("groups.focus.label") %></legend>
-    <% Group::FOCUSES.each_key do |key| %>
-      <label class="flex items-center gap-2 font-ui text-sm text-surface-700">
-        <%= f.radio_button :focus, key, class: radio_classes %>
-        <%= t("groups.focus.#{key}") %>
-      </label>
-    <% end %>
-    <p class="font-ui text-xs text-surface-600"><%= t("groups.focus.hint") %></p>
-  </fieldset>
-
+  <%# One choice for what the study reads: the whole Bible, Highlighted
+      in Red chapter by chapter, or one of the lists or themes read a
+      passage at a time. %>
   <div>
-    <%= f.label :reading_list, t("groups.reading_list.label"), class: label_classes %>
-    <%= f.select :reading_list,
+    <%= f.label :plan, t("groups.focus.label"), class: label_classes %>
+    <%= f.select :plan,
+                 options_for_select([ [ t("groups.plan.bible"), "bible" ], [ t("groups.plan.red"), "red" ] ], group.plan) +
                  grouped_options_for_select(
                    { t("groups.reading_list.lists_group") => Bible::Passages::COLLECTIONS.keys.map { |list| [ t("red.#{list}.title"), list ] },
                      t("groups.reading_list.themes_group") => Bible::Themes.all.map { |theme| [ theme.name, "#{Group::THEME_PREFIX}#{theme.slug}" ] } },
-                   group.reading_list
+                   group.plan
                  ),
-                 { include_blank: t("groups.reading_list.none") },
+                 {},
                  class: "#{input_classes} [&_option]:bg-surface-50 [&_option]:text-surface-900" %>
-    <p class="mt-1.5 font-ui text-xs text-surface-600"><%= t("groups.reading_list.hint") %></p>
+    <p class="mt-1.5 font-ui text-xs text-surface-600"><%= t("groups.plan.hint") %></p>
   </div>
 
   <div class="flex items-center justify-end gap-3">
