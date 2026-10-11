@@ -15,17 +15,13 @@
 ### In flight 2026-10-10 — Highlighted in Red
 
 The project is being focused on the words, parables and encounters of Jesus. Plan, sprint
-table and owner decisions are at the top of `PLAN.md`. Nothing from this cluster is merged
-yet; the PRs are open and waiting on the owner:
+table and owner decisions are at the top of `PLAN.md`.
 
-- **#184 — merge first.** Bumps brakeman, mail and rubyzip. `scan_ruby` fails on every other branch until it lands (`bin/brakeman` runs with `--ensure-latest`, and two advisories were published after the last merge).
-- **#185** — `id="join"` on `/studies` so the nav's "Join with code" link lands on the form.
-- **#187** — community layer was missing public notes attached to phrase-level highlights.
-- **#186** — Spanish red text for the 642 partly-red verses. **After deploy, run `bundle exec rails 'bible:red_letter:apply[rv1909]'` in the Render shell.**
-- **#188** — the red reader at `/red`.
-- **#189** — the parable list in `config/passages.yml`. Needs the owner's approval of the list itself before the parables pages are built.
-
-After #184 merges, the other branches need `main` merged in (or a re-run) to turn `scan_ruby` green.
+- **Live:** the red reader at `/red` (#188), complete Spanish red text (#186, patch applied in production 2026-10-11), and the curated parable list (#189).
+- **Also shipped in this cluster:** the brakeman/mail/rubyzip bump (#184), the `/studies#join` anchor (#185), and the community layer fix for notes on phrase-level highlights (#187).
+- **Next:** the parables pages, then Encounters and themes (sprint 4), the `/red` front page and nav entries (sprint 5).
+- **Still provisional:** the Spanish section name, "En Rojo".
+- `bin/brakeman` runs with `--ensure-latest`, so `scan_ruby` fails on every branch the day a new brakeman is released. When that happens, bump brakeman first.
 
 ### Shipped 2026-08-06 — contact form data loss + security bump
 
