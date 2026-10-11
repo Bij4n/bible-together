@@ -1,0 +1,17 @@
+<% content_for :title, @theme.name %>
+<% content_for :meta_description, t("red.themes.intro") %>
+
+<article class="mx-auto max-w-2xl space-y-12 sm:space-y-14">
+  <%= render "red/shared/header", title: @theme.name, intro: t("red.themes.intro") %>
+
+  <% @groups.each do |group| %>
+    <%= render "red/passages/list", note: nil, **group %>
+  <% end %>
+
+  <p class="border-t border-surface-200 pt-6 font-ui text-sm">
+    <%= link_to red_themes_path, class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
+      <span aria-hidden="true">&larr;</span>
+      <%= t("red.themes.all") %>
+    <% end %>
+  </p>
+</article>

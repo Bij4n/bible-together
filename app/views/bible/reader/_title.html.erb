@@ -13,4 +13,13 @@
   <p class="passage-reference font-ui text-sm text-surface-600">
     <%= passage_reference(@appearance) %> &middot; <%= @translation.name %>
   </p>
+  <% if @passage.themes.any? %>
+    <p class="passage-themes flex flex-wrap gap-x-3 gap-y-1 font-ui text-sm">
+      <% @passage.themes.each do |slug| %>
+        <% theme = Bible::Themes.find(slug) %>
+        <%= link_to theme.name, red_theme_path(theme.slug),
+                    class: "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
+      <% end %>
+    </p>
+  <% end %>
 <% end %>

@@ -1,19 +1,10 @@
-<% content_for :title, t("red.parables.title") %>
-<% content_for :meta_description, t("red.parables.intro") %>
+<% content_for :title, t("red.#{@collection}.title") %>
+<% content_for :meta_description, t("red.#{@collection}.intro") %>
 
 <article class="mx-auto max-w-2xl space-y-12 sm:space-y-14">
-  <header class="space-y-5">
-    <p class="font-ui text-xs font-semibold uppercase tracking-wide text-jesus-light">
-      <%= link_to t("bible.reader.red.eyebrow"), red_entry_path, class: "hover:underline" %>
-    </p>
-    <h1 class="font-ui text-4xl font-semibold tracking-[-0.03em] text-surface-900 sm:text-5xl">
-      <%= t("red.parables.title") %>
-    </h1>
-    <p class="font-reading text-xl leading-relaxed text-pretty text-surface-700">
-      <%= t("red.parables.intro") %>
-    </p>
-  </header>
+  <%= render "red/shared/header", title: t("red.#{@collection}.title"), intro: t("red.#{@collection}.intro") %>
 
-  <%= render "red/passages/list", heading: t("red.parables.parables_heading"), note: nil, passages: @parables, id: "parables" %>
-  <%= render "red/passages/list", heading: t("red.parables.word_pictures_heading"), note: t("red.parables.word_pictures_note"), passages: @word_pictures, id: "word-pictures" %>
+  <% @groups.each do |group| %>
+    <%= render "red/passages/list", **group %>
+  <% end %>
 </article>

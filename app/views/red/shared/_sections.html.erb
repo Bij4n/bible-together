@@ -1,0 +1,10 @@
+<%# The ways through Highlighted in Red, as a quiet row of links. %>
+<nav aria-label="<%= t("red.sections_label") %>" class="red-sections flex flex-wrap gap-x-4 gap-y-1 font-ui text-sm">
+  <% quiet_link = "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
+  <% Bible::Passages::COLLECTIONS.each_key do |collection| %>
+    <%= link_to t("red.#{collection}.title"), red_passages_path(collection: collection), class: quiet_link,
+                aria: { current: (current_page?(red_passages_path(collection: collection)) ? "page" : nil) } %>
+  <% end %>
+  <%= link_to t("red.themes.title"), red_themes_path, class: quiet_link,
+              aria: { current: (current_page?(red_themes_path) ? "page" : nil) } %>
+</nav>

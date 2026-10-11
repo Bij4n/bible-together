@@ -1,6 +1,7 @@
 <%# Highlighted in Red, in the reader header. Under the red lens: the
     section label, a line on what the dimming means, the "his words
-    only" toggle and the way back to the whole chapter. In the ordinary
+    only" toggle and the way back to the whole chapter (an encounter's
+    page isn't dimmed, so it gets the label and the link only). In the ordinary
     reader: a quiet link into the lens when the chapter has red text.
     locals: translation, book, chapter, verses %>
 <% slug = { translation: translation.code.downcase, book: book.osis_code.downcase, chapter: chapter.number } %>
@@ -9,25 +10,29 @@
     <p class="font-ui text-xs font-semibold uppercase tracking-wide text-jesus-light">
       <%= t("bible.reader.red.eyebrow") %>
     </p>
-    <p class="max-w-2xl font-ui text-sm leading-relaxed text-surface-600">
-      <%= t("bible.reader.red.intro") %>
-    </p>
+    <% if red_lens_dimmed? %>
+      <p class="max-w-2xl font-ui text-sm leading-relaxed text-surface-600">
+        <%= t("bible.reader.red.intro") %>
+      </p>
+    <% end %>
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-ui text-sm">
-      <button type="button"
-              data-red-lens-target="toggle"
-              data-action="red-lens#toggle"
-              aria-pressed="false"
-              class="rounded-full border border-surface-300 px-3 py-1 text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-surface-900 aria-pressed:bg-surface-900 aria-pressed:text-surface-50">
-        <%= t("bible.reader.red.words_only") %>
-      </button>
+      <% if red_lens_dimmed? %>
+        <button type="button"
+                data-red-lens-target="toggle"
+                data-action="red-lens#toggle"
+                aria-pressed="false"
+                class="rounded-full border border-surface-300 px-3 py-1 text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-surface-900 aria-pressed:bg-surface-900 aria-pressed:text-surface-50">
+          <%= t("bible.reader.red.words_only") %>
+        </button>
+      <% end %>
       <% quiet_link = "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
       <% if @passage %>
         <%= link_to t("bible.reader.red.in_its_chapter"), red_chapter_path(**slug, anchor: dom_id(verses.first)), class: quiet_link %>
       <% else %>
         <%= link_to t("bible.reader.red.whole_chapter"), bible_chapter_path(**slug), class: quiet_link %>
-        <%= link_to t("red.parables.title"), red_parables_path, class: quiet_link %>
       <% end %>
     </div>
+    <%= render "red/shared/sections" unless @passage %>
   </div>
 <% elsif verses.any? { |v| v.red_letter_ranges.present? } %>
   <p class="font-ui text-sm">

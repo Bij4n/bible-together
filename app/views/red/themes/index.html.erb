@@ -1,0 +1,18 @@
+<% content_for :title, t("red.themes.title") %>
+<% content_for :meta_description, t("red.themes.intro") %>
+
+<article class="mx-auto max-w-2xl space-y-12 sm:space-y-14">
+  <%= render "red/shared/header", title: t("red.themes.title"), intro: t("red.themes.intro") %>
+
+  <ul class="divide-y divide-surface-200 border-t border-surface-200">
+    <% @themes.each do |theme| %>
+      <li class="py-4">
+        <%= link_to theme.name, red_theme_path(theme.slug),
+                    class: "font-reading text-xl text-surface-900 underline-offset-4 transition-colors hover:text-accent-700 hover:underline" %>
+        <p class="mt-1 font-ui text-sm text-surface-600">
+          <%= safe_join(theme.passages.first(4).map(&:title), " · ") %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</article>

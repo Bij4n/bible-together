@@ -226,6 +226,27 @@ es:
       word_pictures_heading: Imágenes en Juan
       word_pictures_note: El evangelio de Juan no tiene parábolas en el sentido habitual. En su lugar están las imágenes que Jesús usa para hablar de sí mismo.
       told_in: Relatada en
+    sections_label: En Rojo
+    encounters:
+      title: Encuentros
+      all: Todos los encuentros
+      intro: "Lo que Jesús hizo: las personas que encontró, tocó, con quienes comió y a quienes acompañó. Aquí el relato se muestra completo, con sus palabras en rojo."
+    sayings:
+      title: Enseñanzas
+      all: Todas las enseñanzas
+      intro: Enseñanzas que se sostienen por sí solas, desde el Sermón del monte hasta la última cena.
+    themes:
+      title: Temas
+      all: Todos los temas
+      intro: Caminos para conocer quién fue. Cada tema pone lo que hizo junto a lo que dijo. Son un punto de partida, no el todo. Todo lo que dijo está en el texto en rojo.
+      did: Lo que hizo
+      said: Lo que dijo
+      told: Las historias que contó
+    kinds:
+      parable: Parábola
+      word_picture: Imagen
+      encounter: Encuentro
+      saying: Enseñanza
   settings:
     title: Ajustes
     description: Personaliza tu experiencia de lectura. La mayoría de los cambios se guardan automáticamente. No hace falta un botón de guardar.

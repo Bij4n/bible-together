@@ -61,14 +61,30 @@ module Bible
     def passage_path(passage, appearance = nil)
       told_in = appearance&.book&.downcase
       told_in = nil if told_in == passage.appearances.first.book.downcase
-      red_parable_path(passage.slug, in: told_in, translation: params[:translation].presence)
+      red_passage_path(collection: Bible::Passages.collection_of(passage), slug: passage.slug,
+                       in: told_in, translation: params[:translation].presence)
     end
 
-    # [previous, next] passage in the order the list presents them.
+    # [previous, next] passage within the passage's own list.
     def passage_neighbours(passage)
-      all = Bible::Passages.all
-      at = all.index(passage)
-      [ (all[at - 1] if at.positive?), all[at + 1] ]
+      list = Bible::Passages.in_collection(Bible::Passages.collection_of(passage))
+      at = list.index(passage)
+      [ (list[at - 1] if at.positive?), list[at + 1] ]
+    end
+
+    # Whether the page dims narration. An encounter is the exception
+    # under the red lens: there the story is the point, so it is shown
+    # at full strength with his words still in red.
+    def red_lens_dimmed?
+      @lens == :red && @passage&.kind != "encounter"
+    end
+
+    # Curated passages that begin in the chapter on screen, keyed by
+    # starting verse. Only the red chapter view marks them.
+    def passage_markers
+      return {} unless @lens == :red && @passage.nil?
+
+      Bible::Passages.starting_in(@book.osis_code, @chapter.number)
     end
 
     # Verse id => ordered unique note ids, for the per-verse note chips
