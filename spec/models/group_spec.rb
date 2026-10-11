@@ -78,6 +78,58 @@ RSpec.describe Group, type: :model do
     end
   end
 
+  describe "reading list" do
+    it "is absent by default" do
+      group = build(:group)
+
+      expect(group.reading_list).to be_nil
+      expect(group.passages).to be_empty
+    end
+
+    it "can be one of the curated lists or a theme" do
+      expect(build(:group, reading_list: "parables")).to be_valid
+      expect(build(:group, reading_list: "theme:forgiveness")).to be_valid
+    end
+
+    it "rejects a list or theme that does not exist" do
+      expect(build(:group, reading_list: "miracles")).not_to be_valid
+      expect(build(:group, reading_list: "theme:nope")).not_to be_valid
+    end
+
+    it "makes the study a Highlighted in Red study" do
+      group = create(:group, reading_list: "parables")
+
+      expect(group).to be_focus_red
+    end
+
+    it "treats a blank list as none" do
+      expect(create(:group, reading_list: "").reading_list).to be_nil
+    end
+
+    it "gives the passages in the order the list presents them" do
+      parables = create(:group, reading_list: "parables").passages
+      forgiveness = create(:group, reading_list: "theme:forgiveness").passages
+
+      expect(parables.first.slug).to eq("lamp-on-a-stand")
+      expect(parables.map(&:kind).uniq).to eq(%w[parable word_picture])
+      expect(forgiveness.map(&:slug)).to include("prodigal-son", "woman-caught-in-adultery")
+    end
+
+    it "starts at the first passage and remembers where the study is" do
+      group = create(:group, reading_list: "parables")
+      expect(group.current_passage_record.slug).to eq("lamp-on-a-stand")
+
+      group.update!(current_passage: "sower")
+      expect(group.current_passage_record.slug).to eq("sower")
+    end
+
+    it "falls back to the first passage if the remembered one left the list" do
+      group = create(:group, reading_list: "parables", current_passage: "zacchaeus")
+
+      expect(group.current_passage_record.slug).to eq("lamp-on-a-stand")
+    end
+  end
+
   describe "#member?" do
     let(:group) { create(:group) }
     let(:outsider) { create(:user) }

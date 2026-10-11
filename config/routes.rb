@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
     member do
       delete :leave
+      patch  :current_passage
     end
     resources :memberships, only: [ :update, :destroy ]
     # Sprint 23.3 — owner sends/cancels email invitations from the
@@ -45,6 +46,8 @@ Rails.application.routes.draw do
         to: "groups/bible#show",
         as: :bible_chapter,
         constraints: { chapter: /\d+/ }
+    # A study working through a list reads one passage at a time.
+    get "passages/:slug", to: "groups/bible#passage", as: :passage
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

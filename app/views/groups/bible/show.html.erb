@@ -17,7 +17,7 @@
     <span aria-hidden="true">&rsaquo;</span>
     <%= link_to @group.name, group_path(@group), class: "transition-colors hover:text-accent-700" %>
     <span aria-hidden="true">&rsaquo;</span>
-    <span class="text-surface-900"><%= book_name %> <%= @chapter.number %></span>
+    <span class="text-surface-900"><%= @passage ? @passage.title : "#{book_name} #{@chapter.number}" %></span>
   </nav>
 
   <header class="space-y-3 border-b border-surface-200 pb-6">
@@ -25,14 +25,37 @@
       <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500">
         <%= @translation.name %>
       </p>
-      <%= render "bible/reader/layer_switcher",
-                 translation: @translation, book: @book, chapter: @chapter,
-                 selected_url: group_bible_chapter_path(@group, translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+      <% if @passage %>
+        <% if @appearances.size > 1 %>
+          <nav aria-label="<%= t("red.parables.told_in") %>" class="passage-tellings flex flex-wrap items-center gap-1 font-ui text-sm">
+            <% @appearances.each do |appearance| %>
+              <% current = appearance == @appearance %>
+              <%= link_to passage_reference(appearance), study_passage_path(@group, @passage, appearance),
+                          aria: { current: (current ? "page" : nil) },
+                          class: "rounded-full border px-3 py-1 transition-colors #{current ? 'border-surface-900 bg-surface-900 text-surface-50' : 'border-surface-300 text-surface-700 hover:bg-surface-100'}" %>
+            <% end %>
+          </nav>
+        <% end %>
+      <% else %>
+        <%= render "bible/reader/layer_switcher",
+                   translation: @translation, book: @book, chapter: @chapter,
+                   selected_url: group_bible_chapter_path(@group, translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
+      <% end %>
     </div>
-    <%= render "bible/reader/red_lens_bar", translation: @translation, book: @book, chapter: @chapter, verses: @verses, study: true if red %>
-    <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 sm:text-5xl md:text-6xl">
-      <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
-    </h1>
+    <%= render "bible/reader/red_lens_bar", translation: @translation, book: @book, chapter: @chapter, verses: @verses, study: true if @lens == :red %>
+    <%= render "bible/reader/title", book_name: book_name %>
+    <% if @passage %>
+      <%# Where the study is. A manager can move it here. %>
+      <div class="study-here font-ui text-sm">
+        <% if @group.current_passage_record == @passage %>
+          <span class="rounded-full bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-800"><%= t("groups.reading_list.we_are_here") %></span>
+        <% elsif @group.manager?(current_user) %>
+          <%= button_to t("groups.reading_list.mark_here"), current_passage_group_path(@group, slug: @passage.slug), method: :patch,
+                        form_class: "inline",
+                        class: "rounded-full border border-surface-300 px-3 py-1 text-surface-700 transition-colors hover:bg-surface-100" %>
+        <% end %>
+      </div>
+    <% end %>
   </header>
 
   <div class="chapter-body font-reading <%= red ? "text-surface-500" : "text-surface-900" %>"
@@ -45,7 +68,27 @@
     <%= render "bible/reader/toolbar" %>
   <% end %>
 
-  <% if red %>
+  <% if @passage %>
+    <% previous_passage, next_passage = study_passage_neighbours(@group, @passage) %>
+    <nav aria-label="<%= study_reading_list_title(@group) %>" class="study-passage-nav flex items-start justify-between gap-6 border-t border-surface-200 pt-6 font-ui text-sm">
+      <% if previous_passage %>
+        <%= link_to study_passage_path(@group, previous_passage),
+                    class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
+          <span aria-hidden="true">&larr;</span>
+          <%= previous_passage.title %>
+        <% end %>
+      <% else %>
+        <span aria-hidden="true"></span>
+      <% end %>
+      <% if next_passage %>
+        <%= link_to study_passage_path(@group, next_passage),
+                    class: "inline-flex items-center gap-1 text-right text-surface-600 transition-colors hover:text-accent-700" do %>
+          <%= next_passage.title %>
+          <span aria-hidden="true">&rarr;</span>
+        <% end %>
+      <% end %>
+    </nav>
+  <% elsif red %>
     <% prev_stop, next_stop = reader_neighbours(@chapter) %>
     <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="study-chapter-nav flex items-center justify-between border-t border-surface-200 pt-6 font-ui text-sm">
       <% if prev_stop %>
