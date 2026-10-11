@@ -281,6 +281,12 @@ es:
       language:
         title: Idioma
         description: El idioma de la interfaz. Independiente de la traducción de la Biblia que lees.
+      study_focus:
+        title: Qué estudias
+        description: A dónde te llevan Leer y "continuar leyendo". Ambas opciones siguen disponibles elijas la que elijas.
+        options:
+          bible: Toda la Biblia
+          red: En Rojo, las palabras de Jesús
       default_translation:
         title: Traducción predeterminada
         description: Se abre cuando navegas al lector sin especificar ninguna.
@@ -353,6 +359,11 @@ es:
       private_group: Privado
       invite_only: Solo por invitación
       open_group: Abierto
+    focus:
+      label: Qué lee este estudio
+      bible: Toda la Biblia
+      red: En Rojo
+      hint: Un estudio de En Rojo lee las palabras de Jesús, capítulo por capítulo, con el relato que las rodea atenuado.
     discover_title: Descubrir estudios
     discover_subtitle: Estudios abiertos a los que cualquiera puede unirse, sin invitación.
     discover_empty: Todavía no hay estudios abiertos. Crea uno y configúralo como "Abierto" para que otros puedan encontrarlo.

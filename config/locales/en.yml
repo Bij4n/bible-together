@@ -288,6 +288,12 @@ en:
       language:
         title: Language
         description: The language of the interface. Independent of the Bible translation you read.
+      study_focus:
+        title: What you study
+        description: Where Read and "continue reading" take you. Both stay available whichever you choose.
+        options:
+          bible: The whole Bible
+          red: Highlighted in Red, the words of Jesus
       default_translation:
         title: Default translation
         description: Opens when you navigate to the reader without specifying one.
@@ -360,6 +366,11 @@ en:
       private_group: Private
       invite_only: Invite-only
       open_group: Open
+    focus:
+      label: What this study reads
+      bible: The whole Bible
+      red: Highlighted in Red
+      hint: A study of Highlighted in Red reads Jesus's words, chapter by chapter, with the story around them dimmed.
     discover_title: Discover studies
     discover_subtitle: Open studies anyone can join, no invitation needed.
     discover_empty: No open studies yet. Create one and set it to "Open" so others can find it.

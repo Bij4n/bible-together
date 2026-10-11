@@ -6,6 +6,9 @@ module Bible
     # KJV Genesis 1. Signed-out visitors fall through to the public
     # bible at the same default.
     def entry
+      # A reader who has chosen to study Highlighted in Red starts there.
+      return redirect_to(red_words_path) if user_signed_in? && current_user.focus_red?
+
       code = resolved_default_translation_code
       # Same destination either way since R7 — /bible serves the
       # community layer to guests at the same URL.

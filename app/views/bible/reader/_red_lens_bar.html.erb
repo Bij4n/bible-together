@@ -3,7 +3,8 @@
     only" toggle and the way back to the whole chapter (an encounter's
     page isn't dimmed, so it gets the label and the link only). In the ordinary
     reader: a quiet link into the lens when the chapter has red text.
-    locals: translation, book, chapter, verses %>
+    locals: translation, book, chapter, verses; study (optional) for a
+    study's reader, which gets the label and toggle but no links out. %>
 <% slug = { translation: translation.code.downcase, book: book.osis_code.downcase, chapter: chapter.number } %>
 <% if @lens == :red %>
   <div class="red-lens-bar space-y-3">
@@ -26,13 +27,15 @@
         </button>
       <% end %>
       <% quiet_link = "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
-      <% if @passage %>
+      <% if local_assigns[:study] %>
+        <%# A study's reader keeps its members in the study. %>
+      <% elsif @passage %>
         <%= link_to t("bible.reader.red.in_its_chapter"), red_chapter_path(**slug, anchor: dom_id(verses.first)), class: quiet_link %>
       <% else %>
         <%= link_to t("bible.reader.red.whole_chapter"), bible_chapter_path(**slug), class: quiet_link %>
       <% end %>
     </div>
-    <%= render "red/shared/sections" unless @passage %>
+    <%= render "red/shared/sections" unless @passage || local_assigns[:study] %>
   </div>
 <% elsif verses.any? { |v| v.red_letter_ranges.present? } %>
   <p class="font-ui text-sm">

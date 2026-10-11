@@ -34,7 +34,7 @@ class SettingsController < ApplicationController
   # allow the full set here and let the form decide.
   def settings_params
     permitted = params.require(:user).permit(
-      :ui_locale, :username, :bio, :email_on_comment, :default_translation_id, :display_name,
+      :ui_locale, :username, :bio, :email_on_comment, :default_translation_id, :display_name, :study_focus,
       :default_note_color, :avatar, highlight_toolbar_colors: [], highlight_color_labels: {}
     )
     if permitted[:highlight_toolbar_colors].present?

@@ -68,6 +68,28 @@
       <%= render "shared/settings_flash" %>
     <% end %>
 
+    <%# ----------  What you study  ---------- %>
+    <%= turbo_frame_tag "settings_study_focus", class: section_wrap do %>
+      <div>
+        <h2 class="<%= section_h2 %>"><%= t("settings.sections.study_focus.title") %></h2>
+        <p class="<%= section_p %>"><%= t("settings.sections.study_focus.description") %></p>
+      </div>
+      <%= form_with model: current_user, url: settings_path, method: :patch, data: { turbo_frame: "settings_study_focus", controller: "preference-form" }, class: "space-y-3" do |f| %>
+        <div class="flex flex-col gap-2">
+          <% User::STUDY_FOCUSES.each_key do |focus| %>
+            <label class="<%= label_classes %>">
+              <%= f.radio_button :study_focus, focus, data: { action: "change->preference-form#submit" }, class: radio_classes %>
+              <%= t("settings.sections.study_focus.options.#{focus}") %>
+            </label>
+          <% end %>
+        </div>
+        <noscript>
+          <%= f.submit t("settings.save"), class: submit_classes %>
+        </noscript>
+      <% end %>
+      <%= render "shared/settings_flash" %>
+    <% end %>
+
     <%# ----------  Display name  ---------- %>
     <%= turbo_frame_tag "settings_display_name", class: section_wrap do %>
       <div>

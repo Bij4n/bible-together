@@ -1,8 +1,9 @@
 <% book_name = I18n.locale == :es ? @book.name_es : @book.name_en %>
 <% debug_selection = Rails.env.development? || params[:debug] == "1" %>
 
-<article class="relative mx-auto max-w-3xl space-y-8"
-         data-controller="highlight"
+<% red = red_lens_dimmed? %>
+<article class="relative mx-auto max-w-3xl space-y-8 <%= "red-lens" if red %>"
+         data-controller="highlight<%= " red-lens" if red %>"
          data-highlight-translation-code-value="<%= @translation.code %>"
          data-highlight-book-value="<%= @book.osis_code %>"
          data-highlight-chapter-value="<%= @chapter.number %>"
@@ -28,12 +29,13 @@
                  translation: @translation, book: @book, chapter: @chapter,
                  selected_url: group_bible_chapter_path(@group, translation: @translation.code.downcase, book: @book.osis_code.downcase, chapter: @chapter.number) %>
     </div>
+    <%= render "bible/reader/red_lens_bar", translation: @translation, book: @book, chapter: @chapter, verses: @verses, study: true if red %>
     <h1 class="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-surface-900 sm:text-5xl md:text-6xl">
       <span class="book-title-text"><%= book_name %> <%= @chapter.number %></span>
     </h1>
   </header>
 
-  <div class="chapter-body font-reading text-surface-900"
+  <div class="chapter-body font-reading <%= red ? "text-surface-500" : "text-surface-900" %>"
        data-highlight-target="chapter">
     <% chip_map = verse_note_map(@highlights) %>
     <% @verses.each_with_index do |verse, i| %><% meta = chip_map[verse.id] %><% note_chip = meta[:ids].any? ? { count: meta[:ids].size, href: "#note_#{meta[:ids].first}", color: meta[:color], label: meta[:label] } : nil %><%= render partial: "bible/reader/verse", locals: { verse: verse, highlights: @highlights, chapter_opener: i == 0, note_chip: note_chip } %><%= " " unless i == @verses.size - 1 %><% end %>
@@ -41,6 +43,28 @@
 
   <% if user_signed_in? %>
     <%= render "bible/reader/toolbar" %>
+  <% end %>
+
+  <% if red %>
+    <% prev_stop, next_stop = reader_neighbours(@chapter) %>
+    <nav aria-label="<%= t("bible.reader.chapter_label") %>" class="study-chapter-nav flex items-center justify-between border-t border-surface-200 pt-6 font-ui text-sm">
+      <% if prev_stop %>
+        <%= link_to group_bible_chapter_path(@group, translation: @translation.code.downcase, **prev_stop),
+                    class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
+          <span aria-hidden="true">&larr;</span>
+          <%= t("bible.reader.prev_chapter") %>
+        <% end %>
+      <% else %>
+        <span aria-hidden="true"></span>
+      <% end %>
+      <% if next_stop %>
+        <%= link_to group_bible_chapter_path(@group, translation: @translation.code.downcase, **next_stop),
+                    class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
+          <%= t("bible.reader.next_chapter") %>
+          <span aria-hidden="true">&rarr;</span>
+        <% end %>
+      <% end %>
+    </nav>
   <% end %>
 
   <aside id="group_notes_aside"
