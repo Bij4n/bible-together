@@ -142,13 +142,23 @@ es:
       step_3_body: Con un amigo, tu grupo de estudio o el capítulo público.
     about:
       heading: Acerca de
-      subhead: Bible Together es un lugar para leer las Escrituras, marcar lo que te habla y compartirlo con personas que también las aman.
+      subhead: Bible Together es un lugar para leer las palabras de Jesús, ver cómo trató a las personas e ir a hacer lo mismo.
       translations_label: Traducciones
       para_1: "En lo esencial es un lector limpio con resaltados, notas privadas y una capa comunitaria que puedes activar cuando quieras leer junto a otros."
-      vision_label: Hacia dónde va
-      para_vision: "La esperanza es mayor que una herramienta de lectura: una plataforma social para personas afines que quieran profundizar en las Escrituras y unirse en torno a nuestro amor por Jesús."
+      vision_label: Por qué existe
+      para_why_1: "Jesús pasó sus días con los enfermos, los pobres, los hambrientos y aquellos a quienes todos los demás habían dado por perdidos. Sus palabras más duras fueron para la religión convertida en espectáculo. Si caminara hoy por nuestras ciudades, no creemos que estaría admirando los edificios. Estaría afuera, con la gente de la calle."
+      para_why_2: "Mucho de lo que se hace en su nombre ha sepultado quién fue y lo que defendió. Este sitio vuelve a lo que dijo e hizo, y deja que hable por sí mismo."
+      quotes_label: En sus palabras
+      quotes:
+        neighbour: "Amarás á tu prójimo como á ti mismo."
+        least: "…en cuanto lo hicisteis á uno de estos mis hermanos pequeñitos, á mí lo hicisteis."
+        physician: "Los que están sanos no tienen necesidad de médico, sino los enfermos."
+        brethren: "…todos vosotros sois hermanos."
+        love: "En esto conocerán todos que sois mis discípulos, si tuviereis amor los unos con los otros."
+      duty_label: Lo que nos debemos unos a otros
+      para_duty: "Todos somos hermanos y hermanas. Antes que cualquier otra cosa somos humanos, y es nuestro deber seguir siendo humanos en nuestro trato: cuidarnos unos a otros y permanecer unidos, junto a los débiles, los enfermos, los jóvenes y los marginados, frente a cualquiera que quiera hacerles daño."
       team_label: Quién lo construye
-      para_team: "Por ahora lo construye y lo mantiene una sola persona, alguien de negocios y a la vez desarrollador que hace de todo. Ese es el punto de partida, no el destino: el plan es hacer crecer el equipo y construir algo que sirva a una comunidad real."
+      para_team: "Me crié como musulmán. Encontré al verdadero Jesús, el profeta Isa, cuando empecé a tener una relación y un diálogo sinceros con Dios el Creador. Eso me llevó a cargar mi cruz cada día y a hacer sacrificios por mi propio bien y por el de la humanidad. Vivo para servir a los demás, para ayudar a las personas a encontrar su propósito con Dios a su lado y para hacer frente a quienes las oprimen."
       para_4: Se lee en inglés (KJV) y español (Reina-Valera 1909) hoy, con una interfaz totalmente bilingüe. Ambas traducciones son de dominio público.
       nonprofit_label: Sin fines de lucro
       para_nonprofit: "Bible Together es un proyecto sin fines de lucro, financiado por completo con donaciones. No hay suscripción, ni publicidad, ni rastreo. Cada aporte va directo a las cuentas que lo mantienen en línea: alojamiento, correo y dominios."

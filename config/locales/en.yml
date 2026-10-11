@@ -142,13 +142,23 @@ en:
       step_3_body: With a friend, your study group, or the public chapter.
     about:
       heading: About
-      subhead: Bible Together is a place to read scripture, mark what speaks to you, and share it with people who love it too.
+      subhead: Bible Together is a place to read the words of Jesus, see how he treated people, and go and do the same.
       translations_label: Translations
       para_1: "At its simplest it is a clean reader with highlights, private notes, and a community layer you can switch on whenever you want to read alongside others."
-      vision_label: Where this is going
-      para_vision: "The hope is bigger than a reading tool: a social platform for like-minded people to go deeper in scripture and unite around our shared love for Jesus."
+      vision_label: Why this exists
+      para_why_1: "Jesus spent his days with the sick, the poor, the hungry and the people everyone else had given up on. His hardest words were for religion that had turned into a show. If he walked through our cities today, we do not think he would be admiring the buildings. He would be outside, with the people on the street."
+      para_why_2: "A great deal of what is done in his name has buried who he was and what he stood for. This site goes back to what he said and did, and lets it speak for itself."
+      quotes_label: In his words
+      quotes:
+        neighbour: "Thou shalt love thy neighbour as thyself."
+        least: "Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me."
+        physician: "They that be whole need not a physician, but they that are sick."
+        brethren: "…all ye are brethren."
+        love: "By this shall all men know that ye are my disciples, if ye have love one to another."
+      duty_label: What we owe each other
+      para_duty: "We are all brothers and sisters. Before anything else we are human, and it is our duty to stay humane: to look after each other, to care for one another, and to stand together with the weak, the sick, the young and the pushed aside against anyone who would harm them."
       team_label: Who builds it
-      para_team: "For now it is built and run by one person, a businessperson and a developer wearing every hat. That is the starting point, not the destination: the plan is to grow the team and build something that serves a real community."
+      para_team: "I was raised Muslim. I found the real Jesus, the prophet Isa, when I began an honest relationship and conversation with God the Creator. It led me to carry my cross every day and to make sacrifices for my own good and for the good of humanity. I live to serve others, to help people find their purpose with God behind them, and to stand up to those who oppress them."
       para_4: It reads in English (KJV) and Spanish (Reina-Valera 1909) today, with a fully bilingual interface. Both translations are public domain.
       nonprofit_label: Non-profit
       para_nonprofit: "Bible Together is a non-profit, funded entirely by donations. There is no subscription, no advertising, and no tracking — every gift goes straight to the bills that keep it online: hosting, email, and domains."

@@ -16,18 +16,64 @@
     </p>
   </header>
 
-  <%# The vision is the centerpiece — carried by type scale, not a box. %>
-  <section class="space-y-4" aria-labelledby="about-vision">
+  <%# Why the site exists is the centerpiece — carried by type scale,
+      not a box. %>
+  <section class="space-y-5" aria-labelledby="about-vision">
     <p id="about-vision" class="font-ui text-xs font-semibold uppercase tracking-[0.14em] text-accent-700">
       <%= t("home.about.vision_label") %>
     </p>
     <p class="font-reading text-2xl leading-snug text-pretty text-surface-900 sm:text-[1.75rem] sm:leading-[1.35]">
-      <%= t("home.about.para_vision") %>
+      <%= t("home.about.para_why_1") %>
+    </p>
+    <p class="font-reading text-lg leading-relaxed text-pretty text-surface-700">
+      <%= t("home.about.para_why_2") %>
+    </p>
+  </section>
+
+  <%# His own words, each linking to the chapter in the red reader.
+      Quoted from the KJV, or the Reina-Valera 1909 in Spanish. %>
+  <%
+    quote_translation = I18n.locale == :es ? "rv1909" : "kjv"
+    quotes = [
+      [ "neighbour", "Mark", 12, 31 ],
+      [ "least",     "Matt", 25, 40 ],
+      [ "physician", "Matt", 9, 12 ],
+      [ "brethren",  "Matt", 23, 8 ],
+      [ "love",      "John", 13, 35 ]
+    ]
+  %>
+  <section class="space-y-5 border-t border-surface-200 pt-10" aria-labelledby="about-quotes">
+    <h2 id="about-quotes" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-600">
+      <%= t("home.about.quotes_label") %>
+    </h2>
+    <ul class="about-quotes space-y-6">
+      <% quotes.each do |key, book, chapter, verse| %>
+        <% book_name = Bible::CanonicalBooks.find(book)[I18n.locale == :es ? :name_es : :name_en] %>
+        <li class="space-y-1">
+          <p class="font-reading text-xl leading-relaxed text-pretty text-jesus-light">
+            <%= t("home.about.quotes.#{key}") %>
+          </p>
+          <p class="font-ui text-sm">
+            <%= link_to "#{book_name} #{chapter}:#{verse}",
+                        red_chapter_path(translation: quote_translation, book: book.downcase, chapter: chapter),
+                        class: "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-3 border-t border-surface-200 pt-10" aria-labelledby="about-duty">
+    <h2 id="about-duty" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-600">
+      <%= t("home.about.duty_label") %>
+    </h2>
+    <p class="font-reading text-lg leading-relaxed text-pretty text-surface-700">
+      <%= t("home.about.para_duty") %>
     </p>
   </section>
 
   <section class="space-y-3 border-t border-surface-200 pt-10" aria-labelledby="about-team">
-    <h2 id="about-team" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-500">
+    <h2 id="about-team" class="font-ui text-sm font-semibold uppercase tracking-wide text-surface-600">
       <%= t("home.about.team_label") %>
     </h2>
     <p class="font-reading text-lg leading-relaxed text-pretty text-surface-700">
