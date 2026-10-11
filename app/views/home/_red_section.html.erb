@@ -1,0 +1,15 @@
+<%# Homepage introduction to Highlighted in Red, for visitors. %>
+<section data-section="highlighted-in-red" class="landing-section mx-auto max-w-2xl space-y-4 text-center" aria-labelledby="home-red-heading">
+  <h2 id="home-red-heading" class="font-ui text-3xl font-semibold tracking-[-0.02em] text-jesus-light sm:text-4xl">
+    <%= t("home.red.heading") %>
+  </h2>
+  <p class="font-reading text-lg leading-relaxed text-pretty text-surface-700">
+    <%= t("home.red.body") %>
+  </p>
+  <p>
+    <%= link_to red_home_path, class: "inline-flex items-center gap-1 font-ui text-base font-medium text-accent-700 underline-offset-4 transition-colors hover:text-accent-800 hover:underline" do %>
+      <%= t("home.red.cta") %>
+      <span aria-hidden="true">&rarr;</span>
+    <% end %>
+  </p>
+</section>

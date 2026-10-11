@@ -8,7 +8,7 @@
 <% if @lens == :red %>
   <div class="red-lens-bar space-y-3">
     <p class="font-ui text-xs font-semibold uppercase tracking-wide text-jesus-light">
-      <%= t("bible.reader.red.eyebrow") %>
+      <%= link_to t("bible.reader.red.eyebrow"), red_home_path, class: "hover:underline" %>
     </p>
     <% if red_lens_dimmed? %>
       <p class="max-w-2xl font-ui text-sm leading-relaxed text-surface-600">

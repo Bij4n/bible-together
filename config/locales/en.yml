@@ -58,6 +58,7 @@ en:
     profile_link: Profile
     start_reading_link: Start reading
     read_link: Read
+    red_link: In Red
     studies_link: Studies
     community_link: Community
     donate_link: Donate
@@ -89,6 +90,10 @@ en:
     switch_to: "Switch to %{name}"
     dismiss: Dismiss
   home:
+    red:
+      heading: Highlighted in Red
+      body: Read the Bible through the words of Jesus. What he said, the stories he told, and how he treated the people he met.
+      cta: Open Highlighted in Red
     welcome: Read the Bible together.
     subhead: Highlight verses, write notes, and share with your study group.
     cta_public_bible: Start reading
@@ -225,6 +230,26 @@ en:
         one: "This highlight has %{count} note. Removing it will delete the note. Continue?"
         other: "This highlight has %{count} notes. Removing it will delete the notes. Continue?"
   red:
+    home:
+      title: Highlighted in Red
+      lead: Read the Bible through the words of Jesus. What he said, the stories he told, and how he treated the people he met.
+      doors_label: Three ways in
+      doors:
+        words:
+          title: His words
+          body: Everything printed in red, chapter by chapter, with the story around it dimmed.
+          cta: Start reading
+        parables:
+          title: His parables
+          body: The stories he told, and the pictures he used for himself.
+          cta: See the parables
+        encounters:
+          title: His encounters
+          body: "What he did: the people he touched, ate with and stood beside."
+          cta: See the encounters
+      sayings_line: Looking for a particular teaching? The Beatitudes, the Lord's Prayer and others are under
+      themes_heading: Start from a theme
+      note: All of it is here. The hard sayings are in the red text beside the gentle ones, and we add no commentary of our own.
     parables:
       title: The Parables
       all: All parables
