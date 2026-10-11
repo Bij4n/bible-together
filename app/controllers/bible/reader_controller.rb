@@ -12,14 +12,26 @@ module Bible
       redirect_to bible_chapter_path(translation: code.downcase, book: "gen", chapter: 1)
     end
 
+    # /red -> the first chapter with red text in the reader's default
+    # translation.
+    def red_entry
+      translation = Translation.find_by!(code: resolved_default_translation_code)
+      first = Bible::RedLetterIndex.for(translation).first
+      raise ActiveRecord::RecordNotFound if first.nil?
+
+      redirect_to red_chapter_path(translation: translation.code.downcase,
+                                   book: first.book.downcase, chapter: first.number)
+    end
+
     def show
+      @lens = :red if request.path.start_with?("/red/")
       canonical_translation = params[:translation].downcase
       canonical_book        = params[:book].downcase
 
       if params[:translation] != canonical_translation || params[:book] != canonical_book
-        redirect_to bible_chapter_path(translation: canonical_translation, book: canonical_book,
-                                       chapter: params[:chapter],
-                                       layer: params[:layer].presence),
+        redirect_to lens_chapter_path(translation: canonical_translation, book: canonical_book,
+                                      chapter: params[:chapter],
+                                      layer: params[:layer].presence),
                     status: :moved_permanently
         return
       end
@@ -28,6 +40,17 @@ module Bible
       @book        = @translation.books.where("lower(osis_code) = ?", canonical_book).first!
       @chapter     = @book.chapters.find_by!(number: params[:chapter].to_i)
       @verses      = @chapter.verses.order(:number)
+
+      if @lens == :red
+        @red_index = Bible::RedLetterIndex.for(@translation)
+        # A chapter with none of his words has nothing to show under
+        # the lens; the ordinary reader is the right place for it.
+        unless @red_index.include?(@book.osis_code, @chapter.number)
+          redirect_to bible_chapter_path(translation: canonical_translation, book: canonical_book,
+                                         chapter: @chapter.number)
+          return
+        end
+      end
 
       # The community layer lives at the same URL (?layer=community,
       # Sprint R7 merge of the old /public/bible surface). Anonymous
@@ -44,6 +67,10 @@ module Bible
     end
 
     private
+
+    def lens_chapter_path(**args)
+      @lens == :red ? red_chapter_path(**args) : bible_chapter_path(**args)
+    end
 
     # Prefix LIKE against the indexed osis_ref column. Every highlight's
     # ref starts with "Bible.<TRANS>.<Book>.<Chapter>." by the

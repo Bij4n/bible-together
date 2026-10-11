@@ -567,6 +567,14 @@
     color: var(--color-jesus-light);
   }
 
+  /* Highlighted in Red. The lens dims narration by setting a muted
+     text color on .chapter-body in the view (a utility, so it wins
+     over this layer); his words keep their red from the rule above.
+     "His words only" then drops the verses that have none. */
+  .red-lens.red-lens-words-only .chapter-body .verse-narration {
+    display: none;
+  }
+
 
   .verse-number {
     font-family: var(--font-ui);

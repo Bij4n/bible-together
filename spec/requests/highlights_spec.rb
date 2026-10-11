@@ -47,7 +47,7 @@ RSpec.describe "Highlights", type: :request do
 
         expect(response).to have_http_status(:created)
         expect(response.body).to include(%(<turbo-stream action="replace" target="verse_#{verse.id}">))
-        expect(response.body).to include(%(<span class="verse"))
+        expect(response.body).to include(%(<span class="verse verse-narration"))
         expect(response.body).to include(%(data-highlight-ids="#{Highlight.last.id}"))
         expect(response.body).to include(%(class="highlight-gold))
       end

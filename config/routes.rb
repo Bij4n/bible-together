@@ -67,6 +67,14 @@ Rails.application.routes.draw do
       as: :bible_chapter,
       constraints: { chapter: /\d+/ }
 
+  # Highlighted in Red: the same reader, stepping only through chapters
+  # that contain Jesus's words, with the narration around them dimmed.
+  get "/red", to: "bible/reader#red_entry", as: :red_entry
+  get "/red/:translation/:book/:chapter",
+      to: "bible/reader#show",
+      as: :red_chapter,
+      constraints: { chapter: /\d+/ }
+
   get "/public/bible", to: redirect("/bible/kjv/gen/1?layer=community", status: 301)
   get "/public/bible/:translation/:book/:chapter",
       to: "public/bible#show",

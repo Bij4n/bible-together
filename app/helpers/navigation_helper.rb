@@ -12,7 +12,7 @@ module NavigationHelper
   end
 
   def read_nav_active?
-    request.path.start_with?("/bible") && params[:layer] != "community"
+    request.path.start_with?("/bible", "/red") && params[:layer] != "community"
   end
 
   def study_nav_active?
