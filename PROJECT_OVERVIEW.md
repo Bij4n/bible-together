@@ -10,6 +10,8 @@
 
 That's the affordance. The **product** is something else: it's scripture-as-conversation. The animating belief is that scripture is meant to be read with someone — that the comma where a verse turned for you matters more when somebody else can hear it. Testimony culture meets digital reading. Fellowship is the product; highlighting and notes are the surface. Long-term, this is shaped to become a real social network around scripture: usernames, profiles, follow relationships, a feed of what's striking other readers. We're not there yet, and the homepage copy now reflects that — *Where verses meet voices.* / *Donde los versículos encuentran voz.*
 
+**Since October 2026 the project is focused on who Jesus was**: his words, the stories he told, and how he treated people. The **Highlighted in Red** section (`/red`) is built on the red-letter text and is something a reader or a study can choose instead of the whole Bible. Two principles hold it together: all of the red text is shown, hard sayings included (themes are a way in, never a filter), and the site adds no commentary of its own. `PLAN.md` has the sprint table and decisions; `HANDOFF.md` has the routes, the data files and what is left.
+
 - **Repository:** `Bij4n/bible-together` — open-source on GitHub (MIT). `CONTRIBUTING.md` documents the contributor rules; `CODE_OF_CONDUCT.md` sets community expectations.
 - **Production:** https://bible-together.org (live since 2026-04-21)
 - **Hosting:** Render (blueprint at repo root in `render.yaml`)
@@ -223,6 +225,8 @@ Items currently parked in PLAN.md, ready to pick up:
 ---
 
 ## 9. What's coming next
+
+> **Stale below this line as of 2026-10-11.** Several items listed here have shipped since this section was written (terms and privacy pages, the contact form, `/how-it-works`, usernames and profiles, follows). The current queue is `HANDOFF.md` "Next session queue". This section is kept for the reasoning behind the older items.
 
 The Echo redesign (Sprint 16) and the long autonomous-feature run (Sprints 17–23) closed out the design + community + collaboration tracks. The remaining roadmap clusters are:
 

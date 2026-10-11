@@ -9,18 +9,20 @@
 
 - **Production:** [bible-together.org](https://bible-together.org), live since 2026-04-21, on Render. `main` auto-deploys.
 - **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together`.
-- **Branch:** `main` — all work through PR #198 merged and live (2026-10-11).
+- **Branch:** `main` — all work through PR #205 merged and live (2026-10-11). #206 (study form tidy-up) and the docs refresh were open at the end of that session.
 - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md` (R1–R9 shipped on `main`).
 
 ### Shipped 2026-10-10 → 2026-10-11 — Highlighted in Red
 
-The project is now focused on the words, parables and encounters of Jesus. All seven sprints of the plan are merged and live (PRs #184–#198). Sprint table, owner decisions and what's left are at the top of `PLAN.md`.
+The project is now focused on the words, parables and encounters of Jesus. All seven sprints of the plan and the follow-ups are merged and live (PRs #184–#205). Sprint table, owner decisions and what's left are at the top of `PLAN.md`.
 
 - **The section:** `/red` (front page), `/red/words` (first red chapter), `/red/:translation/:book/:chapter` (the red reader), `/red/parables`, `/red/encounters`, `/red/sayings`, `/red/themes`, and `/red/<list>/<slug>` for a single passage.
 - **Data:** `config/passages.yml`, `config/themes.yml`, `config/red_letter/kjv.yml` and `rv1909.yml`. Editing the first two needs no deploy step. After editing a file under `config/red_letter/` (`kjv.yml` or `rv1909.yml`), run `bundle exec rails 'bible:red_letter:apply[<code>]'` in the Render shell.
-- **Nav IA:** Read · In Red · Study · Explore, five tabs on the mobile tab bar.
+- **Nav IA:** top level is Read · In Red · Study · Explore. Study dropdown (My studies → My notes → Start a study → Join with code) and Explore dropdown (Search → Public notes → Forum → Community Bible → Discover studies). The mobile tab bar has five tabs: Read, In Red, Study, Explore, You.
 - **Study focus:** `users.study_focus` (settings) and `groups.focus` (new-study form).
-- **Search:** `?red=1`, "Only verses where Jesus speaks".
+- **Study reading lists:** `groups.reading_list` (`parables`, `encounters`, `sayings` or `theme:<slug>`) and `groups.current_passage`. A list study reads at `/studies/:id/passages/:slug`; a manager moves the "We are here" marker by hand. `Group#plan` is the single form value covering focus and list.
+- **Search:** `?red=1`, "Search only the words of Jesus". Keyword search then runs against `verses.red_text` (his words on their own, written by the importer, the KJV mirror and the red-letter patch). Concept search still filters by verse.
+- **Explanations:** a passage in `config/passages.yml` can carry `explained:` (same chapter, after the telling); the page shows it under the telling. Set for the Sower and the Wheat and the Weeds.
 - **Also in this cluster:** the brakeman/mail/rubyzip bump, the `/studies#join` anchor, the community-layer fix for notes on phrase-level highlights, the About page rewrite and the *Donate to the Mission* heading.
 - **Watch for:** `bin/brakeman` runs with `--ensure-latest`, so `scan_ruby` fails on every branch the day a new brakeman is released; bump brakeman first. `spec/system/public_bible_spec.rb:54` failed once in CI and passed on re-run.
 - **Merging:** in the session that built this, `gh pr merge` was blocked by the session's permission settings, so the owner merged every PR by hand.
@@ -84,7 +86,7 @@ The project is now focused on the words, parables and encounters of Jesus. All s
 These are the things sitting on the user's desk, not Claude's. Don't pick them blind.
 
 - **Legal pages** — `/terms` and `/privacy` **shipped** (`LegalController`, live and serving 200, copy in both locales). Only `/acceptable-use` is still open: unrouted, no view. Needs a jurisdiction decision + drafted copy from the owner. Note there are **no request specs for `LegalController`** — a coverage gap worth closing when the third page lands.
-- **Groups / studies deep-dive** — owner wants a full pass on how groups work: highlighting, notes, sharing, settings, and administrator workflows. Audit for gaps before building more on top.
+- **Groups / studies deep-dive** — owner wants a full pass on how groups work: highlighting, notes, sharing, settings, and administrator workflows. Studies gained a focus and reading lists in October 2026; the audit itself is still open.
 - **Language-switcher placement** — the account menu still carries locale + auth. Two options exist; owner picks. Audit detail saved at `~/.claude/plans/what-do-you-need-enumerated-ember.md`.
 - **Pencil-bridge polish** (Sprint 16.5 PR E) — transition between toolbar dismiss and note-panel reveal. No UX spec locked: slide animation? auto-focus scroll? back-arrow to reopen toolbar? Owner decides the gesture before building.
 - **Donation rotation UX redesign** — current behavior forces a rotation on every "Add address." Backlogged design call: `Add` creates inactive, separate `Activate` action promotes. Low urgency; current behaviour works.
@@ -95,23 +97,26 @@ These are the things sitting on the user's desk, not Claude's. Don't pick them b
 ## Next session queue
 
 **Owner input needed first:**
-- **Finish wiring the Resend webhook (two steps, ~5 minutes).** The code shipped in PR #175 but is **inert** until both are done, and returns 500 on every delivery in the meantime — deliberately, so a missing secret is loud. (1) Register `https://bible-together.org/webhooks/resend` in Resend → Webhooks, subscribed to `email.bounced`, `email.complained`, `email.failed`, `email.suppressed`, `email.delivery_delayed`, `suppression.added`, `suppression.removed`. (2) Put the generated `whsec_…` secret into credentials as `resend.webhook_secret`. Details in `PROJECT_OVERVIEW.md`.
+- **Finish wiring the Resend webhook (two steps, ~5 minutes).** Owner planned to do this on 2026-10-12. The code shipped in PR #175 but is **inert** until both are done, and returns 500 on every delivery in the meantime — deliberately, so a missing secret is loud. (1) Register `https://bible-together.org/webhooks/resend` in Resend → Webhooks, subscribed to `email.bounced`, `email.complained`, `email.failed`, `email.suppressed`, `email.delivery_delayed`, `suppression.added`, `suppression.removed`. (2) Put the generated `whsec_…` secret into credentials as `resend.webhook_secret`. Details in `PROJECT_OVERVIEW.md`.
 - **Pick the alert channel** for `MailEvent` failures. Recording works; nothing pushes. It can't be email — that's what breaks. Options: a second address on a different provider, or opening a GitHub issue via the API.
-- **Groups / studies audit** — walk through highlighting, notes, visibility, group admin permissions, and settings. Confirm nothing is missing before new social features.
+- **Check study focus and a list study on the live site, signed in.** Both were walked through locally against the full data and in CI, but not on production, which needs an account. Settings → "What you study"; Start a study → "What this study reads".
+- **Review the softened About copy** (#198). The PR lists the three places the wording differs from the owner's notes.
 - **Legal pages** — `/terms` and `/privacy` shipped; only `/acceptable-use` remains. Needs jurisdiction + copy from owner before any code.
 - **Language-switcher placement** — once decided, this is a focused Stimulus + CSS change. No code until the owner picks an option.
 - **Pencil-bridge polish** — same; the build is straightforward once the UX is specified.
+- **Groups / studies audit** — still open as a full pass, though studies gained focus and reading lists in October.
 
 **Autonomous-doable (no owner input needed):**
-- **Alerting on top of `MailEvent`** — the recording layer shipped (`POST /webhooks/resend`); nothing yet *pushes* a failure to the owner. Deliberately deferred until there are real events to look at. The channel can't be email — that's the thing that breaks — so the options on the table were a second address on a different provider, or opening a GitHub issue via the API. Owner picks.
-- **`rails_helper.rb` Xvfb robustness** — poll for `:99` actually accepting connections instead of `sleep 1`, and fall back to `-headless` if it never comes up, rather than pointing Firefox at a dead display. See the three footguns under local environment quirks. Would make Rule 9 system specs runnable locally again.
-- **Stray `dark:` classes in locale files** — `config/locales/en.yml` and `es.yml` each carry 3 in the terms/privacy `contact_body_html` strings, contradicting the "dark mode fully removed" claim. The June sweep only covered `app/views/`; locale HTML renders into views too.
-- **`LegalController` request specs** — `/terms` and `/privacy` are live with zero specs covering them.
-- **Swipe-to-dismiss bottom sheet** — the mobile highlight toolbar (PR #50) and account menu have no swipe gesture. Substantive Stimulus + gesture work; roughly a full sprint segment.
-- **Multilingual semantic search (4-step sequenced)** — see `PROJECT_OVERVIEW.md` §8 for the full plan. Currently Concept search is English-only and labeled as such; multilingual covers RV1909. Steps: (1) make `embeddings.rake` translation-agnostic, (2) swap to multilingual model, (3) regenerate embeddings, (4) drop the "(English)" parenthetical from homepage.
+- **Multilingual semantic search (4-step sequenced)** — the largest item left. See `PROJECT_OVERVIEW.md` §8. Concept search is English-only, so it and its "words of Jesus" filter do nothing useful for RV1909. Steps: (1) make `embeddings.rake` translation-agnostic, (2) swap to a multilingual model, (3) regenerate embeddings (a 15–20 minute job in the Render shell, so it needs the owner at the end), (4) drop the "(English)" parenthetical from the homepage.
+- **Concept search inside his words.** The filter is verse-level there. Would need embeddings of the red text alone.
+- **More explanations and passages.** One line each in `config/passages.yml`.
+- **Local browser-suite reliability.** Still fails a handful to a few dozen examples per full run when the machine is under load (see the local quirks section). `rails_helper.rb` still starts Xvfb with a fixed `sleep 1`; polling for the display and falling back to `-headless` is the untried part.
+- **Alerting on top of `MailEvent`** — once the owner picks a channel.
+- **Swipe-to-dismiss bottom sheet** — the mobile highlight toolbar and account menu have no swipe gesture. Roughly a full sprint segment.
 - **`/help` or FAQ** — usage guide. No clear demand yet; easy to add.
-- **Profile social layer polish** — liking and commenting on notes from profile pages; verify end-to-end UX now that profiles + forum exist.
-- **Remaining editorial surfaces** — forum thread show, notes show, admin pages, and Devise mailer HTML still carry pre-redesign card chrome. Low priority; apply the About-page editorial language when touched.
+- **Profile social layer polish** — liking and commenting on notes from profile pages.
+- **Remaining editorial surfaces** — forum thread show, notes show, admin pages, and Devise mailer HTML still carry pre-redesign card chrome.
+- **Open dependency PRs.** A dozen Dependabot PRs have been open since June–August; most went red only because of the `scan_ruby` problem fixed in #184 and need a rebase. `image_processing` 2.x and `thruster` failed `test` on their own and need a look.
 
 ---
 
@@ -138,14 +143,15 @@ When the user provides explicit direction (e.g. "fix the about page eyebrow"), d
 - **Bilingual (en + es) is a merge gate.** Both locales updated in the same PR.
 - **CI required checks:** `test`, `lint`, `scan_ruby`, `scan_js`, GitGuardian. Branch protection enforces.
 - **Light mode only.** Dark mode was removed 2026-06-16. Do not reintroduce `data-theme`, theme toggles, or `dark:` view classes.
-- **Homepage layout:** `/` shows hero + community for signed-out visitors; signed-in users get the dashboard. Features, How it works, and About live at their own routes (`/how-it-works`, `/about`). Don't add content sections back to `/` without owner direction.
+- **Homepage layout:** `/` shows hero, the three feature cards, a short Highlighted in Red introduction and the community section for signed-out visitors; signed-in users get the dashboard (continue reading, a Highlighted in Red card, recent notes, studies). Features, How it works, and About live at their own routes (`/how-it-works`, `/about`). Don't add further content sections to `/` without owner direction.
 - **Nav IA:** Study dropdown (My studies → My notes → Start a study → Join with code) and Explore dropdown (Search → Public notes → Forum → Community Bible → Discover studies). Mobile tab bar mirrors the primary destinations.
 - **Editorial content style:** About-page pattern — `max-w-2xl` article, uppercase eyebrow labels, thin `border-t border-surface-200` section dividers, no rounded card chrome on content pages. Apply when touching marketing or settings surfaces.
-- **Reader:** verses always render as blocks (one verse per line). No view toggle. Red-letter (Jesus words) enabled. Book picker filters Old/New Testament.
+- **Reader:** verses always render as blocks (one verse per line). No view toggle. Red-letter (Jesus words) enabled. Book picker filters Old/New Testament. The red reader, passage pages and study reader are all this same reader: the red lens is a class on the page plus a data-derived `verse-narration` class on each verse, never a different rendering of a verse, so live verse replaces can't switch it off.
+- **About page:** states why the site exists, quotes Jesus five times with links into the red reader, and gives the founder's story in the first person. Owner's voice; don't soften or sharpen it without asking.
 - **OSIS refs** are canonical: `Bible.<TRANSLATION>.<Book>.<Chapter>.<Verse>[!offset]`. Don't reinvent — use `app/services/osis_ref.rb`.
 - **Profiles:** vanity URLs at `/@username`. Follow/unfollow on author pages. Forum at `/forum`.
 - **Contact form:** live at `/contact`. Submissions **persist as `ContactMessage` rows first**, then `ContactMailer` notifies `hello@bible-together.org`. The email is a notification, not the transport — a Resend suppression silently destroyed every submission for three days in Aug 2026. Guarded by a honeypot (`website` field) plus a per-IP `rate_limit` of 5/hour. No admin UI; read them from the console, same as `DonationReport`.
-- **Test count:** 1028 spec examples — 927 non-JS, 101 tagged `js: true` (measured 2026-08-06 via `rspec --dry-run`). The non-JS suite runs in ~13s locally; the JS ones only reliably run in CI (see the Xvfb note below).
+- **Test count:** about 1,220 spec examples, about 130 of them tagged `js: true` (measured 2026-10-11 via `rspec --dry-run`). The non-JS suite runs in ~15s locally; the JS ones are only reliable in CI (see the Xvfb note below).
 
 ---
 
