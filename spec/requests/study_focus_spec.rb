@@ -92,7 +92,8 @@ RSpec.describe "Studying Highlighted in Red instead of the whole Bible", type: :
 
     it "is offered when starting a study and saved" do
       get "/studies/new"
-      expect(response.body).to include(I18n.t("groups.focus.red"))
+      options = Nokogiri::HTML(response.body).css("select[name='group[plan]'] option").map { |o| o[:value] }
+      expect(options.first(2)).to eq(%w[bible red])
 
       post "/studies", params: { group: { name: "Red letters", privacy: "invite_only", focus: "red" } }
       expect(Group.find_by!(name: "Red letters")).to be_focus_red

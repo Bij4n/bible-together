@@ -379,15 +379,14 @@ en:
       open_group: Open
     focus:
       label: What this study reads
-      bible: The whole Bible
       red: Highlighted in Red
-      hint: A study of Highlighted in Red reads Jesus's words, chapter by chapter, with the story around them dimmed.
+    plan:
+      bible: The whole Bible
+      red: Highlighted in Red, chapter by chapter
+      hint: Highlighted in Red reads Jesus's words with the story around them dimmed. Pick a list or a theme to read one passage at a time, with a marker for where the study is.
     reading_list:
-      label: Work through a list
-      none: No list. Read chapter by chapter
-      lists_group: Lists
-      themes_group: Themes
-      hint: Optional. The study reads one passage at a time, and a manager marks where you are. Choosing a list makes this a Highlighted in Red study.
+      lists_group: One passage at a time
+      themes_group: A theme, one passage at a time
       working_through: "Working through: %{list}"
       intro: Read one passage at a time. A manager marks where the study is.
       open_current: "Open: %{title}"

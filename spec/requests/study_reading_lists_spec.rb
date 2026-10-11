@@ -30,11 +30,32 @@ RSpec.describe "A study that works through a list", type: :request do
   end
 
   describe "starting one" do
-    it "offers the lists and themes on the new-study form" do
+    it "offers everything a study can read in one control on the new-study form" do
       get "/studies/new"
 
-      options = Nokogiri::HTML(response.body).css("select[name='group[reading_list]'] option").map { |o| o[:value] }
-      expect(options).to include("", "parables", "encounters", "sayings", "theme:forgiveness")
+      page = Nokogiri::HTML(response.body)
+      options = page.css("select[name='group[plan]'] option").map { |o| o[:value] }
+      expect(options).to include("bible", "red", "parables", "encounters", "sayings", "theme:forgiveness")
+      expect(page.at_css("select[name='group[reading_list]']")).to be_nil
+      expect(page.at_css("input[name='group[focus]']")).to be_nil
+    end
+
+    it "starts a list study from that one control" do
+      post "/studies", params: { group: { name: "Sayings", privacy: "invite_only", plan: "sayings" } }
+
+      group = Group.find_by!(name: "Sayings")
+      expect([ group.focus, group.reading_list ]).to eq(%w[red sayings])
+    end
+
+    it "shows the study's current choice when editing, and can change it" do
+      group = create(:group, owner: owner, reading_list: "parables")
+
+      get "/studies/#{group.id}/edit"
+      selected = Nokogiri::HTML(response.body).at_css("select[name='group[plan]'] option[selected]")
+      expect(selected[:value]).to eq("parables")
+
+      patch "/studies/#{group.id}", params: { group: { plan: "red" } }
+      expect([ group.reload.focus, group.reading_list ]).to eq([ "red", nil ])
     end
 
     it "saves the list and makes it a red study" do
@@ -94,6 +115,7 @@ RSpec.describe "A study that works through a list", type: :request do
 
       expect(response).to have_http_status(:ok)
       page = Nokogiri::HTML(response.body)
+      expect(page.at_css("article header").text.scan(kjv.name).size).to eq(1)
       expect(page.at_css("h1").text).to include("The Sower")
       expect(page.css(".chapter-body .verse").map { |v| v["data-osis-ref"] })
         .to eq((3..9).map { |n| "Bible.KJV.Matt.13.#{n}" })

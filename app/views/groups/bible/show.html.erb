@@ -22,9 +22,13 @@
 
   <header class="space-y-3 border-b border-surface-200 pb-6">
     <div class="flex items-center justify-between gap-3">
-      <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500">
-        <%= @translation.name %>
-      </p>
+      <%# On a passage page the translation is named beside the
+          reference, under the title. %>
+      <% unless @passage %>
+        <p class="font-ui text-xs font-medium uppercase tracking-wider text-surface-500">
+          <%= @translation.name %>
+        </p>
+      <% end %>
       <% if @passage %>
         <% if @appearances.size > 1 %>
           <nav aria-label="<%= t("red.parables.told_in") %>" class="passage-tellings flex flex-wrap items-center gap-1 font-ui text-sm">

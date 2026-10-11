@@ -23,7 +23,7 @@ RSpec.describe "A study that works through a list", type: :system, js: true do
     visit "/studies/new"
     fill_in "Name", with: "Parables together"
     find("input[value='invite_only']").click
-    select I18n.t("red.parables.title"), from: I18n.t("groups.reading_list.label")
+    select I18n.t("red.parables.title"), from: I18n.t("groups.focus.label")
     find('input[type="submit"]').click
 
     expect(page).to have_content(/parables together/i)

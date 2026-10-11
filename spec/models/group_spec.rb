@@ -102,6 +102,25 @@ RSpec.describe Group, type: :model do
       expect(group).to be_focus_red
     end
 
+    it "is chosen through one plan: the whole Bible, red chapters, a list or a theme" do
+      expect(build(:group).plan).to eq("bible")
+      expect(build(:group, focus: :red).plan).to eq("red")
+      expect(build(:group, reading_list: "parables").plan).to eq("parables")
+
+      group = create(:group, plan: "theme:forgiveness")
+      expect([ group.focus, group.reading_list ]).to eq([ "red", "theme:forgiveness" ])
+
+      group.update!(plan: "red")
+      expect([ group.focus, group.reading_list ]).to eq([ "red", nil ])
+
+      group.update!(plan: "bible")
+      expect([ group.focus, group.reading_list ]).to eq([ "bible", nil ])
+    end
+
+    it "rejects a plan that does not exist" do
+      expect(build(:group, plan: "miracles")).not_to be_valid
+    end
+
     it "treats a blank list as none" do
       expect(create(:group, reading_list: "").reading_list).to be_nil
     end
