@@ -9,6 +9,9 @@
 <% bridge_code = local_assigns[:cross_translation_highlights]&.dig(verse.number) %>
 <% chip = local_assigns[:note_chip] %>
 <% verse_classes = [ "verse" ] %>
+<%# Derived from the verse itself, so a live replace of this partial
+    can't drop it. The red lens dims or hides these. %>
+<% verse_classes << "verse-narration" if verse.red_letter_ranges.blank? %>
 <% verse_classes << "verse-has-note note-marker-#{chip[:color] || 'violet'}" if chip.present? %>
 <span class="<%= verse_classes.join(" ") %>"
       id="<%= dom_id(verse) %>"
