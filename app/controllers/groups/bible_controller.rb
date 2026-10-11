@@ -22,14 +22,46 @@ module Groups
         @red_index = Bible::RedLetterIndex.for(@translation)
       end
 
+      load_shared_layer
+    end
+
+    # /studies/:id/passages/:slug -> one passage from the study's list,
+    # in the study's reader. Every telling sits inside one chapter, so
+    # the page subscribes to that chapter's stream like any other and
+    # live updates work unchanged.
+    def passage
+      @passage = @group.passages.detect { |candidate| candidate.slug == params[:slug] }
+      return head(:not_found) unless @passage
+
+      @lens        = :red
+      @translation = passage_translation
+      @appearances = appearances_available_in(@translation, @passage)
+      @appearance  = chosen_appearance
+      return head(:not_found) unless @appearance
+
+      @book    = @translation.books.find_by!(osis_code: @appearance.book)
+      @chapter = @book.chapters.find_by!(number: @appearance.chapter)
+      @verses  = @chapter.verses.where(number: @appearance.verses).order(:number)
+
+      load_shared_layer
+      keep_notes_on_passage
+      render :show
+    end
+
+    private
+
+    # Highlights anchored to a note shared with this study, and those
+    # notes, for the chapter on screen.
+    #
+    # Sprint 5: the group bible shows only highlights anchored to a
+    # note shared with this group. Each viewer's private highlights
+    # stay on /bible/... — keeping group-view content identical
+    # across members means a single broadcast can replace a verse for
+    # everyone. A future sprint can layer per-user highlights as a
+    # client-side overlay without re-rendering the server HTML.
+    def load_shared_layer
       prefix = "Bible.#{@translation.code}.#{@book.osis_code}.#{@chapter.number}."
 
-      # Sprint 5: the group bible shows only highlights anchored to a
-      # note shared with this group. Each viewer's private highlights
-      # stay on /bible/... — keeping group-view content identical
-      # across members means a single broadcast can replace a verse for
-      # everyone. A future sprint can layer per-user highlights as a
-      # client-side overlay without re-rendering the server HTML.
       @highlights = Highlight
                     .joins(highlight_notes: { note: :note_shares })
                     .where(note_shares: { shareable_type: "Group", shareable_id: @group.id })
@@ -45,7 +77,40 @@ module Groups
                      .distinct
     end
 
-    private
+    # ?translation= wins, then the reader's own default, then Spanish
+    # scripture for a Spanish-language reader, then the KJV.
+    def passage_translation
+      code = params[:translation].presence&.upcase
+      return Translation.find_by!(code: code) if code
+
+      current_user.default_translation ||
+        (Translation.find_by(code: "RV1909") if I18n.locale == :es) ||
+        Translation.find_by!(code: "KJV")
+    end
+
+    # The tellings whose verses this translation actually has.
+    def appearances_available_in(translation, passage)
+      first_refs = passage.appearances.to_h { |a| [ a.osis_refs(translation.code).first, a ] }
+      found = Verse.where(osis_ref: first_refs.keys).pluck(:osis_ref)
+      first_refs.select { |ref, _| found.include?(ref) }.values
+    end
+
+    def chosen_appearance
+      return @appearances.first if params[:in].blank?
+
+      @appearances.detect { |a| a.book.casecmp?(params[:in]) }
+    end
+
+    # The shared layer loads a chapter at a time. On a passage page,
+    # drop the notes anchored elsewhere in the chapter.
+    def keep_notes_on_passage
+      @group_notes = @group_notes.select do |note|
+        note.highlights.any? do |highlight|
+          ref = highlight.parsed_ref
+          ref.start_verse <= @appearance.verses.last && ref.end_verse >= @appearance.verses.first
+        end
+      end
+    end
 
     def load_group
       @group = Group.find(params[:group_id])

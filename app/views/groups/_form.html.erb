@@ -48,6 +48,19 @@
     <p class="font-ui text-xs text-surface-600"><%= t("groups.focus.hint") %></p>
   </fieldset>
 
+  <div>
+    <%= f.label :reading_list, t("groups.reading_list.label"), class: label_classes %>
+    <%= f.select :reading_list,
+                 grouped_options_for_select(
+                   { t("groups.reading_list.lists_group") => Bible::Passages::COLLECTIONS.keys.map { |list| [ t("red.#{list}.title"), list ] },
+                     t("groups.reading_list.themes_group") => Bible::Themes.all.map { |theme| [ theme.name, "#{Group::THEME_PREFIX}#{theme.slug}" ] } },
+                   group.reading_list
+                 ),
+                 { include_blank: t("groups.reading_list.none") },
+                 class: "#{input_classes} [&_option]:bg-surface-50 [&_option]:text-surface-900" %>
+    <p class="mt-1.5 font-ui text-xs text-surface-600"><%= t("groups.reading_list.hint") %></p>
+  </div>
+
   <div class="flex items-center justify-end gap-3">
     <%= link_to t("groups.cancel"), groups_path, class: cancel_classes %>
     <%= f.submit class: submit_classes %>

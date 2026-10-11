@@ -381,6 +381,18 @@ en:
       bible: The whole Bible
       red: Highlighted in Red
       hint: A study of Highlighted in Red reads Jesus's words, chapter by chapter, with the story around them dimmed.
+    reading_list:
+      label: Work through a list
+      none: No list. Read chapter by chapter
+      lists_group: Lists
+      themes_group: Themes
+      hint: Optional. The study reads one passage at a time, and a manager marks where you are. Choosing a list makes this a Highlighted in Red study.
+      working_through: "Working through: %{list}"
+      intro: Read one passage at a time. A manager marks where the study is.
+      open_current: "Open: %{title}"
+      we_are_here: We are here
+      mark_here: Mark this as where we are
+      moved: The study is here now.
     discover_title: Discover studies
     discover_subtitle: Open studies anyone can join, no invitation needed.
     discover_empty: No open studies yet. Create one and set it to "Open" so others can find it.

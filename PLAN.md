@@ -65,7 +65,6 @@ Recent cluster (PRs #139–#153):
   - Concept search is still English-only, so the filter does nothing for RV1909 there. Same dependency as the multilingual embeddings item in `HANDOFF.md`.
   - The sayings and parables show the telling only; Jesus's own explanations (the Sower, the Weeds) are not listed.
   - *Prayer* has one encounter and *Love of enemies* five passages. Thin, by the owner's own themes.
-  - A study of Highlighted in Red steps through red chapters. Stepping a study through a list (the parables, a theme) was not built.
   - Two KJV source quirks surfaced while marking the Spanish: some red ranges stop one character short of the verse end, and a few sweep in a lead-in word ("Saying,"). The Spanish file corrects for both; the KJV data was left as imported.
 - **Semantic search provider for Sprint 9** — decide before Sprint 8 ends. Options: Anthropic Voyage, OpenAI embeddings, or a local open-source model (e.g., `all-MiniLM-L6-v2` via pgvector). Tradeoffs: cost, latency, privacy, quality.
 - **Moderation staffing model for Sprint 7** — single admin (you) for v1, or early invite of trusted moderators? Affects admin UX.
@@ -276,6 +275,8 @@ Append-only. Each entry: date-ish, decision, rationale.
 - **2026-10-11 Highlighted in Red** — **Nav IA changed: Read · In Red · Study · Explore, five tabs on mobile.** Owner-approved as part of the plan. `/red` is the front page; `/red/words` opens the first red chapter.
 - **2026-10-11 Highlighted in Red** — **Study focus is a default, not a wall.** `users.study_focus` and `groups.focus` change where Read, "continue reading" and a study's reader lead. The ordinary reader stays one click away, and a reader whose last highlight is in a chapter with no red text continues there.
 - **2026-10-11** — **About page and donate heading rewritten at the owner's direction** (#198). The owner's notes were sharper than the shipped copy in three places (Christianity as such, "take down the oppressors", "unite against those who oppose the weak"); the PR lists each softening so it can be reversed. What surprised us: a CI-only flake in `public_bible_spec.rb:54` (admin hides a note) failed once and passed on re-run, and the local browser suite is still unreliable under load despite the window-size work.
+
+- **2026-10-11 Study reading lists** — **A study can work through a list, and "where we are" is set by hand.** `groups.reading_list` names one of the curated lists or a theme (`parables`, `encounters`, `sayings`, `theme:<slug>`); `groups.current_passage` is the slug a manager last marked. It is deliberately not derived from activity the way the chapter-based "reading together" card is: a group meets weekly and one member reading ahead shouldn't move everyone. Choosing a list makes the study a Highlighted in Red study. A passage is read at `/studies/:id/passages/:slug` in the study's own reader, on that chapter's existing live-update stream.
 
 ---
 

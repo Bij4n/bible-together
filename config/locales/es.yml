@@ -374,6 +374,18 @@ es:
       bible: Toda la Biblia
       red: En Rojo
       hint: Un estudio de En Rojo lee las palabras de Jesús, capítulo por capítulo, con el relato que las rodea atenuado.
+    reading_list:
+      label: Recorrer una lista
+      none: Sin lista. Leer capítulo por capítulo
+      lists_group: Listas
+      themes_group: Temas
+      hint: Opcional. El estudio lee un pasaje a la vez, y un administrador marca por dónde van. Al elegir una lista, este será un estudio de En Rojo.
+      working_through: "Recorriendo: %{list}"
+      intro: Lean un pasaje a la vez. Un administrador marca por dónde va el estudio.
+      open_current: "Abrir: %{title}"
+      we_are_here: Vamos aquí
+      mark_here: Marcar que vamos aquí
+      moved: El estudio va aquí ahora.
     discover_title: Descubrir estudios
     discover_subtitle: Estudios abiertos a los que cualquiera puede unirse, sin invitación.
     discover_empty: Todavía no hay estudios abiertos. Crea uno y configúralo como "Abierto" para que otros puedan encontrarlo.

@@ -72,6 +72,28 @@ module Bible
       [ (list[at - 1] if at.positive?), list[at + 1] ]
     end
 
+    # A passage on a study's list, read in the study's reader.
+    def study_passage_path(group, passage, appearance = nil)
+      told_in = appearance&.book&.downcase
+      told_in = nil if told_in == passage.appearances.first.book.downcase
+      group_passage_path(group, passage.slug, in: told_in, translation: params[:translation].presence)
+    end
+
+    # [previous, next] passage on the study's own list.
+    def study_passage_neighbours(group, passage)
+      list = group.passages
+      at = list.index(passage)
+      [ (list[at - 1] if at.positive?), list[at + 1] ]
+    end
+
+    # "The Parables", "Encounters", or a theme's name.
+    def study_reading_list_title(group)
+      list = group.reading_list
+      return Bible::Themes.find(list.delete_prefix(Group::THEME_PREFIX)).name if list.start_with?(Group::THEME_PREFIX)
+
+      t("red.#{list}.title")
+    end
+
     # Whether the page dims narration. An encounter is the exception
     # under the red lens: there the story is the point, so it is shown
     # at full strength with his words still in red.

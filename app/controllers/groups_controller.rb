@@ -1,8 +1,8 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_group, only: %i[show edit update destroy leave]
+  before_action :load_group, only: %i[show edit update destroy leave current_passage]
   before_action :ensure_group_member,  only: %i[show]
-  before_action :ensure_group_manager, only: %i[edit update]
+  before_action :ensure_group_manager, only: %i[edit update current_passage]
   before_action :ensure_group_owner,   only: %i[destroy]
 
   skip_before_action :authenticate_user!, only: [ :discover ]
@@ -36,6 +36,15 @@ class GroupsController < ApplicationController
     @pending_invitations = @group.group_invitations.pending.order(created_at: :desc) if @group.manager?(current_user)
     @member_notes = @group.recent_member_notes
     @reading_together = @group.reading_together_location
+  end
+
+  # A manager marks the passage the study is on ("we are here").
+  def current_passage
+    passage = @group.passages.detect { |candidate| candidate.slug == params[:slug] }
+    return head(:not_found) unless passage
+
+    @group.update!(current_passage: passage.slug)
+    redirect_to group_passage_path(@group, passage.slug), notice: t("groups.reading_list.moved"), status: :see_other
   end
 
   def edit
@@ -114,6 +123,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:name, :description, :privacy, :focus)
+    params.require(:group).permit(:name, :description, :privacy, :focus, :reading_list)
   end
 end
