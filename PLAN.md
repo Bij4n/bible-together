@@ -2,6 +2,9 @@
 
 ## Current sprint
 
+**Highlighted in Red (2026-10-10 → 2026-10-11): all seven sprints shipped and live.** What is
+left is in the open questions below, not in the table.
+
 **Highlighted in Red (started 2026-10-10).** The project is being focused on who Jesus
 was: his words, his parables, and how he treated people. A new section at `/red` is built
 around the New Testament text printed in red, and becomes something a person or a study
@@ -17,7 +20,7 @@ our own.
 | 4 | Encounters, sayings and themes: lists, `/red/encounters`, `/red/sayings`, `/red/themes`, markers in the red chapter view | shipped (#192, #193) |
 | 5 | The `/red` front page, "In Red" nav entry (desktop and mobile tab bar), homepage section and dashboard card | shipped (#194) |
 | 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | shipped (#196) |
-| 7 | "Only verses where Jesus speaks" search filter (keyword and concept), sitemap entries for the section | in review |
+| 7 | "Only verses where Jesus speaks" search filter (keyword and concept), sitemap entries for the section | shipped (#197) |
 
 Owner decisions so far: the name is "Highlighted in Red" (Spanish "En Rojo" is provisional);
 the gospels are the main path and his words in Acts, the epistles and Revelation sit apart
@@ -56,6 +59,14 @@ Recent cluster (PRs #139–#153):
 
 ## Open questions
 
+- **Highlighted in Red, after the first seven sprints** (2026-10-11):
+  - The Spanish section name *En Rojo* is still a placeholder; owner to confirm.
+  - The search filter is verse-level. In a verse Jesus speaks for part of, a match can sit in the narration. Matching only inside the red ranges would need the ranges indexed as text.
+  - Concept search is still English-only, so the filter does nothing for RV1909 there. Same dependency as the multilingual embeddings item in `HANDOFF.md`.
+  - The sayings and parables show the telling only; Jesus's own explanations (the Sower, the Weeds) are not listed.
+  - *Prayer* has one encounter and *Love of enemies* five passages. Thin, by the owner's own themes.
+  - A study of Highlighted in Red steps through red chapters. Stepping a study through a list (the parables, a theme) was not built.
+  - Two KJV source quirks surfaced while marking the Spanish: some red ranges stop one character short of the verse end, and a few sweep in a lead-in word ("Saying,"). The Spanish file corrects for both; the KJV data was left as imported.
 - **Semantic search provider for Sprint 9** — decide before Sprint 8 ends. Options: Anthropic Voyage, OpenAI embeddings, or a local open-source model (e.g., `all-MiniLM-L6-v2` via pgvector). Tradeoffs: cost, latency, privacy, quality.
 - **Moderation staffing model for Sprint 7** — single admin (you) for v1, or early invite of trusted moderators? Affects admin UX.
 - ~~**Group Bible default visibility**~~ — resolved 2026-06-12 (Sprint R6): stays opt-in per note; the Post-to menu makes the audience an explicit per-note choice.
@@ -259,6 +270,12 @@ Append-only. Each entry: date-ish, decision, rationale.
 
 - **2026-10-10 Highlighted in Red** — **Spanish red text is completed from a reviewed file, not left partial.** The Sprint 10 mirror only carries verses that are red end to end, which left 642 RV1909 verses with no red, among them Mark 2:17 and John 8:11. In 624 of them the Spanish has a colon where the speech begins, so `Bible::RedLetterProposer` drafts the ranges and `config/red_letter/rv1909.yml` stores the reviewed result as quoted text, applied by `Bible::RedLetterPatch` (which writes nothing if any passage is missing from its verse). Which verses are red follows the KJV; where the speech starts and stops follows the Spanish.
 - **2026-10-10 Highlighted in Red** — **The red reader is the existing reader under a lens, not a second reader.** Same action, views and verse partial, so highlights, notes, sharing and the community layer come for free. Found along the way: the community layer matched highlights by exact verse ref and so never showed public notes attached to a phrase-level highlight (PR #187). Every existing spec used whole-verse refs, which is why it went unnoticed.
+
+- **2026-10-11 Highlighted in Red, sprints 3–7** — **Curated passages are a checked-in file, and every telling stays inside one chapter.** `config/passages.yml` (40 parables, 9 word pictures from John, 29 encounters, 18 sayings) and `config/themes.yml` (8 themes) load like `config/books.yml`, so there is no data step on deploy. A highlight can't cross a chapter and the group live-update stream is keyed by chapter, so a spec holds each telling to one chapter; a passage page is then just the reader with a verse range, and highlighting works unchanged. A second spec holds each theme to the reason themes exist: at least one thing he did and one thing he said.
+- **2026-10-11 Highlighted in Red** — **An encounter is the one place the lens does not dim.** There the narration is the point, so the page shows it at full strength with his words in red and offers no "His words only".
+- **2026-10-11 Highlighted in Red** — **Nav IA changed: Read · In Red · Study · Explore, five tabs on mobile.** Owner-approved as part of the plan. `/red` is the front page; `/red/words` opens the first red chapter.
+- **2026-10-11 Highlighted in Red** — **Study focus is a default, not a wall.** `users.study_focus` and `groups.focus` change where Read, "continue reading" and a study's reader lead. The ordinary reader stays one click away, and a reader whose last highlight is in a chapter with no red text continues there.
+- **2026-10-11** — **About page and donate heading rewritten at the owner's direction** (#198). The owner's notes were sharper than the shipped copy in three places (Christianity as such, "take down the oppressors", "unite against those who oppose the weak"); the PR lists each softening so it can be reversed. What surprised us: a CI-only flake in `public_bible_spec.rb:54` (admin hides a note) failed once and passed on re-run, and the local browser suite is still unreliable under load despite the window-size work.
 
 ---
 

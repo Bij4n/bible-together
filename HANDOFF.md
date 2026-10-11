@@ -9,20 +9,22 @@
 
 - **Production:** [bible-together.org](https://bible-together.org), live since 2026-04-21, on Render. `main` auto-deploys.
 - **Repo:** Public on GitHub as [Bij4n/bible-together](https://github.com/Bij4n/bible-together) (MIT). Local checkout: `~/projects/bible-together`.
-- **Branch:** `main` — all work through PR #175 merged and live (2026-08-06).
+- **Branch:** `main` — all work through PR #198 merged and live (2026-10-11).
 - **Design source of truth:** `DESIGN.md` (v3). Rationale + sprint breakdown: `REDESIGN.md` (R1–R9 shipped on `main`).
 
-### In flight 2026-10-10 — Highlighted in Red
+### Shipped 2026-10-10 → 2026-10-11 — Highlighted in Red
 
-The project is being focused on the words, parables and encounters of Jesus. Plan, sprint
-table and owner decisions are at the top of `PLAN.md`.
+The project is now focused on the words, parables and encounters of Jesus. All seven sprints of the plan are merged and live (PRs #184–#198). Sprint table, owner decisions and what's left are at the top of `PLAN.md`.
 
-- **Live:** the red reader (`/red/:translation/:book/:chapter`, #188), complete Spanish red text (#186, patch applied in production 2026-10-11), and the curated lists with their pages: `/red/parables`, `/red/encounters`, `/red/sayings`, `/red/themes` (#189, #191–#193). Lists live in `config/passages.yml` and `config/themes.yml`.
-- **Also shipped in this cluster:** the brakeman/mail/rubyzip bump (#184), the `/studies#join` anchor (#185), and the community layer fix for notes on phrase-level highlights (#187).
-- **Next:** study this instead (`users.study_focus`, `groups.focus`, sprint 6), then the "Jesus's words only" search filter and sitemap entries (sprint 7).
-- **Nav IA changed:** top level is now Read · In Red · Study · Explore, and the mobile tab bar has five tabs. `/red` is the section's front page; `/red/words` opens the first red chapter.
-- **Still provisional:** the Spanish section name, "En Rojo".
-- `bin/brakeman` runs with `--ensure-latest`, so `scan_ruby` fails on every branch the day a new brakeman is released. When that happens, bump brakeman first.
+- **The section:** `/red` (front page), `/red/words` (first red chapter), `/red/:translation/:book/:chapter` (the red reader), `/red/parables`, `/red/encounters`, `/red/sayings`, `/red/themes`, and `/red/<list>/<slug>` for a single passage.
+- **Data:** `config/passages.yml`, `config/themes.yml`, `config/red_letter/rv1909.yml`. Editing the first two needs no deploy step. After editing the third, run `bundle exec rails 'bible:red_letter:apply[rv1909]'` in the Render shell.
+- **Nav IA:** Read · In Red · Study · Explore, five tabs on the mobile tab bar.
+- **Study focus:** `users.study_focus` (settings) and `groups.focus` (new-study form).
+- **Search:** `?red=1`, "Only verses where Jesus speaks".
+- **Also in this cluster:** the brakeman/mail/rubyzip bump, the `/studies#join` anchor, the community-layer fix for notes on phrase-level highlights, the About page rewrite and the *Donate to the Mission* heading.
+- **Owner still to decide:** the Spanish section name (*En Rojo* is a placeholder).
+- **Watch for:** `bin/brakeman` runs with `--ensure-latest`, so `scan_ruby` fails on every branch the day a new brakeman is released; bump brakeman first. `spec/system/public_bible_spec.rb:54` failed once in CI and passed on re-run.
+- **Merging:** in the session that built this, `gh pr merge` was blocked by the session's permission settings, so the owner merged every PR by hand.
 
 ### Shipped 2026-08-06 — contact form data loss + security bump
 
@@ -106,7 +108,6 @@ These are the things sitting on the user's desk, not Claude's. Don't pick them b
 - **`rails_helper.rb` Xvfb robustness** — poll for `:99` actually accepting connections instead of `sleep 1`, and fall back to `-headless` if it never comes up, rather than pointing Firefox at a dead display. See the three footguns under local environment quirks. Would make Rule 9 system specs runnable locally again.
 - **Stray `dark:` classes in locale files** — `config/locales/en.yml` and `es.yml` each carry 3 in the terms/privacy `contact_body_html` strings, contradicting the "dark mode fully removed" claim. The June sweep only covered `app/views/`; locale HTML renders into views too.
 - **`LegalController` request specs** — `/terms` and `/privacy` are live with zero specs covering them.
-- **`id="join"` anchor on `/studies`** — nav "Join with code" links to `groups_path(anchor: "join")` but the studies index has no matching anchor. Small fix.
 - **Swipe-to-dismiss bottom sheet** — the mobile highlight toolbar (PR #50) and account menu have no swipe gesture. Substantive Stimulus + gesture work; roughly a full sprint segment.
 - **Multilingual semantic search (4-step sequenced)** — see `PROJECT_OVERVIEW.md` §8 for the full plan. Currently Concept search is English-only and labeled as such; multilingual covers RV1909. Steps: (1) make `embeddings.rake` translation-agnostic, (2) swap to multilingual model, (3) regenerate embeddings, (4) drop the "(English)" parenthetical from homepage.
 - **`/help` or FAQ** — usage guide. No clear demand yet; easy to add.
