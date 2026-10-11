@@ -17,12 +17,11 @@
 The project is now focused on the words, parables and encounters of Jesus. All seven sprints of the plan are merged and live (PRs #184–#198). Sprint table, owner decisions and what's left are at the top of `PLAN.md`.
 
 - **The section:** `/red` (front page), `/red/words` (first red chapter), `/red/:translation/:book/:chapter` (the red reader), `/red/parables`, `/red/encounters`, `/red/sayings`, `/red/themes`, and `/red/<list>/<slug>` for a single passage.
-- **Data:** `config/passages.yml`, `config/themes.yml`, `config/red_letter/rv1909.yml`. Editing the first two needs no deploy step. After editing the third, run `bundle exec rails 'bible:red_letter:apply[rv1909]'` in the Render shell.
+- **Data:** `config/passages.yml`, `config/themes.yml`, `config/red_letter/kjv.yml` and `rv1909.yml`. Editing the first two needs no deploy step. After editing a file under `config/red_letter/` (`kjv.yml` or `rv1909.yml`), run `bundle exec rails 'bible:red_letter:apply[<code>]'` in the Render shell.
 - **Nav IA:** Read · In Red · Study · Explore, five tabs on the mobile tab bar.
 - **Study focus:** `users.study_focus` (settings) and `groups.focus` (new-study form).
 - **Search:** `?red=1`, "Only verses where Jesus speaks".
 - **Also in this cluster:** the brakeman/mail/rubyzip bump, the `/studies#join` anchor, the community-layer fix for notes on phrase-level highlights, the About page rewrite and the *Donate to the Mission* heading.
-- **Owner still to decide:** the Spanish section name (*En Rojo* is a placeholder).
 - **Watch for:** `bin/brakeman` runs with `--ensure-latest`, so `scan_ruby` fails on every branch the day a new brakeman is released; bump brakeman first. `spec/system/public_bible_spec.rb:54` failed once in CI and passed on re-run.
 - **Merging:** in the session that built this, `gh pr merge` was blocked by the session's permission settings, so the owner merged every PR by hand.
 

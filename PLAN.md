@@ -22,7 +22,7 @@ our own.
 | 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | shipped (#196) |
 | 7 | "Only verses where Jesus speaks" search filter (keyword and concept), sitemap entries for the section | shipped (#197) |
 
-Owner decisions so far: the name is "Highlighted in Red" (Spanish "En Rojo" is provisional);
+Owner decisions so far: the name is "Highlighted in Red" (Spanish "En Rojo", confirmed 2026-10-11);
 the gospels are the main path and his words in Acts, the epistles and Revelation sit apart
 as "After the resurrection"; John's "I am" images are listed as word pictures, not parables;
 Spanish ships complete, not with a gap; Encounters are in scope.
@@ -60,13 +60,11 @@ Recent cluster (PRs #139–#153):
 ## Open questions
 
 - **Highlighted in Red, after the first seven sprints** (2026-10-11):
-  - The Spanish section name *En Rojo* is still a placeholder; owner to confirm.
   - The search filter is verse-level. In a verse Jesus speaks for part of, a match can sit in the narration. Matching only inside the red ranges would need the ranges indexed as text.
   - Concept search is still English-only, so the filter does nothing for RV1909 there. Same dependency as the multilingual embeddings item in `HANDOFF.md`.
   - The sayings and parables show the telling only; Jesus's own explanations (the Sower, the Weeds) are not listed.
   - *Prayer* has one encounter and *Love of enemies* five passages. Thin, by the owner's own themes.
   - A study of Highlighted in Red steps through red chapters. Stepping a study through a list (the parables, a theme) was not built.
-  - Two KJV source quirks surfaced while marking the Spanish: some red ranges stop one character short of the verse end, and a few sweep in a lead-in word ("Saying,"). The Spanish file corrects for both; the KJV data was left as imported.
 - **Semantic search provider for Sprint 9** — decide before Sprint 8 ends. Options: Anthropic Voyage, OpenAI embeddings, or a local open-source model (e.g., `all-MiniLM-L6-v2` via pgvector). Tradeoffs: cost, latency, privacy, quality.
 - **Moderation staffing model for Sprint 7** — single admin (you) for v1, or early invite of trusted moderators? Affects admin UX.
 - ~~**Group Bible default visibility**~~ — resolved 2026-06-12 (Sprint R6): stays opt-in per note; the Post-to menu makes the audience an explicit per-note choice.
