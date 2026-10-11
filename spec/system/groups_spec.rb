@@ -28,3 +28,14 @@ RSpec.describe "Groups", type: :system, js: true do
     expect(Group.find_by!(name: "Tuesday Study").members).to include(friend)
   end
 end
+
+RSpec.describe "Studies index", type: :system do
+  it "gives the nav's Join with code link a section to land on" do
+    sign_in create(:user)
+    visit "/studies"
+
+    within("section#join") do
+      expect(page).to have_field("invitation_code")
+    end
+  end
+end
