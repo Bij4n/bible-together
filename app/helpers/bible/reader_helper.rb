@@ -47,6 +47,30 @@ module Bible
       @lens == :red ? @red_index.chapters_in(book.osis_code).first : 1
     end
 
+    # "Luke 15:11–32", or "John 8:12" for a single verse, with the book
+    # named in the current locale.
+    def passage_reference(appearance)
+      book = Bible::CanonicalBooks.find(appearance.book)
+      name = I18n.locale == :es ? book[:name_es] : book[:name_en]
+      verses = [ appearance.verses.first, appearance.verses.last ].uniq.join("–")
+      "#{name} #{appearance.chapter}:#{verses}"
+    end
+
+    # A passage's page, optionally at one gospel's telling. The first
+    # telling is the bare URL; a chosen translation is carried along.
+    def passage_path(passage, appearance = nil)
+      told_in = appearance&.book&.downcase
+      told_in = nil if told_in == passage.appearances.first.book.downcase
+      red_parable_path(passage.slug, in: told_in, translation: params[:translation].presence)
+    end
+
+    # [previous, next] passage in the order the list presents them.
+    def passage_neighbours(passage)
+      all = Bible::Passages.all
+      at = all.index(passage)
+      [ (all[at - 1] if at.positive?), all[at + 1] ]
+    end
+
     # Verse id => ordered unique note ids, for the per-verse note chips
     # (design v3). Built from the chapter's already-loaded highlights
     # (notes eager-loaded by every reader controller), so the only extra

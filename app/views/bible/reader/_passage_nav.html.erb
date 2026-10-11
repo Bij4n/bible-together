@@ -1,0 +1,22 @@
+<%# Previous / next on a passage page step through the curated list,
+    not through chapters. %>
+<% previous_passage, next_passage = passage_neighbours(@passage) %>
+<nav aria-label="<%= t("red.parables.title") %>" class="passage-nav flex items-start justify-between gap-6 border-t border-surface-200 pt-6 font-ui text-sm">
+  <% if previous_passage %>
+    <%= link_to red_parable_path(previous_passage.slug, translation: params[:translation].presence),
+                class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
+      <span aria-hidden="true">&larr;</span>
+      <%= previous_passage.title %>
+    <% end %>
+  <% else %>
+    <span aria-hidden="true"></span>
+  <% end %>
+
+  <% if next_passage %>
+    <%= link_to red_parable_path(next_passage.slug, translation: params[:translation].presence),
+                class: "inline-flex items-center gap-1 text-right text-surface-600 transition-colors hover:text-accent-700" do %>
+      <%= next_passage.title %>
+      <span aria-hidden="true">&rarr;</span>
+    <% end %>
+  <% end %>
+</nav>

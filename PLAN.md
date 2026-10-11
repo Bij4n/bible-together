@@ -11,9 +11,9 @@ our own.
 
 | # | Sprint | Status |
 |---|---|---|
-| 1 | Finish Spanish red text (642 partly-red RV1909 verses) | PR #186 |
-| 2 | The red reader: `/red/:translation/:book/:chapter`, dimmed narration, "His words only" | PR #188 |
-| 3 | Parables: curated list (PR #189, awaiting owner approval), then `/red/parables` pages | list in review |
+| 1 | Finish Spanish red text (642 partly-red RV1909 verses) | shipped (#186), applied in production 2026-10-11 |
+| 2 | The red reader: `/red/:translation/:book/:chapter`, dimmed narration, "His words only" | shipped (#188) |
+| 3 | Parables: curated list in `config/passages.yml`, `/red/parables` and `/red/parables/:slug` | list merged (#189); pages in review |
 | 4 | Encounters (what he did) and themes that tie sayings, parables and encounters together | not started |
 | 5 | The `/red` front page, nav entries, homepage and dashboard entry points | not started |
 | 6 | Study this instead: `users.study_focus`, `groups.focus`, red-focused study reader | not started |

@@ -210,12 +210,22 @@ es:
         words_only: Solo sus palabras
         whole_chapter: Leer el capítulo completo
         read_in_red: Leer este capítulo en rojo
+        in_its_chapter: Leerlo en su capítulo
         gospels: Los Evangelios
         after_resurrection: Después de la resurrección
       note_action: Nota
       confirm_remove_with_notes:
         one: "Este resaltado tiene %{count} nota. Quitarlo eliminará la nota. ¿Continuar?"
         other: "Este resaltado tiene %{count} notas. Quitarlo eliminará las notas. ¿Continuar?"
+  red:
+    parables:
+      title: Las Parábolas
+      all: Todas las parábolas
+      intro: Las historias que Jesús contó y las imágenes que usó para hablar de sí mismo. Cada una aparece una sola vez, con todos los evangelios que la relatan.
+      parables_heading: Parábolas
+      word_pictures_heading: Imágenes en Juan
+      word_pictures_note: El evangelio de Juan no tiene parábolas en el sentido habitual. En su lugar están las imágenes que Jesús usa para hablar de sí mismo.
+      told_in: Relatada en
   settings:
     title: Ajustes
     description: Personaliza tu experiencia de lectura. La mayoría de los cambios se guardan automáticamente. No hace falta un botón de guardar.

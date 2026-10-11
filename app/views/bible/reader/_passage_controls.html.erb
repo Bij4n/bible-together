@@ -1,0 +1,20 @@
+<%# Controls on a passage page, in place of the book and chapter
+    pickers: the way back to the list, and, when more than one gospel
+    tells the passage, a tab for each telling. %>
+<div class="reader-controls flex flex-wrap items-center gap-x-4 gap-y-2 font-ui text-sm">
+  <%= link_to red_parables_path, class: "inline-flex items-center gap-1 text-surface-600 transition-colors hover:text-accent-700" do %>
+    <span aria-hidden="true">&larr;</span>
+    <%= t("red.parables.all") %>
+  <% end %>
+
+  <% if @appearances.size > 1 %>
+    <nav aria-label="<%= t("red.parables.told_in") %>" class="passage-tellings flex flex-wrap items-center gap-1 sm:ms-auto">
+      <% @appearances.each do |appearance| %>
+        <% current = appearance == @appearance %>
+        <%= link_to passage_reference(appearance), passage_path(@passage, appearance),
+                    aria: { current: (current ? "page" : nil) },
+                    class: "rounded-full border px-3 py-1 transition-colors #{current ? 'border-surface-900 bg-surface-900 text-surface-50' : 'border-surface-300 text-surface-700 hover:bg-surface-100'}" %>
+      <% end %>
+    </nav>
+  <% end %>
+</div>

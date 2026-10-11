@@ -20,8 +20,13 @@
               class="rounded-full border border-surface-300 px-3 py-1 text-surface-700 transition-colors hover:bg-surface-100 aria-pressed:border-surface-900 aria-pressed:bg-surface-900 aria-pressed:text-surface-50">
         <%= t("bible.reader.red.words_only") %>
       </button>
-      <%= link_to t("bible.reader.red.whole_chapter"), bible_chapter_path(**slug),
-                  class: "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
+      <% quiet_link = "text-surface-600 underline underline-offset-2 transition-colors hover:text-accent-700" %>
+      <% if @passage %>
+        <%= link_to t("bible.reader.red.in_its_chapter"), red_chapter_path(**slug, anchor: dom_id(verses.first)), class: quiet_link %>
+      <% else %>
+        <%= link_to t("bible.reader.red.whole_chapter"), bible_chapter_path(**slug), class: quiet_link %>
+        <%= link_to t("red.parables.title"), red_parables_path, class: quiet_link %>
+      <% end %>
     </div>
   </div>
 <% elsif verses.any? { |v| v.red_letter_ranges.present? } %>

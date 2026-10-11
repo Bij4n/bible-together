@@ -52,21 +52,83 @@ module Bible
         end
       end
 
-      # The community layer lives at the same URL (?layer=community,
-      # Sprint R7 merge of the old /public/bible surface). Anonymous
-      # visitors get it without the param — it's the only lens they
-      # have, and an empty personal reader would be a dead end.
+      render_reader
+    end
+
+    # /red/parables/:slug -> one curated passage, read in the same
+    # reader under the red lens. A passage told in several gospels is
+    # shown one telling at a time (?in=mark); every telling sits inside
+    # a single chapter, so highlighting works exactly as it does on a
+    # chapter page.
+    def passage
+      @lens        = :red
+      @passage     = Bible::Passages.find(params[:slug]) or raise ActiveRecord::RecordNotFound
+      @translation = passage_translation
+      @appearances = appearances_available_in(@translation, @passage)
+      @appearance  = chosen_appearance or raise ActiveRecord::RecordNotFound
+
+      @book    = @translation.books.find_by!(osis_code: @appearance.book)
+      @chapter = @book.chapters.find_by!(number: @appearance.chapter)
+      @verses  = @chapter.verses.where(number: @appearance.verses).order(:number)
+
+      render_reader
+    end
+
+    private
+
+    # The community layer lives at the same URL (?layer=community,
+    # Sprint R7 merge of the old /public/bible surface). Anonymous
+    # visitors get it without the param — it's the only lens they
+    # have, and an empty personal reader would be a dead end.
+    def render_reader
       if params[:layer] == "community" || !user_signed_in?
         load_community_chapter
+        keep_community_notes_on_passage if @passage
         render "public/bible/show"
         return
       end
 
       @highlights  = load_highlights_for_chapter
       @cross_translation_highlights = load_cross_translation_highlight_map
+      render "bible/reader/show"
     end
 
-    private
+    # ?translation= wins, then the reader's own default, then Spanish
+    # scripture for a Spanish-language visitor, then the KJV.
+    def passage_translation
+      code = params[:translation].presence&.upcase
+      return Translation.find_by!(code: code) if code
+
+      (current_user&.default_translation if user_signed_in?) ||
+        (Translation.find_by(code: "RV1909") if I18n.locale == :es) ||
+        Translation.find_by!(code: "KJV")
+    end
+
+    # The tellings whose verses this translation actually has.
+    def appearances_available_in(translation, passage)
+      first_refs = passage.appearances.to_h { |a| [ a.osis_refs(translation.code).first, a ] }
+      found = Verse.where(osis_ref: first_refs.keys).pluck(:osis_ref)
+      first_refs.select { |ref, _| found.include?(ref) }.values
+    end
+
+    def chosen_appearance
+      return @appearances.first if params[:in].blank?
+
+      @appearances.detect { |a| a.book.casecmp?(params[:in]) }
+    end
+
+    # The community loader works a chapter at a time. On a passage
+    # page, drop the notes anchored elsewhere in the chapter.
+    def keep_community_notes_on_passage
+      @public_notes = @public_notes.select do |note|
+        note.highlights.any? do |highlight|
+          ref = highlight.parsed_ref
+          ref.start_chapter == @chapter.number &&
+            ref.start_verse <= @appearance.verses.last && ref.end_verse >= @appearance.verses.first
+        end
+      end
+      @highlights = community_highlights_for(@public_notes)
+    end
 
     def lens_chapter_path(**args)
       @lens == :red ? red_chapter_path(**args) : bible_chapter_path(**args)
