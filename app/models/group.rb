@@ -10,6 +10,13 @@ class Group < ApplicationRecord
   FOCUSES = { bible: 0, red: 1 }.freeze
   enum :focus, FOCUSES, prefix: true, validate: true
 
+  # Optionally the study works through a curated list, one passage at
+  # a time: "parables", "encounters", "sayings", or "theme:<slug>".
+  # Choosing a list makes it a Highlighted in Red study.
+  THEME_PREFIX = "theme:".freeze
+  before_validation :normalize_reading_list
+  validate :reading_list_exists
+
   belongs_to :owner, class_name: "User"
   # delete_all (not :destroy) bypasses the at-least-one-owner callback on
   # Membership — if the whole group is going away, there's nothing to
@@ -84,6 +91,25 @@ class Group < ApplicationRecord
     { translation: "kjv", book: first_red.book.downcase, chapter: first_red.number }
   end
 
+  # The passages on the study's list, in the order the list presents
+  # them. Empty for a study with no list.
+  def passages
+    return [] if reading_list.blank?
+
+    if reading_list.start_with?(THEME_PREFIX)
+      Bible::Themes.find(reading_list.delete_prefix(THEME_PREFIX))&.passages || []
+    else
+      Bible::Passages.in_collection(reading_list)
+    end
+  end
+
+  # Where the study is on its list: the passage a manager last marked,
+  # or the first one.
+  def current_passage_record
+    list = passages
+    list.detect { |passage| passage.slug == current_passage } || list.first
+  end
+
   def self.generate_invitation_code
     alphabet = ("A".."Z").to_a + ("0".."9").to_a
     length   = 6 + rand(3) # 6..8
@@ -91,6 +117,20 @@ class Group < ApplicationRecord
   end
 
   private
+
+  def normalize_reading_list
+    self.reading_list = reading_list.presence
+    self.focus = :red if reading_list
+  end
+
+  def reading_list_exists
+    return if reading_list.nil?
+
+    known = Bible::Passages::COLLECTIONS.key?(reading_list) ||
+            (reading_list.start_with?(THEME_PREFIX) &&
+             Bible::Themes.find(reading_list.delete_prefix(THEME_PREFIX)).present?)
+    errors.add(:reading_list, :inclusion) unless known
+  end
 
   def ensure_owner_membership
     memberships.find_or_create_by!(user: owner) do |m|
