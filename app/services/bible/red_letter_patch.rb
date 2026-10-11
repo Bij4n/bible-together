@@ -64,7 +64,9 @@ module Bible
       raise Mismatch, "#{@code} red-letter patch does not match:\n  #{problems.join("\n  ")}" if problems.any?
 
       Verse.transaction do
-        planned.each { |verse, ranges| verse.update_columns(red_letter_ranges: ranges) }
+        planned.each do |verse, ranges|
+          verse.update_columns(red_letter_ranges: ranges, red_text: Verse.red_text_for(verse.body_text, ranges))
+        end
       end
 
       Result.new(updated: planned.size)

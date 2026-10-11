@@ -261,6 +261,7 @@ module Bible
           body_text:        body_text,
           body_html:        body_html,
           red_letter_ranges: ranges,
+          red_text:         Verse.red_text_for(body_text, ranges),
           osis_ref:         osis_ref,
           created_at:       now,
           updated_at:       now

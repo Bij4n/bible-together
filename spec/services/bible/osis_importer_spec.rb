@@ -84,6 +84,10 @@ RSpec.describe Bible::OsisImporter do
         expect(verse.red_letter_ranges).to eq([ [ start, start + span.length ] ])
       end
 
+      it "stores his words on their own for searching" do
+        expect(verse.red_text).to eq("even so must the Son of man be lifted up")
+      end
+
       it "escapes non-red content and wraps red content in the span in body_html" do
         expect(verse.body_html).to include(%(<span class="jesus-words">even so must the Son of man be lifted up</span>))
         expect(verse.body_html).to include("As Moses lifted up")
@@ -95,6 +99,7 @@ RSpec.describe Bible::OsisImporter do
         importer.call
         verse = Verse.find_by!(osis_ref: "Bible.KJV.John.3.17")
         expect(verse.red_letter_ranges).to eq([])
+        expect(verse.red_text).to be_nil
         expect(verse.body_html).not_to include("jesus-words")
       end
     end

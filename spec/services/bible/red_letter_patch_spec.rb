@@ -29,6 +29,7 @@ RSpec.describe Bible::RedLetterPatch do
 
     start = body.index("Ni yo")
     expect(verse.reload.red_letter_ranges).to eq([ [ start, body.length ] ])
+    expect(verse.red_text).to eq("Ni yo te condeno: vete, y no peques más.")
     expect(result.updated).to eq(1)
   end
 

@@ -25,4 +25,26 @@ class Verse < ApplicationRecord
                       }
                     }
                   }
+
+  # The same search, but only inside Jesus's words. red_text holds a
+  # verse's red passages on their own, so a match in the narration
+  # around them doesn't count and the highlighted snippet is his words.
+  pg_search_scope :search_red_text,
+                  against: :red_text,
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      highlight: {
+                        StartSel: "<mark>",
+                        StopSel:  "</mark>"
+                      }
+                    }
+                  }
+
+  # What red_text should hold for a verse: its red passages joined by a
+  # space, or nil when it has none. Everything that writes
+  # red_letter_ranges writes this beside it.
+  def self.red_text_for(body_text, ranges)
+    Array(ranges).map { |from, to| body_text[from...to] }.join(" ").presence
+  end
 end

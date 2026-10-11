@@ -73,6 +73,7 @@ RSpec.describe SearchService do
                      body_text: "Jesus said, This is my commandment, That ye love one another",
                      body_html: "Jesus said, This is my commandment, That ye love one another",
                      red_letter_ranges: [ [ 12, 60 ] ],
+                     red_text: "This is my commandment, That ye love one another",
                      osis_ref: "Bible.KJV.John.3.18")
     end
 
@@ -80,6 +81,25 @@ RSpec.describe SearchService do
       results = described_class.new(query: "love", scope: "verses", red_only: true).call
 
       expect(results[:verses]).to eq([ red_verse ])
+    end
+
+    it "matches inside his words, not in the narration around them" do
+      body = "And they that loved him wept. And Jesus said, Weep not."
+      create(:verse, chapter: chapter, number: 19, body_text: body, body_html: body,
+                     red_letter_ranges: [ [ 46, 55 ] ], red_text: "Weep not.",
+                     osis_ref: "Bible.KJV.John.3.19")
+
+      results = described_class.new(query: "love", scope: "verses", red_only: true).call
+
+      expect(results[:verses]).to eq([ red_verse ])
+    end
+
+    it "highlights the match within his words only" do
+      results = described_class.new(query: "love", scope: "verses", red_only: true).call
+
+      snippet = results[:verses].first.pg_search_highlight
+      expect(snippet).to include("<mark>love</mark>")
+      expect(snippet).not_to include("Jesus said")
     end
 
     it "is off by default" do

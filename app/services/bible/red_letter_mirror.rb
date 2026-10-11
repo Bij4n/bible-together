@@ -50,7 +50,7 @@ module Bible
           if dst.nil?
             missing += 1
           else
-            dst.update_columns(red_letter_ranges: [ [ 0, dst.body_text.length ] ])
+            dst.update_columns(red_letter_ranges: [ [ 0, dst.body_text.length ] ], red_text: dst.body_text)
             updated += 1
           end
         elsif src.red_letter_ranges.any?

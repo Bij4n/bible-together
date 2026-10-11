@@ -589,7 +589,7 @@ en:
     translations:
       current: This translation
       all: All translations
-    red_only: Only verses where Jesus speaks
+    red_only: Search only the words of Jesus
     empty_hint: Type something you remember from scripture, or a feeling you can't name. Try one of the suggestions below if you don't know where to start.
     no_results_html: "No results for <strong>%{query}</strong>. Try different keywords or check your spelling."
     results_for_html: "Results for <strong>%{query}</strong>"
