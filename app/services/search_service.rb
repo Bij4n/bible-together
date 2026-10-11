@@ -7,9 +7,8 @@ class SearchService
 
   attr_reader :query, :user, :scope, :translations, :translation_code, :red_only
 
-  # red_only narrows verse results to verses where Jesus speaks. It is
-  # verse-level: in a verse he speaks for part of, the matched words
-  # may sit in the narration around his.
+  # red_only searches inside Jesus's words only: a match in the
+  # narration of a verse he speaks in does not count.
   def initialize(query:, user: nil, scope: "all", translations: "current", translation_code: DEFAULT_TRANSLATION,
                  red_only: false)
     @query            = query.to_s.strip
@@ -44,13 +43,10 @@ class SearchService
     # with_pg_search_highlight is added to the relation pg_search
     # returns — chain it *after* search_text, not before.
     codes = translations == "all" ? Translation.pluck(:code) : [ translation_code.upcase ]
-    verses = Verse
-      .search_text(query)
+    (red_only ? Verse.search_red_text(query) : Verse.search_text(query))
       .with_pg_search_highlight
       .joins(chapter: { book: :translation })
       .where(translations: { code: codes })
-    verses = verses.where("verses.red_letter_ranges <> '[]'::jsonb") if red_only
-    verses
       .includes(chapter: { book: :translation })
       .limit(VERSE_LIMIT)
       .to_a
