@@ -12,6 +12,7 @@
 #
 # After a change to config/red_letter/<code>.yml on an already-imported
 # database, apply it without re-importing:
+#   bundle exec rails 'bible:red_letter:apply[kjv]'
 #   bundle exec rails 'bible:red_letter:apply[rv1909]'
 #
 # The embedding generate task is left manual — it takes 15-20 minutes

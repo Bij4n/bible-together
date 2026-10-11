@@ -14,7 +14,8 @@ a white ground / cool near-black dark).
 - Two public-domain translations: King James Version (KJV) and
   Reina-Valera 1909 (RV1909). Translation picker preserves book and chapter
   across switches.
-- Red-letter Jesus words from character-offset ranges at import time. RV1909
+- Red-letter Jesus words from character-offset ranges at import time, with a
+  handful of source slips corrected from `config/red_letter/kjv.yml`. RV1909
   has the same red verses as the KJV: fully red verses are mirrored, and
   verses where he speaks for part of the verse come from a reviewed file,
   `config/red_letter/rv1909.yml`.
