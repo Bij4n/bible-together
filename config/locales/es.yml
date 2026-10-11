@@ -204,6 +204,14 @@ es:
       layer_label: Capa
       layer_mine: Mi Biblia
       layer_community: Comunidad
+      red:
+        eyebrow: En Rojo
+        intro: Las palabras de Jesús están en rojo. El relato que las rodea aparece atenuado, no eliminado.
+        words_only: Solo sus palabras
+        whole_chapter: Leer el capítulo completo
+        read_in_red: Leer este capítulo en rojo
+        gospels: Los Evangelios
+        after_resurrection: Después de la resurrección
       note_action: Nota
       confirm_remove_with_notes:
         one: "Este resaltado tiene %{count} nota. Quitarlo eliminará la nota. ¿Continuar?"

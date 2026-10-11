@@ -1,5 +1,52 @@
 module Bible
   module ReaderHelper
+    GOSPELS = %w[Matt Mark Luke John].freeze
+
+    # Chapter URL under whichever lens the page is in, so the reader's
+    # pickers and links keep a reader in Highlighted in Red.
+    def reader_chapter_path(**args)
+      @lens == :red ? red_chapter_path(**args) : bible_chapter_path(**args)
+    end
+
+    # The chapter numbers the chapter picker offers for a book.
+    def reader_chapter_numbers(book)
+      return @red_index.chapters_in(book.osis_code) if @lens == :red
+
+      book.chapters.order(:number).pluck(:number)
+    end
+
+    # [previous, next] as path params ({ book:, chapter: }) or nil at
+    # either end. Under the red lens these skip chapters with no red.
+    def reader_neighbours(chapter)
+      stops =
+        if @lens == :red
+          code = chapter.book.osis_code
+          [ @red_index.before(code, chapter.number), @red_index.after(code, chapter.number) ]
+            .map { |stop| stop && [ stop.book, stop.number ] }
+        else
+          [ chapter.previous, chapter.next ].map { |c| c && [ c.book.osis_code, c.number ] }
+        end
+      stops.map { |book, number| book && { book: book.downcase, chapter: number } }
+    end
+
+    # Books for the book picker as [heading, books] groups: the two
+    # testaments, or under the red lens the gospels and everything
+    # after them.
+    def reader_book_groups(translation)
+      if @lens == :red
+        books = translation.books.where(osis_code: @red_index.books).order(:position).to_a
+        gospels, later = books.partition { |b| GOSPELS.include?(b.osis_code) }
+        [ [ t("bible.reader.red.gospels"), gospels ], [ t("bible.reader.red.after_resurrection"), later ] ]
+      else
+        [ [ t("bible.reader.old_testament"), translation.books.where(testament: :old).order(:position) ],
+          [ t("bible.reader.new_testament"), translation.books.where(testament: :new).order(:position) ] ]
+      end
+    end
+
+    def reader_first_chapter(book)
+      @lens == :red ? @red_index.chapters_in(book.osis_code).first : 1
+    end
+
     # Verse id => ordered unique note ids, for the per-verse note chips
     # (design v3). Built from the chapter's already-loaded highlights
     # (notes eager-loaded by every reader controller), so the only extra

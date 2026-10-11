@@ -204,6 +204,14 @@ en:
       layer_label: Layer
       layer_mine: My Bible
       layer_community: Community
+      red:
+        eyebrow: Highlighted in Red
+        intro: Jesus's words are in red. The story around them is dimmed, not removed.
+        words_only: His words only
+        whole_chapter: Read the whole chapter
+        read_in_red: Read this chapter in red
+        gospels: The Gospels
+        after_resurrection: After the resurrection
       note_action: Note
       # Sprint 16.5 PR C: confirm dialog when color-toggle removes a
       # highlight that has notes attached. Q1 Option A — auto-destroy
